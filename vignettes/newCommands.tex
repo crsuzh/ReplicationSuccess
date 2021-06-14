@@ -1,0 +1,328 @@
+\usepackage{xifthen}            % for \isempty
+\usepackage{array}
+\usepackage{amssymb}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Kommentare %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Zum Kommentieren
+\newcommand{\komm}[1]{%
+  \marginpar{\fbox{% mit Rahmen
+    \begin{minipage}{1.4cm}  % Für automatischen Zeilenumbruch im Kommentar
+      {\footnotesize\bfseries #1}
+    \end{minipage}
+  }
+ }
+} 
+
+
+% Zum Auskommentieren
+\newcommand{\blanco}[1]{  } 
+%\usepackage[sumlimits, intlimits, namelimits]{amsmath} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Formatierung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\newcommand{\alert}{}
+\newcommand{\gqs}{}
+
+% für englische Begriffe: Achtung, falls sich ein Wort anschließt so:
+% \english{engWord}{}, d.h. Klammern nicht vergessen  
+\newcommand{\english}[1]{\glqq #1\grqq}
+
+% für lateinische Begriffe, z. B. a posteriori, ad hoc, etc
+\newcommand{\latin}[1]{\textit{#1}}
+
+% für Definitionen
+\newcommand{\define}[1]{\emph{#1}} % jetzt ohne index, das muss manuell gemacht werden
+
+% angeben von Personennamen
+\newcommand{\name}[1]{\textsc{#1}} 
+
+% Abkürzungen richtig setzen ("z.B.") 
+\newcommand{\abks}[1]{\mbox{\scriptsize #1}\xdot}
+\newcommand{\abk}[1]{\mbox{#1}\xdot}
+\DeclareRobustCommand\xdot{\futurelet\token\Xdot}
+\def\Xdot{%
+  \ifx\token\bgroup.%
+  \else\ifx\token\egroup.%
+  \else\ifx\token\/.%
+  \else\ifx\token\ .%
+  \else\ifx\token!.%
+  \else\ifx\token,.%
+  \else\ifx\token:.%
+  \else\ifx\token;.%
+  \else\ifx\token?.%
+  \else\ifx\token/.%
+  \else\ifx\token'.%
+  \else\ifx\token).%
+  \else\ifx\token-.%
+  \else\ifx\token+.%
+  \else\ifx\token~.%
+  \else\ifx\token.%
+  \else.\ %
+  \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi%
+}
+
+\newcommand{\etc}{\abk{etc}}
+\newcommand{\Prof}{\abk{Prof}}
+\newcommand{\Dr}{\abk{Dr}}
+\newcommand{\vgl}{\abk{vgl}}
+\newcommand{\zB}{\abk{z.\,B}}
+\newcommand{\bzgl}{\abk{bzgl}}
+\newcommand{\bzw}{\abk{bzw}}
+\newcommand{\dH}{\abk{d.\,h}}
+\newcommand{\ua}{\abk{u.\,a}}
+\newcommand{\ca}{\abk{ca}}
+\newcommand{\ggf}{\abk{ggf}}
+\newcommand{\eg}{\abk{\latin{e.\,g}}}
+\newcommand{\ie}{\abk{\latin{i.\,e}}}
+\newcommand{\cf}{\abk{\latin{cf}}}
+
+% Grafikskalierung
+\newcommand{\graphicSize}[1]{\setkeys{Gin}{width = #1\textwidth, keepaspectratio}}
+\newcommand{\fullwidth}{\setkeys{Gin}{width = \textwidth, keepaspectratio}}
+
+\newlength{\halbebreite}
+\setlength{\halbebreite}{\textwidth / 2 - 0.5cm}
+\newcommand{\halfwidth}{\setkeys{Gin}{width = \halbebreite, keepaspectratio}}
+
+% Referenzierung von Listenelementen
+%\newcommand{\subref}[1]{\ref{#1})}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Befehle %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Verteilungen (- bedeutet: im Appendix eingetragen)
+\DeclareMathOperator{\Ber}{B} % Bernoulli - 
+\DeclareMathOperator{\Bin}{Bin} % Binomial Distribution - 
+\DeclareMathOperator{\Cauchy}{C} % Cauchy Distribution (special Student -
+                                % dist.) 
+\DeclareMathOperator{\Par}{Par} % Pareto Distribution
+\DeclareMathOperator{\Mult}{M} % Multinomialverteilung - 
+\DeclareMathOperator{\NegBin}{NBin} % Negative Binomial - 
+\DeclareMathOperator{\HypGeom}{HypGeom} % Hypergeometric Distribution - 
+\DeclareMathOperator{\NCHypGeom}{NCHypGeom} % Noncentral hypergeometric Distribution - 
+\DeclareMathOperator{\Geom}{Geom} % Geometric Distribution - 
+\DeclareMathOperator{\Po}{Po} % Poisson Distribution - 
+\DeclareMathOperator{\Exp}{Exp} % Exponential Distribution -
+\DeclareMathOperator{\Nor}{N} % Normal -
+\DeclareMathOperator{\LN}{LN} % Log-Normal - 
+\DeclareMathOperator{\HN}{HN} % Halb-Normal - 
+\DeclareMathOperator{\FN}{FN} % gefaltet Normal - 
+\DeclareMathOperator{\Gumbel}{Gu} % Gumbel - 
+\DeclareMathOperator{\F}{F} % F - 
+\DeclareMathOperator{\stud}{t} % Student - 
+\DeclareMathOperator{\Stud}{\stud}  
+\DeclareMathOperator{\Log}{Log} % Logistische Verteilung - 
+\DeclareMathOperator{\Uni}{U} % Uniform -
+\DeclareMathOperator{\Ga}{G} % Gamma - 
+\DeclareMathOperator{\IG}{IG} % Invers-Gamma - 
+\DeclareMathOperator{\Gg}{Gg} % Gamma-Gamma - 
+\DeclareMathOperator{\Be}{Be} % Beta - 
+\DeclareMathOperator{\BeB}{BeB} % Beta-Binomial - 
+\DeclareMathOperator{\PoG}{PoG} % Poisson-Gamma - 
+\DeclareMathOperator{\Wb}{Wb} % Weibull - 
+\DeclareMathOperator{\Dir}{D} % Dirichlet - 
+\DeclareMathOperator{\Wish}{Wi} % Wishart 
+\DeclareMathOperator{\InvWish}{IWi} % Inverse Wishart
+\DeclareMathOperator{\MultDir}{MD} % Multinomial-Dirichlet -
+\DeclareMathOperator{\NoG}{NG} % Normal-Gamma - 
+
+% Operatoren
+\DeclareMathOperator{\Var}{Var} % Varianz
+\DeclareMathOperator{\E}{\mathsf{E}} % Erwartungswert
+\newcommand{\KLD}[2]{\mathsf{D}(#1 \parallel{} #2)} % new KL discrepancy
+\DeclareMathOperator{\Cov}{Cov} % Covariance
+\DeclareMathOperator{\Corr}{Corr} % Correlation 
+\DeclareMathOperator{\se}{se}   % standard error
+\DeclareMathOperator{\sign}{sign} % signum
+\DeclareMathOperator{\logit}{logit} % logit-Funktion
+\DeclareMathOperator{\Mod}{Mod} % Modus
+\DeclareMathOperator{\Med}{Med} % Median
+\DeclareMathOperator{\diag}{diag} % Diagonalmatrix
+\DeclareMathOperator{\trace}{tr} % Spur
+\renewcommand{\P}{\operatorname{\mathsf{Pr}}} % Wahrscheinlichkeitsmaß
+%\newcommand{\p}{\operatorname{\mathsf{p}}} % Density function
+\newcommand{\p}{f}%{\operatorname{{p}}} % Density function
+\newcommand{\B}{\operatorname{{B}}} % Beta function
+%\newcommand{\Lik}{\operatorname{\mathsf{L}}} % Probability/Density function
+\newcommand{\Lik}{L} % Probability/Density function
+\DeclareMathOperator{\dotcup}{\dot{\cup}} % disjunkte Vereinigung
+\DeclareMathOperator{\arctanh}{arctanh} % arcus tangens hyperbolicus
+\DeclareMathOperator*{\argmax}{arg\,max} % argument which maximises
+\DeclareMathOperator*{\argmin}{arg\,min} % argument which minimises
+
+\DeclareMathOperator{\BS}{BS} % Brier Score
+\DeclareMathOperator{\AS}{AS} % Absolute Score
+\DeclareMathOperator{\CRPS}{CRPS} % CRPS
+\DeclareMathOperator{\LS}{LS} % Logarithmic Score
+\DeclareMathOperator{\SPE}{SPE} % Squared prediction error
+\DeclareMathOperator{\SC}{SC} % Sander's calibration
+% \DeclareMathOperator{\MR}{MR} % Murphy resolution --> !conflict with aoas template!
+\DeclareMathOperator{\AUC}{AUC} % Area under the curve
+\DeclareMathOperator{\BF}{BF} % Bayes factor
+\DeclareMathOperator{\mBF}{mBF} % minimum Bayes factor
+
+
+
+% Zum Angeben von Funktionen
+\newcommand{\funktion}[5]{%
+	\begin{tabular}[t]{lrcl}
+	$#1$~: & $#2$ & $\longrightarrow$ & $#3$\\
+	& $#4$ & $\longmapsto$ & $#5$
+	\end{tabular}}
+
+% für Pfeil mit Erklärung unter einem Formelteil
+\newcommand{\underarrow}[2]{%
+ \underset{\begin{subarray}{c} \uparrow\\ #1 \end{subarray}}{#2}%
+}
+
+% Text über =
+\newcommand{\overequal}[1]{\overset{\text{#1}}{=}}
+
+% partielle Abl. von #2 nach #3 mit optionalem Parameter #1 für wievielte Ableitung (default 1)
+\newcommand{\partialv}[3][1]{%
+% \ifthenelse{#1 = 1}{\frac{\partial\,#2}{\partial\,#3}}{\frac{\partial^{#1} #2}{\partial\,#3^{#1}}}
+\ifthenelse{#1 = 1}{\frac{\partial #2}{\partial #3}}{\frac{\partial^{#1} #2}{\partial #3^{#1}}}
+} 
+
+% Abl. von #2 nach Skalar #3 mit optionalem Parameter #1 für wievielte Ableitung (default 1)
+\newcommand{\partials}[3][1]{%
+%% \ifthenelse{#1 = 1}{\frac{d\,#2}{d\,#3}}{\frac{d^{#1} #2}{d\,#3^{#1}}}
+\ifthenelse{#1 = 1}{\frac{d #2}{d #3}}{\frac{d^{#1} #2}{d #3^{#1}}}
+} 
+
+% partielle Abl. mit separatem Bruch für "nach einem Skalar" mit optionalem Parameter #1 für
+% wievielte Ableitung (default 1) 
+\newcommand{\dseps}[2][1]{%
+% \ifthenelse{#1 = 1}{\frac{d}{d\,#2}}{\frac{d^{#1}}{d\,#2^{#1}}}
+\ifthenelse{#1 = 1}{\frac{d}{d #2}}{\frac{d^{#1}}{d #2^{#1}}}
+}
+
+% partielle Abl. mit separatem Bruch mit optionalem Parameter #1 für
+% wievielte Ableitung (default 1) 
+\newcommand{\dsepv}[2][1]{%
+% \ifthenelse{#1 = 1}{\frac{\partial\,}{\partial\,#2}}{\frac{\partial^{#1}}{\partial\,#2^{#1}}}
+\ifthenelse{#1 = 1}{\frac{\partial}{\partial #2}}{\frac{\partial^{#1}}{\partial #2^{#1}}}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Abkürzungen %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Mengen
+\newcommand{\mcf}{\mathcal{F}}
+\newcommand{\ve}{\varepsilon}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\0}{\emptyset}
+\newcommand{\Tau}{\mathcal{T}}
+
+% Quer-Versionen
+\newcommand{\deltaq}{\bar{\delta}}
+\newcommand{\xq}{\bar{x}}
+\newcommand{\Xq}{\bar{X}}
+\newcommand{\yq}{\bar{y}}
+\newcommand{\Yq}{\bar{Y}}
+\newcommand{\eq}{\bar{e}}
+
+% Dach-Versionen
+\newcommand{\xd}{\hat{x}}
+\newcommand{\Xd}{\hat{X}}
+\newcommand{\yd}{\hat{y}}
+\newcommand{\Yd}{\hat{Y}}
+\newcommand{\bd}{{\hat{\beta}}}
+\newcommand{\ad}{{\hat{\alpha}}}
+\newcommand{\pid}{\hat{\pi}}
+\newcommand{\sd}{{\hat{\sigma}}}
+\newcommand{\sda}{\hat{\sigma}_{\hat{\alpha}}}
+\newcommand{\sdb}{\hat{\sigma}_{\hat{\beta}}}
+
+\newcommand{\ml}[2][1]{% % für Maximum-Likelihood-Schätzer von #1
+\ifthenelse{#1 = 1}%
+ {\hat{#2}_{\scriptscriptstyle{\mathrm{ML}}}}% 
+ {\hat{#2}^{#1}_{\scriptscriptstyle{\mathrm{ML}}}}% z.B. für sigmadach^2
+}
+\newcommand{\map}[2][0]{% % für MAP-Schätzer von #1
+\ifthenelse{#1 = 0}%
+ {\hat{#2}_{\scriptscriptstyle{\mathrm{MAP}}}}% 
+ {\hat{#2}_{{\scriptscriptstyle{\mathrm{MAP}}_{#1}}}}% z.B. für sigmadach^2
+}
+\newcommand{\mpm}[2][0]{% % für MPM-Schätzer von #1
+\ifthenelse{#1 = 0}%
+ {\hat{#2}_{\scriptscriptstyle{\mathrm{MPM}}}}% 
+ {\hat{#2}_{{\scriptscriptstyle{\mathrm{MPM}}_{#1}}}}% z.B. für sigmadach^2
+}
+
+%% \newcommand{\ml}[2][1]{% % für Maximum-Likelihood-Schätzer von #1
+%% \ifthenelse{#1 = 1}%
+%%  {\hat{#2}_{\scriptscriptstyle{\text{ML}}}}% 
+%%  {\hat{#2}^{#1}_{\scriptscriptstyle{\text{ML}}}}% z.B. für sigmadach^2
+%% }
+%% \newcommand{\map}[2][0]{% % für MAP-Schätzer von #1
+%% \ifthenelse{#1 = 0}%
+%%  {\hat{#2}_{\scriptscriptstyle{\text{MAP}}}}% 
+%%  {\hat{#2}_{{\scriptscriptstyle{\text{MAP}}_{#1}}}}% z.B. für sigmadach^2
+%% }
+%% \newcommand{\mpm}[2][0]{% % für MAP-Schätzer von #1
+%% \ifthenelse{#1 = 0}%
+%%  {\hat{#2}_{\scriptscriptstyle{\text{MPM}}}}% 
+%%  {\hat{#2}_{{\scriptscriptstyle{\text{MPM}}_{#1}}}}% z.B. für sigmadach^2
+%% }
+
+\newcommand{\myround}[2][1]{\format{#2,nsmall=#1,digits=#1}}
+
+% Verteilt wie
+\newcommand{\simah}{\stackrel{a}{\underset{H_0}{\thicksim}}} % approx. Vtlg. unter H0
+\newcommand{\sima}{\mathrel{\overset{\text{a}}{\thicksim}}} % approx. Vtlg.
+\newcommand{\simh}{\mathrel{\underset{H_0}{\thicksim}}} % Vtlg. unter H0
+\newcommand{\simiid}{\mathrel{\overset{\text{iid}}{\thicksim}}} % iid-verteilt 
+\newcommand{\simid}{\mathrel{\overset{\text{id}}{\thicksim}}} % id-verteilt 
+\newcommand{\simind}{\mathrel{\overset{\text{ind}}{\thicksim}}} % unabhängig verteilt 
+\newcommand{\simcid}{\mathrel{\overset{\text{cid}}{\thicksim}}} % cid-verteilt 
+\newcommand{\yobs}{y_{\text{o}}}
+\newcommand{\yobstilde}{\tilde{y}_{\text{o}}}
+\newcommand{\Yobs}{Y_{\text{o}}}
+
+% Operationen
+\newcommand{\given}{\,\vert\,} % für "X gegeben Y" also $X\given Y$ schreiben
+\newcommand{\semicolon}{\,;\,} % für "X gegeben Y" also $X\given Y$ schreiben
+\newcommand{\s}{\setminus}
+\newcommand{\entspricht}{\mathrel{\widehat{=}}}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert} % Absolutbetrag
+\newcommand{\absmall}[1]{\lvert#1\rvert} % Absolutbetrag ohne Größenanpassung
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert} % Norm
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil} % Ceiling
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor} % Floor
+\newcommand{\sprod}[1]{\left\langle#1\right\rangle} % Skalarprodukt
+\newcommand{\sdiff}{\bigtriangleup} % symm. Differenz
+
+% Grenzen 
+\newcommand{\cupg}{\bigcup\limits}
+\newcommand{\capg}{\bigcap\limits}
+
+% sonstiges
+\newcommand{\com}[1]{\left(#1\right)^c} % Complement von #1
+\newcommand{\upvp}{\upvarphi}
+\newcommand{\vpnorm}{\upvp}
+\newcommand{\vp}{\phi}
+\newcommand{\vt}{\vartheta}
+\newcommand{\midt}[1]{\quad\text{#1}\quad} % spart Schreibarbeit
+\newcommand{\glqm}{\text{``}} % für Anführungszeichen im Mathemodus
+\newcommand{\grqm}{\text{''}}
+\newcommand{\Ind}[2]{\mathsf{I}_{#2}(#1)} % Indikatorfunktion
+\newcommand{\IdMat}{\boldsymbol{\mathrm{I}}} % identity matrix
+
+% for diagnostic testing examples
+\newcommand{\Dp}{\mbox{$D+$}}
+\newcommand{\Dm}{\mbox{$D-$}}
+\newcommand{\Tp}{\mbox{$T+$}}
+\newcommand{\Tm}{\mbox{$T-$}}
+\newcommand{\dmin}{d_{\tiny \mbox{min}}}
+
+% Local Variables: 
+% mode: latex
+% TeX-master: "MSI"
+% ispell-local-dictionary: "english"
+% End: 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Ende %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

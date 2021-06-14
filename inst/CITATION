@@ -1,0 +1,24 @@
+ 
+citHeader(paste("To cite the R-package 'ReplicationSuccess' in publications,",
+                "please use:")) 	  
+
+citEntry(entry = "article",
+	 title = "A new standard for the analysis and design of replication studies (with discussion)",
+	 author = c(person(given = "Leonhard", family = "Held", role = "aut")), 
+         url = "https://doi.org/10.1111/rssa.12493",
+         journal = "Journal of the Royal Statistical Society, Series A (Statistics in Society)",  
+	 volume = "183",
+         number = "2",
+         pages = "431 - 448",
+	 year = 2020,
+	 textVersion = paste("Held, L. (2020).",
+	                     "A new standard for the analysis and design of replication studies (with discussion).",
+                             "Journal of the Royal Statistical Society: Series A (Statistics in Society).",
+                             "183(2):431--448.",
+			     "https://doi.org/10.1111/rssa.12493"
+	 	    	     ))
+
+
+
+
+

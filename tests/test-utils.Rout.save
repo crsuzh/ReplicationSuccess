@@ -1,0 +1,95 @@
+
+R version 3.6.3 (2020-02-29) -- "Holding the Windsock"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(ReplicationSuccess)
+> 
+> ## Functions to check for errors
+> ## ------------------------------------------------------------------
+> checkError <- function(expr) {
++   inherits(try(expr = expr, silent = TRUE), "try-error")
++ }
+> 
+> checkNum <- function(x, y) {
++   stopifnot(isTRUE(all.equal.numeric(x, y)))
++ }
+> 
+> checkNumTol <- function(x, y, tol = .Machine$double.eps) {
++   stopifnot(isTRUE(all.equal.numeric(x, y, 
++                                      tolerance = tol,
++                                      check.attributes = FALSE)))
++ }
+> 
+> ## Check that wrong inputs throw errors
+> ## ------------------------------------------------------------------
+> 
+> ## p2z
+> checkError(p2z(p = 0))
+[1] TRUE
+> checkError(p2z(p = 1.1))
+[1] TRUE
+> checkError(p2z(p = 0.05, alternative = "wrong"))
+[1] TRUE
+> 
+> ## z2p 
+> checkError(z2p(z = "wrong"))
+[1] TRUE
+> checkError(z2p(z = 1, alternative = "wrong"))
+[1] TRUE
+> 
+> ## ci2se
+> checkError(ci2se(lower = c(1, 2), upper = c(1, 2, 3)))
+[1] TRUE
+> checkError(ci2se(lower = c(3, 3), upper = c(2, 1)))
+[1] TRUE
+> checkError(ci2se(lower = c(3, 3), upper = c(2, 1), conf.level = 2))
+[1] TRUE
+> checkError(ci2se(lower = 0, upper = 1, ratio = TRUE))
+[1] TRUE
+> 
+> ## ci2estimate
+> checkError(ci2estimate(lower = c(1, 2), upper = c(1, 2, 3)))
+[1] TRUE
+> checkError(ci2estimate(lower = c(3, 3), upper = c(2, 1)))
+[1] TRUE
+> checkError(ci2estimate(lower = 0, upper = 1, ratio = TRUE))
+[1] TRUE
+> 
+> ## ci2z
+> checkError(ci2z(lower = c(1, 2), upper = c(1, 2, 3)))
+[1] TRUE
+> checkError(ci2z(lower = c(3, 3), upper = c(2, 1)))
+[1] TRUE
+> checkError(ci2z(lower = c(3, 3), upper = c(2, 1), conf.level = 2))
+[1] TRUE
+> checkError(ci2z(lower = 0, upper = 1, ratio = TRUE))
+[1] TRUE
+> 
+> ## ci2p
+> checkError(ci2p(lower = c(1, 2), upper = c(1, 2, 3)))
+[1] TRUE
+> checkError(ci2p(lower = c(3, 3), upper = c(2, 1)))
+[1] TRUE
+> checkError(ci2p(lower = c(3, 3), upper = c(2, 1), conf.level = 2))
+[1] TRUE
+> checkError(ci2p(lower = 0, upper = 1, ratio = TRUE))
+[1] TRUE
+> checkError(ci2p(lower = 0, upper = 1, alternative = "wrong"))
+[1] TRUE
+> 
+> proc.time()
+   user  system elapsed 
+  0.197   0.151   0.133 

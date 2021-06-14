@@ -1,0 +1,108 @@
+
+R version 3.6.3 (2020-02-29) -- "Holding the Windsock"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(ReplicationSuccess)
+> 
+> ## Functions to check for errors and (approximate) numerical equality
+> ## ------------------------------------------------------------------
+> checkError <- function(expr) {
++   inherits(try(expr = expr, silent = TRUE), "try-error")
++ }
+> 
+> checkNum <- function(x, y) {
++   stopifnot(isTRUE(all.equal.numeric(x, y)))
++ }
+> 
+> checkNumTol <- function(x, y, tol = .Machine$double.eps) {
++   stopifnot(isTRUE(all.equal.numeric(x, y, 
++                                      tolerance = tol,
++                                      check.attributes = FALSE)))
++ }
+> 
+> ## Check that wrong inputs throw errors
+> ## ------------------------------------------------------------------
+> checkError(powerReplicationSuccess(zo = 1, c = 1,  
++                                    designPrior = "wrong"))
+[1] TRUE
+> checkError(powerReplicationSuccess(zo = 1, c = -1))
+[1] TRUE
+> checkError(powerReplicationSuccess(zo = 1, c = 1, level = -1))
+[1] TRUE
+> checkError(powerReplicationSuccess(zo = 1, c = 1, level = 2))
+[1] TRUE
+> checkError(powerReplicationSuccess(zo = 1, c = 1, alternative = "wrong"))
+[1] TRUE
+> 
+> ## Check numerically results from paper
+> ## ------------------------------------------------------------------
+> checkNumTol(powerReplicationSuccess(zo = qnorm(p = 1 - 0.05/2),
++                                     c = 1, level = 0.05,
++                                     alternative = "two.sided",
++                                     type = "nominal"), 
++             0)
+> checkNumTol(powerReplicationSuccess(zo = qnorm(p = 1 - 0.0056/2),
++                                     c = 1, level = 0.05,
++                                     alternative = "two.sided",
++                                     type = "nominal"), 
++             0.5, tol = 0.01)
+> 
+> ## Apply over a grid of values
+> ## ------------------------------------------------------------------
+> zo <- seq(-3, 3, 1)
+> apply_grid <- expand.grid(priors = c("conditional", "predictive"),
++                           c = c(0.5, 2),
++                           alt = c("two.sided", "one.sided"),
++                           stringsAsFactors = FALSE)
+> 
+> for (i in seq(1, nrow(apply_grid))) {
++   print(apply_grid[i,])
++   p <- powerReplicationSuccess(zo = zo,
++                                c = apply_grid$c[i],
++                                level = 0.05,
++                                designPrior = apply_grid$priors[i],
++                                alternative = apply_grid$alt[i],
++                                type = "nominal")
++   print(round(p, digits = 5))
++ }
+       priors   c       alt
+1 conditional 0.5 two.sided
+[1] 0.43065 0.00000 0.00000 0.00000 0.00000 0.00000 0.43065
+      priors   c       alt
+2 predictive 0.5 two.sided
+[1] 0.44341 0.00000 0.00000 0.00000 0.00000 0.00000 0.44341
+       priors c       alt
+3 conditional 2 two.sided
+[1] 0.87498 0.00000 0.00000 0.00000 0.00000 0.00000 0.87498
+      priors c       alt
+4 predictive 2 two.sided
+[1] 0.7467 0.0000 0.0000 0.0000 0.0000 0.0000 0.7467
+       priors   c       alt
+5 conditional 0.5 one.sided
+[1] 0.62115 0.17418 0.00000 0.00000 0.00000 0.17418 0.62115
+      priors   c       alt
+6 predictive 0.5 one.sided
+[1] 0.60002 0.22292 0.00000 0.00000 0.00000 0.22292 0.60002
+       priors c       alt
+7 conditional 2 one.sided
+[1] 0.97724 0.18003 0.00000 0.00000 0.00000 0.18003 0.97724
+      priors c       alt
+8 predictive 2 one.sided
+[1] 0.87594 0.29868 0.00000 0.00000 0.00000 0.29868 0.87594
+> 
+> proc.time()
+   user  system elapsed 
+  0.270   0.180   0.232 
