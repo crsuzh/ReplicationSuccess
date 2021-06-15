@@ -1,14 +1,14 @@
 Package: ReplicationSuccess
 Type: Package
 Title: Design and Analysis of Replication Studies
-Version: 0.1-4
-Date: 2020-11-25
+Version: 0.2
+Date: 2021-06-15
 Author: Leonhard Held [aut], Samuel Pawel [ctb], Charlotte Micheloud [ctb]
 Maintainer: Leonhard Held <leonhard.held@uzh.ch>
 Description: Contains utilities for design and analysis of replication studies. Traditional methods based on statistical signficance and confidence intervals, as well as more recently developed methods such as the sceptical p-value are included. Also provides functions to compute the p-value from the harmonic mean chi-squared test, the p-value for intrinsic credibility as well as the threshold for intrinsic credibility. Contains data sets from four large-scale replication projects.
 VignetteBuilder: knitr
 Imports: rootSolve
-Suggests: knitr
+Suggests: knitr, roxygen2, testthat
 License: GPL (>=2)
 NeedsCompilation: no
 Packaged: 2021-03-23 09:08:53 UTC; rforge
@@ -17,3 +17,4 @@ Repository/R-Forge/Project: replication
 Repository/R-Forge/Revision: 169
 Repository/R-Forge/DateTimeStamp: 2021-03-23 08:53:15
 Date/Publication: 2021-03-23 08:53:15
+RoxygenNote: 7.1.1

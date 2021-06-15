@@ -1,5 +1,11 @@
 # ReplicationSuccess
 
-Version from https://r-forge.r-project.org/R/?group_id=2357
+## Goal:
+* implement `sampleSizeSignificance2()` and test it against `sampleSizeSignificance()`.
 
-Version: 0.1-4 | Last change: 2021-03-23 09:53:15+01 | Rev.: 169
+
+
+## Suggestions:
+* implement unit tests with the R package 'testthat'.
+* move documentation to R files and use 'roxygen2' to generate man.
+
