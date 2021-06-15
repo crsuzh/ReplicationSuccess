@@ -62,7 +62,6 @@ When the approach based on power is used, the arguments design prior,
 shrinkage, and relative heterogeneity also have to be specified.
 }
 \examples{
-par(mfrow = c(1,2))
 sampleSizeSignificance(zo = p2z(0.005), power = 0.8)
 sampleSizeSignificance(zo = p2z(0.005, alternative = "greater"), power = 0.8)
 sampleSizeSignificance(zo = p2z(0.005), power = 0.8, designPrior = "predictive")
@@ -74,6 +73,7 @@ sampleSizeSignificance(zo = 3, power = 0.8, designPrior = "EB",
                        
 # required relative sample size for 0.8 power as function of original p-value
 zo <- p2z(seq(0.0001, 0.05, 0.0001))
+oldPar <- par(mfrow = c(1,2))
 plot(z2p(zo), sampleSizeSignificance(zo = zo, designPrior = "conditional", power = 0.8),
      type = "l", ylim = c(0.5, 10), log = "y", lwd = 1.5, ylab = "Relative sample size",
      xlab = expression(italic(p)[o]), las = 1)
@@ -91,7 +91,7 @@ zo <- p2z(seq(0.0001, 0.05, 0.0001))
 plot(z2p(zo), sampleSizeSignificance(zo = zo, d = 0.8, level = 0.025),
      type = "l", ylim = c(0.5, 10), log = "y", lwd = 1.5, ylab = "Relative sample size",
     xlab = expression(italic(p)[o]), las = 1)
-
+par(oldPar)
 }
 \references{
 Held, L. (2020). A new standard for the analysis and design of replication studies (with discussion).
