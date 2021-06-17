@@ -1,0 +1,366 @@
+
+R version 4.0.3 (2020-10-10) -- "Bunny-Wunnies Freak Out"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> rm(list=ls())
+> options(width=100)
+> library(ReplicationSuccess)
+> library(testthat)
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following object is masked from ‘package:testthat’:
+
+    matches
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> ## sapply(list.files("../R", pattern='\\.R$', full.names = TRUE), source)
+> 
+> ## - h is not an agrument of powerReplicationSuccess() ???
+> 
+> 
+> powerReplicationSuccess2 <- function(zo,
++                                      c = 1, 
++                                      level = 0.025,
++                                      designPrior = "conditional",
++                                      alternative = "one.sided",
++                                      type = "golden",
++                                      shrinkage = 0, 
++                                      h = 0){
++   resV <- mapply(FUN = function(zo, c, level, designPrior, 
++                                 alternative, type, shrinkage) {  
++     # sanity checks
++     if (is.na(zo))
++       return(NA)
++     # if (!(designPrior %in% c("conditional", "predictive", "EB")))
++     #   stop('designPrior must be either "conditional", "predictive", "EB"')
++     if (!is.numeric(c) || c < 0)
++       stop("c must be numeric and larger than 0")
++     if (!is.numeric(level) || (level <= 0 || level >= 1))
++       stop("level must be numeric and in (0, 1)!")
++     if (!is.numeric(shrinkage) || (shrinkage < 0 || shrinkage > 1)) 
++       stop("shrinkage must be numeric and in [0, 1]")
++     zo <-  abs(zo)
++     # check if original study was not significant, then power is zero
++     p <- z2p(z = zo, alternative = alternative)
++     if (p > levelSceptical(level = level, alternative = alternative, 
++                            type = type)) 
++       power <- 0
++     
++     alphaS <-  levelSceptical(level = level, alternative = alternative, 
++                             type = type)
++     zalphaS <-  p2z(alphaS, alternative = alternative)
++     k <-  zo^2/zalphaS^2
++     dmin <- effectSizeReplicationSuccess(zo, c, level, alternative, type)
++     
++     if(designPrior == "conditional"){
++       # if(alternative == "one.sided"){
++         power <- pnorm(sqrt(c)*zo*(1-shrinkage)-zalphaS*sqrt(1 + c/(k-1)))
++       # } else if (alternative == "two.sided") {
++       #   power <- pnorm(sqrt(c)*zo*((1-shrinkage)-dmin)) + 
++       #     pnorm(sqrt(c)*zo*(-dmin-(1-shrinkage)))
++       # }
++     } else if (designPrior == "predictive") {
++       # if(alternative == "one.sided"){
++         num <- (1-shrinkage)*zo*sqrt(c) - zalphaS*sqrt(1 + c/(k - 1))
++         denom <- sqrt(c*(1 + 2*h) + 1)
++         power <- pnorm(num/denom)
++       # } else if (alternative == "two.sided") {
++       #   power <- pnorm(1/sqrt(1+1/c)*zo*((1-shrinkage)-dmin)) +  
++       #     pnorm(1/sqrt(1+1/c)*zo*(-dmin - (1-shrinkage))) 
++       # }
++     
++     } else if (designPrior == "EB"){
++       shrinkage <- pmin((1 + h)/zo^2, 1)
++       num <- (1-shrinkage)*zo*sqrt(c) - zalphaS*sqrt(1 + c/(k - 1))
++       denom <- sqrt(c*(1 - shrinkage + 2*h - shrinkage*h) + 1)
++       power <- pnorm(num/denom)
++     }
++     return(power)
++   }, zo, c, level, designPrior, alternative, type, shrinkage)
++   
++   return(resV)
++ }
+> 
+> 
+> ## test if sampleSizeSignificance2() yields same results as 
+> vec01 <- c(0.001, 0.2532, 0.99)
+> vec01bound <- c(0, 0.0386, 0.5031, 1)
+> vec55 <- c(-5, -2.6288, 0, 0.0427, 4)
+> alternative <- c("two.sided", "one.sided", "less", "greater")
+> designPrior <- c("conditional", "predictive", "EB")
+> type <- c("golden", "nominal", "liberal", "controlled")
+> pars_grid <- expand.grid(zo=vec55,
++                          c=vec01*3,
++                          level=vec01,
++                          alternative=alternative,
++                          designPrior=designPrior,
++                          type=type,
++                          h=abs(vec55),
++                          shrinkage=vec01bound)
+> 
+> ## test all configurations separately
+> pars_grid <- cbind(pars_grid, new=NA, new_error=NA, legacy=NA, legacy_error=NA)
+> powerReplicationSuccess <- ReplicationSuccess::powerReplicationSuccess
+> for(i in seq_len(nrow(pars_grid))){
++     prs2 <- try(do.call("powerReplicationSuccess2", args = pars_grid[i,1:8]), silent=TRUE)
++     if(inherits(prs2, "try-error")){
++         pars_grid[i,"new_error"] <- attr(prs2, "condition")$message
++         pars_grid[i,"new"] <- NA
++     } else {
++         pars_grid[i,"new_error"] <- NA
++         pars_grid[i,"new"] <- prs2
++     }
++ 
++ 
++     
++     prs <- try(do.call("powerReplicationSuccess", args = pars_grid[i,c(1:6,8)]), silent=TRUE)
++     if(inherits(prs, "try-error")){
++         pars_grid[i,"legacy_error"] <- attr(prs, "condition")$message
++         pars_grid[i,"legacy"] <- NA
++     } else {
++         pars_grid[i,"legacy_error"] <- NA
++         pars_grid[i,"legacy"] <- prs
++     }
++ }
+There were 50 or more warnings (use warnings() to see the first 50)
+> 
+> 
+> 
+> 
+> pars_grid %>% filter(abs(new - legacy) > 0.001 |
++                      (is.finite(new)  & !is.finite(new)) |
++                      (!is.finite(new) & is.finite(new)))     -> problems
+> problems %>% nrow()
+[1] 23627
+> problems %>% head(n=100)
+         zo      c  level alternative designPrior   type h shrinkage         new new_error
+1   -5.0000 0.0030 0.0010   two.sided conditional golden 5         0 0.010322656      <NA>
+2   -2.6288 0.0030 0.0010   two.sided conditional golden 5         0 0.005249515      <NA>
+3    0.0000 0.0030 0.0010   two.sided conditional golden 5         0 0.004897707      <NA>
+4    0.0427 0.0030 0.0010   two.sided conditional golden 5         0 0.004931024      <NA>
+5    4.0000 0.0030 0.0010   two.sided conditional golden 5         0 0.008880792      <NA>
+6    0.0000 0.7596 0.0010   two.sided conditional golden 5         0 0.102336640      <NA>
+7    0.0427 0.7596 0.0010   two.sided conditional golden 5         0 0.109238545      <NA>
+8   -5.0000 0.0030 0.2532   two.sided conditional golden 5         0 0.266166335      <NA>
+9   -2.6288 0.0030 0.2532   two.sided conditional golden 5         0 0.225287048      <NA>
+10   0.0000 0.0030 0.2532   two.sided conditional golden 5         0 0.184881588      <NA>
+11   0.0427 0.0030 0.2532   two.sided conditional golden 5         0 0.185507099      <NA>
+12   4.0000 0.0030 0.2532   two.sided conditional golden 5         0 0.248490368      <NA>
+13   0.0000 0.7596 0.2532   two.sided conditional golden 5         0 0.329814670      <NA>
+14   0.0427 0.7596 0.2532   two.sided conditional golden 5         0 0.343977780      <NA>
+15  -5.0000 0.0030 0.9900   two.sided conditional golden 5         0 0.604113152      <NA>
+16  -2.6288 0.0030 0.9900   two.sided conditional golden 5         0 0.553350942      <NA>
+17   0.0000 0.0030 0.9900   two.sided conditional golden 5         0 0.496075104      <NA>
+18   0.0427 0.0030 0.9900   two.sided conditional golden 5         0 0.497001873      <NA>
+19   4.0000 0.0030 0.9900   two.sided conditional golden 5         0 0.582867924      <NA>
+20  -2.6288 0.7596 0.9900   two.sided conditional golden 5         0 0.988734008      <NA>
+21   0.0000 0.7596 0.9900   two.sided conditional golden 5         0 0.498072683      <NA>
+22   0.0427 0.7596 0.9900   two.sided conditional golden 5         0 0.510831438      <NA>
+23   0.0427 2.9700 0.9900   two.sided conditional golden 5         0 0.525094240      <NA>
+24  -5.0000 0.0030 0.0010   one.sided conditional golden 5         0 0.015516278      <NA>
+25  -2.6288 0.0030 0.0010   one.sided conditional golden 5         0 0.010537588      <NA>
+26   0.0000 0.0030 0.0010   one.sided conditional golden 5         0 0.007638530      <NA>
+27   0.0427 0.0030 0.0010   one.sided conditional golden 5         0 0.007687915      <NA>
+28   4.0000 0.0030 0.0010   one.sided conditional golden 5         0 0.013468475      <NA>
+29   0.0000 0.7596 0.0010   one.sided conditional golden 5         0 0.116798383      <NA>
+30   0.0427 0.7596 0.0010   one.sided conditional golden 5         0 0.124383816      <NA>
+31  -5.0000 0.0030 0.2532   one.sided conditional golden 5         0 0.401870487      <NA>
+32  -2.6288 0.0030 0.2532   one.sided conditional golden 5         0 0.352563740      <NA>
+33   0.0000 0.0030 0.2532   one.sided conditional golden 5         0 0.300982431      <NA>
+34   0.0427 0.0030 0.2532   one.sided conditional golden 5         0 0.301799144      <NA>
+35   4.0000 0.0030 0.2532   one.sided conditional golden 5         0 0.380836060      <NA>
+36  -2.6288 0.7596 0.2532   one.sided conditional golden 5         0 0.960853508      <NA>
+37   0.0000 0.7596 0.2532   one.sided conditional golden 5         0 0.398930316      <NA>
+38   0.0427 0.7596 0.2532   one.sided conditional golden 5         0 0.414429556      <NA>
+39  -5.0000 0.0030 0.9900   one.sided conditional golden 5         0 0.982273519      <NA>
+40  -2.6288 0.0030 0.9900   one.sided conditional golden 5         0 0.975889649      <NA>
+41   0.0000 0.0030 0.9900   one.sided conditional golden 5         0 0.966083622      <NA>
+42   0.0427 0.0030 0.9900   one.sided conditional golden 5         0 0.966259242      <NA>
+43   4.0000 0.0030 0.9900   one.sided conditional golden 5         0 0.979753072      <NA>
+44   0.0000 0.7596 0.9900   one.sided conditional golden 5         0 0.815060986      <NA>
+45   0.0427 0.7596 0.9900   one.sided conditional golden 5         0 0.824627200      <NA>
+46  -5.0000 0.0030 0.0010        less conditional golden 5         0 0.996578376      <NA>
+47  -2.6288 0.0030 0.0010        less conditional golden 5         0 0.995265024      <NA>
+48   0.0000 0.0030 0.0010        less conditional golden 5         0 0.992361470      <NA>
+49   0.0427 0.0030 0.0010        less conditional golden 5         0 0.992410528      <NA>
+50   4.0000 0.0030 0.0010        less conditional golden 5         0 0.995982652      <NA>
+51  -5.0000 0.7596 0.0010        less conditional golden 5         0 1.000000000      <NA>
+52  -2.6288 0.7596 0.0010        less conditional golden 5         0 1.000000000      <NA>
+53   0.0000 0.7596 0.0010        less conditional golden 5         0 0.883201617      <NA>
+54   0.0427 0.7596 0.0010        less conditional golden 5         0 0.890234891      <NA>
+55   4.0000 0.7596 0.0010        less conditional golden 5         0 1.000000000      <NA>
+56  -5.0000 2.9700 0.0010        less conditional golden 5         0 1.000000000      <NA>
+57  -2.6288 2.9700 0.0010        less conditional golden 5         0 1.000000000      <NA>
+58   4.0000 2.9700 0.0010        less conditional golden 5         0 1.000000000      <NA>
+59  -5.0000 0.0030 0.2532        less conditional golden 5         0 0.787051133      <NA>
+60  -2.6288 0.0030 0.2532        less conditional golden 5         0 0.747415455      <NA>
+61   0.0000 0.0030 0.2532        less conditional golden 5         0 0.699017569      <NA>
+62   0.0427 0.0030 0.2532        less conditional golden 5         0 0.699829613      <NA>
+63   4.0000 0.0030 0.2532        less conditional golden 5         0 0.770793856      <NA>
+64  -5.0000 0.7596 0.2532        less conditional golden 5         0 0.999999476      <NA>
+65  -2.6288 0.7596 0.2532        less conditional golden 5         0 0.997610655      <NA>
+66   0.0000 0.7596 0.2532        less conditional golden 5         0 0.601069684      <NA>
+67   0.0427 0.7596 0.2532        less conditional golden 5         0 0.614319621      <NA>
+68   4.0000 0.7596 0.2532        less conditional golden 5         0 0.999969896      <NA>
+69  -5.0000 2.9700 0.2532        less conditional golden 5         0 1.000000000      <NA>
+70  -2.6288 2.9700 0.2532        less conditional golden 5         0 0.999999815      <NA>
+71   4.0000 2.9700 0.2532        less conditional golden 5         0 1.000000000      <NA>
+72  -5.0000 0.0030 0.9900        less conditional golden 5         0 0.059922565      <NA>
+73  -2.6288 0.0030 0.9900        less conditional golden 5         0 0.045758654      <NA>
+74   4.0000 0.0030 0.9900        less conditional golden 5         0 0.053644650      <NA>
+75  -5.0000 0.7596 0.9900        less conditional golden 5         0 0.992336968      <NA>
+76  -2.6288 0.7596 0.9900        less conditional golden 5         0 0.459314553      <NA>
+77   4.0000 0.7596 0.9900        less conditional golden 5         0 0.930849841      <NA>
+78  -5.0000 2.9700 0.9900        less conditional golden 5         0 1.000000000      <NA>
+79  -2.6288 2.9700 0.9900        less conditional golden 5         0 0.834459301      <NA>
+80   4.0000 2.9700 0.9900        less conditional golden 5         0 0.999995708      <NA>
+81   0.0000 0.0030 0.0010     greater conditional golden 5         0 0.007638530      <NA>
+82   0.0427 0.0030 0.0010     greater conditional golden 5         0 0.007687915      <NA>
+83   0.0000 0.7596 0.0010     greater conditional golden 5         0 0.116798383      <NA>
+84   0.0427 0.7596 0.0010     greater conditional golden 5         0 0.124383816      <NA>
+85   0.0000 0.0030 0.2532     greater conditional golden 5         0 0.300982431      <NA>
+86   0.0427 0.0030 0.2532     greater conditional golden 5         0 0.301799144      <NA>
+87   0.0000 0.7596 0.2532     greater conditional golden 5         0 0.398930316      <NA>
+88   0.0427 0.7596 0.2532     greater conditional golden 5         0 0.414429556      <NA>
+89  -5.0000 0.0030 0.0010   two.sided  predictive golden 5         0 0.011388907      <NA>
+90  -2.6288 0.0030 0.0010   two.sided  predictive golden 5         0 0.005905529      <NA>
+91   0.0000 0.0030 0.0010   two.sided  predictive golden 5         0 0.005520846      <NA>
+92   0.0427 0.0030 0.0010   two.sided  predictive golden 5         0 0.005557309      <NA>
+93   4.0000 0.0030 0.0010   two.sided  predictive golden 5         0 0.009840373      <NA>
+94  -5.0000 0.7596 0.0010   two.sided  predictive golden 5         0 0.680375755      <NA>
+95   0.0000 0.7596 0.0010   two.sided  predictive golden 5         0 0.339191610      <NA>
+96   0.0427 0.7596 0.0010   two.sided  predictive golden 5         0 0.343722516      <NA>
+97   4.0000 0.7596 0.0010   two.sided  predictive golden 5         0 0.535126398      <NA>
+98  -5.0000 2.9700 0.0010   two.sided  predictive golden 5         0 0.799877904      <NA>
+99   4.0000 2.9700 0.0010   two.sided  predictive golden 5         0 0.654916927      <NA>
+100 -5.0000 0.0030 0.2532   two.sided  predictive golden 5         0 0.269477529      <NA>
+         legacy legacy_error
+1   0.012431561         <NA>
+2   0.007431607         <NA>
+3   0.000000000         <NA>
+4   0.000000000         <NA>
+5   0.011371900         <NA>
+6   0.000000000         <NA>
+7   0.000000000         <NA>
+8   0.386724497         <NA>
+9   0.373890240         <NA>
+10  0.000000000         <NA>
+11  0.000000000         <NA>
+12  0.380392081         <NA>
+13  0.000000000         <NA>
+14  0.000000000         <NA>
+15  0.992427686         <NA>
+16  0.992219424         <NA>
+17  0.000000000         <NA>
+18  0.992136553         <NA>
+19  0.992324776         <NA>
+20  0.999414060         <NA>
+21  0.000000000         <NA>
+22  0.991984997         <NA>
+23  0.991528063         <NA>
+24  0.018964787         <NA>
+25  0.015279742         <NA>
+26  0.000000000         <NA>
+27  0.000000000         <NA>
+28  0.017507922         <NA>
+29  0.000000000         <NA>
+30  0.000000000         <NA>
+31  0.614819114         <NA>
+32  0.605148163         <NA>
+33  0.000000000         <NA>
+34  0.000000000         <NA>
+35  0.610042032         <NA>
+36  0.963243127         <NA>
+37  0.000000000         <NA>
+38  0.000000000         <NA>
+39  1.000000000         <NA>
+40  1.000000000         <NA>
+41  1.000000000         <NA>
+42  1.000000000         <NA>
+43  1.000000000         <NA>
+44  1.000000000         <NA>
+45  1.000000000         <NA>
+46  0.000000000         <NA>
+47  0.000000000         <NA>
+48  0.000000000         <NA>
+49  0.000000000         <NA>
+50  0.000000000         <NA>
+51  0.000000000         <NA>
+52  0.000000000         <NA>
+53  0.000000000         <NA>
+54  0.000000000         <NA>
+55  0.000000000         <NA>
+56  0.000000000         <NA>
+57  0.000000000         <NA>
+58  0.000000000         <NA>
+59  0.000000000         <NA>
+60  0.000000000         <NA>
+61  0.000000000         <NA>
+62  0.000000000         <NA>
+63  0.000000000         <NA>
+64  0.000000000         <NA>
+65  0.000000000         <NA>
+66  0.000000000         <NA>
+67  0.000000000         <NA>
+68  0.000000000         <NA>
+69  0.000000000         <NA>
+70  0.000000000         <NA>
+71  0.000000000         <NA>
+72  0.000000000         <NA>
+73  0.000000000         <NA>
+74  0.000000000         <NA>
+75  0.000000000         <NA>
+76  0.000000000         <NA>
+77  0.000000000         <NA>
+78  0.000000000         <NA>
+79  0.000000000         <NA>
+80  0.000000000         <NA>
+81  0.000000000         <NA>
+82  0.000000000         <NA>
+83  0.000000000         <NA>
+84  0.000000000         <NA>
+85  0.000000000         <NA>
+86  0.000000000         <NA>
+87  0.000000000         <NA>
+88  0.000000000         <NA>
+89  0.012555548         <NA>
+90  0.007521462         <NA>
+91  0.000000000         <NA>
+92  0.000000000         <NA>
+93  0.011490243         <NA>
+94  0.860111686         <NA>
+95  0.000000000         <NA>
+96  0.000000000         <NA>
+97  0.580547844         <NA>
+98  0.992853406         <NA>
+99  0.877171158         <NA>
+100 0.387383661         <NA>
+> 
+> 
+> proc.time()
+   user  system elapsed 
+120.097   0.496 120.321 
