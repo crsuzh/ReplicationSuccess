@@ -1,0 +1,281 @@
+
+R version 4.0.3 (2020-10-10) -- "Bunny-Wunnies Freak Out"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> rm(list=ls())
+> options(width=100)
+> library(ReplicationSuccess)
+> library(testthat)
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following object is masked from ‘package:testthat’:
+
+    matches
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> ## sapply(list.files("../R", pattern='\\.R$', full.names = TRUE), source)
+> 
+> ## h : new argument???
+> 
+> sampleSizeReplicationSuccess2 = function(zo, power, level = 0.025, 
++                                          type = "golden", 
++                                          designPrior = "conditional", 
++                                          alternative = "one.sided", 
++                                          shrinkage = 0, 
++                                          h = 0){
++     
++     cV <- mapply(FUN = function(zo, power, level, type, designPrior, 
++                                 alternative, shrinkage) {
++         alphaS <-  levelSceptical(level = level, alternative = alternative, 
++                                   type = type)
++         zalphaS <-  p2z(alphaS, alternative = alternative)
++         k <-  zo^2/zalphaS^2
++         u <-  qnorm(power)
++                                         # sanity check
++         phi <-  (sqrt(5) + 1)/2
++         thresh.zo <-  zalphaS*sqrt(phi)
++         s <- shrinkage
++         if(zo < thresh.zo) {
++             warning(paste("zo must be larger than", round(thresh.zo, 3)))
++             x <- NA
++         } 
++         if(designPrior == "conditional"){
++             if (s > 1- 1/sqrt(k^2 - k)) {
++                 c <- NA
++             } else {
++                 num <- (k-1)*k*u*(1-s) + sqrt((k-1)*((k-1)*(u^2*k^2*(1-s)^2) - ((1-s)^2*(k^2-k)-1)*(u^2*k-zo^2)))
++                 denom <- zo*((1-s)^2*(k^2-k)-1)
++                 x <-  num/denom
++                 c <-  x^2
++             }
++         }
++         
++         if(designPrior == "predictive"){
++             part1 <- (1-s)/sqrt(k)
++             part2 <- sqrt((1-s)^2/k - (1/k - u^2/zo^2)*((1-s)^2 - (u^2/zo^2)*
++                                                         (1 + 2*h - 1/(k-1))))
++             part3 <-  1/k - u^2/zo^2
++             x1 <-  (part1 + part2)/part3
++             x2 <- (part1 - part2)/part3
++             if (power < 0.5) {
++                 
++                 c <- ifelse(x1^2 > 1/(k-1), 1/(x1^2 - 1/(k-1)), NaN)
++             } else {
++                 c <- ifelse(x2^2 > 1/(k-1), 1/(x2^2 - 1/(k-1)), NaN)
++             }
++                                         # if (c < 0){
++                                         #   c <- NA
++                                         # }
++         }
++         
++         if(designPrior == "EB"){
++             s <- pmin((1 + h)/zo^2, 1)
++             H <- 1 - s + 2*h - s*h
++             part1 <- (1-s)/sqrt(k)
++             part2 <- sqrt((1-s)^2/k - (1/k - u^2/zo^2)*((1-s)^2 - (u^2/zo^2)*
++                                                         (H - 1/(k-1))))
++             part3 <-  1/k - u^2/zo^2
++             x1 <-  (part1 + part2)/part3
++             x2 <- (part1 - part2)/part3
++             if (power < 0.5) {
++                 c <- 1/(x1^2 - 1/(k-1))
++             } else {
++                 c <- 1/(x2^2 - 1/(k-1))
++             }
++                                         # if (c < 0){
++                                         #   c <- NA
++                                         # }
++         }
++         
++         
++         return(c)
++     }, zo, power, level, type, designPrior, 
++     alternative, shrinkage)
++     return(cV)
++ }
+> 
+> 
+> 
+> ## test if sampleSizeSignificance2() yields same results as 
+> vec01 <- c(0.001, 0.2532, 0.99)
+> vec01bound <- c(0, 0.0386, 0.5031, 1)
+> vec55 <- c(-5, -2.6288, 0, 0.0427, 4)
+> alternative <- c("two.sided", "one.sided", "less", "greater")
+> designPrior <- c("conditional", "predictive", "EB")
+> type <- c("golden", "nominal", "liberal", "controlled")
+> pars_grid <- expand.grid(zo=vec55,
++                          power=vec01,
++                          level=vec01,
++                          type=type,
++                          designPrior=designPrior,
++                          alternative=alternative,
++                          shrinkage=vec01bound,
++                          h=abs(vec55),
++                          new=NA, new_error=NA, legacy=NA, legacy_error=NA)
+> 
+> ## test all configurations separately
+> sampleSizeReplicationSuccess <- ReplicationSuccess::sampleSizeReplicationSuccess
+> for(i in seq_len(nrow(pars_grid))){
++     prs2 <- try(do.call("sampleSizeReplicationSuccess2", args = pars_grid[i,1:8]),
++                 silent=TRUE)
++     if(inherits(prs2, "try-error")){
++         pars_grid[i,"new_error"] <- attr(prs2, "condition")$message
++         pars_grid[i,"new"] <- NA
++     } else {
++         pars_grid[i,"new_error"] <- NA
++         pars_grid[i,"new"] <- prs2
++     }
++ 
++     prs <- try(do.call("sampleSizeReplicationSuccess", args = pars_grid[i,1:7]),
++                silent=TRUE)
++     if(inherits(prs, "try-error")){
++         pars_grid[i,"legacy_error"] <- attr(prs, "condition")$message
++         pars_grid[i,"legacy"] <- NA
++     } else {
++         pars_grid[i,"legacy_error"] <- NA
++         pars_grid[i,"legacy"] <- prs
++     }
++ }
+There were 50 or more warnings (use warnings() to see the first 50)
+> 
+> pars_grid %>% filter(abs(new - legacy) > 0.001 |
++                      (is.finite(new)  & !is.finite(new)) |
++                      (!is.finite(new) & is.finite(new)))     -> problems
+> problems %>% nrow()
+[1] 4019
+> pars_grid %>% nrow()
+[1] 43200
+> 
+> pars_grid %>% select(-new_error, -legacy_error) %>% head(n=100)
+         zo  power  level    type designPrior alternative shrinkage h          new      legacy
+1   -5.0000 0.0010 0.0010  golden conditional   two.sided         0 5 9.947340e-03          NA
+2   -2.6288 0.0010 0.0010  golden conditional   two.sided         0 5           NA  0.02872576
+3    0.0000 0.0010 0.0010  golden conditional   two.sided         0 5           NA         Inf
+4    0.0427 0.0010 0.0010  golden conditional   two.sided         0 5           NA         Inf
+5    4.0000 0.0010 0.0010  golden conditional   two.sided         0 5 1.497519e-02          NA
+6   -5.0000 0.2532 0.0010  golden conditional   two.sided         0 5 1.594763e-01  0.15949785
+7   -2.6288 0.2532 0.0010  golden conditional   two.sided         0 5           NA         Inf
+8    0.0000 0.2532 0.0010  golden conditional   two.sided         0 5           NA         Inf
+9    0.0427 0.2532 0.0010  golden conditional   two.sided         0 5           NA         Inf
+10   4.0000 0.2532 0.0010  golden conditional   two.sided         0 5 2.988824e-01  0.29888293
+11  -5.0000 0.9900 0.0010  golden conditional   two.sided         0 5 1.174650e+00  1.17464468
+12  -2.6288 0.9900 0.0010  golden conditional   two.sided         0 5           NA         Inf
+13   0.0000 0.9900 0.0010  golden conditional   two.sided         0 5           NA         Inf
+14   0.0427 0.9900 0.0010  golden conditional   two.sided         0 5           NA         Inf
+15   4.0000 0.9900 0.0010  golden conditional   two.sided         0 5 2.990925e+00  2.99092641
+16  -5.0000 0.0010 0.2532  golden conditional   two.sided         0 5 1.916864e-01          NA
+17  -2.6288 0.0010 0.2532  golden conditional   two.sided         0 5 6.707611e-01          NA
+18   0.0000 0.0010 0.2532  golden conditional   two.sided         0 5           NA         Inf
+19   0.0427 0.0010 0.2532  golden conditional   two.sided         0 5           NA         Inf
+20   4.0000 0.0010 0.2532  golden conditional   two.sided         0 5 2.983558e-01          NA
+21  -5.0000 0.2532 0.2532  golden conditional   two.sided         0 5 2.187331e-03          NA
+22  -2.6288 0.2532 0.2532  golden conditional   two.sided         0 5 7.942687e-03          NA
+23   0.0000 0.2532 0.2532  golden conditional   two.sided         0 5           NA         Inf
+24   0.0427 0.2532 0.2532  golden conditional   two.sided         0 5           NA         Inf
+25   4.0000 0.2532 0.2532  golden conditional   two.sided         0 5 3.419132e-03          NA
+26  -5.0000 0.9900 0.2532  golden conditional   two.sided         0 5 4.175347e-01  0.41735320
+27  -2.6288 0.9900 0.2532  golden conditional   two.sided         0 5 1.589724e+00  1.58938422
+28   0.0000 0.9900 0.2532  golden conditional   two.sided         0 5           NA         Inf
+29   0.0427 0.9900 0.2532  golden conditional   two.sided         0 5           NA         Inf
+30   4.0000 0.9900 0.2532  golden conditional   two.sided         0 5 6.561528e-01  0.65591613
+31  -5.0000 0.0010 0.9900  golden conditional   two.sided         0 5 3.795494e-01          NA
+32  -2.6288 0.0010 0.9900  golden conditional   two.sided         0 5 1.373072e+00          NA
+33   0.0000 0.0010 0.9900  golden conditional   two.sided         0 5           NA         Inf
+34   0.0427 0.0010 0.9900  golden conditional   two.sided         0 5 4.707209e+03          NA
+35   4.0000 0.0010 0.9900  golden conditional   two.sided         0 5 5.930460e-01          NA
+36  -5.0000 0.2532 0.9900  golden conditional   two.sided         0 5 1.714007e-02          NA
+37  -2.6288 0.2532 0.9900  golden conditional   two.sided         0 5 6.200654e-02          NA
+38   0.0000 0.2532 0.9900  golden conditional   two.sided         0 5           NA         Inf
+39   0.0427 0.2532 0.9900  golden conditional   two.sided         0 5 2.167632e+02          NA
+40   4.0000 0.2532 0.9900  golden conditional   two.sided         0 5 2.678136e-02          NA
+41  -5.0000 0.9900 0.9900  golden conditional   two.sided         0 5 2.183134e-01          NA
+42  -2.6288 0.9900 0.9900  golden conditional   two.sided         0 5 7.897786e-01          NA
+43   0.0000 0.9900 0.9900  golden conditional   two.sided         0 5           NA         Inf
+44   0.0427 0.9900 0.9900  golden conditional   two.sided         0 5 3.322852e+03 11.60392665
+45   4.0000 0.9900 0.9900  golden conditional   two.sided         0 5 3.411147e-01          NA
+46  -5.0000 0.0010 0.0010 nominal conditional   two.sided         0 5 1.637862e-03          NA
+47  -2.6288 0.0010 0.0010 nominal conditional   two.sided         0 5           NA         Inf
+48   0.0000 0.0010 0.0010 nominal conditional   two.sided         0 5           NA         Inf
+49   0.0427 0.0010 0.0010 nominal conditional   two.sided         0 5           NA         Inf
+50   4.0000 0.0010 0.0010 nominal conditional   two.sided         0 5           NA 13.36961263
+51  -5.0000 0.2532 0.0010 nominal conditional   two.sided         0 5 3.769952e-01  0.37697036
+52  -2.6288 0.2532 0.0010 nominal conditional   two.sided         0 5           NA         Inf
+53   0.0000 0.2532 0.0010 nominal conditional   two.sided         0 5           NA         Inf
+54   0.0427 0.2532 0.0010 nominal conditional   two.sided         0 5           NA         Inf
+55   4.0000 0.2532 0.0010 nominal conditional   two.sided         0 5           NA         Inf
+56  -5.0000 0.9900 0.0010 nominal conditional   two.sided         0 5 2.540293e+00  2.54029310
+57  -2.6288 0.9900 0.0010 nominal conditional   two.sided         0 5           NA         Inf
+58   0.0000 0.9900 0.0010 nominal conditional   two.sided         0 5           NA         Inf
+59   0.0427 0.9900 0.0010 nominal conditional   two.sided         0 5           NA         Inf
+60   4.0000 0.9900 0.0010 nominal conditional   two.sided         0 5           NA         Inf
+61  -5.0000 0.0010 0.2532 nominal conditional   two.sided         0 5 1.509910e-01          NA
+62  -2.6288 0.0010 0.2532 nominal conditional   two.sided         0 5 5.121989e-01          NA
+63   0.0000 0.0010 0.2532 nominal conditional   two.sided         0 5           NA         Inf
+64   0.0427 0.0010 0.2532 nominal conditional   two.sided         0 5           NA         Inf
+65   4.0000 0.0010 0.2532 nominal conditional   two.sided         0 5 2.342062e-01          NA
+66  -5.0000 0.2532 0.2532 nominal conditional   two.sided         0 5 9.156418e-03          NA
+67  -2.6288 0.2532 0.2532 nominal conditional   two.sided         0 5 3.370710e-02          NA
+68   0.0000 0.2532 0.2532 nominal conditional   two.sided         0 5           NA         Inf
+69   0.0427 0.2532 0.2532 nominal conditional   two.sided         0 5           NA         Inf
+70   4.0000 0.2532 0.2532 nominal conditional   two.sided         0 5 1.433318e-02          NA
+71  -5.0000 0.9900 0.2532 nominal conditional   two.sided         0 5 4.855702e-01  0.48555178
+72  -2.6288 0.9900 0.2532 nominal conditional   two.sided         0 5 1.990313e+00  1.99030427
+73   0.0000 0.9900 0.2532 nominal conditional   two.sided         0 5           NA         Inf
+74   0.0427 0.9900 0.2532 nominal conditional   two.sided         0 5           NA         Inf
+75   4.0000 0.9900 0.2532 nominal conditional   two.sided         0 5 7.688396e-01  0.76881618
+76  -5.0000 0.0010 0.9900 nominal conditional   two.sided         0 5 3.788892e-01          NA
+77  -2.6288 0.0010 0.9900 nominal conditional   two.sided         0 5 1.370683e+00          NA
+78   0.0000 0.0010 0.9900 nominal conditional   two.sided         0 5           NA         Inf
+79   0.0427 0.0010 0.9900 nominal conditional   two.sided         0 5 4.406427e+03          NA
+80   4.0000 0.0010 0.9900 nominal conditional   two.sided         0 5 5.920144e-01          NA
+81  -5.0000 0.2532 0.9900 nominal conditional   two.sided         0 5 1.700000e-02          NA
+82  -2.6288 0.2532 0.9900 nominal conditional   two.sided         0 5 6.149981e-02          NA
+83   0.0000 0.2532 0.9900 nominal conditional   two.sided         0 5           NA         Inf
+84   0.0427 0.2532 0.9900 nominal conditional   two.sided         0 5 2.028939e+02          NA
+85   4.0000 0.2532 0.9900 nominal conditional   two.sided         0 5 2.656250e-02          NA
+86  -5.0000 0.9900 0.9900 nominal conditional   two.sided         0 5 2.188146e-01          NA
+87  -2.6288 0.9900 0.9900 nominal conditional   two.sided         0 5 7.915919e-01          NA
+88   0.0000 0.9900 0.9900 nominal conditional   two.sided         0 5           NA         Inf
+89   0.0427 0.9900 0.9900 nominal conditional   two.sided         0 5 3.586397e+03  0.00000000
+90   4.0000 0.9900 0.9900 nominal conditional   two.sided         0 5 3.418979e-01  0.00000000
+91  -5.0000 0.0010 0.0010 liberal conditional   two.sided         0 5 2.286967e-02          NA
+92  -2.6288 0.0010 0.0010 liberal conditional   two.sided         0 5           NA  2.24972617
+93   0.0000 0.0010 0.0010 liberal conditional   two.sided         0 5           NA         Inf
+94   0.0427 0.0010 0.0010 liberal conditional   two.sided         0 5           NA         Inf
+95   4.0000 0.0010 0.0010 liberal conditional   two.sided         0 5 3.450665e-02          NA
+96  -5.0000 0.2532 0.0010 liberal conditional   two.sided         0 5 1.154836e-01  0.11547110
+97  -2.6288 0.2532 0.0010 liberal conditional   two.sided         0 5           NA         Inf
+98   0.0000 0.2532 0.0010 liberal conditional   two.sided         0 5           NA         Inf
+99   0.0427 0.2532 0.0010 liberal conditional   two.sided         0 5           NA         Inf
+100  4.0000 0.2532 0.0010 liberal conditional   two.sided         0 5 1.973317e-01  0.19730903
+> 
+> 
+> 
+> 
+> proc.time()
+     user    system   elapsed 
+   92.691     0.236 54216.341 
