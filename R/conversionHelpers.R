@@ -7,7 +7,7 @@
 #' odds ratio, relative risk or hazard ratio. If \code{TRUE}, the standard error
 #' of the log ratio is computed. Defaults to \code{FALSE}.
 #' @return A numeric vector of standard errors. 
-#' @seealso \code{\link{ci2p}}, \code{\link{ci2z}}, \code{\link{ci2estimate}}, \code{\link{p2z}}, \code{\link{z2p}}
+#' @seealso \code{\link{ci2estimate}}, \code{\link{ci2z}}, \code{\link{ci2p}}, \code{\link{z2p}}, \code{\link{p2z}}
 #' @examples
 #' ci2se(lower = 1, upper = 3)
 #' ci2se(lower = 1, upper = 3, ratio = TRUE)
@@ -43,7 +43,7 @@ ci2se <- function(lower,
 #' @param antilog Indicates whether the estimate is reported on the ratio scale.
 #' Only applies if \code{ratio = TRUE}. Defaults to \code{FALSE}.
 #' @return A numeric vector of parameter estimates.
-#' @seealso \code{\link{ci2p}}, \code{\link{ci2z}}, \code{\link{ci2se}}, \code{\link{p2z}}, \code{\link{z2p}}
+#' @seealso \code{\link{ci2se}}, \code{\link{ci2z}}, \code{\link{ci2p}}, \code{\link{z2p}}, \code{\link{p2z}}
 #' @examples
 #' ci2estimate(lower = 1, upper = 3)
 #' ci2estimate(lower = 1, upper = 3, ratio = TRUE)
@@ -78,7 +78,7 @@ ci2estimate <- function(lower,
 #' odds ratio, relative risk or hazard ratio. If \code{TRUE}, the
 #' z-value of the log ratio is computed. Defaults to \code{FALSE}.
 #' @return A numeric vector of z-values.
-#' @seealso \code{\link{ci2p}}, \code{\link{ci2estimate}}, \code{\link{ci2se}}, \code{\link{p2z}}, \code{\link{z2p}}
+#' @seealso \code{\link{ci2se}}, \code{\link{ci2estimate}}, \code{\link{ci2p}}, \code{\link{z2p}}, \code{\link{p2z}}
 #' @examples
 #' ci2z(lower = 1, upper = 3)
 #' ci2z(lower = 1, upper = 3, ratio = TRUE)
@@ -108,7 +108,7 @@ ci2z <- function(lower,
 #' odds ratio, relative risk or hazard ratio. Defaults to \code{FALSE}.
 #' @param alternative Specifies whether the p-values are "two.sided" (default) or "one.sided".
 #' @return A numeric vector of p-values.
-#' @seealso \code{\link{ci2p}}, \code{\link{ci2estimate}}, \code{\link{ci2se}}, \code{\link{p2z}}, \code{\link{z2p}}
+#' @seealso \code{\link{ci2se}}, \code{\link{ci2estimate}}, \code{\link{ci2z}}, \code{\link{z2p}}, \code{\link{p2z}}
 #' @examples
 #' ci2p(lower = 1, upper = 3)
 #' ci2p(lower = 1, upper = 3, alternative = "one.sided")
@@ -128,11 +128,11 @@ ci2p <- function(lower,
 
 #' Transforms z-values into p-values.
 #' 
-#' @param z Numeric a vector of z-values.
-#' @param alternative Specifies direction of the alternative of p-value.
+#' @param z Numeric vector of z-values.
+#' @param alternative Direction of the alternative of the p-value.
 #' Either "one.sided" (default), "two.sided", "less", or "greater".  
 #' @return A Numeric vector of p-values.
-#' @seealso \code{\link{ci2p}}, \code{\link{ci2estimate}}, \code{\link{ci2se}}, \code{\link{p2z}}, \code{\link{z2p}}
+#' @seealso \code{\link{ci2se}}, \code{\link{ci2estimate}}, \code{\link{ci2z}}, \code{\link{ci2p}}, \code{\link{p2z}}
 #' @examples
 #' z2p(z = c(1, 2, 5))
 #' z2p(z = c(1, 2, 5), alternative = "less")
@@ -167,3 +167,47 @@ z2p <- function(z,
     return(pV)
 }
 
+
+#' Transforms p-values to z-values.
+#' 
+#' @param p Numeric vector of p-values.
+#' @param alternative Direction of the alternative of the p-value. 
+#' Either "one.sided" (default), "two.sided", "less", or "greater".
+#' If "one.sided" or "two.sided", the z-value is assumed to be positive.
+#' @return A numeric vector of z-values.
+#' @seealso \code{\link{ci2se}}, \code{\link{ci2estimate}}, \code{\link{ci2z}}, \code{\link{ci2p}}, \code{\link{z2p}}
+#' @examples
+#' p2z(p = c(0.005, 0.01, 0.05))
+#' p2z(p = c(0.005, 0.01, 0.05), alternative = "greater")
+#' p2z(p = c(0.005, 0.01, 0.05), alternative = "less")
+#'
+#' p <- seq(0.001, 0.05, 0.0001)
+#' plot(p, p2z(p), type = "l", ylim = c(0, 3.5), ylab = "z")
+#' lines(p, p2z(p, alternative = "greater"), lty = 2)
+#' legend("bottomleft", c("two-sided", "greater"), lty = c(1, 2), bty = "n")
+#' @export
+p2z <- function(p, 
+                alternative = "two.sided"){
+  
+  # vectorize function in both arguments
+  zVec <- mapply(FUN = function(p, alternative) {
+    
+    # sanity checks
+    if (!is.numeric(p) || (p <= 0 || p > 1))
+      stop("p must be numeric and in (0,1]!")
+    if (!(alternative %in% c("less", "greater", "two.sided", "one.sided")))
+      stop('alternative must be either "less", "greater", "two.sided", or "one.sided"')
+    
+    if (alternative == "two.sided")
+      z <- qnorm(p = p/2, lower.tail = FALSE)
+    if (alternative == "less")
+      z <- qnorm(p = p, lower.tail = TRUE)
+    if (alternative == "greater" || alternative == "one.sided")
+      z <- qnorm(p = p, lower.tail = FALSE)
+    
+    return(z)
+    
+  }, p, alternative)
+  
+  return(zVec)
+}
