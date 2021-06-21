@@ -3,7 +3,7 @@
 \name{pBox}
 \alias{pBox}
 \alias{zBox}
-\title{Computes Box's tail probability}
+\title{Computes Box's tail probability.}
 \usage{
 pBox(zo, zr, c, level = 0.05, alternative = "two.sided")
 
