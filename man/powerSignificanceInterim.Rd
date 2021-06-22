@@ -28,6 +28,10 @@ Default is 1.}
 
 \item{level}{Significance level. Default is 0.025.}
 
+\item{designPrior}{Either "conditional" (default), "informed predictive", or "predictive".
+"informed predictive" refers to an informative normal prior coming from the original study.
+"predictive" refers to a flat prior.}
+
 \item{analysisPrior}{Either "flat" (default) or "original".}
 
 \item{alternative}{Specifies if the replication success level is "greater" (default), "less", or "two.sided".}

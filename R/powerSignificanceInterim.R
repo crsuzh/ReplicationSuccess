@@ -9,7 +9,7 @@
 #' @param f Fraction of the replication study already completed. Default is 0.5.
 #' @param level Significance level. Default is 0.025.
 #' @param designPrior Either "conditional" (default), "informed predictive", or "predictive".
-#' "informed predictive"} refers to an informative normal prior coming from the original study.
+#' "informed predictive" refers to an informative normal prior coming from the original study.
 #' "predictive" refers to a flat prior.
 #' @param analysisPrior Either "flat" (default) or "original".
 #' @param alternative Specifies if the replication success level is "greater" (default), "less", or "two.sided".
