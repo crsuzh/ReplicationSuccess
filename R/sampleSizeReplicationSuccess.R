@@ -9,7 +9,7 @@ sampleSizeReplicationSuccess <- function(zo,
     # target function for uniroot
     target <- function(zo, c, p, level, designPrior, alternative, type = type,
                        shrinkage){
-        zr2 <- zr2.quantile(zo = zo, c = c, p = p, designPrior = designPrior, 
+        zr2 <- zr2quantile(zo = zo, c = c, p = p, designPrior = designPrior, 
                             shrinkage = shrinkage)
         pC <- pSceptical(zo = zo, zr = sqrt(zr2), c = c, 
                          alternative = alternative, type = type)

@@ -1,5 +1,5 @@
 # function that returns z_r^2 quantile for given z_o, c
-zr2.quantile <- function(zo, 
+zr2quantile <- function(zo, 
                          c, 
                          p, 
                          designPrior,
@@ -88,7 +88,7 @@ powerReplicationSuccess <- function(zo,
     
     targetPower <- function(power, zo, c, level, designPrior, alternative, type,
                             shrinkage){
-        zr2 <- zr2.quantile(zo = zo, c = c, p = 1 - power, 
+        zr2 <- zr2quantile(zo = zo, c = c, p = 1 - power, 
                             designPrior = designPrior, shrinkage = shrinkage)
         pC <- pSceptical(zo = zo, zr = sqrt(zr2), c = c,
                          alternative = alternative, type = type)
