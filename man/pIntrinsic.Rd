@@ -36,6 +36,8 @@ pIntrinsic(p = p)
 pIntrinsic(p = p, type = "Matthews")
 pIntrinsic(p = p, alternative = "one.sided")
 pIntrinsic(p = p, alternative = "one.sided", type = "Matthews")
+
+pIntrinsic(z = 2)
 }
 \references{
 Matthews, R. A. J. (2018).  Beyond 'significance': principles and practice of the analysis of credibility.

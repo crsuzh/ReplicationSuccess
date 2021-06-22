@@ -22,6 +22,8 @@
 #' pIntrinsic(p = p, type = "Matthews")
 #' pIntrinsic(p = p, alternative = "one.sided")
 #' pIntrinsic(p = p, alternative = "one.sided", type = "Matthews")
+#'
+#' pIntrinsic(z = 2)
 #' @export
 pIntrinsic <- function(p = z2p(z, alternative = alternative), z = NULL,
                        alternative = "two.sided", type = "Held"){
