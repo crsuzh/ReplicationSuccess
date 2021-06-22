@@ -42,7 +42,7 @@ See \code{\link{levelSceptical}} for details about recalibration types.}
 \description{
 Computes sceptical p-values and z-values based on the z-values of the
 original and the replication study and the corresponding variance ratio.
-If specified, a the p-values are recalibrated.
+If specified, the p-values are recalibrated.
 }
 \examples{
 ## no recalibration (type = "nominal") as in Held (2020)
