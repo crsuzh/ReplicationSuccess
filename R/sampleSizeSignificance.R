@@ -1,6 +1,3 @@
-
-zo=-5; power=0.001; d=NA; level=0.001; alternative="two.sided"; designPrior="predictive"; h=5; shrinkage=0
-
 .sampleSizeSignificance_one <- function(zo,
                                         power = NA,
                                         d = NA,
@@ -67,7 +64,7 @@ zo=-5; power=0.001; d=NA; level=0.001; alternative="two.sided"; designPrior="pre
     }
     return(c)
 }
-
+sampleSizeSignificance2 <- Vectorize(FUN=.sampleSizeSignificance_one)
 
 #' @name sampleSizeSignificance
 #' @rdname sampleSizeSignificance
@@ -150,9 +147,7 @@ zo=-5; power=0.001; d=NA; level=0.001; alternative="two.sided"; designPrior="pre
 #'     xlab = expression(italic(p)[o]), las = 1)
 #' par(oldPar)
 #' @export
-sampleSizeSignificance <- Vectorize(FUN=.sampleSizeSignificance_one)
-
-.sampleSizeSignificance_uniroot <- function(zo,
+sampleSizeSignificance <- function(zo,
                                    power = NA,
                                    d = NA,
                                    level = 0.025,
@@ -272,4 +267,3 @@ sampleSizeSignificance <- Vectorize(FUN=.sampleSizeSignificance_one)
     
     return(cV)
 }
-
