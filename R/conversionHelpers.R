@@ -20,24 +20,24 @@ ci2se <- function(lower,
                   ratio = FALSE){
 
     stopifnot(is.numeric(lower),
-              is.finite(lower),
               length(lower)>0,
-              
-              is.numeric(upper),
-              is.finite(upper),
-              length(upper)>0,
+              is.finite(lower),
 
-              length(upper)==length(lower),
+              is.numeric(upper),
+              length(upper)>0,
+              is.finite(upper),
+
               lower <= upper,
+              length(upper)==length(lower),
 
               is.numeric(conf.level),
-              is.finite(conf.level),
               length(conf.level)==1,
+              is.finite(conf.level),
               0 < conf.level, conf.level < 1,
 
               is.lgocial(ratio),
-              is.finite(ratio),
-              length(ratio)==1)
+              length(ratio)==1,
+              is.finite(ratio))
     
     level <- 1 - conf.level
     q <- qnorm(p = 1 - level/2, lower.tail = TRUE)
