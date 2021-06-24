@@ -146,6 +146,8 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0, alt
 #' print(round(exp(CI1b),2))
 #' print(round(exp(CI2b),2))
 #' @export
+#' @importFrom rootSolve uniroot.all
+#' @import stats
 hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)), alternative = "two.sided", level = 0.95){
     stopifnot(min(w) > 0)
     stopifnot(min(se) > 0)

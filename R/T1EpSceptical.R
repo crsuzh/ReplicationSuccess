@@ -52,6 +52,7 @@
 #' T1EpSceptical(level = levelSceptical(level = 0.025, alternative = "one.sided", 
 #'                                      type = "controlled"), 
 #'               c = 1, alternative = "one.sided",  type = "nominal")
+#' @export
 T1EpSceptical <- function(level, c, alternative = "one.sided", type = "golden") {  
     
     ## vectorize function in all arguments
