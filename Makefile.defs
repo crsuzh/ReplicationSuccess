@@ -1,0 +1,6 @@
+SHELL := /bin/bash
+
+R := R
+RSCRIPT := Rscript
+RBATCH := $(R) CMD BATCH --vanilla
+

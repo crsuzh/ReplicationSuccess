@@ -1,5 +1,5 @@
 # function that returns z_r^2 quantile for given z_o, c
-zr2.quantile <- function(zo, 
+zr2quantile <- function(zo, 
                          c, 
                          p, 
                          designPrior,
@@ -32,6 +32,52 @@ zr2.quantile <- function(zo,
     return(factor*res)
 }
 
+
+#' Computes the power for replication success
+#'
+#' Computes the power for replication success based on the result of the
+#' original study, the corresponding variance ratio, and the design prior.
+#' @param zo Numeric vector of z-values from original studies.
+#' @param c Numeric vector of variance ratios of the original and replication
+#' effect estimates. This is usually the ratio of the sample
+#' size of the replication study to the sample size of the original study.
+#' @param level Numeric vector of replication success levels. The default is 0.025.
+#' @param designPrior Either "conditional" (default), "predictive", or "EB".
+#' If \code{"EB"}, the power is computed under a predictive distribution, where
+#' the contribution of the original study is shrunken towards zero based
+#' on the evidence in the original study (with an empirical Bayes shrinkage estimator).
+#' @param alternative Either "one.sided" (default) or "two.sided".
+#' Specifies if the replication success level is one-sided or two-sided.
+#' If the replication success level is one-sided, then power calculations are based on a
+#' one-sided assessment of replication success in the direction of the
+#' original effect estimates.
+#' @param type Recalibration type can be either "golden" (default), "nominal" (no recalibration), "liberal",
+#' or "controlled". \code{type="golden"} ensures that for an original study
+#' just significant at the specified \code{level}, replication success is only
+#' possible if the replication effect estimate is larger than the original one.
+#' See \code{\link{levelSceptical}} for details about recalibration types.
+#' @param shrinkage Numeric vector with values in [0,1]. Defaults to 0.
+#' Specifies the shrinkage of the original effect estimate towards zero, e.g.,
+#' the effect is shrunken by a factor of 25\% for \code{shrinkage=0.25}.
+#' Is only taken into account if the \code{designPrior} is "conditional" or "predictive".
+#' @return The power for replication success.
+#' @references
+#' Held, L. (2020). A new standard for the analysis and design of replication
+#' studies (with discussion). \emph{Journal of the Royal Statistical Society:
+#' Series A (Statistics in Society)}. 183(2):431 - 448. \url{https://doi.org/10.1111/rssa.12493}
+#'
+#' Held, L., Micheloud, C. & Pawel, S. (2020). The assessment of replication success
+#' based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
+#' @seealso \code{\link{sampleSizeReplicationSuccess}}, \code{\link{pSceptical}}, \code{\link{levelSceptical}}
+#' @examples
+#' ## larger sample size in replication (c > 1)
+#' powerReplicationSuccess(zo = p2z(0.005), c = 2)
+#' powerReplicationSuccess(zo = p2z(0.005), c = 2, designPrior = "predictive")
+#'
+#' ## smaller sample size in replication (c < 1)
+#' powerReplicationSuccess(zo = p2z(0.005), c = 1/2)
+#' powerReplicationSuccess(zo = p2z(0.005), c = 1/2, designPrior = "predictive")
+#' @export
 powerReplicationSuccess <- function(zo,
                                     c = 1, 
                                     level = 0.025,
@@ -42,7 +88,7 @@ powerReplicationSuccess <- function(zo,
     
     targetPower <- function(power, zo, c, level, designPrior, alternative, type,
                             shrinkage){
-        zr2 <- zr2.quantile(zo = zo, c = c, p = 1 - power, 
+        zr2 <- zr2quantile(zo = zo, c = c, p = 1 - power, 
                             designPrior = designPrior, shrinkage = shrinkage)
         pC <- pSceptical(zo = zo, zr = sqrt(zr2), c = c,
                          alternative = alternative, type = type)

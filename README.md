@@ -1,5 +1,7 @@
 # ReplicationSuccess
 
-Version from https://r-forge.r-project.org/R/?group_id=2357
-
-Version: 0.1-4 | Last change: 2021-03-23 09:53:15+01 | Rev.: 169
+## Notes on `conversionHelpers.R`:
+* input tests are incomplete. 
+* in what way should the functions be vectorized?
+* why does the documentation `ci2p()` not mention the alternatives 'less' and 'greater'?
+* it could make sense the describe these functions (`ci2se`, `ci2estimate`, `ci2z`, `ci2p`, `z2p`, `p2z`) in a single help file.

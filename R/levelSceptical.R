@@ -1,4 +1,39 @@
-
+#' Computes the level for the sceptical p-value
+#'
+#' The level for the sceptical p-value is computed based on the specified
+#' alternative and calibration type.
+#' @param level Numeric vector of required significance levels.
+#' @param alternative Either "one.sided" (default), "two.sided", "greater", or "less".
+#' Specifies if the significance level is one-sided or two-sided. If the significance level is one-sided,
+#' then a one-sided level for the sceptical p-value is computed.
+#' @param type The calibration type can be either "golden" (default), "nominal", "liberal", or "controlled".
+#' \code{type="golden"} ensures that for an original study just significant at the specified \code{level},
+#' replication success is only possible if the replication effect estimate is larger than the original one.
+#' If \code{type="controlled"}, the type-I error rate is equal to \code{level}^2 (for \code{alternative="two.sided"}) or
+#' 2 \eqn{\times}{*}\code{level}^2 (for alternative = "one.sided") if the variance ratio is equal to 1.
+#' The type \code{"nominal"} ensures that the type-I error rate is always smaller
+#' than \code{level}^2. Significance of both the original and replication study
+#' at \code{level} is then a necessary but not sufficient requirement for replication success.
+#' If \code{"type"} is \code{"liberal"} then significance of both studies is a
+#' sufficient requirement for replication success if the variance ratio is equal to 1.
+#' @return Levels for the sceptical p-value.
+#' @references Held, L. (2020). A new standard for the analysis and design of replication studies (with discussion).
+#' \emph{Journal of the Royal Statistical Society: Series A (Statistics in Society)}, \bold{183}, 431-448.
+#' \url{https://doi.org/10.1111/rssa.12493}
+#'
+#' Held, L. (2020). The harmonic mean chi-squared test to substantiate scientific findings.
+#' \emph{Journal of the Royal Statistical Society: Series C (Applied Statistics)}, \bold{69}, 697-708.
+#' \url{https://doi.org/10.1111/rssc.12410}
+#'
+#' Held, L., Micheloud, C. & Pawel, S. (2020). The assessment of replication success
+#' based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
+#' @author Leonhard Held
+#' @examples
+#' levelSceptical(level = 0.025, type = "nominal")
+#' levelSceptical(level = 0.025, type = "liberal")
+#' levelSceptical(level = 0.025, type = "controlled")
+#' levelSceptical(level = 0.025, type = "golden")
+#' @export
 levelSceptical <- function(level, 
                            alternative = "one.sided", 
                            type = "golden"){
