@@ -3,7 +3,7 @@
 #' @param alpha Numric vector of intrinsic credibility levels.
 #' @param alternative Either "two.sided" (default) or "one.sided".
 #' Specifies if the threshold is for one-sided or two-sided p-values.
-#' @param Type Either "Held" (default) or "Matthews".
+#' @param type Either "Held" (default) or "Matthews".
 #' Type of intrinsic p-value threshold, see Held (2019) and Matthews (2018) for more information.
 #' @return The threshold for intrinsic credibility. 
 #' @references

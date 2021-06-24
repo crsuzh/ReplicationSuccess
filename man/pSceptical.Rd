@@ -3,7 +3,7 @@
 \name{pSceptical}
 \alias{pSceptical}
 \alias{zSceptical}
-\title{Computes the sceptical p-value and z-value.}
+\title{Computes the sceptical p-value and z-value}
 \usage{
 pSceptical(zo, zr, c, alternative = "one.sided", type = "golden")
 

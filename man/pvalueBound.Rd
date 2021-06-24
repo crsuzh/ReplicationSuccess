@@ -2,7 +2,7 @@
 % Please edit documentation in R/pvalueBound.R
 \name{pvalueBound}
 \alias{pvalueBound}
-\title{Bound for the p-values entering the harmonic mean chi-squared test.}
+\title{Bound for the p-values entering the harmonic mean chi-squared test}
 \usage{
 pvalueBound(alpha, n, type = "necessary")
 }

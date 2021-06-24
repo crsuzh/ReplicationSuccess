@@ -2,7 +2,7 @@
 % Please edit documentation in R/predictionInterval.R
 \name{predictionInterval}
 \alias{predictionInterval}
-\title{Prediction interval for effect estimate of replication study.}
+\title{Prediction interval for effect estimate of replication study}
 \usage{
 predictionInterval(
   thetao,

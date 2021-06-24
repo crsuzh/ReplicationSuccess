@@ -1,9 +1,12 @@
 include Makefile.defs
 
-VERSION := 0.2
-TAR = optimParallel_$(VERSION).tar.gz
+PACKAGE = ReplicationSuccess
+VERSION = 0.2
+TAR = $(PACKAGE)_$(VERSION).tar.gz
 
-.PHONY: test-package update-src lib rm
+
+
+.PHONY: test-package update-src lib rm check-cran check
 
 
 update-src:
@@ -20,3 +23,12 @@ rm:
 
 test-package:
 	$(RSCRIPT) -e "devtools::test('.')"
+
+$(TAR): update-src
+	$(R) CMD build .
+
+check-cran: $(TAR)
+	$(R) CMD check --as-cran $(TAR) 
+
+check: $(TAR)
+	$(R) CMD check $(TAR) 

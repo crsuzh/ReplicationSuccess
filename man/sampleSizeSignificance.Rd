@@ -3,7 +3,7 @@
 \name{sampleSizeSignificance}
 \alias{sampleSizeSignificance}
 \title{Computes the required relative sample size to achieve significance
-based on power or on the minimum relative effect size.}
+based on power or on the minimum relative effect size}
 \usage{
 sampleSizeSignificance(
   zo,
@@ -26,29 +26,26 @@ from the replication study to the effect estimate from the original study).}
 
 \item{level}{Significance level. Default is 0.025.}
 
-\item{alternative}{Either \code{"two.sided"}, \code{"one.sided"}, \code{"less"},
-or \code{"greater"}.  Specifies direction of the alternative.
-Defaults to \code{"one.sided"}, the same direction as the original estimate.}
+\item{alternative}{Either "one.sided" (default), "two.sided", "less",
+or "greater".  Specifies direction of the alternative.
+"one.sided" assumes an effect in the same direction as the original estimate.}
 
-\item{designPrior}{Is only taken into account when \code{"power"} is specified.
-Either \code{"conditional"}, \code{"predictive"}, or \code{"EB"}.  
-Defaults to \code{"conditional"}. If \code{"EB"}, the power is computed under
-a predictive distribution where the contribution of the original study is 
+\item{designPrior}{Is only taken into account when \code{power} is specified.
+Either "conditional" (default), "predictive", or "EB".  
+If "EB", the power is computed under a predictive distribution
+where the contribution of the original study is 
 shrunken towards zero based on the evidence in the original study 
 (with an empirical Bayes shrinkage estimator).}
 
-\item{h}{Is only taken into account when \code{"power"} is specified.
-The relative between-study heterogeneity, i.e. the ratio of the heterogeneity
+\item{h}{Is only taken into account when \code{power} is specified and \code{designPrior} is "predictive" or "EB".
+The relative between-study heterogeneity, i.e., the ratio of the heterogeneity
 variance to the variance of the original effect estimate.
-Default is \code{0} (no heterogeneity).
-Is only taken into account when \code{designPrior = "predictive"} or
-\code{designPrior = "EB"}.}
+Default is 0 (no heterogeneity).}
 
-\item{shrinkage}{Is only taken into account when \code{"power"} is specified.
-A number in [0,1]. Defaults to \code{0}. Specifies how much the original effect
-estimate is shrunken towards zero (e.g. the effect is shrunken by a factor of 25\%
-for \code{shrinkage = 0.25}). Is only taken into account when \code{designPrior = "conditional"}
-or\code{designPrior = "predictive"}.}
+\item{shrinkage}{Is only taken into account when \code{power} is specified.
+A number in [0,1] with 0. Specifies the shrinkage of the original effect
+towards zero (e.g., \code{shrinkage = 0.25} implies a shrinkage by a factor of 25\%).
+Is only taken into account when \code{designPrior} is "conditional" or "predictive".}
 }
 \value{
 The relative sample size to achieve significance in the specified direction.

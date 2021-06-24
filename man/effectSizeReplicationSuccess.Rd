@@ -2,7 +2,7 @@
 % Please edit documentation in R/effectSizeReplicationSuccess.R
 \name{effectSizeReplicationSuccess}
 \alias{effectSizeReplicationSuccess}
-\title{Computes the minimum relative effect size to achieve replication success.}
+\title{Computes the minimum relative effect size to achieve replication success}
 \usage{
 effectSizeReplicationSuccess(
   zo,

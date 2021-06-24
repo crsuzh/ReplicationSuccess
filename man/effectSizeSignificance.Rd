@@ -2,7 +2,7 @@
 % Please edit documentation in R/effectSizeSignificance.R
 \name{effectSizeSignificance}
 \alias{effectSizeSignificance}
-\title{Computes the minimum relative effect size to achieve significance of the replication study.}
+\title{Computes the minimum relative effect size to achieve significance of the replication study}
 \usage{
 effectSizeSignificance(zo, c = 1, level = 0.025, alternative = "one.sided")
 }

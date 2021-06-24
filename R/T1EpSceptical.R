@@ -32,7 +32,7 @@
 #' Held, L., Micheloud, C. & Pawel, S. (2020). The assessment of replication success
 #' based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
 #' @author Samuel Pawel, Leonhard Held
-#' @seealso \code{\link{pSceptical}}, \code{\link{levelSceptical}}, \code{\link{PPpSceptical}}\
+#' @seealso \code{\link{pSceptical}}, \code{\link{levelSceptical}}, \code{\link{PPpSceptical}}
 #' @examples
 #' ## compare type-I error rate for different levels of replication success
 #' levels <- c("nominal" = levelSceptical(level = 0.025, type = "nominal"),

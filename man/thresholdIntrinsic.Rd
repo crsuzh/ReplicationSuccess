@@ -2,7 +2,7 @@
 % Please edit documentation in R/thresholdIntrinsic.R
 \name{thresholdIntrinsic}
 \alias{thresholdIntrinsic}
-\title{Computes the p-value threshold for intrinsic credibility.}
+\title{Computes the p-value threshold for intrinsic credibility}
 \usage{
 thresholdIntrinsic(alpha, alternative = "two.sided", type = "Held")
 }
@@ -12,14 +12,14 @@ thresholdIntrinsic(alpha, alternative = "two.sided", type = "Held")
 \item{alternative}{Either "two.sided" (default) or "one.sided".
 Specifies if the threshold is for one-sided or two-sided p-values.}
 
-\item{Type}{Either "Held" (default) or "Matthews".
+\item{type}{Either "Held" (default) or "Matthews".
 Type of intrinsic p-value threshold, see Held (2019) and Matthews (2018) for more information.}
 }
 \value{
 The threshold for intrinsic credibility.
 }
 \description{
-Computes the p-value threshold for intrinsic credibility.
+Computes the p-value threshold for intrinsic credibility
 }
 \examples{
 thresholdIntrinsic(alpha = c(0.005, 0.01, 0.05))

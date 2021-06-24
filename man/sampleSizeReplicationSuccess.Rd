@@ -3,7 +3,7 @@
 \name{sampleSizeReplicationSuccess}
 \alias{sampleSizeReplicationSuccess}
 \title{Computes the required relative sample size to achieve replication success based
-on power or on the minimum relative effect size.}
+on power or on the minimum relative effect size}
 \usage{
 sampleSizeReplicationSuccess(
   zo,

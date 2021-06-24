@@ -7,7 +7,7 @@
 \alias{ci2p}
 \alias{z2p}
 \alias{p2z}
-\title{Convert between estimates, z-values, p-values, and confidence intervals.}
+\title{Convert between estimates, z-values, p-values, and confidence intervals}
 \usage{
 ci2se(lower, upper, conf.level = 0.95, ratio = FALSE)
 
@@ -57,7 +57,7 @@ If "one.sided" or "two.sided" is specified, the z-value is assumed to be positiv
 \code{p2z} returns a numeric vector of z-values.
 }
 \description{
-Convert between estimates, z-values, p-values, and confidence intervals.
+Convert between estimates, z-values, p-values, and confidence intervals
 }
 \examples{
 ci2se(lower = 1, upper = 3)

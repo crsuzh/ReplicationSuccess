@@ -2,7 +2,7 @@
 % Please edit documentation in R/powerReplicationSuccess.R
 \name{powerReplicationSuccess}
 \alias{powerReplicationSuccess}
-\title{Computes the power for replication success.}
+\title{Computes the power for replication success}
 \usage{
 powerReplicationSuccess(
   zo,

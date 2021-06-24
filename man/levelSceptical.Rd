@@ -2,7 +2,7 @@
 % Please edit documentation in R/levelSceptical.R
 \name{levelSceptical}
 \alias{levelSceptical}
-\title{Computes the level for the sceptical p-value.}
+\title{Computes the level for the sceptical p-value}
 \usage{
 levelSceptical(level, alternative = "one.sided", type = "golden")
 }

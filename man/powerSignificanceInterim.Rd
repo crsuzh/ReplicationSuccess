@@ -2,7 +2,7 @@
 % Please edit documentation in R/powerSignificanceInterim.R
 \name{powerSignificanceInterim}
 \alias{powerSignificanceInterim}
-\title{Interim power of a replication study.}
+\title{Interim power of a replication study}
 \usage{
 powerSignificanceInterim(
   zo,

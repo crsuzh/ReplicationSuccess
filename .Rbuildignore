@@ -2,3 +2,6 @@
 
 lib/*
 scratch/*
+Makefile
+Makefile.defs
+.tar.gz$

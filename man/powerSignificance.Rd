@@ -2,7 +2,7 @@
 % Please edit documentation in R/powerSignificance.R
 \name{powerSignificance}
 \alias{powerSignificance}
-\title{Computes the power for significance.}
+\title{Computes the power for significance}
 \usage{
 powerSignificance(
   zo,

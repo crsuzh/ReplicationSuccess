@@ -2,7 +2,7 @@
 % Please edit documentation in R/PPpSceptical.R
 \name{PPpSceptical}
 \alias{PPpSceptical}
-\title{Compute project power of the sceptical p-value.}
+\title{Compute project power of the sceptical p-value}
 \usage{
 PPpSceptical(
   level,

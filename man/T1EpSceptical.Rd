@@ -2,7 +2,7 @@
 % Please edit documentation in R/T1EpSceptical.R
 \name{T1EpSceptical}
 \alias{T1EpSceptical}
-\title{Compute type-I error rate of the sceptical p-value.}
+\title{Compute type-I error rate of the sceptical p-value}
 \usage{
 T1EpSceptical(level, c, alternative = "one.sided", type = "golden")
 }
@@ -68,7 +68,7 @@ Held, L., Micheloud, C. & Pawel, S. (2020). The assessment of replication succes
 based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
 }
 \seealso{
-
+\code{\link{pSceptical}}, \code{\link{levelSceptical}}, \code{\link{PPpSceptical}}
 }
 \author{
 Samuel Pawel, Leonhard Held

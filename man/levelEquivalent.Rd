@@ -2,7 +2,7 @@
 % Please edit documentation in R/levelEquivalent.R
 \name{levelEquivalent}
 \alias{levelEquivalent}
-\title{Computes the level for the sceptical p-value.}
+\title{Computes the level for the sceptical p-value}
 \usage{
 levelEquivalent(dinf, level = 0.025, alternative = "one.sided")
 }

@@ -4,7 +4,7 @@
 \alias{hMeanChiSq}
 \alias{hMeanChiSqMu}
 \alias{hMeanChiSqCI}
-\title{p-values and confidence intervals from the harmonic mean chi-squared test.}
+\title{p-values and confidence intervals from the harmonic mean chi-squared test}
 \usage{
 hMeanChiSq(z, w = rep(1, length(z)), alternative = "greater", bound = TRUE)
 
@@ -57,7 +57,7 @@ the return value may be a set of (non-overlapping) confidence intervals.
 In that case, the output is a vector of length 2n, where n is the number of confidence intervals.
 }
 \description{
-p-values and confidence intervals from the harmonic mean chi-squared test.
+p-values and confidence intervals from the harmonic mean chi-squared test
 }
 \examples{
 ## Example from Fisher (1999) as discussed in Held (2020)

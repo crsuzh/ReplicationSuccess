@@ -2,7 +2,7 @@
 % Please edit documentation in R/Qtest.R
 \name{Qtest}
 \alias{Qtest}
-\title{Q-test to assess compatibility between original and replication effect estimate.}
+\title{Q-test to assess compatibility between original and replication effect estimate}
 \usage{
 Qtest(thetao, thetar, seo, ser)
 }
