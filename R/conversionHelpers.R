@@ -18,16 +18,32 @@ ci2se <- function(lower,
                   upper, 
                   conf.level = 0.95, 
                   ratio = FALSE){
-    
-    stopifnot(length(lower) == length(upper))
-    stopifnot(sum(lower >= upper) == 0)
-    stopifnot(conf.level > 0 & conf.level < 1)
+
+    stopifnot(is.numeric(lower),
+              is.finite(lower),
+              length(lower)>0,
+              
+              is.numeric(upper),
+              is.finite(upper),
+              length(upper)>0,
+
+              length(upper)==length(lower),
+              lower <= upper,
+
+              is.numeric(conf.level),
+              is.finite(conf.level),
+              length(conf.level)==1,
+              0 < conf.level, conf.level < 1,
+
+              is.lgocial(ratio),
+              is.finite(ratio),
+              length(ratio)==1)
     
     level <- 1 - conf.level
     q <- qnorm(p = 1 - level/2, lower.tail = TRUE)
     
-    if(ratio == TRUE){
-        stopifnot(sum(lower <= 0) == 0)
+    if(ratio){
+        stopifnot(lower>0, upper>0)
         lower <- log(lower)
         upper <- log(upper)
     }
