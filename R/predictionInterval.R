@@ -1,4 +1,4 @@
-#' Prediction interval for effect estimate of replication study.
+#' Prediction interval for effect estimate of replication study
 #'
 #' Computes a prediction interval for the effect estimate of the replication study.
 #' @param thetao Numeric vector of effect estimates from original studies.

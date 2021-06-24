@@ -1,4 +1,4 @@
-#' Bound for the p-values entering the harmonic mean chi-squared test.
+#' Bound for the p-values entering the harmonic mean chi-squared test
 #'
 #' Necessary or sufficient bounds for significance of the harmonic mean
 #' chi-squared test are computed for n one-sided p-values.

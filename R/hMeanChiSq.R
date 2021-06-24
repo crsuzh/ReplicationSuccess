@@ -1,5 +1,4 @@
-#' p-values and confidence intervals from the harmonic mean chi-squared test.
-#'
+#' p-values and confidence intervals from the harmonic mean chi-squared test
 #'
 #' @rdname hMeanChiSq
 #' @param z Numeric vector of z-values. 

@@ -1,4 +1,4 @@
-#' Computes the level for the sceptical p-value.
+#' Computes the level for the sceptical p-value
 #'
 #' The level for the sceptical p-value is computed based on the specified
 #' alternative and calibration type.

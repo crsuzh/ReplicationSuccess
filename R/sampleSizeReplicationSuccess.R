@@ -1,5 +1,5 @@
 #' Computes the required relative sample size to achieve replication success based
-#' on power or on the minimum relative effect size.
+#' on power or on the minimum relative effect size
 #'
 #' The relative sample size to achieve replication success is computed based on the
 #' z-value of the original study, the replication success level, the type of

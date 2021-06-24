@@ -1,4 +1,4 @@
-#' Computes the minimum relative effect size to achieve significance of the replication study.
+#' Computes the minimum relative effect size to achieve significance of the replication study
 #'
 #' The minimum relative effect size (replication to original) to achieve significance
 #' of the replication study is computed based on the result of the original study and

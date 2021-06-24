@@ -1,4 +1,4 @@
-#' Computes the level for the sceptical p-value.
+#' Computes the level for the sceptical p-value
 #'
 #' The equivalent level for the sceptical p-value is computed based on
 #' the specified limiting relative effect size, the original level, and

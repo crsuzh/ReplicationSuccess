@@ -1,4 +1,4 @@
-#' Computes Box's tail probability.
+#' Computes Box's tail probability
 #'
 #' \code{pBox} computes Box's tail probabilities based on the z-values of the
 #' original and the replication study, the corresponding variance ratio,

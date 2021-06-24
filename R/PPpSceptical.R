@@ -1,4 +1,4 @@
-#' Compute project power of the sceptical p-value.
+#' Compute project power of the sceptical p-value
 #'
 #' The project power of the sceptical p-value is computed for a
 #' specified level of replication success, the relative variance,

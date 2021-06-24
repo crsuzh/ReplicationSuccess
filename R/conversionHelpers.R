@@ -1,4 +1,4 @@
-#' Convert between estimates, z-values, p-values, and confidence intervals.
+#' Convert between estimates, z-values, p-values, and confidence intervals
 #' 
 #' @rdname conversionHelpers
 #' @param lower Numeric vector of lower confidence interval bounds.

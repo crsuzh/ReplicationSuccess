@@ -1,4 +1,4 @@
-#' Computes the minimum relative effect size to achieve replication success.
+#' Computes the minimum relative effect size to achieve replication success
 #'
 #' The minimum relative effect size (replication to original) to achieve replication success
 #' is computed based on the result of the original study and the corresponding variance ratio (relative sample size).

@@ -1,4 +1,4 @@
-#' Computes the power for significance.
+#' Computes the power for significance
 #'
 #' The power for significance is computed based on the result of
 #' the original study, the corresponding variance ratio,

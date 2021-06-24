@@ -1,4 +1,4 @@
-#' Computes the sceptical p-value and z-value.
+#' Computes the sceptical p-value and z-value
 #'
 #' Computes sceptical p-values and z-values based on the z-values of the
 #' original and the replication study and the corresponding variance ratio.

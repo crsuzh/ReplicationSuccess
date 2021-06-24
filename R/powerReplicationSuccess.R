@@ -33,7 +33,7 @@ zr2quantile <- function(zo,
 }
 
 
-#' Computes the power for replication success.
+#' Computes the power for replication success
 #'
 #' Computes the power for replication success based on the result of the
 #' original study, the corresponding variance ratio, and the design prior.

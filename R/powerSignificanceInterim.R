@@ -1,4 +1,4 @@
-#' Interim power of a replication study.
+#' Interim power of a replication study
 #'
 #' Computes the power of a replication study taking into account data from an interim analysis.
 #'

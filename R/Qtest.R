@@ -1,4 +1,4 @@
-#' Q-test to assess compatibility between original and replication effect estimate.
+#' Q-test to assess compatibility between original and replication effect estimate
 #'
 #' Computes p-value from meta-analytic Q-test to assess compatibility between
 #' original and replication effect estimate.

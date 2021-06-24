@@ -1,4 +1,4 @@
-#' Computes the p-value threshold for intrinsic credibility.
+#' Computes the p-value threshold for intrinsic credibility
 #'
 #' @param alpha Numric vector of intrinsic credibility levels.
 #' @param alternative Either "two.sided" (default) or "one.sided".
