@@ -15,11 +15,17 @@ ci2estimate(lower, upper, ratio = FALSE, antilog = FALSE)
 
 ci2z(lower, upper, conf.level = 0.95, ratio = FALSE)
 
-ci2p(lower, upper, conf.level = 0.95, ratio = FALSE, alternative = "two.sided")
+ci2p(
+  lower,
+  upper,
+  conf.level = 0.95,
+  ratio = FALSE,
+  alternative = c("two.sided", "one.sided", "less", "greater")
+)
 
-z2p(z, alternative = "two.sided")
+z2p(z, alternative = c("two.sided", "one.sided", "less", "greater"))
 
-p2z(p, alternative = "two.sided")
+p2z(p, alternative = c("two.sided", "one.sided", "less", "greater"))
 }
 \arguments{
 \item{lower}{Numeric vector of lower confidence interval bounds.}
@@ -36,7 +42,7 @@ of the log ratio is computed. Defaults to \code{FALSE}.}
 Only applies if \code{ratio = TRUE}. Defaults to \code{FALSE}.}
 
 \item{alternative}{Direction of the alternative of the p-value. 
-Either "one.sided" (default), "two.sided", "less", or "greater".
+Either "two.sided" (default), "one.sided", "less", or "greater".
 If "one.sided" or "two.sided" is specified, the z-value is assumed to be positive.}
 
 \item{z}{Numeric vector of z-values.}

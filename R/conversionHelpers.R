@@ -27,15 +27,15 @@ ci2se <- function(lower,
               length(upper)>0,
               is.finite(upper),
 
-              lower <= upper,
               length(upper)==length(lower),
-
+              lower <= upper,
+              
               is.numeric(conf.level),
               length(conf.level)==1,
               is.finite(conf.level),
               0 < conf.level, conf.level < 1,
 
-              is.lgocial(ratio),
+              is.logical(ratio),
               length(ratio)==1,
               is.finite(ratio))
     
@@ -43,7 +43,7 @@ ci2se <- function(lower,
     q <- qnorm(p = 1 - level/2, lower.tail = TRUE)
     
     if(ratio){
-        stopifnot(lower>0, upper>0)
+        stopifnot(lower>0)
         lower <- log(lower)
         upper <- log(upper)
     }
@@ -66,16 +66,32 @@ ci2estimate <- function(lower,
                         ratio = FALSE, 
                         antilog = FALSE){
     
-    stopifnot(length(lower) == length(upper))
-    stopifnot(sum(lower >= upper) == 0)
+    stopifnot(is.numeric(lower),
+              length(lower)>0,
+              is.finite(lower),
+
+              is.numeric(upper),
+              length(upper)>0,
+              is.finite(upper),
+
+              length(upper)==length(lower),
+              lower <= upper,
+
+              is.logical(ratio),
+              length(ratio)==1,
+              is.finite(ratio),
+
+              is.logical(antilog),
+              length(antilog)==1,
+              is.finite(antilog))
     
-    if(ratio == TRUE){
-        stopifnot(sum(lower <= 0) == 0)
+    if(ratio){
+        stopifnot(lower>0)
         lower <- log(lower)
         upper <- log(upper)
     }
     res <- (lower + upper)/2
-    if((ratio == TRUE) & (antilog == TRUE))
+    if(ratio && antilog)
         res <- exp(res)
     return(res)
 }
@@ -93,19 +109,36 @@ ci2z <- function(lower,
                  conf.level = 0.95, 
                  ratio = FALSE){
     
-    stopifnot(length(lower) == length(upper))
-    stopifnot(sum(lower >= upper) == 0)
-    stopifnot(conf.level > 0 & conf.level < 1)
+    stopifnot(is.numeric(lower),
+              length(lower)>0,
+              is.finite(lower),
+
+              is.numeric(upper),
+              length(upper)>0,
+              is.finite(upper),
+
+              length(upper)==length(lower),
+              lower <= upper,
+
+              is.numeric(conf.level),
+              length(conf.level)==1,
+              is.finite(conf.level),
+              0 < conf.level, conf.level < 1,
+
+              is.logical(ratio),
+              length(ratio)==1,
+              is.finite(ratio))
+
     estimate <- ci2estimate(lower = lower, upper = upper, ratio = ratio)
     se <- ci2se(lower = lower, upper = upper, 
                 conf.level = conf.level, ratio = ratio)
-    z <- estimate/se
+    z <- estimate / se
     return(z)
 }
 
 #' @rdname conversionHelpers
 #' @param alternative Direction of the alternative of the p-value. 
-#' Either "one.sided" (default), "two.sided", "less", or "greater".
+#' Either "two.sided" (default), "one.sided", "less", or "greater".
 #' If "one.sided" or "two.sided" is specified, the z-value is assumed to be positive.
 #' @return \code{ci2p} returns a numeric vector of p-values.
 #' @examples
@@ -117,12 +150,52 @@ ci2p <- function(lower,
                  upper, 
                  conf.level = 0.95, 
                  ratio = FALSE,
-                 alternative = "two.sided"){
+                 alternative = c("two.sided", "one.sided", "less", "greater")){
 
+    stopifnot(is.numeric(lower),
+              length(lower)>0,
+              is.finite(lower),
+
+              is.numeric(upper),
+              length(upper)>0,
+              is.finite(upper),
+
+              length(upper)==length(lower),
+              lower <= upper,
+              
+              is.numeric(conf.level),
+              length(conf.level)==1,
+              is.finite(conf.level),
+              0 < conf.level, conf.level < 1,
+
+              is.logical(ratio),
+              length(ratio)==1,
+              is.finite(ratio),
+
+              !is.null(alternative))
+    alternative <- match.arg(alternative)
+    
     z <- ci2z(lower = lower, upper = upper, 
               conf.level = conf.level, ratio = ratio)
     p <- z2p(z = z, alternative = alternative)
     return(p)
+}
+
+.z2p_ <- function(z, 
+                  alternative = c("two.sided", "one.sided", "less", "greater")){
+    
+    stopifnot(is.numeric(z), is.finite(z),
+              !is.null(alternative))
+    alternative <- match.arg(alternative)
+    
+    if (alternative == "two.sided")
+        return(2*pnorm(abs(z), lower.tail = FALSE))
+    
+    if (alternative == "less")
+        return(pnorm(q = z, lower.tail = TRUE))
+    
+    ## alternative is "greater" or "one.sided")
+    pnorm(q = z, lower.tail = FALSE)
 }
 
 #' @rdname conversionHelpers
@@ -138,28 +211,26 @@ ci2p <- function(lower,
 #' legend("topright", c("two-sided", "greater"), lty = c(1, 2), bty = "n")
 #'
 #' @export
-z2p <- function(z, 
-                alternative = "two.sided"){
+z2p <- Vectorize(.z2p_)
+
+
+
+.p2z_ <- function(p, 
+                  alternative = c("two.sided", "one.sided", "less", "greater")){
     
-    # vectorize function in all arguments
-    pV <- mapply(FUN = function(z, alternative) {
-        if (!is.numeric(z))
-            stop("z must be numeric")
-        if (!(alternative %in% c("less", "greater", "two.sided", "one.sided")))
-            stop('alternative must be either "less", "greater", "two.sided", or "one.sided"')
-        
-        if (alternative == "two.sided")
-            p <- 2*pnorm(abs(z), lower.tail = FALSE)
-        
-        if (alternative == "less")
-            p <- pnorm(q = z, lower.tail = TRUE)
-        
-        if (alternative == "greater" | alternative == "one.sided")
-            p <- pnorm(q = z, lower.tail = FALSE)
-        
-        return(p)    
-    }, z, alternative)
-    return(pV)
+    if (!is.numeric(p) || !all(is.finite(p)) || !all(0 < p) || !all(p <= 1))
+        stop("p must be numeric and in (0,1]!")
+    stopifnot(!is.null(alternative))
+    alternative <- match.arg(alternative)
+
+    if (alternative == "two.sided")
+        return(qnorm(p = p/2, lower.tail = FALSE))
+
+    if (alternative == "less")
+        return(qnorm(p = p, lower.tail = TRUE))
+
+    ## alternative is "one.sided" or "greater"
+    return(qnorm(p = p, lower.tail = FALSE))
 }
 
 #' @rdname conversionHelpers
@@ -174,28 +245,5 @@ z2p <- function(z,
 #' lines(p, p2z(p, alternative = "greater"), lty = 2)
 #' legend("bottomleft", c("two-sided", "greater"), lty = c(1, 2), bty = "n")
 #' @export
-p2z <- function(p, 
-                alternative = "two.sided"){
-  
-  # vectorize function in both arguments
-  zVec <- mapply(FUN = function(p, alternative) {
-    
-    # sanity checks
-    if (!is.numeric(p) || (p <= 0 || p > 1))
-      stop("p must be numeric and in (0,1]!")
-    if (!(alternative %in% c("less", "greater", "two.sided", "one.sided")))
-      stop('alternative must be either "less", "greater", "two.sided", or "one.sided"')
-    
-    if (alternative == "two.sided")
-      z <- qnorm(p = p/2, lower.tail = FALSE)
-    if (alternative == "less")
-      z <- qnorm(p = p, lower.tail = TRUE)
-    if (alternative == "greater" || alternative == "one.sided")
-      z <- qnorm(p = p, lower.tail = FALSE)
-    
-    return(z)
-    
-  }, p, alternative)
-  
-  return(zVec)
-}
+p2z <- Vectorize(.p2z_)
+
