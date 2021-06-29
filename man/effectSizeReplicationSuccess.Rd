@@ -8,8 +8,8 @@ effectSizeReplicationSuccess(
   zo,
   c = 1,
   level = 0.025,
-  alternative = "one.sided",
-  type = "golden"
+  alternative = c("one.sided", "two.sided"),
+  type = c("golden", "nominal", "liberal", "controlled")
 )
 }
 \arguments{
