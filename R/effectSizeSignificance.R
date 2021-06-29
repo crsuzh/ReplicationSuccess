@@ -1,3 +1,28 @@
+.effectSizeSignificance_ <- function(zo, 
+                                     c = 1, 
+                                     level = 0.025, 
+                                     alternative = c("one.sided", "two.sided")){
+    stopifnot(is.numeric(zo),
+              length(zo)==1,
+              is.finite(zo),
+                            
+              is.numeric(c),
+              length(c)==1,
+              is.finite(c),
+              
+              is.numeric(level),
+              length(level)==1,
+              is.finite(level),
+              0 < level, level < 1,
+              
+              !is.null(alternative))
+    alternative <- match.arg(alternative)
+
+    zalpha <- z2p(level, alternative = alternative)
+    d <- zalpha/(zo*sqrt(c))
+    return(d)
+}
+
 #' Computes the minimum relative effect size to achieve significance of the replication study
 #'
 #' The minimum relative effect size (replication to original) to achieve significance
@@ -28,20 +53,4 @@
 #' effectSizeSignificance(zo = zo, c = 50, level = 0.025,
 #'                        alternative = "one.sided")
 #' @export
-effectSizeSignificance <- function(zo, 
-                                   c = 1, 
-                                   level = 0.025, 
-                                   alternative = "one.sided"){
-  
-  mV <- mapply(FUN = function(zo, c, level) {
-    if (!is.numeric(c)) 
-      stop("d must be numeric")
-    if (!is.numeric(level) || (level <= 0 || level >= 1)) 
-      stop("level must be numeric and in (0,1)!")
-    zalpha <- z2p(level, alternative = alternative)
-    d <- zalpha/(zo*sqrt(c))
-    return(d)
-  }, zo, c, level)
-  return(mV)
-}
-  
+effectSizeSignificance <- Vectorize(.effectSizeSignificance_)

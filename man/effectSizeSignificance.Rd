@@ -4,7 +4,12 @@
 \alias{effectSizeSignificance}
 \title{Computes the minimum relative effect size to achieve significance of the replication study}
 \usage{
-effectSizeSignificance(zo, c = 1, level = 0.025, alternative = "one.sided")
+effectSizeSignificance(
+  zo,
+  c = 1,
+  level = 0.025,
+  alternative = c("one.sided", "two.sided")
+)
 }
 \arguments{
 \item{zo}{Numeric vector of z-values from original studies.}
