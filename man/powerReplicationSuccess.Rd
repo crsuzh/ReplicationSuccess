@@ -8,9 +8,9 @@ powerReplicationSuccess(
   zo,
   c = 1,
   level = 0.025,
-  designPrior = "conditional",
-  alternative = "one.sided",
-  type = "golden",
+  designPrior = c("conditional", "predictive", "EB"),
+  alternative = c("one.sided", "two.sided"),
+  type = c("golden", "nominal", "liberal", "controlled"),
   shrinkage = 0
 )
 }
