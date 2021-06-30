@@ -4,7 +4,11 @@
 \alias{levelSceptical}
 \title{Computes the level for the sceptical p-value}
 \usage{
-levelSceptical(level, alternative = "one.sided", type = "golden")
+levelSceptical(
+  level,
+  alternative = c("one.sided", "two.sided", "greater", "less"),
+  type = c("golden", "nominal", "liberal", "controlled")
+)
 }
 \arguments{
 \item{level}{Numeric vector of required significance levels.}
