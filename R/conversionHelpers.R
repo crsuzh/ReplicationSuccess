@@ -218,8 +218,10 @@ z2p <- Vectorize(.z2p_)
 .p2z_ <- function(p, 
                   alternative = c("two.sided", "one.sided", "less", "greater")){
     
-    if (!is.numeric(p) || !all(is.finite(p)) || !all(0 < p) || !all(p <= 1))
+    if (!is.numeric(p) || !length(p) ==1 || !all(is.finite(p)) ||
+        !all(0 < p) || !all(p <= 1))
         stop("p must be numeric and in (0,1]!")
+    
     stopifnot(!is.null(alternative))
     alternative <- match.arg(alternative)
 

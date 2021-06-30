@@ -7,8 +7,8 @@
 pIntrinsic(
   p = z2p(z, alternative = alternative),
   z = NULL,
-  alternative = "two.sided",
-  type = "Held"
+  alternative = c("two.sided", "one.sided"),
+  type = c("Held", "Matthews")
 )
 }
 \arguments{
@@ -21,8 +21,8 @@ Specifies if the p-value is two-sided or one-sided.
 If the p-value is one-sided, then a one-sided p-value for
 intrinsic credibility is computed.}
 
-\item{type}{Type of intrinsic p-value. Default is \code{"Held"} as in
-Held (2019). The other option is \code{"Matthews"} as in Matthews (2018).}
+\item{type}{Type of intrinsic p-value. Default is "Held" as in
+Held (2019). The other option is "Matthews" as in Matthews (2018).}
 }
 \value{
 p-values for intrinsic credibility.
