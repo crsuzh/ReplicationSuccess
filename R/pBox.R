@@ -9,7 +9,7 @@
 #' @param c Numeric vector of variance ratios of the original and replication
 #' effect estimates. This is usually the ratio of the sample
 #' size of the replication study to the sample size of the
-#' original study.
+#' original study. Default is 1.
 #' @param level Numeric vector of significance levels. Default is 0.05.
 #' @param alternative Either "two.sided" (default) or "one.sided".
 #' Specifies whether two-sided or one-sided Box's tail probabilities are computed.
@@ -29,9 +29,14 @@
 #'      zr = p2z(0.01, alternative = "one.sided"),
 #'      c = 1/2, alternative = "one.sided")
 #' @export
-pBox <- function(zo, zr, c, level = 0.05, alternative = "two.sided"){
+pBox <- function(zo, zr, c = 1, level = 0.05,
+                 alternative = c("two.sided", "one.sided")){
+    stopifnot(!is.null(alternative))
+    alternative <- match.arg(alternative)    
+
+    ## all other input parameters are checked in zBox()
     z <- zBox(zo = zo, zr = zr, c = c, level = level, alternative = alternative)
-    res <- z2p(z)
+    res <- z2p(z = z)
     if(alternative == "one.sided")
         res <- ifelse(sign(zo) == sign(zr), res / 2, 1 - res / 2)
     return(res)
@@ -40,8 +45,29 @@ pBox <- function(zo, zr, c, level = 0.05, alternative = "two.sided"){
 #' @rdname pBox
 #' @return \code{zBox} returns the z-values used in \code{pBox}.
 #' @export 
-zBox <- function(zo, zr, c, level = 0.05, alternative = "two.sided"){
-    z <- p2z(level, alternative = alternative)
+zBox <- function(zo, zr, c, level = 0.05,
+                 alternative = c("two.sided", "one.sided")){
+    stopifnot(is.numeric(zo),
+              length(zo) >= 1,
+              is.finite(zo),
+
+              is.numeric(zr),
+              length(zr) >= 1,
+              is.finite(zr),
+
+              is.numeric(c),
+              length(c) >= 1,
+              is.finite(c),
+
+              is.numeric(level),
+              length(level) >= 1,
+              is.finite(level),
+              0 < level, level < 1,
+              
+              !is.null(alternative))
+    
+    alternative <- match.arg(alternative)
+    z <- p2z(p = level, alternative = alternative)
     den <- ifelse((zo^2 > z^2), c / (zo^2 / z^2 - 1) + 1, NA)
     res <- zr^2 / den
     return(sqrt(res))
