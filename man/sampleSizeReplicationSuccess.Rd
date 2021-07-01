@@ -10,9 +10,9 @@ sampleSizeReplicationSuccess(
   power = NA,
   d = NA,
   level = 0.025,
-  alternative = "one.sided",
-  type = "golden",
-  designPrior = "conditional",
+  alternative = c("one.sided", "two.sided"),
+  type = c("golden", "nominal", "liberal", "controlled"),
+  designPrior = c("conditional", "predictive", "EB"),
   shrinkage = 0
 )
 }
