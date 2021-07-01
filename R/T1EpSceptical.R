@@ -3,12 +3,12 @@
                             type = c("golden", "nominal", "liberal", "controlled")) {  
     
     stopifnot(is.numeric(level),
-              length(level)==1,
+              length(level) == 1,
               is.finite(level),
               0 < level, level < 1,
 
               is.numeric(c),
-              length(c)==1,
+              length(c) == 1,
               is.finite(c),
               0 <= c,
                             

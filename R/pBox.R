@@ -33,8 +33,8 @@ pBox <- function(zo, zr, c = 1, level = 0.05,
                  alternative = c("two.sided", "one.sided")){
     stopifnot(!is.null(alternative))
     alternative <- match.arg(alternative)    
-
     ## all other input parameters are checked in zBox()
+
     z <- zBox(zo = zo, zr = zr, c = c, level = level, alternative = alternative)
     res <- z2p(z = z)
     if(alternative == "one.sided")

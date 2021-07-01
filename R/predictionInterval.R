@@ -6,26 +6,26 @@
                                  designPrior = c("predictive", "conditional", "EB")) {
 
     stopifnot(is.numeric(thetao),
-              length(thetao)==1,
+              length(thetao) == 1,
               is.finite(thetao),
 
               is.numeric(seo),
-              length(seo)==1,
+              length(seo) == 1,
               is.finite(seo),
               0 < seo,  
 
               is.numeric(ser),
-              length(ser)==1,
+              length(ser) == 1,
               is.finite(ser),
               0 < ser,  
 
               is.numeric(tau),
-              length(tau)==1,
+              length(tau) == 1,
               is.finite(tau),
               0 <= tau,  
 
               is.numeric(conf.level),
-              length(conf.level)==1,
+              length(conf.level) == 1,
               is.finite(conf.level),
               0 <= conf.level, conf.level <= 1,
 

@@ -4,22 +4,22 @@
                            type = c("golden", "nominal", "liberal", "controlled")) {  
 
     stopifnot(is.numeric(level),
-              length(level)==1,
+              length(level) == 1,
               is.finite(level),
               0 < level, level < 1,
 
               is.numeric(c),
-              length(c)==1,
+              length(c) == 1,
               is.finite(c),
               0 <= c,
 
               is.numeric(alpha),
-              length(alpha)==1,
+              length(alpha) == 1,
               is.finite(alpha),
               0 < alpha, alpha < 1,
 
               is.numeric(power),
-              length(power)==1,
+              length(power) == 1,
               is.finite(power),
               0 < power, power < 1,
 

@@ -3,15 +3,15 @@
                                      level = 0.025, 
                                      alternative = c("one.sided", "two.sided")){
     stopifnot(is.numeric(zo),
-              length(zo)==1,
+              length(zo) == 1,
               is.finite(zo),
                             
               is.numeric(c),
-              length(c)==1,
+              length(c) == 1,
               is.finite(c),
               
               is.numeric(level),
-              length(level)==1,
+              length(level) == 1,
               is.finite(level),
               0 < level, level < 1,
               
@@ -19,7 +19,7 @@
     alternative <- match.arg(alternative)
 
     zalpha <- z2p(level, alternative = alternative)
-    d <- zalpha/(zo*sqrt(c))
+    d <- zalpha / (zo * sqrt(c))
     return(d)
 }
 

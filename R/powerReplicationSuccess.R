@@ -1,9 +1,9 @@
 # function that returns z_r^2 quantile for given z_o, c
 zr2quantile <- function(zo, 
-                         c, 
-                         p, 
-                         designPrior,
-                         shrinkage){
+                        c, 
+                        p, 
+                        designPrior,
+                        shrinkage){
     
     if (designPrior == "predictive"){
         lambda <- (1 - shrinkage)^2*zo^2/(1 + 1/c)
@@ -56,16 +56,16 @@ zr2quantile <- function(zo,
                                      shrinkage = 0){
 
     stopifnot(is.numeric(zo),
-              length(zo)==1,
+              length(zo) == 1,
               is.finite(zo),
               
               is.numeric(c),
-              length(c)==1,
+              length(c) == 1,
               is.finite(c),
               0 <= c,
               
               is.numeric(level),
-              length(level)==1,
+              length(level) == 1,
               is.finite(level),
               0 < level, level < 1,
 
@@ -79,7 +79,7 @@ zr2quantile <- function(zo,
     type <- match.arg(type)
 
     stopifnot(is.numeric(shrinkage),
-              length(shrinkage)==1,
+              length(shrinkage) == 1,
               is.finite(shrinkage),
               0 <= shrinkage, shrinkage <= 1)
 

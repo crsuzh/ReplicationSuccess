@@ -33,11 +33,11 @@
 hMeanChiSq <- function(z, w = rep(1, length(z)),
                        alternative = c("greater", "less", "two.sided", "none"), bound=TRUE){
     stopifnot(is.numeric(z),
-              length(z)>0,
+              length(z) > 0,
               is.finite(z),
 
               is.numeric(w),
-              length(w)==length(z),
+              length(w) == length(z),
               is.finite(w),
               min(w) > 0,
               
@@ -45,15 +45,15 @@ hMeanChiSq <- function(z, w = rep(1, length(z)),
     alternative <- match.arg(alternative)
 
     stopifnot(is.logical(bound),
-              length(bound)==1,
+              length(bound) == 1,
               is.finite(bound))
               
     n <- length(z)
-    zH2 <- sum(sqrt(w))^2 / sum(w/z^2)
+    zH2 <- sum(sqrt(w))^2 / sum(w / z^2)
     res <- pchisq(zH2, df = 1, lower.tail = FALSE)
     check_greater <- min(z) > 0
     check_less <- max(z) < 0
-    break_p <- 1/(2^n)
+    break_p <- 1 / (2^n)
     if(alternative == "greater"){
         if(bound)
             ## FG: better use `res <- if() {} else {}`.
@@ -96,27 +96,27 @@ hMeanChiSq <- function(z, w = rep(1, length(z)),
 hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
                          alternative =c("greater", "less", "two.sided", "none"), bound=TRUE){
     stopifnot(is.numeric(thetahat),
-              length(thetahat)>0,
+              length(thetahat) > 0,
               is.finite(thetahat),
 
               is.numeric(se),
-              length(se)==1 || length(se)==length(thetahat),
+              length(se) == 1 || length(se) == length(thetahat),
               is.finite(se),
               min(se) > 0,
 
               is.numeric(w),
-              length(w)==length(thetahat),
+              length(w) == length(thetahat),
               is.finite(w),
               min(w) > 0,
 
               is.numeric(mu),
-              length(mu)==1 || length(mu)==length(thetahat),
+              length(mu) == 1 || length(mu) == length(thetahat),
               is.finite(mu),
 
               !is.null(alternative))
     alternative <- match.arg(alternative)
     stopifnot(is.logical(bound),
-              length(bound)==1,
+              length(bound) == 1,
               is.finite(bound))
     
     n <- length(thetahat)
@@ -192,16 +192,16 @@ hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
                          alternative = c("two.sided", "greater", "less", "none"),
                          level = 0.95){
     stopifnot(is.numeric(thetahat),
-              length(thetahat)>0,
+              length(thetahat) > 0,
               is.finite(thetahat),
               
               is.numeric(se),
-              length(se)==1 || length(se)==length(thetahat),
+              length(se) == 1 || length(se) == length(thetahat),
               is.finite(se),
               min(se) > 0,
               
               is.numeric(w),
-              length(w)==length(thetahat),
+              length(w) == length(thetahat),
               is.finite(w),
               min(w) > 0,
 
@@ -209,7 +209,7 @@ hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
     alternative <- match.arg(alternative)
     
     stopifnot(is.numeric(level),
-              length(level)==1,
+              length(level) == 1,
               is.finite(level),
               0 < level, level <1)
 

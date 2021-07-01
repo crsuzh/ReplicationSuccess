@@ -20,11 +20,11 @@
                                      shrinkage = 0) {
 
     stopifnot(is.numeric(zo),
-              length(zo)==1,
+              length(zo) == 1,
               is.finite(zo))
     
-    stopifnot(length(power)==1,
-              length(d)==1)
+    stopifnot(length(power) == 1,
+              length(d) == 1)
     if (is.na(d) && is.na(power))  stop("either 'power' or 'd' has to be specified")
     if (!is.na(d) && !is.na(power))  stop("only one of 'power' or 'd' has to be specified")
     if (!is.na(d)) {
@@ -36,7 +36,7 @@
     }
     
     stopifnot(is.numeric(level),
-              length(level)==1,
+              length(level) == 1,
               is.finite(level),
               0 < level, level < 1,
               
@@ -47,12 +47,12 @@
     designPrior <- match.arg(designPrior)
     
     stopifnot(is.numeric(h),
-              length(h)==1,
+              length(h) == 1,
               is.finite(h),
               0 <= h,
 
               is.numeric(shrinkage),
-              length(shrinkage)==1,
+              length(shrinkage) == 1,
               is.finite(shrinkage),
               0 <= shrinkage, shrinkage <= 1)
 

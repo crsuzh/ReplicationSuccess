@@ -6,16 +6,16 @@
                                 h = 0,
                                 shrinkage = 0) {
     stopifnot(is.numeric(zo),
-              length(zo)==1,
+              length(zo) == 1,
               is.finite(zo),
               
               is.numeric(c),
-              length(c)==1,
+              length(c) == 1,
               is.finite(c),
               0 <= c,
               
               is.numeric(level),
-              length(level)==1,
+              length(level) == 1,
               is.finite(level),
               0 < level, level < 1,
               
@@ -26,12 +26,12 @@
     alternative <- match.arg(alternative)
 
     stopifnot(is.numeric(h),
-              length(h)==1,
+              length(h) == 1,
               is.finite(h),
               0 <= h,
 
               is.numeric(shrinkage),
-              length(shrinkage)==1,
+              length(shrinkage) == 1,
               is.finite(shrinkage),
               0 <= shrinkage, shrinkage <= 1)
 

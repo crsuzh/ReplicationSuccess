@@ -20,30 +20,30 @@ ci2se <- function(lower,
                   ratio = FALSE){
 
     stopifnot(is.numeric(lower),
-              length(lower)>0,
+              length(lower) > 0,
               is.finite(lower),
 
               is.numeric(upper),
-              length(upper)>0,
+              length(upper) > 0,
               is.finite(upper),
 
-              length(upper)==length(lower),
+              length(upper) == length(lower),
               lower <= upper,
               
               is.numeric(conf.level),
-              length(conf.level)==1,
+              length(conf.level) == 1,
               is.finite(conf.level),
               0 < conf.level, conf.level < 1,
 
               is.logical(ratio),
-              length(ratio)==1,
+              length(ratio) == 1,
               is.finite(ratio))
     
     level <- 1 - conf.level
     q <- qnorm(p = 1 - level/2, lower.tail = TRUE)
     
     if(ratio){
-        stopifnot(lower>0)
+        stopifnot(lower > 0)
         lower <- log(lower)
         upper <- log(upper)
     }
@@ -67,26 +67,26 @@ ci2estimate <- function(lower,
                         antilog = FALSE){
     
     stopifnot(is.numeric(lower),
-              length(lower)>0,
+              length(lower) > 0,
               is.finite(lower),
 
               is.numeric(upper),
-              length(upper)>0,
+              length(upper) > 0,
               is.finite(upper),
 
-              length(upper)==length(lower),
+              length(upper) == length(lower),
               lower <= upper,
 
               is.logical(ratio),
-              length(ratio)==1,
+              length(ratio) == 1,
               is.finite(ratio),
 
               is.logical(antilog),
-              length(antilog)==1,
+              length(antilog) == 1,
               is.finite(antilog))
     
     if(ratio){
-        stopifnot(lower>0)
+        stopifnot(lower > 0)
         lower <- log(lower)
         upper <- log(upper)
     }
@@ -110,23 +110,23 @@ ci2z <- function(lower,
                  ratio = FALSE){
     
     stopifnot(is.numeric(lower),
-              length(lower)>0,
+              length(lower) > 0,
               is.finite(lower),
 
               is.numeric(upper),
-              length(upper)>0,
+              length(upper) > 0,
               is.finite(upper),
 
-              length(upper)==length(lower),
+              length(upper) == length(lower),
               lower <= upper,
 
               is.numeric(conf.level),
-              length(conf.level)==1,
+              length(conf.level) == 1,
               is.finite(conf.level),
               0 < conf.level, conf.level < 1,
 
               is.logical(ratio),
-              length(ratio)==1,
+              length(ratio) == 1,
               is.finite(ratio))
 
     estimate <- ci2estimate(lower = lower, upper = upper, ratio = ratio)
@@ -153,23 +153,23 @@ ci2p <- function(lower,
                  alternative = c("two.sided", "one.sided", "less", "greater")){
 
     stopifnot(is.numeric(lower),
-              length(lower)>0,
+              length(lower) > 0,
               is.finite(lower),
 
               is.numeric(upper),
-              length(upper)>0,
+              length(upper) > 0,
               is.finite(upper),
 
-              length(upper)==length(lower),
+              length(upper) == length(lower),
               lower <= upper,
               
               is.numeric(conf.level),
-              length(conf.level)==1,
+              length(conf.level) == 1,
               is.finite(conf.level),
               0 < conf.level, conf.level < 1,
 
               is.logical(ratio),
-              length(ratio)==1,
+              length(ratio) == 1,
               is.finite(ratio),
 
               !is.null(alternative))
@@ -218,11 +218,12 @@ z2p <- Vectorize(.z2p_)
 .p2z_ <- function(p, 
                   alternative = c("two.sided", "one.sided", "less", "greater")){
     
-    if (!is.numeric(p) || !length(p) ==1 || !all(is.finite(p)) ||
-        !all(0 < p) || !all(p <= 1))
-        stop("p must be numeric and in (0,1]!")
-    
-    stopifnot(!is.null(alternative))
+    stopifnot(is.numeric(p),
+              length(p) == 1,
+              is.finite(p),
+              0 < p, p <= 1,
+
+              !is.null(alternative))
     alternative <- match.arg(alternative)
 
     if (alternative == "two.sided")
