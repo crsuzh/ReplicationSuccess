@@ -10,9 +10,9 @@ powerSignificanceInterim(
   c = 1,
   f = 1/2,
   level = 0.025,
-  designPrior = "conditional",
-  analysisPrior = "flat",
-  alternative = "greater",
+  designPrior = c("conditional", "informed predictive", "predictive"),
+  analysisPrior = c("flat", "original"),
+  alternative = c("greater", "less", "two.sided"),
   shrinkage = 0
 )
 }
