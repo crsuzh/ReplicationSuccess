@@ -9,8 +9,8 @@ PPpSceptical(
   c,
   alpha,
   power,
-  alternative = "one.sided",
-  type = "golden"
+  alternative = c("one.sided", "two.sided", "greater", "less"),
+  type = c("golden", "nominal", "liberal", "controlled")
 )
 }
 \arguments{
