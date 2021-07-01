@@ -71,7 +71,7 @@ powerSignificanceInterim <- function(zo,
               is.numeric(c),
               length(c) > 0,
               is.finite(c),
-              0 < c,
+              0 <= c,
 
               is.numeric(f),
               length(f) > 0,

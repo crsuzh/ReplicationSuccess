@@ -8,8 +8,8 @@ powerSignificance(
   zo,
   c = 1,
   level = 0.025,
-  designPrior = "conditional",
-  alternative = "one.sided",
+  designPrior = c("conditional", "predictive", "EB"),
+  alternative = c("one.sided", "two.sided", "greater", "less"),
   h = 0,
   shrinkage = 0
 )
