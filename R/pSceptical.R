@@ -15,7 +15,7 @@
               is.numeric(c),
               length(c) == 1,
               is.finite(c),
-              0 < c,
+              0 <= c,
               
               !is.null(alternative))
     alternative <- match.arg(alternative)
@@ -123,7 +123,7 @@ zSceptical <- function(zo,
               is.numeric(c),
               length(c) > 0,
               is.finite(c),
-              0 < c)
+              0 <= c)
 
     ## arithmetic mean
     aritMean <- function(x, y)
