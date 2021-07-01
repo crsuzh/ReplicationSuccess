@@ -10,8 +10,8 @@ sampleSizeSignificance(
   power = NA,
   d = NA,
   level = 0.025,
-  alternative = "one.sided",
-  designPrior = "conditional",
+  alternative = c("one.sided", "two.sided", "less", "greater"),
+  designPrior = c("conditional", "predictive", "EB"),
   h = 0,
   shrinkage = 0
 )
