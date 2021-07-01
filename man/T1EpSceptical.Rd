@@ -4,7 +4,12 @@
 \alias{T1EpSceptical}
 \title{Compute type-I error rate of the sceptical p-value}
 \usage{
-T1EpSceptical(level, c, alternative = "one.sided", type = "golden")
+T1EpSceptical(
+  level,
+  c,
+  alternative = c("one.sided", "two.sided", "greater", "less"),
+  type = c("golden", "nominal", "liberal", "controlled")
+)
 }
 \arguments{
 \item{level}{Numeric vector of levels of replication success.}
