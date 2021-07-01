@@ -65,8 +65,8 @@ zBox <- function(zo, zr, c, level = 0.05,
               0 < level, level < 1,
               
               !is.null(alternative))
-    
     alternative <- match.arg(alternative)
+
     z <- p2z(p = level, alternative = alternative)
     den <- ifelse((zo^2 > z^2), c / (zo^2 / z^2 - 1) + 1, NA)
     res <- zr^2 / den

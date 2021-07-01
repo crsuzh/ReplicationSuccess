@@ -5,7 +5,13 @@
 \alias{zSceptical}
 \title{Computes the sceptical p-value and z-value}
 \usage{
-pSceptical(zo, zr, c, alternative = "one.sided", type = "golden")
+pSceptical(
+  zo,
+  zr,
+  c,
+  alternative = c("one.sided", "two.sided"),
+  type = c("golden", "nominal", "liberal", "controlled")
+)
 
 zSceptical(zo, zr, c)
 }
