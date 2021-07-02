@@ -55,6 +55,10 @@ The power for significance is computed based on the result of
 the original study, the corresponding variance ratio,
 and the design prior.
 }
+\details{
+\code{powerSignificance} is the vectorized version of \code{.powerSignificance_}.
+\code{\link[base]{Vectorize}} is used to vectorize the function.
+}
 \examples{
 powerSignificance(zo = p2z(0.005), c = 2)
 powerSignificance(zo = p2z(0.005), c = 2, designPrior = "predictive")

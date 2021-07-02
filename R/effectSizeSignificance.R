@@ -1,3 +1,4 @@
+#' @export
 .effectSizeSignificance_ <- function(zo, 
                                      c = 1, 
                                      level = 0.025, 
@@ -36,6 +37,8 @@
 #' @param level Significance level. Default is 0.025.
 #' @param alternative Specifies if the replication success level is "one.sided" (default) or "two.sided".
 #' @return The minimum relative effect size to achieve significance of the replication study.
+#' @details \code{effectSizeSignificance} is the vectorized version of \code{.effectSizeSignificance_}.
+#' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @references Held, L., Micheloud, C. & Pawel, S. (2020).
 #' The assessment of replication success based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
 #' @author Charlotte Micheloud

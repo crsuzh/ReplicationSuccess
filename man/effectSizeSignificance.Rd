@@ -30,6 +30,10 @@ The minimum relative effect size (replication to original) to achieve significan
 of the replication study is computed based on the result of the original study and
 the corresponding variance ratio.
 }
+\details{
+\code{effectSizeSignificance} is the vectorized version of \code{.effectSizeSignificance_}.
+\code{\link[base]{Vectorize}} is used to vectorize the function.
+}
 \examples{
 po <- c(0.001, 0.002, 0.01, 0.02, 0.025)
 zo <- p2z(po, alternative = "one.sided")

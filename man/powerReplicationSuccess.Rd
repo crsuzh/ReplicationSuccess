@@ -52,6 +52,10 @@ The power for replication success.
 Computes the power for replication success based on the result of the
 original study, the corresponding variance ratio, and the design prior.
 }
+\details{
+\code{powerReplicationSuccess} is the vectorized version of \code{.powerReplicationSuccess_}.
+\code{\link[base]{Vectorize}} is used to vectorize the function.
+}
 \examples{
 ## larger sample size in replication (c > 1)
 powerReplicationSuccess(zo = p2z(0.005), c = 2)

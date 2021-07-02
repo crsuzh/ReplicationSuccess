@@ -50,6 +50,10 @@ Computes sceptical p-values and z-values based on the z-values of the
 original and the replication study and the corresponding variance ratio.
 If specified, the p-values are recalibrated.
 }
+\details{
+\code{pSceptical} is the vectorized version of \code{.pSceptical_}.
+\code{\link[base]{Vectorize}} is used to vectorize the function.
+}
 \examples{
 ## no recalibration (type = "nominal") as in Held (2020)
 pSceptical(zo = p2z(0.01), zr = p2z(0.02), c = 2, alternative = "one.sided",

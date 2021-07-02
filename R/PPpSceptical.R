@@ -1,4 +1,5 @@
 #' @import stats
+#' @export
 .PPpSceptical_ <- function(level, c, alpha, power,
                            alternative = c("one.sided", "two.sided", "greater", "less"),
                            type = c("golden", "nominal", "liberal", "controlled")) {  
@@ -127,6 +128,8 @@
 #' replication effect estimate is at least as large as the original one.
 #' See \code{\link{levelSceptical}} for details about recalibration types.
 #' @return The project power.
+#' @details \code{PPpSceptical} is the vectorized version of \code{.PPpSceptical_}.
+#' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @references Held, L. (2020). The harmonic mean chi-squared test to substantiate scientific
 #' findings.  \emph{Journal of the Royal Statistical Society: Series C
 #' (Applied Statistics)}, \bold{69}, 697-708. \url{https://doi.org/10.1111/rssc.12410}

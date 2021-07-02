@@ -65,6 +65,13 @@ If "one.sided" or "two.sided" is specified, the z-value is assumed to be positiv
 \description{
 Convert between estimates, z-values, p-values, and confidence intervals
 }
+\details{
+\code{z2p} is the vectorized version of \code{.z2p_}.
+\code{\link[base]{Vectorize}} is used to vectorize the function.
+
+\code{p2z} is the vectorized version of \code{.p2z_}.
+\code{\link[base]{Vectorize}} is used to vectorize the function.
+}
 \examples{
 ci2se(lower = 1, upper = 3)
 ci2se(lower = 1, upper = 3, ratio = TRUE)

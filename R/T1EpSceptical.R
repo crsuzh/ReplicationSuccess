@@ -1,3 +1,4 @@
+#' @export
 .T1EpSceptical_ <- function(level, c,
                             alternative = c("one.sided", "two.sided", "greater", "less"),
                             type = c("golden", "nominal", "liberal", "controlled")) {  
@@ -136,6 +137,8 @@
 #' least as large as the original one. See \code{\link{levelSceptical}} for details
 #' about recalibration types.
 #' @return The type-I error rate.
+#' @details \code{T1EpSceptical} is the vectorized version of \code{.T1EpSceptical_}.
+#' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @references
 #' Held, L. (2020). The harmonic mean chi-squared test to substantiate scientific
 #' findings.  \emph{Journal of the Royal Statistical Society: Series C

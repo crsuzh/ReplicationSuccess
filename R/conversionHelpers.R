@@ -181,6 +181,7 @@ ci2p <- function(lower,
     return(p)
 }
 
+#' @export
 .z2p_ <- function(z, 
                   alternative = c("two.sided", "one.sided", "less", "greater")){
     
@@ -200,6 +201,8 @@ ci2p <- function(lower,
 
 #' @rdname conversionHelpers
 #' @param z Numeric vector of z-values.
+#' @details \code{z2p} is the vectorized version of \code{.z2p_}.
+#' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @return \code{z2p} returns a numeric vector of p-values.
 #' @examples
 #' z2p(z = c(1, 2, 5))
@@ -214,7 +217,7 @@ ci2p <- function(lower,
 z2p <- Vectorize(.z2p_)
 
 
-
+#' @export
 .p2z_ <- function(p, 
                   alternative = c("two.sided", "one.sided", "less", "greater")){
     
@@ -238,6 +241,8 @@ z2p <- Vectorize(.z2p_)
 
 #' @rdname conversionHelpers
 #' @param p Numeric vector of p-values.
+#' @details \code{p2z} is the vectorized version of \code{.p2z_}.
+#' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @return \code{p2z} returns a numeric vector of z-values.
 #' @examples
 #' p2z(p = c(0.005, 0.01, 0.05))

@@ -1,3 +1,4 @@
+#' @export
 .effectSizeReplicationSuccess_ <- function(zo, 
                                            c = 1, 
                                            level = 0.025, 
@@ -60,6 +61,8 @@
 #' the specified \code{level}, replication success is only possible for replication effect estimates larger than the original one.
 #' See \code{\link{levelSceptical}} for details about recalibration types.
 #' @return The minimum relative effect size to achieve replication success.
+#' @details \code{effectSizeReplicationSuccess} is the vectorized version of \code{.effectSizeReplicationSuccess_}.
+#' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @references Held, L., Micheloud, C. & Pawel, S. (2020).
 #' The assessment of replication success based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
 #' @author Leonhard Held, Charlotte Micheloud

@@ -1,3 +1,4 @@
+#' @export
 .powerSignificance_ <- function(zo,
                                 c = 1, 
                                 level = 0.025,
@@ -100,6 +101,8 @@
 #' @return The probability that a replication study yields a significant effect estimate
 #' in the specified direction. An error is returned if it is impossible to obtain the
 #' specified power.
+#' @details \code{powerSignificance} is the vectorized version of \code{.powerSignificance_}.
+#' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @references
 #' Goodman, S. N. (1992). A comment on replication, p-values and evidence, 
 #' \emph{Statistics in Medicine}, \bold{11}, 875--879. 

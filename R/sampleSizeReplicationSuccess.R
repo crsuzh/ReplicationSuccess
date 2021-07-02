@@ -1,4 +1,4 @@
-.sampleSizeReplicationSuccessTarget <- function(zo, c, p, level, designPrior, alternative, type = type,
+sampleSizeReplicationSuccessTarget <- function(zo, c, p, level, designPrior, alternative, type = type,
                    shrinkage){
     zr2 <- zr2quantile(zo = zo, c = c, p = p, designPrior = designPrior, 
                        shrinkage = shrinkage)
@@ -7,6 +7,7 @@
     return(pC - level)
 }
 
+#' @export
 .sampleSizeReplicationSuccess_ <- function(zo,
                                            power = NA,
                                            d = NA,
@@ -56,7 +57,7 @@
     
     ## sample size calculation based on power
     if (is.na(d)){
-        target.l <- .sampleSizeReplicationSuccessTarget(c = mylower, 
+        target.l <- sampleSizeReplicationSuccessTarget(c = mylower, 
                                                         zo = zo, 
                                                         p = 1 - power, 
                                                         level = level,
@@ -64,7 +65,7 @@
                                                         alternative = alternative,
                                                         type = type,
                                                         shrinkage = shrinkage)
-        target.u <- .sampleSizeReplicationSuccessTarget(c = myupper, 
+        target.u <- sampleSizeReplicationSuccessTarget(c = myupper, 
                                                         zo = zo, 
                                                         p = 1 - power, 
                                                         level = level,
@@ -79,7 +80,7 @@
                 c <- NA
         }
         else {
-            c <- uniroot(f = .sampleSizeReplicationSuccessTarget, 
+            c <- uniroot(f = sampleSizeReplicationSuccessTarget, 
                          lower = mylower, 
                          upper = myupper, 
                          zo = zo, 
@@ -146,6 +147,9 @@
 #' Is only taken into account when the \code{designPrior} is "conditional" or "predictive".
 #' @return The relative sample size for replication success.
 #' If larger than 1000, \code{Inf} is returned.
+#' @details \code{sampleSizeReplicationSuccess} is the vectorized version of
+#' \code{.sampleSizeReplicationSuccess_}.
+#' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @references
 #' Held, L. (2020). A new standard for the analysis and design of replication studies (with discussion).
 #' \emph{Journal of the Royal Statistical Society: Series A (Statistics in Society)}.
@@ -154,7 +158,7 @@
 #' Held, L., Micheloud, C. & Pawel, S. (2020). The assessment of replication success
 #' based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
 #' @author Leonhard Held, Charlotte Micheloud
-#' seealso \code{\link{pSceptical}}, \code{\link{powerReplicationSuccess}}, \code{\link{levelSceptical}}
+#' @seealso \code{\link{pSceptical}}, \code{\link{powerReplicationSuccess}}, \code{\link{levelSceptical}}
 #' @examples
 #' ## based on power
 #' sampleSizeReplicationSuccess(zo = p2z(0.0025), power = 0.8, level = 0.025,

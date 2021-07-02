@@ -1,3 +1,4 @@
+#' @export
 .predictionInterval_ <- function(thetao,
                                  seo,
                                  ser,
@@ -76,6 +77,8 @@
 #' \item{lower}{Lower limit of prediction interval,}
 #' \item{mean}{Mean of predictive distribution,}
 #' \item{upper}{Upper limit of prediction interval.}
+#' @details \code{predictionInterval} is the vectorized version of \code{.predictionInterval_}.
+#' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @references
 #' Patil, P., Peng, R. D., Leek, J. T. (2016).
 #' What should researchers expect when they replicate studies? A statistical view of

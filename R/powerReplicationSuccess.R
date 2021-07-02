@@ -34,7 +34,7 @@ zr2quantile <- function(zo,
 
 
 
-.powerReplicationSuccessTargetPower <- function(power, zo, c, level, designPrior, alternative, type,
+powerReplicationSuccessTargetPower <- function(power, zo, c, level, designPrior, alternative, type,
                         shrinkage){
     zr2 <- zr2quantile(zo = zo, c = c, p = 1 - power, 
                        designPrior = designPrior, shrinkage = shrinkage)
@@ -47,6 +47,7 @@ zr2quantile <- function(zo,
                                         #                                type = type))
 }
 
+#' @export 
 .powerReplicationSuccess_ <- function(zo,
                                      c = 1, 
                                      level = 0.025,
@@ -95,7 +96,7 @@ zr2quantile <- function(zo,
                            type = type))
         res <- 0
     else {
-        targetLower <- .powerReplicationSuccessTargetPower(power = mylower, 
+        targetLower <- powerReplicationSuccessTargetPower(power = mylower, 
                                                         zo = zo, 
                                                         c = c, 
                                                         level = level,
@@ -103,7 +104,7 @@ zr2quantile <- function(zo,
                                                         alternative = alternative,
                                                         type = type,
                                                         shrinkage = shrinkage)
-        targetUpper <- .powerReplicationSuccessTargetPower(power = myupper, 
+        targetUpper <- powerReplicationSuccessTargetPower(power = myupper, 
                                                         zo = zo, 
                                                         c = c, 
                                                         level = level,
@@ -118,7 +119,7 @@ zr2quantile <- function(zo,
                 res <- 1
         }
         else {
-            res <- uniroot(f = .powerReplicationSuccessTargetPower, 
+            res <- uniroot(f = powerReplicationSuccessTargetPower, 
                            lower = mylower, 
                            upper = myupper,
                            zo = zo, 
@@ -161,6 +162,8 @@ zr2quantile <- function(zo,
 #' the effect is shrunken by a factor of 25\% for \code{shrinkage=0.25}.
 #' Is only taken into account if the \code{designPrior} is "conditional" or "predictive".
 #' @return The power for replication success.
+#' @details \code{powerReplicationSuccess} is the vectorized version of \code{.powerReplicationSuccess_}.
+#' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @references
 #' Held, L. (2020). A new standard for the analysis and design of replication
 #' studies (with discussion). \emph{Journal of the Royal Statistical Society:

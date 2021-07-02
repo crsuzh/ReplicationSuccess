@@ -44,6 +44,10 @@ The type-I error rate of the sceptical p-value is computed for a
 specified level of replication success, the relative variance,
 and the alternative hypothesis.
 }
+\details{
+\code{T1EpSceptical} is the vectorized version of \code{.T1EpSceptical_}.
+\code{\link[base]{Vectorize}} is used to vectorize the function.
+}
 \examples{
 ## compare type-I error rate for different levels of replication success
 levels <- c("nominal" = levelSceptical(level = 0.025, type = "nominal"),

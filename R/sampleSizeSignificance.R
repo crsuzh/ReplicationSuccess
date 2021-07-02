@@ -1,4 +1,4 @@
-.sampleSizeSignificanceTarget <- function(c, zo, level, power, alternative,
+sampleSizeSignificanceTarget <- function(c, zo, level, power, alternative,
                             h, shrinkage, designPrior){
     term <- powerSignificance(zo = zo, 
                               c = c, 
@@ -10,6 +10,7 @@
     return(term - power)
 }
 
+#' @export
 .sampleSizeSignificance_ <- function(zo,
                                      power = NA,
                                      d = NA,
@@ -88,7 +89,7 @@
                                         # } else {
             
                                         # check whether desired power can be achieved for max c = n.u
-            target.l <- .sampleSizeSignificanceTarget(c = n.l, 
+            target.l <- sampleSizeSignificanceTarget(c = n.l, 
                                                       zo = zo,
                                                       level = level,
                                                       power = power,
@@ -96,7 +97,7 @@
                                                       h = h,
                                                       shrinkage = shrinkage,
                                                       designPrior = designPrior)
-            target.u <- .sampleSizeSignificanceTarget(c = n.u, 
+            target.u <- sampleSizeSignificanceTarget(c = n.u, 
                                                       zo = zo,
                                                       level = level,
                                                       power = power,
@@ -107,7 +108,7 @@
             if (sign(target.l) == sign(target.u)) 
                 c <- NaN
                                         # determine c to achieve desired power
-            else c <- uniroot(f = .sampleSizeSignificanceTarget, 
+            else c <- uniroot(f = sampleSizeSignificanceTarget, 
                               lower = n.l, 
                               upper = n.u,
                               zo = zo,
@@ -159,8 +160,10 @@
 #' A number in [0,1] with 0. Specifies the shrinkage of the original effect
 #' towards zero (e.g., \code{shrinkage = 0.25} implies a shrinkage by a factor of 25\%).
 #' Is only taken into account when \code{designPrior} is "conditional" or "predictive".
-#' @return   The relative sample size to achieve significance in the specified direction.
+#' @return  The relative sample size to achieve significance in the specified direction.
 #' If larger than 1000 then NA is returned. 
+#' @details \code{sampleSizeSignificance} is the vectorized version of \code{.sampleSizeSignificance_}.
+#' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @seealso \code{\link{powerSignificance}}
 #' @references
 #' Held, L. (2020). A new standard for the analysis and design of replication studies (with discussion).
