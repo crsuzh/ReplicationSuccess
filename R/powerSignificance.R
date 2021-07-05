@@ -37,8 +37,8 @@
               is.finite(shrinkage),
               0 <= shrinkage, shrinkage <= 1,
 
-              is.logical(strict))
-
+              is.logical(strict),
+              length(strict) == 1)
 
 
     ## determine direction of alternative and critical value of zr
