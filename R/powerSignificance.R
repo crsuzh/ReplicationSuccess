@@ -106,8 +106,7 @@
 #' in the opposite direction of the original effect estimate should also be 
 #' taken into account. Default is \code{FALSE}.
 #' @return The probability that a replication study yields a significant effect estimate
-#' in the specified direction. An error is returned if it is impossible to obtain the
-#' specified power.
+#' in the specified direction.
 #' @details \code{powerSignificance} is the vectorized version of \code{.powerSignificance_}.
 #' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @references

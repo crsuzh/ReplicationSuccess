@@ -67,7 +67,7 @@ Type 'q()' to quit R.
 > apply_grid <- expand.grid(priors = c("conditional", "predictive", "EB"),
 +                           h = c(0, 0.1),
 +                           shrinkage = c(0, 0.75),
-+                           alt = c("greater", "two.sided"),
++                           alt = c("one.sided", "two.sided"),
 +                           stringsAsFactors = FALSE)
 > for (i in seq(1, nrow(apply_grid))) {
 +   print(apply_grid[i,])
@@ -80,60 +80,60 @@ Type 'q()' to quit R.
 +                               shrinkage = apply_grid$shrinkage[i])
 +   print(round(c, digits = 5))
 + }
-       priors h shrinkage     alt
-1 conditional 0         0 greater
+      priors h shrinkage       alt
+1 conditional 0         0 one.sided
 [1] 0.38641 1.54564     Inf 1.54564 0.38641
-      priors h shrinkage     alt
-2 predictive 0         0 greater
-[1]     NaN     NaN     NaN 2.64240 0.44059
-  priors h shrinkage     alt
-3     EB 0         0 greater
-[1]     NaN     NaN     NaN 5.68100 0.50569
-       priors   h shrinkage     alt
-4 conditional 0.1         0 greater
+      priors h shrinkage       alt
+2 predictive 0         0 one.sided
+[1] 0.44056 2.64240     NaN 2.64240 0.44056
+  priors h shrinkage       alt
+3     EB 0         0 one.sided
+[1] 0.50568 5.68098     NaN 5.68098 0.50568
+       priors   h shrinkage       alt
+4 conditional 0.1         0 one.sided
 [1] 0.38641 1.54564     Inf 1.54564 0.38641
-      priors   h shrinkage     alt
-5 predictive 0.1         0 greater
-[1]     NaN     NaN     NaN 2.95872 0.45233
-  priors   h shrinkage     alt
-6     EB 0.1         0 greater
-[1]     NaN     NaN     NaN 7.60909 0.52828
-       priors h shrinkage     alt
-7 conditional 0      0.75 greater
+      priors   h shrinkage       alt
+5 predictive 0.1         0 one.sided
+[1] 0.45233 2.95872     NaN 2.95872 0.45233
+  priors   h shrinkage       alt
+6     EB 0.1         0 one.sided
+[1] 0.52828 7.60908     NaN 7.60908 0.52828
+       priors h shrinkage       alt
+7 conditional 0      0.75 one.sided
 [1]  6.18256 24.73023      Inf 24.73023  6.18256
-      priors h shrinkage     alt
-8 predictive 0      0.75 greater
-[1]      NaN      NaN      NaN      NaN 113.1002
-  priors h shrinkage     alt
-9     EB 0      0.75 greater
-[1]     NaN     NaN     NaN 5.68100 0.50569
-        priors   h shrinkage     alt
-10 conditional 0.1      0.75 greater
+      priors h shrinkage       alt
+8 predictive 0      0.75 one.sided
+[1] 113.1002      NaN      NaN      NaN 113.1002
+  priors h shrinkage       alt
+9     EB 0      0.75 one.sided
+[1] 0.50568 5.68098     NaN 5.68098 0.50568
+        priors   h shrinkage       alt
+10 conditional 0.1      0.75 one.sided
 [1]  6.18256 24.73023      Inf 24.73023  6.18256
-       priors   h shrinkage     alt
-11 predictive 0.1      0.75 greater
-[1]      NaN      NaN      NaN      NaN 453.9128
-   priors   h shrinkage     alt
-12     EB 0.1      0.75 greater
-[1]     NaN     NaN     NaN 7.60909 0.52828
+       priors   h shrinkage       alt
+11 predictive 0.1      0.75 one.sided
+[1] 453.9128      NaN      NaN      NaN 453.9128
+   priors   h shrinkage       alt
+12     EB 0.1      0.75 one.sided
+[1] 0.52828 7.60908     NaN 7.60908 0.52828
         priors h shrinkage       alt
 13 conditional 0         0 two.sided
 [1] 0.49055 1.96222     Inf 1.96222 0.49055
        priors h shrinkage       alt
 14 predictive 0         0 two.sided
-[1] 0.56767 3.51088     NaN 3.51088 0.56767
+[1] 0.56766 3.51088     NaN 3.51088 0.56766
    priors h shrinkage       alt
 15     EB 0         0 two.sided
-[1] 0.65212 7.62155     NaN 7.62155 0.65212
+[1] 0.65214 7.62155     NaN 7.62155 0.65214
         priors   h shrinkage       alt
 16 conditional 0.1         0 two.sided
 [1] 0.49055 1.96222     Inf 1.96222 0.49055
        priors   h shrinkage       alt
 17 predictive 0.1         0 two.sided
-[1] 0.58435 3.95489     NaN 3.95489 0.58435
+[1] 0.58434 3.95487     NaN 3.95487 0.58434
    priors   h shrinkage       alt
 18     EB 0.1         0 two.sided
-[1]  0.68329 10.30125      NaN 10.30125  0.68329
+[1]  0.68328 10.30127      NaN 10.30127  0.68328
         priors h shrinkage       alt
 19 conditional 0      0.75 two.sided
 [1]  7.84888 31.39552      Inf 31.39552  7.84888
@@ -142,7 +142,7 @@ Type 'q()' to quit R.
 [1] 158.406     NaN     NaN     NaN 158.406
    priors h shrinkage       alt
 21     EB 0      0.75 two.sided
-[1] 0.65212 7.62155     NaN 7.62155 0.65212
+[1] 0.65214 7.62155     NaN 7.62155 0.65214
         priors   h shrinkage       alt
 22 conditional 0.1      0.75 two.sided
 [1]  7.84888 31.39552      Inf 31.39552  7.84888
@@ -151,7 +151,7 @@ Type 'q()' to quit R.
 [1] 640.3952      NaN      NaN      NaN 640.3952
    priors   h shrinkage       alt
 24     EB 0.1      0.75 two.sided
-[1]  0.68329 10.30125      NaN 10.30125  0.68329
+[1]  0.68328 10.30127      NaN 10.30127  0.68328
 > 
 > proc.time()
    user  system elapsed 
