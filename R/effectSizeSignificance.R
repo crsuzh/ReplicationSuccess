@@ -9,7 +9,7 @@
                             
               is.numeric(c),
               length(c) == 1,
-              is.finite(c),
+              is.finite(c), # should be removed, it is possible to set c = Inf
               0 <= c,
               
               is.numeric(level),
