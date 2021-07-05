@@ -1,6 +1,6 @@
 #' Computes the p-value threshold for intrinsic credibility
 #'
-#' @param alpha Numric vector of intrinsic credibility levels.
+#' @param alpha Numeric vector of intrinsic credibility levels.
 #' @param alternative Either "two.sided" (default) or "one.sided".
 #' Specifies if the threshold is for one-sided or two-sided p-values.
 #' @param type Either "Held" (default) or "Matthews".
@@ -18,12 +18,25 @@
 #' thresholdIntrinsic(alpha = c(0.005, 0.01, 0.05), alternative = "one.sided")
 #' @export
 thresholdIntrinsic <- function(alpha, 
-                               alternative = "two.sided", 
-                               type = "Held"){
+                               alternative = c("two.sided", "one.sided"), 
+                               type = c("Held", "Matthews")){
+
+    stopifnot(is.numeric(alpha),
+              length(alpha) > 0,
+              is.finite(alpha),
+              0 < alpha, alpha <= 1,
+
+              !is.null(alternative))
+    alternative <- match.arg(alternative)
+
+    stopifnot(!is.null(type))
+    type <- match.arg(type)
+
     z <- p2z(p = alpha, alternative = alternative)
-    if(type == "Held")
+    if(type == "Held"){
         result <- z2p(z = sqrt(2)*z, alternative = alternative)
-    if(type == "Matthews")
+    } else{ ## type == "Matthews"
         result <- z2p(z = sqrt(2)*z/sqrt(sqrt(5) - 1), alternative = alternative)
+    }
     return(result)
 }

@@ -5,7 +5,13 @@
 \alias{zSceptical}
 \title{Computes the sceptical p-value and z-value}
 \usage{
-pSceptical(zo, zr, c, alternative = "one.sided", type = "golden")
+pSceptical(
+  zo,
+  zr,
+  c,
+  alternative = c("one.sided", "two.sided"),
+  type = c("golden", "nominal", "liberal", "controlled")
+)
 
 zSceptical(zo, zr, c)
 }
@@ -43,6 +49,10 @@ See \code{\link{levelSceptical}} for details about recalibration types.}
 Computes sceptical p-values and z-values based on the z-values of the
 original and the replication study and the corresponding variance ratio.
 If specified, the p-values are recalibrated.
+}
+\details{
+\code{pSceptical} is the vectorized version of \code{.pSceptical_}.
+\code{\link[base]{Vectorize}} is used to vectorize the function.
 }
 \examples{
 ## no recalibration (type = "nominal") as in Held (2020)

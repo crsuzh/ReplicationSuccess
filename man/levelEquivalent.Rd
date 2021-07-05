@@ -4,7 +4,11 @@
 \alias{levelEquivalent}
 \title{Computes the level for the sceptical p-value}
 \usage{
-levelEquivalent(dinf, level = 0.025, alternative = "one.sided")
+levelEquivalent(
+  dinf,
+  level = 0.025,
+  alternative = c("one.sided", "two.sided", "greater", "less")
+)
 }
 \arguments{
 \item{dinf}{The limiting relative effect size bound below which replication success is

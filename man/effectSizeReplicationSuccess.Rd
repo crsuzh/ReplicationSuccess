@@ -8,8 +8,8 @@ effectSizeReplicationSuccess(
   zo,
   c = 1,
   level = 0.025,
-  alternative = "one.sided",
-  type = "golden"
+  alternative = c("one.sided", "two.sided"),
+  type = c("golden", "nominal", "liberal", "controlled")
 )
 }
 \arguments{
@@ -36,6 +36,10 @@ The minimum relative effect size to achieve replication success.
 \description{
 The minimum relative effect size (replication to original) to achieve replication success
 is computed based on the result of the original study and the corresponding variance ratio (relative sample size).
+}
+\details{
+\code{effectSizeReplicationSuccess} is the vectorized version of \code{.effectSizeReplicationSuccess_}.
+\code{\link[base]{Vectorize}} is used to vectorize the function.
 }
 \examples{
 po <- c(0.001, 0.002, 0.01, 0.02, 0.025)

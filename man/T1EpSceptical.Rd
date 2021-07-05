@@ -4,7 +4,12 @@
 \alias{T1EpSceptical}
 \title{Compute type-I error rate of the sceptical p-value}
 \usage{
-T1EpSceptical(level, c, alternative = "one.sided", type = "golden")
+T1EpSceptical(
+  level,
+  c,
+  alternative = c("one.sided", "two.sided", "greater", "less"),
+  type = c("golden", "nominal", "liberal", "controlled")
+)
 }
 \arguments{
 \item{level}{Numeric vector of levels of replication success.}
@@ -38,6 +43,10 @@ The type-I error rate.
 The type-I error rate of the sceptical p-value is computed for a
 specified level of replication success, the relative variance,
 and the alternative hypothesis.
+}
+\details{
+\code{T1EpSceptical} is the vectorized version of \code{.T1EpSceptical_}.
+\code{\link[base]{Vectorize}} is used to vectorize the function.
 }
 \examples{
 ## compare type-I error rate for different levels of replication success

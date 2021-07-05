@@ -8,10 +8,11 @@ powerSignificance(
   zo,
   c = 1,
   level = 0.025,
-  designPrior = "conditional",
-  alternative = "one.sided",
+  designPrior = c("conditional", "predictive", "EB"),
+  alternative = c("one.sided", "two.sided", "greater", "less"),
   h = 0,
-  shrinkage = 0
+  shrinkage = 0,
+  strict = FALSE
 )
 }
 \arguments{
@@ -44,6 +45,10 @@ Is only taken into account when \code{designPrior = "predictive"} or
 Specifies the shrinkage of the original effect estimate towards zero, e.g.,
 the effect is shrunken by a factor of 25\% for \code{shrinkage = 0.25}.
 Is only taken into account if the \code{designPrior} is "conditional" or "predictive".}
+
+\item{strict}{Logical vector indicating whether the probability for significance
+in the opposite direction of the original effect estimate should also be 
+taken into account. Default is \code{FALSE}.}
 }
 \value{
 The probability that a replication study yields a significant effect estimate
@@ -54,6 +59,10 @@ specified power.
 The power for significance is computed based on the result of
 the original study, the corresponding variance ratio,
 and the design prior.
+}
+\details{
+\code{powerSignificance} is the vectorized version of \code{.powerSignificance_}.
+\code{\link[base]{Vectorize}} is used to vectorize the function.
 }
 \examples{
 powerSignificance(zo = p2z(0.005), c = 2)

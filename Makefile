@@ -6,7 +6,7 @@ TAR = $(PACKAGE)_$(VERSION).tar.gz
 
 
 
-.PHONY: test-package update-src lib rm check-cran check
+.PHONY: test-package update-src lib rm check-cran check covr
 
 
 update-src:
@@ -31,4 +31,7 @@ check-cran: $(TAR)
 	$(R) CMD check --as-cran $(TAR) 
 
 check: $(TAR)
-	$(R) CMD check $(TAR) 
+	$(R) CMD check $(TAR)
+
+covr: 
+	$(RSCRIPT) -e "covr::package_coverage()"
