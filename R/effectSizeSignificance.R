@@ -10,6 +10,7 @@
               is.numeric(c),
               length(c) == 1,
               is.finite(c),
+              0 <= c,
               
               is.numeric(level),
               length(level) == 1,
