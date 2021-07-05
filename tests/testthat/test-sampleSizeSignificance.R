@@ -57,3 +57,51 @@ test_that("numeric test for sampleSizeSignificance(): 2", {
                               c(0.683282959536562,10.3012684887906,NA,10.3012684887906,0.683282959536562)
                           ))
 })
+
+
+
+
+test_that("sampleSizeSignificance() vs .sampleSizeSignificanceNum_", {
+    vec01 <- c(0.001, 0.2532, 0.99)
+    vec01bound <- c(0, 0.0386, 0.5031, 1)
+    vec55 <- c(-5, -2.6288, 0, 4)
+    alternative <- c("two.sided", "one.sided")
+    designPrior <- c("conditional", "predictive", "EB")
+    ## power should only be larger than level
+    powvec <- c(0.499, 0.8, 0.975)
+    levelvec <- c(0.001, 0.025, 0.49)
+    pars_grid_power <- expand.grid(zo=vec55,
+                                   power=powvec,
+                                   d=NA,
+                                   level=levelvec,
+                                   alternative=alternative,
+                                   designPrior=designPrior,
+                                   h=abs(vec55),
+                                   shrinkage=vec01bound, stringsAsFactors = FALSE)
+    pars_grid_d <- expand.grid(zo=vec55,
+                               power=NA,
+                               d=vec01,
+                               level=.025,
+                               alternative="one.sided",
+                               designPrior="conditional",
+                               h=0,
+                               shrinkage=0, stringsAsFactors = FALSE)
+
+    ## test all configurations separately
+    pars_grid <- cbind(rbind(pars_grid_power, pars_grid_d), new=NA, legacy=NA)
+    .sampleSizeSignificanceNum_ <- ReplicationSuccess:::.sampleSizeSignificanceNum_
+    for(i in seq_len(nrow(pars_grid))){
+        pars_grid[i,9] <- do.call("sampleSizeSignificance", args = pars_grid[i,1:8])
+        pars_grid[i,10] <- do.call(".sampleSizeSignificanceNum_", args = pars_grid[i,1:8])
+    }
+    
+    ## exclude cases with large vales
+    pars_grid <- pars_grid[pars_grid$new < 500,]
+    expect_equal(object=is.na(pars_grid[,9]), expected=is.na(pars_grid[,9]))
+    pars_grid_nonNA <- pars_grid[!(is.na(pars_grid[,9]) & is.na(pars_grid[,9])),]
+    expect_equal_tol(object = pars_grid_nonNA[,9],
+                     expected = pars_grid_nonNA[,10], tol = 0.1)
+    
+})
+
+
