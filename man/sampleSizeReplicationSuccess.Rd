@@ -10,9 +10,9 @@ sampleSizeReplicationSuccess(
   power = NA,
   d = NA,
   level = 0.025,
-  alternative = "one.sided",
-  type = "golden",
-  designPrior = "conditional",
+  alternative = c("one.sided", "two.sided"),
+  type = c("golden", "nominal", "liberal", "controlled"),
+  designPrior = c("conditional", "predictive", "EB"),
   shrinkage = 0
 )
 }
@@ -61,6 +61,11 @@ z-value of the original study, the replication success level, the type of
 recalibration and either the power or the minimum relative effect size.
 When the approach based on power is used, the design prior also has to be specified.
 }
+\details{
+\code{sampleSizeReplicationSuccess} is the vectorized version of
+\code{.sampleSizeReplicationSuccess_}.
+\code{\link[base]{Vectorize}} is used to vectorize the function.
+}
 \examples{
 ## based on power
 sampleSizeReplicationSuccess(zo = p2z(0.0025), power = 0.8, level = 0.025,
@@ -82,7 +87,9 @@ Held, L. (2020). A new standard for the analysis and design of replication studi
 Held, L., Micheloud, C. & Pawel, S. (2020). The assessment of replication success
 based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
 }
+\seealso{
+\code{\link{pSceptical}}, \code{\link{powerReplicationSuccess}}, \code{\link{levelSceptical}}
+}
 \author{
 Leonhard Held, Charlotte Micheloud
-seealso \code{\link{pSceptical}}, \code{\link{powerReplicationSuccess}}, \code{\link{levelSceptical}}
 }

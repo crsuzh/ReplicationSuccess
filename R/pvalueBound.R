@@ -18,17 +18,27 @@
 #' pvalueBound(alpha = 0.025^2, n = 2, type = "necessary")
 #' pvalueBound(alpha = 0.025^2, n = 2, type = "sufficient")
 #' @export
-pvalueBound <- function(alpha, n, type="necessary"){
-  if(!(type %in% c("necessary", "sufficient")))
-    stop("Incorrect type chosed")
-  if(type=="necessary")
-      bound <- 1-pnorm(sqrt(cH(alpha, n))/n)
-  if(type=="sufficient")
-      bound <- 1-pnorm(sqrt(cH(alpha, n)/n))
-  return(bound)
+pvalueBound <- function(alpha, n, type=c("necessary", "sufficient")){
+
+    stopifnot(is.numeric(alpha),
+              length(alpha) > 0,
+              is.finite(alpha),
+
+              is.numeric(n),
+              length(n) > 0,
+              is.finite(n),
+              
+              !is.null(type))
+    type <- match.arg(type)
+    
+    cH <- function(alpha, n){
+        (qnorm(1-2^(n-1)*alpha))^2
+    }
+    
+    if(type=="necessary")
+       return(1-pnorm(sqrt(cH(alpha, n))/n))
+
+    ## type=="sufficient"
+    1-pnorm(sqrt(cH(alpha, n)/n))
 }
 
-cH <- function(alpha, n){
-    res <- (qnorm(1-2^(n-1)*alpha))^2
-    return(res)
-}

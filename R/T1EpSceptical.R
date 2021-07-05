@@ -1,3 +1,116 @@
+#' @export
+.T1EpSceptical_ <- function(level, c,
+                            alternative = c("one.sided", "two.sided", "greater", "less"),
+                            type = c("golden", "nominal", "liberal", "controlled")) {  
+    
+    stopifnot(is.numeric(level),
+              length(level) == 1,
+              is.finite(level),
+              0 < level, level < 1,
+
+              is.numeric(c),
+              length(c) == 1,
+              is.finite(c),
+              0 <= c,
+                            
+              !is.null(alternative))
+    alternative <- match.arg(alternative)
+    
+    stopifnot(!is.null(type))
+    type <- match.arg(type)
+        
+    ## compute normal quantile corresponding to level and type
+    alphas <- levelSceptical(level = level, 
+                             alternative = alternative, 
+                             type = type)
+    zas <- p2z(alphas, alternative = alternative)
+    
+    if (alternative == "two.sided") {
+        ## if c = 1 compute analytically
+        if (c == 1) {
+            t1err <- 2*(1 - stats::pnorm(q = 2*zas))
+            return(t1err)
+        } else {  ## if c != 1 use numerical integration
+            
+            ## define function to integrate over zo from zas to Infty
+            intFun <- function(zo) {
+                K <- zo^2/zas^2
+                ## compute minimal zr to achieve replication success given zo and level
+                zrmin <- zas*sqrt(1 + c/(K - 1))
+                ## return integrand: P(|zr| >= zrmin)*dnorm(zo)
+                2*(1 - stats::pnorm(q = zrmin))*stats::dnorm(x = zo)
+            } 
+        }
+    }
+    if (alternative == "one.sided") {
+        ## if c = 1 compute analytically
+        if (c == 1) {
+            t1err <- 1 - stats::pnorm(q = 2*zas)
+            return(t1err)
+        } else { ## if c != 1 use numerical integration
+            
+                                        # define function to integrate over zo from zas to Infty
+            intFun <- function(zo) {
+                K <- zo^2/zas^2
+                ## compute minimal zr to achieve replication success given zo and level
+                zrmin <- zas*sqrt(1 + c/(K - 1))
+                ## compute integrand: P(zr >= zrmin)*dnorm(zo)
+                (1 - stats::pnorm(q = zrmin))*stats::dnorm(x = zo)
+            }
+        }
+    }
+    if (alternative == "greater") {
+        ## if c = 1 compute analytically
+        if (c == 1) {
+            t1err <- (1 - stats::pnorm(q = 2*zas))/2
+            return(t1err)
+        } else { ## if c != 1 use numerical integration
+            
+            ## define function to integrate over zo from zas to Infty
+            intFun <- function(zo) {
+                K <- zo^2/zas^2
+                ## compute minimal zr to achieve replication success given zo and level
+                zrmin <- zas*sqrt(1 + c/(K - 1))
+                ## compute integrand: P(zr >= zrmin)*dnorm(zo)
+                (1 - stats::pnorm(q = zrmin))*stats::dnorm(x = zo)
+            }
+        }
+    }
+    if (alternative == "less") {
+        ## if c = 1 compute analytically
+        if (c == 1) {
+            t1err <- stats::pnorm(q = 2*zas)/2
+            return(t1err)
+        } else { ## if c != 1 use numerical integration
+            
+            ## define function to integrate over zo from zas to Infty
+            intFun <- function(zo) {
+                K <- zo^2/zas^2
+                ## compute maximal zr to achieve replication success given zo and level
+                zrmax <- zas*sqrt(1 + c/(K - 1))
+                ## compute integrand: P(zr <= zrmax)*dnorm(zo)
+                stats::pnorm(q = zrmax)*stats::dnorm(x = zo)
+            }
+        }
+    }
+    if (alternative %in% c("one.sided", "two.sided")) {
+        ## the integral is symmetric around zero for "one.sided" and "two.sided" 
+        ## so we can multiply the integral from zas to Infty by 2
+        t1err <- 2*stats::integrate(f = intFun, lower = zas, upper = Inf)$value
+        return(t1err)
+    }
+    if (alternative == "greater") {
+        t1err <- stats::integrate(f = intFun, lower = zas, upper = Inf)$value
+        return(t1err)
+    }
+    if (alternative == "less") {
+        t1err <- stats::integrate(f = intFun, lower = -Inf, upper = zas)$value
+        return(t1err)
+    }
+    return(t1err)
+}
+
+
 #' Compute type-I error rate of the sceptical p-value
 #'
 #' The type-I error rate of the sceptical p-value is computed for a
@@ -24,6 +137,8 @@
 #' least as large as the original one. See \code{\link{levelSceptical}} for details
 #' about recalibration types.
 #' @return The type-I error rate.
+#' @details \code{T1EpSceptical} is the vectorized version of \code{.T1EpSceptical_}.
+#' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @references
 #' Held, L. (2020). The harmonic mean chi-squared test to substantiate scientific
 #' findings.  \emph{Journal of the Royal Statistical Society: Series C
@@ -53,111 +168,4 @@
 #'                                      type = "controlled"), 
 #'               c = 1, alternative = "one.sided",  type = "nominal")
 #' @export
-T1EpSceptical <- function(level, c, alternative = "one.sided", type = "golden") {  
-    
-    ## vectorize function in all arguments
-    t1errV <- mapply(FUN = function(level, c, alternative, type) {
-        ## sanity checks
-        if (!(alternative %in% c("one.sided", "two.sided", "greater", "less")))
-            stop('alternative must be either "one.sided", "two.sided", "greater" or "less"')
-        if (!is.numeric(c) || c < 0)
-            stop("c must be numeric and larger than 0")
-        if (!is.numeric(level) || (level <= 0 || level >= 1))
-            stop("level must be numeric and in (0, 1)!")
-        if (!(type %in% c("nominal", "liberal", "controlled", "golden")))
-            stop('type must be either "nominal", "liberal", "controlled", or "golden"')
-        
-        ## compute normal quantile corresponding to level and type
-        alphas <- levelSceptical(level = level, 
-                                 alternative = alternative, 
-                                 type = type)
-        zas <- p2z(alphas, alternative = alternative)
-        
-        if (alternative == "two.sided") {
-            ## if c = 1 compute analytically
-            if (c == 1) {
-                t1err <- 2*(1 - stats::pnorm(q = 2*zas))
-                return(t1err)
-            } else {  ## if c != 1 use numerical integration
-                
-                ## define function to integrate over zo from zas to Infty
-                intFun <- function(zo) {
-                    K <- zo^2/zas^2
-                    ## compute minimal zr to achieve replication success given zo and level
-                    zrmin <- zas*sqrt(1 + c/(K - 1))
-                    ## return integrand: P(|zr| >= zrmin)*dnorm(zo)
-                    2*(1 - stats::pnorm(q = zrmin))*stats::dnorm(x = zo)
-                } 
-            }
-        }
-        if (alternative == "one.sided") {
-            ## if c = 1 compute analytically
-            if (c == 1) {
-                t1err <- 1 - stats::pnorm(q = 2*zas)
-                return(t1err)
-            } else { ## if c != 1 use numerical integration
-                
-                                        # define function to integrate over zo from zas to Infty
-                intFun <- function(zo) {
-                    K <- zo^2/zas^2
-                    ## compute minimal zr to achieve replication success given zo and level
-                    zrmin <- zas*sqrt(1 + c/(K - 1))
-                    ## compute integrand: P(zr >= zrmin)*dnorm(zo)
-                    (1 - stats::pnorm(q = zrmin))*stats::dnorm(x = zo)
-                }
-            }
-        }
-        if (alternative == "greater") {
-            ## if c = 1 compute analytically
-            if (c == 1) {
-                t1err <- (1 - stats::pnorm(q = 2*zas))/2
-                return(t1err)
-            } else { ## if c != 1 use numerical integration
-                
-                ## define function to integrate over zo from zas to Infty
-                intFun <- function(zo) {
-                    K <- zo^2/zas^2
-                    ## compute minimal zr to achieve replication success given zo and level
-                    zrmin <- zas*sqrt(1 + c/(K - 1))
-                    ## compute integrand: P(zr >= zrmin)*dnorm(zo)
-                    (1 - stats::pnorm(q = zrmin))*stats::dnorm(x = zo)
-                }
-            }
-        }
-        if (alternative == "less") {
-            ## if c = 1 compute analytically
-            if (c == 1) {
-                t1err <- stats::pnorm(q = 2*zas)/2
-                return(t1err)
-            } else { ## if c != 1 use numerical integration
-                
-                ## define function to integrate over zo from zas to Infty
-                intFun <- function(zo) {
-                    K <- zo^2/zas^2
-                    ## compute maximal zr to achieve replication success given zo and level
-                    zrmax <- zas*sqrt(1 + c/(K - 1))
-                    ## compute integrand: P(zr <= zrmax)*dnorm(zo)
-                    stats::pnorm(q = zrmax)*stats::dnorm(x = zo)
-                }
-            }
-        }
-        if (alternative %in% c("one.sided", "two.sided")) {
-            ## the integral is symmetric around zero for "one.sided" and "two.sided" 
-            ## so we can multiply the integral from zas to Infty by 2
-            t1err <- 2*stats::integrate(f = intFun, lower = zas, upper = Inf)$value
-            return(t1err)
-        }
-        if (alternative == "greater") {
-            t1err <- stats::integrate(f = intFun, lower = zas, upper = Inf)$value
-            return(t1err)
-        }
-        if (alternative == "less") {
-            t1err <- stats::integrate(f = intFun, lower = -Inf, upper = zas)$value
-            return(t1err)
-        }
-        
-        return(t1err)
-    }, level, c, alternative, type)
-    
-    return(t1errV)
-}
+T1EpSceptical <- Vectorize(.T1EpSceptical_)

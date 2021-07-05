@@ -3,7 +3,7 @@
 #' @rdname hMeanChiSq
 #' @param z Numeric vector of z-values. 
 #' @param w Numeric vector of weights.
-#' @param alternative  Either "greater" (default), "less", "two.sided", or "none".
+#' @param alternative Either "greater" (default), "less", "two.sided", or "none".
 #' Specifies the alternative to be considered in the computation of the p-value.
 #' @param bound If \code{TRUE} (default), p-values that cannot be computed are reported as "> bound".
 #' If \code{TRUE}, they are reported as \code{NA}.
@@ -30,37 +30,52 @@
 #' hMeanChiSq(p2z(pvalues, alternative="less"),  w=1/se^2, alternative="two.sided")
 #' hMeanChiSq(p2z(pvalues, alternative="less"),  w=1/se^2, alternative="none")
 #' @export
-hMeanChiSq <- function(z, w = rep(1, length(z)), alternative = "greater", bound=TRUE){
-    stopifnot(min(w) > 0)
-    if (!(alternative %in% c("greater", "less", "two.sided", "none")))
-        stop('alternative must be either "greater", "less", "two.sided" or "none"')
+hMeanChiSq <- function(z, w = rep(1, length(z)),
+                       alternative = c("greater", "less", "two.sided", "none"), bound=TRUE){
+    stopifnot(is.numeric(z),
+              length(z) > 0,
+              is.finite(z),
+
+              is.numeric(w),
+              length(w) == length(z),
+              is.finite(w),
+              min(w) > 0,
+              
+              !is.null(alternative))
+    alternative <- match.arg(alternative)
+
+    stopifnot(is.logical(bound),
+              length(bound) == 1,
+              is.finite(bound))
+              
     n <- length(z)
-    zH2 <- sum(sqrt(w))^2/sum(w/z^2)
+    zH2 <- sum(sqrt(w))^2 / sum(w / z^2)
     res <- pchisq(zH2, df = 1, lower.tail = FALSE)
-    check.greater <- (min(z) > 0)
-    check.less <- (max(z) < 0)
-    break.p <- 1/(2^n)
+    check_greater <- min(z) > 0
+    check_less <- max(z) < 0
+    break_p <- 1 / (2^n)
     if(alternative == "greater"){
-        if(bound == TRUE)
-            res <- ifelse(check.greater, res/(2^n), paste(">", format(break.p, scientific = FALSE)))
-        if(bound == FALSE)
-            res <- ifelse((check.greater | check.less), res/(2^n), NA)
+        if(bound)
+            ## FG: better use `res <- if() {} else {}`.
+            ## only use ifelse() if first argument is a vector. 
+            ## what happens when z==0?
+            res <- ifelse(check_greater, res/(2^n), paste(">", format(break_p, scientific = FALSE)))
+        else
+            res <- ifelse(check_greater | check_less, res/(2^n), NA)
     }
     if(alternative == "less"){
-        if(bound == TRUE)
-            res <- ifelse(check.less, res/(2^n), paste(">", format(break.p, scientific = FALSE)))
-        if(bound == FALSE)
-            res <- ifelse((check.greater | check.less), res/(2^n), NA)
+        if(bound)
+            res <- ifelse(check_less, res/(2^n), paste(">", format(break_p, scientific = FALSE)))
+        else
+            res <- ifelse(check_greater | check_less, res/(2^n), NA)
     }
     if(alternative == "two.sided"){
-        if(bound == TRUE)
-            res <- ifelse((check.greater | check.less), res/(2^(n-1)), paste(">", format(2*break.p, scientific = FALSE)))
-        if(bound == FALSE)
-            res <- ifelse((check.greater | check.less), res/(2^(n-1)), NA)
+        if(bound)
+            res <- ifelse(check_greater | check_less, res/(2^(n-1)), paste(">", format(2*break_p, scientific = FALSE)))
+        else
+            res <- ifelse(check_greater | check_less, res/(2^(n-1)), NA)
     }
-    if(alternative == "none"){
-        res <- res
-    }    
+    ## no chnage to res for alternative == "none"
     return(res)
 }
 
@@ -78,45 +93,71 @@ hMeanChiSq <- function(z, w = rep(1, length(z)), alternative = "greater", bound=
 #' hMeanChiSqMu(thetahat=estimate, se=se, w=1/se^2, alternative="two.sided")
 #' hMeanChiSqMu(thetahat=estimate, se=se, alternative="two.sided", mu=-0.1)
 #' @export
-hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0, alternative = "greater", bound=TRUE){
-    stopifnot(min(w) > 0)
-    stopifnot(min(se) > 0)
-    if (!(alternative %in% c("greater", "less", "two.sided", "none")))
-        stop('alternative must be either "greater", "less", "two.sided" or "none"')
+hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
+                         alternative =c("greater", "less", "two.sided", "none"), bound=TRUE){
+    stopifnot(is.numeric(thetahat),
+              length(thetahat) > 0,
+              is.finite(thetahat),
+
+              is.numeric(se),
+              length(se) == 1 || length(se) == length(thetahat),
+              is.finite(se),
+              min(se) > 0,
+
+              is.numeric(w),
+              length(w) == length(thetahat),
+              is.finite(w),
+              min(w) > 0,
+
+              is.numeric(mu),
+              length(mu) == 1 || length(mu) == length(thetahat),
+              is.finite(mu),
+
+              !is.null(alternative))
+    alternative <- match.arg(alternative)
+    stopifnot(is.logical(bound),
+              length(bound) == 1,
+              is.finite(bound))
+    
     n <- length(thetahat)
     m <- length(mu)
     if(alternative != "none"){
-        z <- (thetahat - mu)/se
-        zH2 <- sum(sqrt(w))^2/sum(w/z^2)
+        z <- (thetahat - mu) / se
+        zH2 <- sum(sqrt(w))^2 / sum(w/z^2)
         res <- pchisq(zH2, df = 1, lower.tail = FALSE)
-        check.greater <- (min(z) > 0)
-        check.less <- (max(z) < 0)
-        break.p <- 1/(2^n)
+        check_greater <- min(z) > 0
+        check_less <- max(z) < 0
+        break_p <- 1/(2^n)
         if(alternative == "greater"){
             if(bound == TRUE)
-                res <- ifelse(check.greater, res/(2^n), paste(">", format(break.p, scientific = FALSE)))
+                res <- ifelse(check_greater, res/(2^n),
+                              paste(">", format(break_p, scientific = FALSE)))
             if(bound == FALSE)
-                res <- ifelse((check.greater | check.less), res/(2^n), NA)
+                res <- ifelse(check_greater | check_less, res/(2^n), NA)
         }
         if(alternative == "less"){
             if(bound == TRUE)
-                res <- ifelse(check.less, res/(2^n), paste(">", format(break.p, scientific = FALSE)))
+                res <- ifelse(check_less, res/(2^n),
+                              paste(">", format(break_p, scientific = FALSE)))
             if(bound == FALSE)
-                res <- ifelse((check.greater | check.less), res/(2^n), NA)
+                res <- ifelse(check_greater | check_less, res/(2^n), NA)
         }
         if(alternative == "two.sided"){
             if(bound == TRUE)
-                res <- ifelse((check.greater | check.less), res/(2^(n-1)), paste(">", format(2*break.p, scientific = FALSE)))
+                res <- ifelse(check_greater | check_less, res/(2^(n-1)),
+                              paste(">", format(2*break_p, scientific = FALSE)))
             if(bound == FALSE)
-                res <- ifelse((check.greater | check.less), res/(2^(n-1)), NA)
+                res <- ifelse(check_greater | check_less, res/(2^(n-1)), NA)
         }
     }
     if(alternative == "none"){
-        zH2 <- numeric()
+        zH2 <- numeric(m)
         ## needs to allow for vectorial arugments
-        for(i in 1:length(mu)){
-            z <- (thetahat - mu[i])/se
-            zH2[i] <- sum(sqrt(w))^2/sum(w/z^2)
+        ## FG: why does alternative != "none" not need this loop?
+        sw <- sum(sqrt(w))^2
+        for(i in 1:m){
+            z <- (thetahat - mu[i]) / se
+            zH2[i] <-  sw / sum(w/z^2)
         }
         res <- pchisq(zH2, df = 1, lower.tail = FALSE)
     }    
@@ -131,7 +172,7 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0, alt
 #' In that case, the output is a vector of length 2n, where n is the number of confidence intervals.
 #' @examples
 #'
-#' 
+#'
 #' ## hMeanChiSqCI() --------
 #' ## two-sided
 #' CI1 <- hMeanChiSqCI(thetahat=estimate, se=se, w=1/se^2, alternative="two.sided")
@@ -139,7 +180,6 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0, alt
 #' ## one-sided
 #' CI1b <- hMeanChiSqCI(thetahat=estimate, se=se, w=1/se^2, alternative="less", level=0.975)
 #' CI2b <- hMeanChiSqCI(thetahat=estimate, se=se, w=1/se^2, alternative="less", level=1-0.025^2)
-#'
 #' ## confidence intervals on hazard ratio scale
 #' print(round(exp(CI1),2))
 #' print(round(exp(CI2),2))
@@ -148,16 +188,35 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0, alt
 #' @export
 #' @importFrom rootSolve uniroot.all
 #' @import stats
-hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)), alternative = "two.sided", level = 0.95){
-    stopifnot(min(w) > 0)
-    stopifnot(min(se) > 0)
-    if (!(alternative %in% c("two.sided", "greater", "less", "none")))
-        stop('alternative must be either "two.sided", "greater", "less" or "none"')
-    stopifnot((level > 0) | (level < 1))
+hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
+                         alternative = c("two.sided", "greater", "less", "none"),
+                         level = 0.95){
+    stopifnot(is.numeric(thetahat),
+              length(thetahat) > 0,
+              is.finite(thetahat),
+              
+              is.numeric(se),
+              length(se) == 1 || length(se) == length(thetahat),
+              is.finite(se),
+              min(se) > 0,
+              
+              is.numeric(w),
+              length(w) == length(thetahat),
+              is.finite(w),
+              min(w) > 0,
+
+              !is.null(alternative))
+    alternative <- match.arg(alternative)
+    
+    stopifnot(is.numeric(level),
+              length(level) == 1,
+              is.finite(level),
+              0 < level, level <1)
+
     ## target function to compute the limits of the CI
-    target <- function(limit, thetahat, se, w=w, alternative=alternative, alpha){
-        res <- hMeanChiSqMu(thetahat, se, w=w, mu=limit, alternative=alternative, bound=FALSE)-alpha
-        return(res)
+    target <- function(limit, thetahat, se, w, alternative, alpha){
+        hMeanChiSqMu(thetahat=thetahat, se=se, w=w, mu=limit, alternative=alternative,
+                     bound=FALSE) - alpha
     }
     mini <- which.min(thetahat)
     maxi <- which.max(thetahat)
@@ -174,6 +233,7 @@ hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)), alternative
                                      alternative=alternative, alpha=alpha, 
                                      lower=mint-factor*z*minse, 
                                      upper=maxt+factor*z*maxse)
+        ## FG: return full uniroot.all() output as CI?
     }
     if(alternative=="two.sided"){
         lower <- uniroot(target, thetahat=thetahat, se=se, w=w, alternative=alternative,

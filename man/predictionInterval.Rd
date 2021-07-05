@@ -45,6 +45,9 @@ specified predictive distribution of the replication effect estimate. Setting
 \code{designPrior = "conditional"} is not recommended since this ignores the
 uncertainty of the original effect estimate. See Patil, Peng, and Leek (2016)
 and Pawel and Held (2020) for details.
+
+\code{predictionInterval} is the vectorized version of \code{.predictionInterval_}.
+\code{\link[base]{Vectorize}} is used to vectorize the function.
 }
 \examples{
 predictionInterval(thetao = c(1.5, 2, 5), seo = 1, ser = 0.5, designPrior = "EB")

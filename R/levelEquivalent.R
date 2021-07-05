@@ -25,18 +25,25 @@
 #' levelEquivalent(dinf = 0.8, level = 0.025)
 #' levelEquivalent(dinf = 0.8, level = 0.05, alternative="two.sided")
 #' @export
-levelEquivalent <- function(dinf, level=0.025, alternative="one.sided"){
-    if (!is.numeric(dinf) || dinf <= 0)
-        stop("dinf must be numeric and larger than 0")
-    if (!is.numeric(level) || (level <= 0 || level >= 1))
-        stop("level must be numeric and in (0, 1)!")
-    if (!(alternative %in% c("one.sided", "two.sided", "greater", "less")))
-        stop('alternative must be either "one.sided", "two.sided", "greater" or "less"')
+levelEquivalent <- function(dinf, level=0.025,
+                            alternative=c("one.sided", "two.sided", "greater", "less")){
+    stopifnot(is.numeric(dinf),
+              length(dinf) >= 1,
+              is.finite(dinf),
+              dinf > 0,
+              
+              is.numeric(level),
+              length(level) >= 1,
+              is.finite(level),
+              0 < level, level < 1,
+              
+              !is.null(alternative))
+    alternative <- match.arg(alternative)
 
-    zalpha <- p2z(level, alternative=alternative)
+    zalpha <- p2z(p=level, alternative=alternative)
     K <- 0.5 + sqrt(1/dinf^2 + 1/4)
     phi <- (sqrt(5)+1)/2
     zalphaNew <- zalpha*sqrt(phi/K)
-    alphaNew <- z2p(zalphaNew, alternative=alternative)
+    alphaNew <- z2p(z=zalphaNew, alternative=alternative)
     return(alphaNew)
 }

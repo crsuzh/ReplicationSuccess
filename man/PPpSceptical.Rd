@@ -9,8 +9,8 @@ PPpSceptical(
   c,
   alpha,
   power,
-  alternative = "one.sided",
-  type = "golden"
+  alternative = c("one.sided", "two.sided", "greater", "less"),
+  type = c("golden", "nominal", "liberal", "controlled")
 )
 }
 \arguments{
@@ -51,6 +51,10 @@ The project power of the sceptical p-value is computed for a
 specified level of replication success, the relative variance,
 significance level and power for a standard significance test of
 the original study, and the alternative hypothesis.
+}
+\details{
+\code{PPpSceptical} is the vectorized version of \code{.PPpSceptical_}.
+\code{\link[base]{Vectorize}} is used to vectorize the function.
 }
 \examples{
 ## compare project power for different levels of replication success

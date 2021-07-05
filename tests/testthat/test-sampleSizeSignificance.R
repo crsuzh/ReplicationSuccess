@@ -1,53 +1,61 @@
 ## library(testthat)
 ## sapply(list.files("../../R", pattern='\\.R$', full.names = TRUE), source)
 
-## context("sampleSizeSignificance")
+context("sampleSizeSignificance")
+source("helpers.R")
 
 
-## expect_equal_tol <- function(object, expected, tol=1e-3, msg=""){
-##     message(msg)
-##     if(!is.numeric(object) || !is.finite(object)){
-##         expect_equal(object=object, expected=expected)
-##     } else {
-##         expect_lt(object=abs(object - expected), expected=tol)
-##     }
-## }
+test_that("numeric test for sampleSizeSignificance(): 1", {
+    za <- qnorm(p = 0.025, lower.tail = FALSE)
+    expect_equal_tol(object = sampleSizeSignificance(zo = za, designPrior = "conditional",
+                                                     power = 0.8, alternative = "one.sided"),
+                     expected = 2.04, tol = 0.01)
+})
 
-## test_that("sampleSizeSignificance() agrees with .sampleSizeSignificance_uniroot()", {
-##     vec01 <- c(0.001, 0.2532, 0.5, 0.6609, 0.8286, 0.99)
-##     vec01bound <- c(0, 0.0386, 0.2833, 0.5, 0.5031, 0.6508, 0.9592, 1)
-##     vec55 <- c(-5, -3, -2.6288, -2, -1.341, -1, 0, 0.0427, 0.6115, 1, 2.9401, 4, 4.9643, 5)
-##     alternative <- c("two.sided", "one.sided", "less", "greater")
-##     designPrior <- c("conditional", "predictive", "EB")
-##     pars_grid_power <- expand.grid(zo=vec55,
-##                                    power=vec01,
-##                                    d=NA,
-##                                    level=vec01,
-##                                    alternative=alternative,
-##                                    designPrior=designPrior,
-##                                    h=abs(vec55),
-##                                    shrinkage=vec01bound)
-##     pars_grid_d <- expand.grid(zo=c(-3, -2.1, 0, 1.22 , 2),
-##                                power=NA,
-##                                d=c(.001, .2, .5, .7, .8, .99),
-##                                level=.025,
-##                                alternative="one.sided",
-##                                designPrior="conditional",
-##                                h=0,
-##                                shrinkage=0)
-##     pars_grid <- rbind(pars_grid_power, pars_grid_d)
 
-##     ## test all configurations separately
-##     for(i in seq_len(nrow(pars_grid))){
-##         expect_equal_tol(object=do.call("sampleSizeSignificance",
-##                                         args = pars_grid[i,]),
-##                          expected=do.call(".sampleSizeSignificance_uniroot",
-##                                           args = pars_grid[i,]),
-##                          msg=paste(i))
-##     }
-
-##     ## test vecotrized input
-##     expect_equal(object=do.call("sampleSizeSignificance", args = pars_grid),
-##                  expected=do.call(".sampleSizeSignificance_uniroot", args = pars_grid))
-  
-## })
+test_that("numeric test for sampleSizeSignificance(): 2", {
+    zo <- seq(-4, 4, 2)
+    apply_grid <- expand.grid(priors = c("conditional", "predictive", "EB"),
+                          h = c(0, 0.1),
+                          shrinkage = c(0, 0.75),
+                          alt = c("greater", "two.sided"),
+                          stringsAsFactors = FALSE)
+    out <- lapply(X=seq_len(nrow(apply_grid)), FUN=function(i){
+        sampleSizeSignificance(zo = zo, 
+                              power = 0.8, 
+                              level = 0.05,
+                              designPrior = apply_grid$priors[i],
+                              alternative = apply_grid$alt[i],
+                              h = apply_grid$h[i],
+                              shrinkage = apply_grid$shrinkage[i])
+    })
+    
+    expect_equal_tol(out,
+                     list(c(0.386409827001236, 1.54563930800494, Inf, 1.54563930800494, 
+0.386409827001236), c(NaN, NaN, NaN, 2.64240453254414, 0.44058712969053
+), c(NaN, NaN, NaN, 5.68099915462423, 0.50568799613795), c(0.386409827001236, 
+1.54563930800494, Inf, 1.54563930800494, 0.386409827001236), 
+    c(NaN, NaN, NaN, 2.95871550393263, 0.452333148130293), c(NaN, 
+    NaN, NaN, 7.60908707805961, 0.528281308003364), c(6.18255723201977, 
+    24.7302289280791, Inf, 24.7302289280791, 6.18255723201977
+    ), c(NaN, NaN, NaN, NaN, 113.100183773898), c(NaN, NaN, NaN, 
+    5.68099915462423, 0.50568799613795), c(6.18255723201977, 
+    24.7302289280791, Inf, 24.7302289280791, 6.18255723201977
+    ), c(NaN, NaN, NaN, NaN, 453.912828360887), c(NaN, NaN, NaN, 
+    7.60908707805961, 0.528281308003364), c(0.490554983396818, 
+    1.96221993358727, Inf, 1.96221993358727, 0.490554983396818
+    ), c(0.567666226964591, 3.51088271817366, NaN, 3.51088271817366, 
+    0.567666226964591), c(0.65212007306691, 7.62155461288933, 
+    NaN, 7.62155461288933, 0.65212007306691), c(0.490554983396818, 
+    1.96221993358727, Inf, 1.96221993358727, 0.490554983396818
+    ), c(0.584349038065368, 3.95488709513785, NaN, 3.95488709513785, 
+    0.584349038065368), c(0.68328700549879, 10.3012451589215, 
+    NaN, 10.3012451589215, 0.68328700549879), c(7.84887973434909, 
+    31.3955189373964, Inf, 31.3955189373964, 7.84887973434909
+    ), c(158.405996502178, NaN, NaN, NaN, 158.405996502178), 
+    c(0.65212007306691, 7.62155461288933, NaN, 7.62155461288933, 
+    0.65212007306691), c(7.84887973434909, 31.3955189373964, 
+    Inf, 31.3955189373964, 7.84887973434909), c(640.395220578649, 
+    NaN, NaN, NaN, 640.395220578649), c(0.68328700549879, 10.3012451589215, 
+    NaN, 10.3012451589215, 0.68328700549879)))
+})

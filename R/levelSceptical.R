@@ -35,13 +35,20 @@
 #' levelSceptical(level = 0.025, type = "golden")
 #' @export
 levelSceptical <- function(level, 
-                           alternative = "one.sided", 
-                           type = "golden"){
-    if (!(type %in% c("nominal", "liberal", "controlled", "golden")))
-        stop('type must be either "nominal", "liberal", "controlled", or "golden"')
-    if (!(alternative %in% c("one.sided", "two.sided", "greater", "less")))
-        stop('alternative must be either "one.sided", "two.sided", "greater" or "less"')
-    
+                           alternative = c("one.sided", "two.sided", "greater", "less"), 
+                           type = c("golden", "nominal", "liberal", "controlled")){
+
+    stopifnot(is.numeric(level),
+              length(level) >= 1,
+              is.finite(level),
+              0 < level, level < 1,
+              
+              !is.null(alternative))
+    alternative <- match.arg(alternative)
+
+    stopifnot(!is.null(type))
+    type <- match.arg(type)
+        
     if(type == "nominal")
         res <- level
     

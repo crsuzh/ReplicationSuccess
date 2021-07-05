@@ -10,8 +10,8 @@ sampleSizeSignificance(
   power = NA,
   d = NA,
   level = 0.025,
-  alternative = "one.sided",
-  designPrior = "conditional",
+  alternative = c("one.sided", "two.sided", "less", "greater"),
+  designPrior = c("conditional", "predictive", "EB"),
   h = 0,
   shrinkage = 0
 )
@@ -57,6 +57,10 @@ computed based on the z-value of the original study, the significance level
 and either the power or the minimum relative effect size.
 When the approach based on power is used, the arguments design prior,
 shrinkage, and relative heterogeneity also have to be specified.
+}
+\details{
+\code{sampleSizeSignificance} is the vectorized version of \code{.sampleSizeSignificance_}.
+\code{\link[base]{Vectorize}} is used to vectorize the function.
 }
 \examples{
 sampleSizeSignificance(zo = p2z(0.005), power = 0.8)

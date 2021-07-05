@@ -1,3 +1,31 @@
+#' @export
+.effectSizeSignificance_ <- function(zo, 
+                                     c = 1, 
+                                     level = 0.025, 
+                                     alternative = c("one.sided", "two.sided")){
+    stopifnot(is.numeric(zo),
+              length(zo) == 1,
+              is.finite(zo),
+                            
+              is.numeric(c),
+              length(c) == 1,
+              !is.na(c), !is.nan(c),
+              0 <= c,
+              
+              is.numeric(level),
+              length(level) == 1,
+              is.finite(level),
+              0 < level, level < 1,
+              
+              !is.null(alternative))
+    alternative <- match.arg(alternative)
+
+    zalpha <- p2z(p = level, alternative = alternative)
+    ## use absolute value of zo to also work with negative zo
+    d <- zalpha / (abs(zo) * sqrt(c))
+    return(d)
+}
+
 #' Computes the minimum relative effect size to achieve significance of the replication study
 #'
 #' The minimum relative effect size (replication to original) to achieve significance
@@ -11,6 +39,8 @@
 #' @param level Significance level. Default is 0.025.
 #' @param alternative Specifies if the replication success level is "one.sided" (default) or "two.sided".
 #' @return The minimum relative effect size to achieve significance of the replication study.
+#' @details \code{effectSizeSignificance} is the vectorized version of \code{.effectSizeSignificance_}.
+#' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @references Held, L., Micheloud, C. & Pawel, S. (2020).
 #' The assessment of replication success based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
 #' @author Charlotte Micheloud
@@ -28,20 +58,4 @@
 #' effectSizeSignificance(zo = zo, c = 50, level = 0.025,
 #'                        alternative = "one.sided")
 #' @export
-effectSizeSignificance <- function(zo, 
-                                   c = 1, 
-                                   level = 0.025, 
-                                   alternative = "one.sided"){
-  
-  mV <- mapply(FUN = function(zo, c, level) {
-    if (!is.numeric(c)) 
-      stop("d must be numeric")
-    if (!is.numeric(level) || (level <= 0 || level >= 1)) 
-      stop("level must be numeric and in (0,1)!")
-    zalpha <- z2p(level, alternative = alternative)
-    d <- zalpha/(zo*sqrt(c))
-    return(d)
-  }, zo, c, level)
-  return(mV)
-}
-  
+effectSizeSignificance <- Vectorize(.effectSizeSignificance_)
