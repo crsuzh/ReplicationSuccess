@@ -16,7 +16,9 @@
 #' @param shrinkage Numeric vector with values in [0,1]. Defaults to 0.
 #' @details This is an extension of \code{PowerSignificance()} and adapts the `interim power'
 #' from section 6.6.3 of Spiegelhalter et al. (2004) to the setting of replication studies.
-#' @return
+#' @return The probability of statistical significance in the specified direction 
+#' at the end of the replication study given the data collected so far 
+#' in the replication study.
 #' @seealso \code{\link{sampleSizeSignificance}}, \code{\link{powerSignificance}}
 #' @references Spiegelhalter, D. J., Abrams, K. R., and Myles, J. P. (2004).
 #' Bayesian Approaches to Clinical Trials and Health-Care

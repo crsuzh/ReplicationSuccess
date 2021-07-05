@@ -39,7 +39,9 @@ Default is 1.}
 \item{shrinkage}{Numeric vector with values in [0,1]. Defaults to 0.}
 }
 \value{
-
+The probability of statistical significance in the specified direction 
+at the end of the replication study given the data collected so far 
+in the replication study.
 }
 \description{
 Computes the power of a replication study taking into account data from an interim analysis.
