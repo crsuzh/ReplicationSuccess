@@ -35,7 +35,7 @@
                              alternative = alternative, 
                              type = type)
     ## abs(.) is needed to deal with alternative="less"
-    zas <- abs(p2z(alphas, alternative = alternative))
+    zas <- abs(p2z(p = alphas, alternative = alternative))
     
     ## compute mean based on alpha and power
     ## abs(.) is needed to deal with alternative="less"

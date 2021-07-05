@@ -5,7 +5,8 @@
                                 designPrior = c("conditional", "predictive", "EB"),
                                 alternative = c("one.sided", "two.sided", "greater", "less"),
                                 h = 0,
-                                shrinkage = 0) {
+                                shrinkage = 0,
+                                strict = FALSE) {
     stopifnot(is.numeric(zo),
               length(zo) == 1,
               is.finite(zo),
@@ -34,7 +35,9 @@
               is.numeric(shrinkage),
               length(shrinkage) == 1,
               is.finite(shrinkage),
-              0 <= shrinkage, shrinkage <= 1)
+              0 <= shrinkage, shrinkage <= 1,
+
+              is.logical(strict))
 
 
 
@@ -51,12 +54,10 @@
     if(designPrior == "conditional"){
         mu <- s*zo*sqrt(c)
         sigma <- 1
-    }
-    if(designPrior == "predictive"){
+    } else if(designPrior == "predictive"){
         mu <- s*zo*sqrt(c)
         sigma <- sqrt(c + 1 + 2*h*c)
-    }
-    if (designPrior == "EB"){
+    } else{ ## designPrior == "EB"
         s <- pmax(1 - (1 + h)/zo^2, 0)
         mu <- s*zo*sqrt(c)
         sigma <- sqrt(s*c*(1 + h) + 1 + h*c)
@@ -64,9 +65,12 @@
     
     ## compute replication probability
     pSig <- pnorm(q = v, mean = mu, sd = sigma, lower.tail = lowertail)
-    ## if (alternative == "two.sided" && strict == TRUE)
-    ## pSig + pnorm(q = -v, mean = mu, sd = sigma)
-    
+
+    ## when strict == TRUE, add probability in the other direction for "two.sided"
+    if (alternative == "two.sided" && strict){
+        pSig <- pSig + pnorm(q = -v, mean = mu, sd = sigma)
+    }
+
     return(pSig)
 }
 
@@ -98,6 +102,9 @@
 #' Specifies the shrinkage of the original effect estimate towards zero, e.g.,
 #' the effect is shrunken by a factor of 25\% for \code{shrinkage = 0.25}.
 #' Is only taken into account if the \code{designPrior} is "conditional" or "predictive".
+#' @param strict Logical vector indicating whether the probability for significance
+#' in the opposite direction of the original effect estimate should also be 
+#' taken into account. Default is \code{FALSE}.
 #' @return The probability that a replication study yields a significant effect estimate
 #' in the specified direction. An error is returned if it is impossible to obtain the
 #' specified power.

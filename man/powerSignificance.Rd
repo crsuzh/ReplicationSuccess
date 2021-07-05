@@ -11,7 +11,8 @@ powerSignificance(
   designPrior = c("conditional", "predictive", "EB"),
   alternative = c("one.sided", "two.sided", "greater", "less"),
   h = 0,
-  shrinkage = 0
+  shrinkage = 0,
+  strict = FALSE
 )
 }
 \arguments{
@@ -44,6 +45,10 @@ Is only taken into account when \code{designPrior = "predictive"} or
 Specifies the shrinkage of the original effect estimate towards zero, e.g.,
 the effect is shrunken by a factor of 25\% for \code{shrinkage = 0.25}.
 Is only taken into account if the \code{designPrior} is "conditional" or "predictive".}
+
+\item{strict}{Logical vector indicating whether the probability for significance
+in the opposite direction of the original effect estimate should also be 
+taken into account. Default is \code{FALSE}.}
 }
 \value{
 The probability that a replication study yields a significant effect estimate
