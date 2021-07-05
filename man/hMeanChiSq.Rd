@@ -6,14 +6,19 @@
 \alias{hMeanChiSqCI}
 \title{p-values and confidence intervals from the harmonic mean chi-squared test}
 \usage{
-hMeanChiSq(z, w = rep(1, length(z)), alternative = "greater", bound = TRUE)
+hMeanChiSq(
+  z,
+  w = rep(1, length(z)),
+  alternative = c("greater", "less", "two.sided", "none"),
+  bound = TRUE
+)
 
 hMeanChiSqMu(
   thetahat,
   se,
   w = rep(1, length(thetahat)),
   mu = 0,
-  alternative = "greater",
+  alternative = c("greater", "less", "two.sided", "none"),
   bound = TRUE
 )
 
@@ -21,7 +26,7 @@ hMeanChiSqCI(
   thetahat,
   se,
   w = rep(1, length(thetahat)),
-  alternative = "two.sided",
+  alternative = c("two.sided", "greater", "less", "none"),
   level = 0.95
 )
 }
@@ -90,7 +95,6 @@ CI2 <- hMeanChiSqCI(thetahat=estimate, se=se, w=1/se^2, alternative="two.sided",
 ## one-sided
 CI1b <- hMeanChiSqCI(thetahat=estimate, se=se, w=1/se^2, alternative="less", level=0.975)
 CI2b <- hMeanChiSqCI(thetahat=estimate, se=se, w=1/se^2, alternative="less", level=1-0.025^2)
-
 ## confidence intervals on hazard ratio scale
 print(round(exp(CI1),2))
 print(round(exp(CI2),2))

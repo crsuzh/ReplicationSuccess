@@ -1,9 +1,9 @@
 # function that returns z_r^2 quantile for given z_o, c
 zr2quantile <- function(zo, 
-                         c, 
-                         p, 
-                         designPrior,
-                         shrinkage){
+                        c, 
+                        p, 
+                        designPrior,
+                        shrinkage){
     
     if (designPrior == "predictive"){
         lambda <- (1 - shrinkage)^2*zo^2/(1 + 1/c)
@@ -33,6 +33,107 @@ zr2quantile <- function(zo,
 }
 
 
+
+powerReplicationSuccessTargetPower <- function(power, zo, c, level, designPrior, alternative, type,
+                        shrinkage){
+    zr2 <- zr2quantile(zo = zo, c = c, p = 1 - power, 
+                       designPrior = designPrior, shrinkage = shrinkage)
+    pC <- pSceptical(zo = zo, zr = sqrt(zr2), c = c,
+                     alternative = alternative, type = type)
+    return(pC - level)
+                                        # pC <- pSceptical(zo = zo, zr = sqrt(zr2), c = c, 
+                                        #                  alternative = alternative)
+                                        # return(pC - levelSceptical(level = level, alternative = alternative,
+                                        #                                type = type))
+}
+
+#' @export 
+.powerReplicationSuccess_ <- function(zo,
+                                     c = 1, 
+                                     level = 0.025,
+                                     designPrior = c("conditional", "predictive", "EB"),
+                                     alternative = c("one.sided", "two.sided"),
+                                     type = c("golden", "nominal", "liberal", "controlled"),
+                                     shrinkage = 0){
+
+    stopifnot(is.numeric(zo),
+              length(zo) == 1,
+              is.finite(zo),
+              
+              is.numeric(c),
+              length(c) == 1,
+              is.finite(c),
+              0 <= c,
+              
+              is.numeric(level),
+              length(level) == 1,
+              is.finite(level),
+              0 < level, level < 1,
+
+              !is.null(designPrior))
+    designPrior <- match.arg(designPrior)
+
+    stopifnot(!is.null(alternative))
+    alternative <- match.arg(alternative)
+
+    stopifnot(!is.null(type))
+    type <- match.arg(type)
+
+    stopifnot(is.numeric(shrinkage),
+              length(shrinkage) == 1,
+              is.finite(shrinkage),
+              0 <= shrinkage, shrinkage <= 1)
+
+
+    ## check if original study was not significant, then power is zero
+    zo <- abs(zo)
+    p <- z2p(z = zo, alternative = alternative)
+    eps <- 1e-5
+    mylower <- eps
+    myupper <- 1 - eps
+    
+    if (p > levelSceptical(level = level, alternative = alternative, 
+                           type = type))
+        res <- 0
+    else {
+        targetLower <- powerReplicationSuccessTargetPower(power = mylower, 
+                                                        zo = zo, 
+                                                        c = c, 
+                                                        level = level,
+                                                        designPrior = designPrior,
+                                                        alternative = alternative,
+                                                        type = type,
+                                                        shrinkage = shrinkage)
+        targetUpper <- powerReplicationSuccessTargetPower(power = myupper, 
+                                                        zo = zo, 
+                                                        c = c, 
+                                                        level = level,
+                                                        designPrior = designPrior,
+                                                        alternative = alternative,
+                                                        type = type,
+                                                        shrinkage = shrinkage)
+        if (sign(targetLower) == sign(targetUpper)) {
+            if ((sign(targetLower) >= 0) & (sign(targetUpper) >= 0))
+                res <- 0
+            if ((sign(targetLower) < 0) & (sign(targetUpper) < 0))
+                res <- 1
+        }
+        else {
+            res <- uniroot(f = powerReplicationSuccessTargetPower, 
+                           lower = mylower, 
+                           upper = myupper,
+                           zo = zo, 
+                           c = c, 
+                           level = level,
+                           designPrior = designPrior,
+                           alternative = alternative,
+                           type = type,
+                           shrinkage = shrinkage)$root
+        }
+    }
+    return(res)
+}
+
 #' Computes the power for replication success
 #'
 #' Computes the power for replication success based on the result of the
@@ -61,6 +162,8 @@ zr2quantile <- function(zo,
 #' the effect is shrunken by a factor of 25\% for \code{shrinkage=0.25}.
 #' Is only taken into account if the \code{designPrior} is "conditional" or "predictive".
 #' @return The power for replication success.
+#' @details \code{powerReplicationSuccess} is the vectorized version of \code{.powerReplicationSuccess_}.
+#' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @references
 #' Held, L. (2020). A new standard for the analysis and design of replication
 #' studies (with discussion). \emph{Journal of the Royal Statistical Society:
@@ -78,90 +181,4 @@ zr2quantile <- function(zo,
 #' powerReplicationSuccess(zo = p2z(0.005), c = 1/2)
 #' powerReplicationSuccess(zo = p2z(0.005), c = 1/2, designPrior = "predictive")
 #' @export
-powerReplicationSuccess <- function(zo,
-                                    c = 1, 
-                                    level = 0.025,
-                                    designPrior = "conditional",
-                                    alternative = "one.sided",
-                                    type = "golden",
-                                    shrinkage = 0){
-    
-    targetPower <- function(power, zo, c, level, designPrior, alternative, type,
-                            shrinkage){
-        zr2 <- zr2quantile(zo = zo, c = c, p = 1 - power, 
-                            designPrior = designPrior, shrinkage = shrinkage)
-        pC <- pSceptical(zo = zo, zr = sqrt(zr2), c = c,
-                         alternative = alternative, type = type)
-        return(pC - level)
-        # pC <- pSceptical(zo = zo, zr = sqrt(zr2), c = c, 
-        #                  alternative = alternative)
-        # return(pC - levelSceptical(level = level, alternative = alternative,
-        #                                type = type))
-    }
-    
-    # vectorize function in all arguments
-    resV <- mapply(FUN = function(zo, c, level, designPrior, alternative, type,
-                                  shrinkage) {
-        
-        # sanity checks
-        if (is.na(zo))
-            return(NA)
-        if (!(designPrior %in% c("conditional", "predictive", "EB")))
-            stop('designPrior must be either "conditional", "predictive", "EB"')
-        if (!is.numeric(c) || c < 0)
-            stop("c must be numeric and larger than 0")
-        if (!is.numeric(level) || (level <= 0 || level >= 1))
-            stop("level must be numeric and in (0, 1)!")
-        if (!is.numeric(shrinkage) || (shrinkage < 0 || shrinkage > 1)) 
-            stop("shrinkage must be numeric and in [0, 1]")
-        
-        # check if original study was not significant, then power is zero
-        zo <- abs(zo)
-        p <- z2p(z = zo, alternative = alternative)
-        eps <- 1e-5
-        mylower <- eps
-        myupper <- 1 - eps
-        
-        if (p > levelSceptical(level = level, alternative = alternative, 
-                               type = type)) res <- 0
-        else {
-            target.l <- targetPower(power = mylower, 
-                                    zo = zo, 
-                                    c = c, 
-                                    level = level,
-                                    designPrior = designPrior,
-                                    alternative = alternative,
-                                    type = type,
-                                    shrinkage = shrinkage)
-            target.u <- targetPower(power = myupper, 
-                                    zo = zo, 
-                                    c = c, 
-                                    level = level,
-                                    designPrior = designPrior,
-                                    alternative = alternative,
-                                    type = type,
-                                    shrinkage = shrinkage)
-            if (sign(target.l) == sign(target.u)) {
-                if ((sign(target.l) >= 0) & (sign(target.u) >= 0))
-                    res <- 0
-                if ((sign(target.l) < 0) & (sign(target.u) < 0))
-                    res <- 1
-            }
-            else {
-                res <- uniroot(f = targetPower, 
-                               lower = mylower, 
-                               upper = myupper,
-                               zo = zo, 
-                               c = c, 
-                               level = level,
-                               designPrior = designPrior,
-                               alternative = alternative,
-                               type = type,
-                               shrinkage = shrinkage)$root
-            }
-        }
-        return(res)
-    }, zo, c, level, designPrior, alternative, type, shrinkage)
-    
-    return(resV)
-}
+powerReplicationSuccess <- Vectorize(.powerReplicationSuccess_)

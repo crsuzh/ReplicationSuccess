@@ -34,7 +34,18 @@ pReplicate <- function(po = NULL,
                        zo = p2z(p = po, alternative = alternative),
                        c = 1,
                        alternative = "two.sided"){
-    pRep <- pnorm(q = zo/sqrt(1 + 1/c))
+    ## 'po' and 'alternative' are checked in p2z()
+
+    stopifnot(is.numeric(zo),
+              length(zo) > 0,
+              is.finite(zo),
+              
+              is.numeric(c),
+              length(c) > 0,
+              is.finite(c),
+              0 <= c)
+    
+    pRep <- pnorm(q = zo / sqrt(1 + 1/c))
     return(pRep)
 }
 

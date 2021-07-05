@@ -4,7 +4,7 @@
 \alias{pvalueBound}
 \title{Bound for the p-values entering the harmonic mean chi-squared test}
 \usage{
-pvalueBound(alpha, n, type = "necessary")
+pvalueBound(alpha, n, type = c("necessary", "sufficient"))
 }
 \arguments{
 \item{alpha}{Numeric vector specifying the significance level.}

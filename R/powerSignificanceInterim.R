@@ -56,24 +56,49 @@ powerSignificanceInterim <- function(zo,
                                      c = 1, 
                                      f = 1/2,
                                      level = 0.025,
-                                     designPrior = "conditional",
-                                     analysisPrior = "flat",
-                                     alternative = "greater",
+                                     designPrior = c("conditional", "informed predictive", "predictive"),
+                                     analysisPrior = c("flat", "original"),
+                                     alternative = c("greater", "less", "two.sided"),
                                      shrinkage = 0) 
 {
-  if (!(designPrior %in% c("conditional", "informed predictive", "predictive"))) 
-    stop("designPrior must be either \"conditional\", \"informed predictive\", or \"predictive\"")
-  if (!(analysisPrior %in% c("flat", "original"))) 
-    stop("analysisPrior must be either \"flat\" or \"original\"")
-  if (min(c, na.rm = TRUE) < 0) 
-    stop("c must be larger than 0")
-  if ((min(f, na.rm = TRUE) < 0 || max(f, na.rm = TRUE) > 
-       1)) 
-    stop("f must be in [0, 1]")
-  if ((min(shrinkage, na.rm = TRUE) < 0 || max(shrinkage, na.rm = TRUE) > 
-       1)) 
-    stop("shrinkage must be in [0, 1]")
-  
+
+    stopifnot(is.numeric(zo),
+              length(zo) > 0,
+              is.finite(zo),
+              
+              is.numeric(zi),
+              length(zi) > 0,
+              is.finite(zi),
+
+              is.numeric(c),
+              length(c) > 0,
+              is.finite(c),
+              0 <= c,
+
+              is.numeric(f),
+              length(f) > 0,
+              is.finite(f),
+              0 <= f, f <= 1,
+
+              is.numeric(level),
+              length(level) > 0,
+              is.finite(level),
+              0 < level, level < 1,
+
+              !is.null(designPrior))
+    designPrior <- match.arg(designPrior)
+
+    stopifnot(!is.null(analysisPrior))
+    analysisPrior <- match.arg(analysisPrior)
+
+    stopifnot(!is.null(alternative))
+    alternative <- match.arg(alternative)
+              
+    stopifnot(is.numeric(shrinkage),
+              length(shrinkage) > 0,
+              is.finite(shrinkage),
+              0 <= shrinkage, shrinkage <= 1)
+              
   s <- 1 - shrinkage
   
   v <- p2z(p = level, alternative = alternative)
@@ -98,7 +123,7 @@ powerSignificanceInterim <- function(zo,
       term1 <- sqrt(1 + (c*(1-f)/(c*f + 1))) * sqrt(1/(c*(1-f)))*zo
       term2 <- sqrt(1 + (c*(1-f)/(c*f + 1))) * sqrt(f/(1-f)) * zi
       term3 <- sqrt((c*f + 1)/(c*(1-f))) * v
-      pSig = pnorm(term1 + term2 - term3)
+      pSig <- pnorm(term1 + term2 - term3)
     }
   }
   

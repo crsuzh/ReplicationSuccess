@@ -5,9 +5,9 @@
 \alias{zBox}
 \title{Computes Box's tail probability}
 \usage{
-pBox(zo, zr, c, level = 0.05, alternative = "two.sided")
+pBox(zo, zr, c = 1, level = 0.05, alternative = c("two.sided", "one.sided"))
 
-zBox(zo, zr, c, level = 0.05, alternative = "two.sided")
+zBox(zo, zr, c, level = 0.05, alternative = c("two.sided", "one.sided"))
 }
 \arguments{
 \item{zo}{Numeric vector of z-values from the original studies.}
@@ -17,7 +17,7 @@ zBox(zo, zr, c, level = 0.05, alternative = "two.sided")
 \item{c}{Numeric vector of variance ratios of the original and replication
 effect estimates. This is usually the ratio of the sample
 size of the replication study to the sample size of the
-original study.}
+original study. Default is 1.}
 
 \item{level}{Numeric vector of significance levels. Default is 0.05.}
 

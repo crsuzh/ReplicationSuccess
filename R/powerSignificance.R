@@ -1,3 +1,79 @@
+#' @export
+.powerSignificance_ <- function(zo,
+                                c = 1, 
+                                level = 0.025,
+                                designPrior = c("conditional", "predictive", "EB"),
+                                alternative = c("one.sided", "two.sided", "greater", "less"),
+                                h = 0,
+                                shrinkage = 0,
+                                strict = FALSE) {
+    stopifnot(is.numeric(zo),
+              length(zo) == 1,
+              is.finite(zo),
+              
+              is.numeric(c),
+              length(c) == 1,
+              is.finite(c),
+              0 <= c,
+              
+              is.numeric(level),
+              length(level) == 1,
+              is.finite(level),
+              0 < level, level < 1,
+              
+              !is.null(designPrior))
+    designPrior <- match.arg(designPrior)
+
+    stopifnot(!is.null(alternative))
+    alternative <- match.arg(alternative)
+
+    stopifnot(is.numeric(h),
+              length(h) == 1,
+              is.finite(h),
+              0 <= h,
+
+              is.numeric(shrinkage),
+              length(shrinkage) == 1,
+              is.finite(shrinkage),
+              0 <= shrinkage, shrinkage <= 1,
+
+              is.logical(strict),
+              length(strict) == 1)
+
+
+    ## determine direction of alternative and critical value of zr
+    v <- p2z(p = level, alternative = alternative) 
+    lowertail <- alternative == "less"
+    if (alternative %in% c("one.sided", "two.sided"))
+        zo  <- abs(zo)
+    
+    ## shrinkage is the shrinkage factor; s is 1 - shrinkage factor
+    s <- 1 - shrinkage
+    
+    ## determine parameters of predictive distribution of tr
+    if(designPrior == "conditional"){
+        mu <- s*zo*sqrt(c)
+        sigma <- 1
+    } else if(designPrior == "predictive"){
+        mu <- s*zo*sqrt(c)
+        sigma <- sqrt(c + 1 + 2*h*c)
+    } else{ ## designPrior == "EB"
+        s <- pmax(1 - (1 + h)/zo^2, 0)
+        mu <- s*zo*sqrt(c)
+        sigma <- sqrt(s*c*(1 + h) + 1 + h*c)
+    }
+    
+    ## compute replication probability
+    pSig <- pnorm(q = v, mean = mu, sd = sigma, lower.tail = lowertail)
+
+    ## when strict == TRUE, add probability in the other direction for "two.sided"
+    if (alternative == "two.sided" && strict){
+        pSig <- pSig + pnorm(q = -v, mean = mu, sd = sigma)
+    }
+
+    return(pSig)
+}
+
 #' Computes the power for significance
 #'
 #' The power for significance is computed based on the result of
@@ -26,9 +102,14 @@
 #' Specifies the shrinkage of the original effect estimate towards zero, e.g.,
 #' the effect is shrunken by a factor of 25\% for \code{shrinkage = 0.25}.
 #' Is only taken into account if the \code{designPrior} is "conditional" or "predictive".
+#' @param strict Logical vector indicating whether the probability for significance
+#' in the opposite direction of the original effect estimate should also be 
+#' taken into account. Default is \code{FALSE}.
 #' @return The probability that a replication study yields a significant effect estimate
 #' in the specified direction. An error is returned if it is impossible to obtain the
 #' specified power.
+#' @details \code{powerSignificance} is the vectorized version of \code{.powerSignificance_}.
+#' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @references
 #' Goodman, S. N. (1992). A comment on replication, p-values and evidence, 
 #' \emph{Statistics in Medicine}, \bold{11}, 875--879. 
@@ -80,63 +161,4 @@
 #' legend("topright", legend = c("conditional", "predictive", "EB"), 
 #'        title = "Design prior", lty = c(1, 2, 3), lwd = 1.5, bty = "n")
 #' @export
-powerSignificance <- function(zo,
-                              c = 1, 
-                              level = 0.025,
-                              designPrior = "conditional",
-                              alternative = "one.sided",
-                              h = 0,
-                              shrinkage = 0) {
-                              # strict = FALSE){
-    
-    # vectorize function in all arguments 
-    pSigV <- mapply(FUN = function(zo, c, level, designPrior, 
-                                   alternative, h, shrinkage) {
-                                   # alternative, h, shrinkage, strict) {
-        # sanity checks
-        if (!(designPrior %in% c("conditional", "predictive", "EB")))
-            stop('designPrior must be either "conditional", "predictive", or "EB"')
-        if (!is.numeric(c) || c < 0)
-            stop("c must be numeric and larger than 0")
-        if (!is.numeric(h) || h < 0)
-            stop("h must be numeric and cannot be negative")
-        if (!is.numeric(shrinkage) || (shrinkage < 0 || shrinkage > 1)) 
-            stop("shrinkage must be numeric and in [0, 1]")
-        if (!is.numeric(level) || (level <= 0 || level >= 1))
-            stop("level must be numeric and in (0, 1)!")
-    
-        # determine direction of alternative and critical value of zr
-        v <- p2z(p = level, alternative = alternative) 
-        lowertail <- FALSE
-        if (alternative == "less") lowertail <- TRUE
-        if (alternative %in% c("one.sided", "two.sided")) zo  <- abs(zo)
-        
-        # shrinkage is the shrinkage factor; s is 1 - shrinkage factor
-        s <- 1 - shrinkage
-        
-        # determine parameters of predictive distribution of tr
-        if(designPrior == "conditional"){
-            mu <- s*zo*sqrt(c)
-            sigma <- 1
-        }
-        if(designPrior == "predictive"){
-            mu <- s*zo*sqrt(c)
-            sigma <- sqrt(c + 1 + 2*h*c)
-        }
-        if (designPrior == "EB"){
-            s <- pmax(1 - (1 + h)/zo^2, 0)
-            mu <- s*zo*sqrt(c)
-            sigma <- sqrt(s*c*(1 + h) + 1 + h*c)
-        }
-        
-        # compute replication probability
-        pSig <- pnorm(q = v, mean = mu, sd = sigma, lower.tail = lowertail)
-        # if (alternative == "two.sided" && strict == TRUE)
-        # pSig + pnorm(q = -v, mean = mu, sd = sigma)
-        
-        return(pSig)
-    # }, zo, c, level, designPrior, alternative, d, shrinkage, strict)
-    }, zo, c, level, designPrior, alternative, h, shrinkage)
-    
-    return(pSigV)
-}
+powerSignificance <- Vectorize(.powerSignificance_)

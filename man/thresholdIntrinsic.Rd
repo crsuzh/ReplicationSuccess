@@ -4,10 +4,14 @@
 \alias{thresholdIntrinsic}
 \title{Computes the p-value threshold for intrinsic credibility}
 \usage{
-thresholdIntrinsic(alpha, alternative = "two.sided", type = "Held")
+thresholdIntrinsic(
+  alpha,
+  alternative = c("two.sided", "one.sided"),
+  type = c("Held", "Matthews")
+)
 }
 \arguments{
-\item{alpha}{Numric vector of intrinsic credibility levels.}
+\item{alpha}{Numeric vector of intrinsic credibility levels.}
 
 \item{alternative}{Either "two.sided" (default) or "one.sided".
 Specifies if the threshold is for one-sided or two-sided p-values.}

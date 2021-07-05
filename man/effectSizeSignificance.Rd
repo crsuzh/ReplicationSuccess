@@ -4,7 +4,12 @@
 \alias{effectSizeSignificance}
 \title{Computes the minimum relative effect size to achieve significance of the replication study}
 \usage{
-effectSizeSignificance(zo, c = 1, level = 0.025, alternative = "one.sided")
+effectSizeSignificance(
+  zo,
+  c = 1,
+  level = 0.025,
+  alternative = c("one.sided", "two.sided")
+)
 }
 \arguments{
 \item{zo}{Numeric vector of z-values from original studies.}
@@ -24,6 +29,10 @@ The minimum relative effect size to achieve significance of the replication stud
 The minimum relative effect size (replication to original) to achieve significance
 of the replication study is computed based on the result of the original study and
 the corresponding variance ratio.
+}
+\details{
+\code{effectSizeSignificance} is the vectorized version of \code{.effectSizeSignificance_}.
+\code{\link[base]{Vectorize}} is used to vectorize the function.
 }
 \examples{
 po <- c(0.001, 0.002, 0.01, 0.02, 0.025)

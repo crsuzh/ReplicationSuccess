@@ -1,3 +1,58 @@
+#' @export
+.predictionInterval_ <- function(thetao,
+                                 seo,
+                                 ser,
+                                 tau = 0,
+                                 conf.level = 0.95,
+                                 designPrior = c("predictive", "conditional", "EB")) {
+
+    stopifnot(is.numeric(thetao),
+              length(thetao) == 1,
+              is.finite(thetao),
+
+              is.numeric(seo),
+              length(seo) == 1,
+              is.finite(seo),
+              0 < seo,  
+
+              is.numeric(ser),
+              length(ser) == 1,
+              is.finite(ser),
+              0 < ser,  
+
+              is.numeric(tau),
+              length(tau) == 1,
+              is.finite(tau),
+              0 <= tau,  
+
+              is.numeric(conf.level),
+              length(conf.level) == 1,
+              is.finite(conf.level),
+              0 <= conf.level, conf.level <= 1,
+
+              !is.null(designPrior))
+    designPrior <- match.arg(designPrior)
+
+    ## determine parameters of predictive distribution of yr
+    if(designPrior == "conditional"){
+        mu <- thetao
+        sigma <- ser
+    } else if(designPrior == "predictive"){
+        mu <- thetao
+        sigma <- sqrt(seo^2 + ser^2 + 2*tau^2)
+    } else{ ## designPrior == "EB"
+        s <- pmax(1 - (seo^2 + tau^2)/thetao^2, 0)
+        mu <- s*thetao
+        sigma <- sqrt(s*(seo^2 + tau^2) + ser^2 + tau^2)
+    }
+    
+    ## compute prediction interval
+    lower <- qnorm(p = (1 - conf.level)/2, mean = mu, sd = sigma)
+    upper <- qnorm(p = (1 + conf.level)/2, mean = mu, sd = sigma)
+    result <- cbind(lower = lower, mean = mu, upper = upper)
+    return(result)
+}
+.predictionInterval__ <- Vectorize(.predictionInterval_)
 #' Prediction interval for effect estimate of replication study
 #'
 #' Computes a prediction interval for the effect estimate of the replication study.
@@ -20,6 +75,8 @@
 #' \item{lower}{Lower limit of prediction interval,}
 #' \item{mean}{Mean of predictive distribution,}
 #' \item{upper}{Upper limit of prediction interval.}
+#' @details \code{predictionInterval} is the vectorized version of \code{.predictionInterval_}.
+#' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @references
 #' Patil, P., Peng, R. D., Leek, J. T. (2016).
 #' What should researchers expect when they replicate studies? A statistical view of
@@ -79,44 +136,10 @@ predictionInterval <- function(thetao,
                                tau = 0,
                                conf.level = 0.95,
                                designPrior = "predictive") {
-    # vectorize function in all arguments
-    resultList <- mapply(FUN = function(thetao, seo, ser, tau, conf.level, designPrior) {
-        # sanity checks
-        if (!is.numeric(thetao)) 
-            stop("thetao must be numeric")
-        if (!(designPrior %in% c("conditional", "predictive", "EB")))
-            stop('designPrior must be either "conditional", "predictive", or "EB"')
-        if (!is.numeric(seo) || seo <= 0)
-            stop("seo must be numeric and larger than 0")
-        if (!is.numeric(ser) || ser <= 0)
-            stop("ser must be numeric and larger than 0")
-        if (!is.numeric(tau) || tau < 0)
-            stop("tau must be numeric and cannot be negative")
-        if (!is.numeric(conf.level) || (conf.level < 0 || conf.level > 1))
-            stop("conf.level must be numeric and in [0, 1]")
-
-        # determine parameters of predictive distribution of yr
-        if(designPrior == "conditional"){
-            mu <- thetao
-            sigma <- ser
-        }
-        if(designPrior == "predictive"){
-            mu <- thetao
-            sigma <- sqrt(seo^2 + ser^2 + 2*tau^2)
-        }
-        if (designPrior == "EB"){
-            s <- pmax(1 - (seo^2 + tau^2)/thetao^2, 0)
-            mu <- s*thetao
-            sigma <- sqrt(s*(seo^2 + tau^2) + ser^2 + tau^2)
-        }
-
-        # compute prediction interval
-        lower <- qnorm(p = (1 - conf.level)/2, mean = mu, sd = sigma)
-        upper <- qnorm(p = (1 + conf.level)/2, mean = mu, sd = sigma)
-        result <- data.frame(lower = lower, mean = mu, upper = upper)
-        return(result)
-    }, thetao, seo, ser, tau, conf.level, designPrior, SIMPLIFY = FALSE)
-
-    result <- do.call("rbind", args = resultList)
-    return(result)
+    res <- .predictionInterval__(thetao=thetao, seo=seo, ser=ser, tau=tau,
+                                 conf.level=conf.level, designPrior=designPrior)
+    res <- matrix(res, ncol=3, byrow=TRUE)
+    res <- data.frame(res)
+    colnames(res) <- c("lower", "mean", "upper")
+    res
 }
