@@ -37,18 +37,16 @@
     if(designPrior == "conditional"){
         mu <- thetao
         sigma <- ser
-    }
-    if(designPrior == "predictive"){
+    } else if(designPrior == "predictive"){
         mu <- thetao
         sigma <- sqrt(seo^2 + ser^2 + 2*tau^2)
-    }
-    if (designPrior == "EB"){
+    } else{ ## designPrior == "EB"
         s <- pmax(1 - (seo^2 + tau^2)/thetao^2, 0)
         mu <- s*thetao
         sigma <- sqrt(s*(seo^2 + tau^2) + ser^2 + tau^2)
     }
     
-        # compute prediction interval
+    ## compute prediction interval
     lower <- qnorm(p = (1 - conf.level)/2, mean = mu, sd = sigma)
     upper <- qnorm(p = (1 + conf.level)/2, mean = mu, sd = sigma)
     result <- cbind(lower = lower, mean = mu, upper = upper)

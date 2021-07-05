@@ -19,8 +19,9 @@
               !is.null(alternative))
     alternative <- match.arg(alternative)
 
-    zalpha <- z2p(level, alternative = alternative)
-    d <- zalpha / (zo * sqrt(c))
+    zalpha <- p2z(p = level, alternative = alternative)
+    ## use absolute value of zo to also work with negative zo
+    d <- zalpha / (abs(zo) * sqrt(c))
     return(d)
 }
 

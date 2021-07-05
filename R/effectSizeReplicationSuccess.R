@@ -27,12 +27,12 @@
     alphas <- levelSceptical(level = level, 
                              alternative = alternative, 
                              type = type)
-    zalphas <- p2z(alphas, alternative = alternative)
+    zalphas <- p2z(p = alphas, alternative = alternative)
     K <- zo^2 / zalphas^2
     
     if (zalphas > zo) {
-      warning(paste("Replication success is not achievable at this level as",
-                    zo, " < ", round(p2z(levelSceptical(level = level,
+      warning(paste("Replication success is not achievable at this level as |",
+                    zo, "| < ", round(p2z(levelSceptical(level = level,
                                                         alternative = alternative,
                                                         type = type)), 3)))
       d <- NA
