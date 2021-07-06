@@ -17,8 +17,8 @@
 #' Interim power calculations are always based on a
 #' one-sided assessment of replication success in the direction of the
 #' original effect estimates.
-#' @param shrinkage Numeric vector with values in [0,1]. Defaults to 0.
 #' @details This is an extension of \code{powerSignificance()} and adapts the `interim power'
+#' @param shrinkage Numeric vector with values in [0,1). Defaults to 0.
 #' from section 6.6.3 of Spiegelhalter et al. (2004) to the setting of replication studies.
 #'  @details \code{powerSignificanceInterim} is the vectorized version of 
 #'  \code{.powerSignificanceInterim_}.

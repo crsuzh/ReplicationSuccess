@@ -10,7 +10,7 @@ sampleSizeSignificance(
   power = NA,
   d = NA,
   level = 0.025,
-  alternative = c("one.sided", "two.sided", "less", "greater"),
+  alternative = c("one.sided", "two.sided"),
   designPrior = c("conditional", "predictive", "EB"),
   h = 0,
   shrinkage = 0
@@ -26,9 +26,9 @@ from the replication study to the effect estimate from the original study).}
 
 \item{level}{Significance level. Default is 0.025.}
 
-\item{alternative}{Either "one.sided" (default), "two.sided", "less",
-or "greater".  Specifies direction of the alternative.
-"one.sided" assumes an effect in the same direction as the original estimate.}
+\item{alternative}{Either "one.sided" (default) or "two.sided".
+Specifies direction of the alternative. "one.sided" assumes an effect in the
+same direction as the original estimate.}
 
 \item{designPrior}{Is only taken into account when \code{power} is specified.
 Either "conditional" (default), "predictive", or "EB".  
@@ -43,7 +43,7 @@ variance to the variance of the original effect estimate.
 Default is 0 (no heterogeneity).}
 
 \item{shrinkage}{Is only taken into account when \code{power} is specified.
-A number in [0,1] with 0. Specifies the shrinkage of the original effect
+A number in [0,1) with default 0. Specifies the shrinkage of the original effect
 towards zero (e.g., \code{shrinkage = 0.25} implies a shrinkage by a factor of 25\%).
 Is only taken into account when \code{designPrior} is "conditional" or "predictive".}
 }
@@ -64,7 +64,7 @@ shrinkage, and relative heterogeneity also have to be specified.
 }
 \examples{
 sampleSizeSignificance(zo = p2z(0.005), power = 0.8)
-sampleSizeSignificance(zo = p2z(0.005, alternative = "greater"), power = 0.8)
+sampleSizeSignificance(zo = p2z(0.005, alternative = "one.sided"), power = 0.8)
 sampleSizeSignificance(zo = p2z(0.005), power = 0.8, designPrior = "predictive")
 
 sampleSizeSignificance(zo = 3, power = 0.8, designPrior = "predictive", 

@@ -15,7 +15,7 @@ sampleSizeSignificanceTarget <- function(c, zo, level, power, alternative,
                                      power = NA,
                                      d = NA,
                                      level = 0.025,
-                                     alternative = c("one.sided", "two.sided", "less", "greater"),
+                                     alternative = c("one.sided", "two.sided"),
                                      designPrior = c("conditional", "predictive", "EB"),
                                      h = 0,
                                      shrinkage = 0) {
@@ -55,7 +55,7 @@ sampleSizeSignificanceTarget <- function(c, zo, level, power, alternative,
               is.numeric(shrinkage),
               length(shrinkage) == 1,
               is.finite(shrinkage),
-              0 <= shrinkage, shrinkage <= 1)
+              0 <= shrinkage, shrinkage < 1)
 
     n.l <- 0
     n.u <- 1000
@@ -143,9 +143,9 @@ sampleSizeSignificanceTarget <- function(c, zo, level, power, alternative,
 #' @param d The minimum relative effect size (ratio of the effect estimate
 #' from the replication study to the effect estimate from the original study).
 #' @param level Significance level. Default is 0.025.
-#' @param alternative Either "one.sided" (default), "two.sided", "less",
-#' or "greater".  Specifies direction of the alternative.
-#' "one.sided" assumes an effect in the same direction as the original estimate.
+#' @param alternative Either "one.sided" (default) or "two.sided".
+#' Specifies direction of the alternative. "one.sided" assumes an effect in the
+#' same direction as the original estimate.
 #' @param designPrior  Is only taken into account when \code{power} is specified.
 #' Either "conditional" (default), "predictive", or "EB".  
 #' If "EB", the power is computed under a predictive distribution
@@ -157,7 +157,7 @@ sampleSizeSignificanceTarget <- function(c, zo, level, power, alternative,
 #' variance to the variance of the original effect estimate.
 #' Default is 0 (no heterogeneity).
 #' @param  shrinkage Is only taken into account when \code{power} is specified.
-#' A number in [0,1] with 0. Specifies the shrinkage of the original effect
+#' A number in [0,1) with default 0. Specifies the shrinkage of the original effect
 #' towards zero (e.g., \code{shrinkage = 0.25} implies a shrinkage by a factor of 25\%).
 #' Is only taken into account when \code{designPrior} is "conditional" or "predictive".
 #' @return  The relative sample size to achieve significance in the specified direction.
@@ -177,7 +177,7 @@ sampleSizeSignificanceTarget <- function(c, zo, level, power, alternative,
 #' success based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
 #' @examples
 #' sampleSizeSignificance(zo = p2z(0.005), power = 0.8)
-#' sampleSizeSignificance(zo = p2z(0.005, alternative = "greater"), power = 0.8)
+#' sampleSizeSignificance(zo = p2z(0.005, alternative = "one.sided"), power = 0.8)
 #' sampleSizeSignificance(zo = p2z(0.005), power = 0.8, designPrior = "predictive")
 #' 
 #' sampleSizeSignificance(zo = 3, power = 0.8, designPrior = "predictive", 
