@@ -12,9 +12,13 @@
 #' "informed predictive" refers to an informative normal prior coming from the original study.
 #' "predictive" refers to a flat prior.
 #' @param analysisPrior Either "flat" (default) or "original".
-#' @param alternative Specifies if the replication success level is "greater" (default), "less", or "two.sided".
+#' @param alternative Either "one.sided" (default) or "two.sided".
+#' Specifies if the significance level is one-sided or two-sided.
+#' Interim power calculations are always based on a
+#' one-sided assessment of replication success in the direction of the
+#' original effect estimates.
 #' @param shrinkage Numeric vector with values in [0,1]. Defaults to 0.
-#' @details This is an extension of \code{PowerSignificance()} and adapts the `interim power'
+#' @details This is an extension of \code{powerSignificance()} and adapts the `interim power'
 #' from section 6.6.3 of Spiegelhalter et al. (2004) to the setting of replication studies.
 #' @return The probability of statistical significance in the specified direction 
 #' at the end of the replication study given the data collected so far 
@@ -51,15 +55,15 @@
 #'                          analysisPrior = "flat",
 #'                          shrinkage = 0.25)
 #' @export
-powerSignificanceInterim <- function(zo, 
-                                     zi, 
-                                     c = 1, 
-                                     f = 1/2,
-                                     level = 0.025,
-                                     designPrior = c("conditional", "informed predictive", "predictive"),
-                                     analysisPrior = c("flat", "original"),
-                                     alternative = c("greater", "less", "two.sided"),
-                                     shrinkage = 0) 
+.powerSignificanceInterim_ <- function(zo, 
+                                      zi, 
+                                      c = 1, 
+                                      f = 1/2,
+                                      level = 0.025,
+                                      designPrior = c("conditional", "informed predictive", "predictive"),
+                                      analysisPrior = c("flat", "original"),
+                                      alternative = c("one.sided", "two.sided"),
+                                      shrinkage = 0) 
 {
 
     stopifnot(is.numeric(zo),
@@ -97,16 +101,18 @@ powerSignificanceInterim <- function(zo,
     stopifnot(is.numeric(shrinkage),
               length(shrinkage) > 0,
               is.finite(shrinkage),
-              0 <= shrinkage, shrinkage <= 1)
+              0 <= shrinkage, shrinkage < 1)
               
   s <- 1 - shrinkage
   
   v <- p2z(p = level, alternative = alternative)
-  zo <- s * zo
+  if(sign(zo) == -1) zi = (-1)*zi # revert the signs when zo is negative
+  
+  zos <- s * abs(zo)
   
   if (designPrior == "conditional")
     if (analysisPrior == "flat"){
-      pSig <- pnorm(zo * sqrt(c * (1 - f) ) + zi*sqrt(f) / (sqrt(1-f)) - 
+      pSig <- pnorm(zos * sqrt(c * (1 - f) ) + zi*sqrt(f) / (sqrt(1-f)) - 
                       sqrt(1 / (1 - f)) * v)
     } else if (analysisPrior == "original") {
       return(NA) ## For now, we are not interested in the case where the design prior is conditional and the analysis prior normal.
@@ -114,13 +120,13 @@ powerSignificanceInterim <- function(zo,
   
   if (designPrior == "informed predictive") {
     if (analysisPrior == "flat") {
-      term1 <- sqrt(((1 - f) * c) / ((c*f + 1) * (1 + c))) * zo
+      term1 <- sqrt(((1 - f) * c) / ((c*f + 1) * (1 + c))) * zos
       term2 <- sqrt(f*(1 + c) / ((1 - f) * (c*f + 1))) * zi
       term3 <- sqrt((c*f + 1) / ((1 + c) * (1 - f))) * v
       pSig <- pnorm(term1 + term2 - term3)
     }
     else if (analysisPrior == "original") {
-      term1 <- sqrt(1 + (c*(1-f)/(c*f + 1))) * sqrt(1/(c*(1-f)))*zo
+      term1 <- sqrt(1 + (c*(1-f)/(c*f + 1))) * sqrt(1/(c*(1-f)))*zos
       term2 <- sqrt(1 + (c*(1-f)/(c*f + 1))) * sqrt(f/(1-f)) * zi
       term3 <- sqrt((c*f + 1)/(c*(1-f))) * v
       pSig <- pnorm(term1 + term2 - term3)
@@ -136,3 +142,5 @@ powerSignificanceInterim <- function(zo,
   }
   return(pSig)
 }
+
+powerSignificanceInterim <- Vecorize(.powerSignificanceInterim_)
