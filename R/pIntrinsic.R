@@ -33,7 +33,7 @@ pIntrinsic <- function(p = z2p(z, alternative = alternative), z = NULL,
               is.finite(p),
               0 < p, p <= 1,
               
-              is.null(z) || (is.numeric(p) && length(p) > 0 && is.finite(p)),
+              is.null(z) || (is.numeric(p) && length(p) > 0 && all(is.finite(p))),
               
               !is.null(alternative))
     alternative <- match.arg(alternative)
