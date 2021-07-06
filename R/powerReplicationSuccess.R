@@ -82,7 +82,7 @@ powerReplicationSuccessTargetPower <- function(power, zo, c, level, designPrior,
     stopifnot(is.numeric(shrinkage),
               length(shrinkage) == 1,
               is.finite(shrinkage),
-              0 <= shrinkage, shrinkage <= 1)
+              0 <= shrinkage, shrinkage < 1)
 
 
     ## check if original study was not significant, then power is zero
@@ -157,7 +157,7 @@ powerReplicationSuccessTargetPower <- function(power, zo, c, level, designPrior,
 #' just significant at the specified \code{level}, replication success is only
 #' possible if the replication effect estimate is larger than the original one.
 #' See \code{\link{levelSceptical}} for details about recalibration types.
-#' @param shrinkage Numeric vector with values in [0,1]. Defaults to 0.
+#' @param shrinkage Numeric vector with values in [0,1). Defaults to 0.
 #' Specifies the shrinkage of the original effect estimate towards zero, e.g.,
 #' the effect is shrunken by a factor of 25\% for \code{shrinkage=0.25}.
 #' Is only taken into account if the \code{designPrior} is "conditional" or "predictive".
