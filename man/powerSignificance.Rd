@@ -9,7 +9,7 @@ powerSignificance(
   c = 1,
   level = 0.025,
   designPrior = c("conditional", "predictive", "EB"),
-  alternative = c("one.sided", "two.sided", "greater", "less"),
+  alternative = c("one.sided", "two.sided"),
   h = 0,
   shrinkage = 0,
   strict = FALSE
@@ -69,14 +69,14 @@ powerSignificance(zo = p2z(0.005), c = 2)
 powerSignificance(zo = p2z(0.005), c = 2, designPrior = "predictive")
 powerSignificance(zo = p2z(0.005), c = 2, alternative = "two.sided")
 powerSignificance(zo = -3, c = 2, designPrior = "predictive",
-                  alternative = "less")
+                  alternative = "one.sided")
 powerSignificance(zo = p2z(0.005), c = 1/2)
 powerSignificance(zo = p2z(0.005), c = 1/2, designPrior = "predictive")
 powerSignificance(zo = p2z(0.005), c = 1/2, alternative = "two.sided")
 powerSignificance(zo = p2z(0.005), c = 1/2, designPrior = "predictive",
                   alternative = "two.sided")
 powerSignificance(zo = p2z(0.005), c = 1/2, designPrior = "predictive",
-                  alternative = "greater", h = 0.5, shrinkage = 0.5)
+                  alternative = "one.sided", h = 0.5, shrinkage = 0.5)
 powerSignificance(zo = p2z(0.005), c = 1/2, designPrior = "EB",
                   alternative = "two.sided", h = 0.5)
                   

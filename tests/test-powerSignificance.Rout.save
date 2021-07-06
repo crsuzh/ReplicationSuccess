@@ -1,11 +1,13 @@
 
-R version 4.0.2 (2020-06-22) -- "Taking Off Again"
+R version 4.0.3 (2020-10-10) -- "Bunny-Wunnies Freak Out"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -70,7 +72,7 @@ Type 'q()' to quit R.
 > apply_grid <- expand.grid(priors = c("conditional", "predictive", "EB"),
 +                           c = c(0.5, 2),
 +                           h = c(0, 1),
-+                           alt = c("two.sided", "one.sided", "greater"),
++                           alt = c("two.sided", "one.sided"),
 +                           shrinkage = c(0, 0.5),
 +                           stringsAsFactors = FALSE)
 > 
@@ -157,151 +159,79 @@ Type 'q()' to quit R.
    priors c h       alt shrinkage
 24     EB 2 1 one.sided         0
 [1] 0.17114 0.17114 0.17114
-        priors   c h     alt shrinkage
-25 conditional 0.5 0 greater         0
-[1] 0.00934 0.05000 0.17419
-       priors   c h     alt shrinkage
-26 predictive 0.5 0 greater         0
-[1] 0.02741 0.08963 0.22194
-   priors   c h     alt shrinkage
-27     EB 0.5 0 greater         0
-[1] 0.05 0.05 0.05
-        priors c h     alt shrinkage
-28 conditional 2 0 greater         0
-[1] 0.00111 0.05000 0.40880
-       priors c h     alt shrinkage
-29 predictive 2 0 greater         0
-[1] 0.03869 0.17114 0.44703
-   priors c h     alt shrinkage
-30     EB 2 0 greater         0
-[1] 0.05 0.05 0.05
-        priors   c h     alt shrinkage
-31 conditional 0.5 1 greater         0
-[1] 0.00934 0.05000 0.17419
-       priors   c h     alt shrinkage
-32 predictive 0.5 1 greater         0
-[1] 0.06844 0.14910 0.27656
-   priors   c h     alt shrinkage
-33     EB 0.5 1 greater         0
-[1] 0.08963 0.08963 0.08963
-        priors c h     alt shrinkage
-34 conditional 2 1 greater         0
-[1] 0.00111 0.05000 0.40880
-       priors c h     alt shrinkage
-35 predictive 2 1 greater         0
-[1] 0.12380 0.26707 0.46527
-   priors c h     alt shrinkage
-36     EB 2 1 greater         0
-[1] 0.17114 0.17114 0.17114
         priors   c h       alt shrinkage
-37 conditional 0.5 0 two.sided       0.5
+25 conditional 0.5 0 two.sided       0.5
 [1] 0.05409 0.02500 0.05409
        priors   c h       alt shrinkage
-38 predictive 0.5 0 two.sided       0.5
+26 predictive 0.5 0 two.sided       0.5
 [1] 0.09482 0.05477 0.09482
    priors   c h       alt shrinkage
-39     EB 0.5 0 two.sided       0.5
+27     EB 0.5 0 two.sided       0.5
 [1] 0.025 0.025 0.025
         priors c h       alt shrinkage
-40 conditional 2 0 two.sided       0.5
+28 conditional 2 0 two.sided       0.5
 [1] 0.10513 0.02500 0.10513
        priors c h       alt shrinkage
-41 predictive 2 0 two.sided       0.5
+29 predictive 2 0 two.sided       0.5
 [1] 0.23474 0.12890 0.23474
    priors c h       alt shrinkage
-42     EB 2 0 two.sided       0.5
+30     EB 2 0 two.sided       0.5
 [1] 0.025 0.025 0.025
         priors   c h       alt shrinkage
-43 conditional 0.5 1 two.sided       0.5
+31 conditional 0.5 1 two.sided       0.5
 [1] 0.05409 0.02500 0.05409
        priors   c h       alt shrinkage
-44 predictive 0.5 1 two.sided       0.5
+32 predictive 0.5 1 two.sided       0.5
 [1] 0.15482 0.10756 0.15482
    priors   c h       alt shrinkage
-45     EB 0.5 1 two.sided       0.5
+33     EB 0.5 1 two.sided       0.5
 [1] 0.05477 0.05477 0.05477
         priors c h       alt shrinkage
-46 conditional 2 1 two.sided       0.5
+34 conditional 2 1 two.sided       0.5
 [1] 0.10513 0.02500 0.10513
        priors c h       alt shrinkage
-47 predictive 2 1 two.sided       0.5
+35 predictive 2 1 two.sided       0.5
 [1] 0.31792 0.22941 0.31792
    priors c h       alt shrinkage
-48     EB 2 1 two.sided       0.5
+36     EB 2 1 two.sided       0.5
 [1] 0.1289 0.1289 0.1289
         priors   c h       alt shrinkage
-49 conditional 0.5 0 one.sided       0.5
+37 conditional 0.5 0 one.sided       0.5
 [1] 0.0983 0.0500 0.0983
        priors   c h       alt shrinkage
-50 predictive 0.5 0 one.sided       0.5
+38 predictive 0.5 0 one.sided       0.5
 [1] 0.14586 0.08963 0.14586
    priors   c h       alt shrinkage
-51     EB 0.5 0 one.sided       0.5
+39     EB 0.5 0 one.sided       0.5
 [1] 0.05 0.05 0.05
         priors c h       alt shrinkage
-52 conditional 2 0 one.sided       0.5
+40 conditional 2 0 one.sided       0.5
 [1] 0.17419 0.05000 0.17419
        priors c h       alt shrinkage
-53 predictive 2 0 one.sided       0.5
+41 predictive 2 0 one.sided       0.5
 [1] 0.29411 0.17114 0.29411
    priors c h       alt shrinkage
-54     EB 2 0 one.sided       0.5
+42     EB 2 0 one.sided       0.5
 [1] 0.05 0.05 0.05
         priors   c h       alt shrinkage
-55 conditional 0.5 1 one.sided       0.5
+43 conditional 0.5 1 one.sided       0.5
 [1] 0.0983 0.0500 0.0983
        priors   c h       alt shrinkage
-56 predictive 0.5 1 one.sided       0.5
+44 predictive 0.5 1 one.sided       0.5
 [1] 0.20705 0.14910 0.20705
    priors   c h       alt shrinkage
-57     EB 0.5 1 one.sided       0.5
+45     EB 0.5 1 one.sided       0.5
 [1] 0.08963 0.08963 0.08963
         priors c h       alt shrinkage
-58 conditional 2 1 one.sided       0.5
+46 conditional 2 1 one.sided       0.5
 [1] 0.17419 0.05000 0.17419
        priors c h       alt shrinkage
-59 predictive 2 1 one.sided       0.5
+47 predictive 2 1 one.sided       0.5
 [1] 0.36151 0.26707 0.36151
    priors c h       alt shrinkage
-60     EB 2 1 one.sided       0.5
-[1] 0.17114 0.17114 0.17114
-        priors   c h     alt shrinkage
-61 conditional 0.5 0 greater       0.5
-[1] 0.02284 0.05000 0.09830
-       priors   c h     alt shrinkage
-62 predictive 0.5 0 greater       0.5
-[1] 0.05137 0.08963 0.14586
-   priors   c h     alt shrinkage
-63     EB 0.5 0 greater       0.5
-[1] 0.05 0.05 0.05
-        priors c h     alt shrinkage
-64 conditional 2 0 greater       0.5
-[1] 0.00934 0.05000 0.17419
-       priors c h     alt shrinkage
-65 predictive 2 0 greater       0.5
-[1] 0.08725 0.17114 0.29411
-   priors c h     alt shrinkage
-66     EB 2 0 greater       0.5
-[1] 0.05 0.05 0.05
-        priors   c h     alt shrinkage
-67 conditional 0.5 1 greater       0.5
-[1] 0.02284 0.05000 0.09830
-       priors   c h     alt shrinkage
-68 predictive 0.5 1 greater       0.5
-[1] 0.10313 0.14910 0.20705
-   priors   c h     alt shrinkage
-69     EB 0.5 1 greater       0.5
-[1] 0.08963 0.08963 0.08963
-        priors c h     alt shrinkage
-70 conditional 2 1 greater       0.5
-[1] 0.00934 0.05000 0.17419
-       priors c h     alt shrinkage
-71 predictive 2 1 greater       0.5
-[1] 0.18701 0.26707 0.36151
-   priors c h     alt shrinkage
-72     EB 2 1 greater       0.5
+48     EB 2 1 one.sided       0.5
 [1] 0.17114 0.17114 0.17114
 > 
 > proc.time()
    user  system elapsed 
-  0.182   0.015   0.193 
+  0.430   0.185   0.315 
