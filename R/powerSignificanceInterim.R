@@ -106,7 +106,7 @@
   s <- 1 - shrinkage
   
   v <- p2z(p = level, alternative = alternative)
-  if(sign(zo) == -1) zi = (-1)*zi # revert the signs when zo is negative
+  if(sign(zo) == -1) zi = (-1)*zi # revert the signs when zo is neg
   
   zos <- s * abs(zo)
   
@@ -143,4 +143,4 @@
   return(pSig)
 }
 
-powerSignificanceInterim <- Vecorize(.powerSignificanceInterim_)
+powerSignificanceInterim <- Vectorize(.powerSignificanceInterim_)
