@@ -22,17 +22,19 @@ test_that("numeric test for sampleSizeReplicationSuccess(): 2", {
                               stringsAsFactors = FALSE)
     
     out <- lapply(X=seq_len(nrow(apply_grid)), FUN=function(i){
+        suppressWarnings({
         sampleSizeReplicationSuccess(zo = zo, 
                                      power = 0.8, 
                                      level = 0.05,
                                      designPrior = apply_grid$priors[i],
                                      alternative = apply_grid$alt[i],
                                      type = "nominal")
+        })
     })
     
     expect_equal_tol(out,
-                     list(c(Inf, Inf, Inf, Inf, 0.407426313316046),
-                          c(Inf, Inf, Inf, Inf, 0.469740710568011),
-                          c(0.549414467208847, Inf, Inf, Inf, 0.549414467208847),
-                          c(0.654250464630736, Inf, Inf, Inf, 0.654250464630736)))
-})
+                     list(c(0.407463446750989, NaN, NaN, NaN, 0.407463446750989),
+                          c(0.469946779033606, NaN, NaN, NaN, 0.469946779033606),
+                          c(0.549411550469594, NaN, NaN, NaN, 0.549411550469594),
+                          c(0.654287906282666, NaN, NaN, NaN, 0.654287906282666)))
+    })
