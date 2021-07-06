@@ -12,7 +12,7 @@ powerSignificanceInterim(
   level = 0.025,
   designPrior = c("conditional", "informed predictive", "predictive"),
   analysisPrior = c("flat", "original"),
-  alternative = c("greater", "less", "two.sided"),
+  alternative = c("one.sided", "two.sided"),
   shrinkage = 0
 )
 }
@@ -34,9 +34,17 @@ Default is 1.}
 
 \item{analysisPrior}{Either "flat" (default) or "original".}
 
-\item{alternative}{Specifies if the replication success level is "greater" (default), "less", or "two.sided".}
+\item{alternative}{Either "one.sided" (default) or "two.sided".
+Specifies if the significance level is one-sided or two-sided.
+Interim power calculations are always based on a
+one-sided assessment of replication success in the direction of the
+original effect estimates.}
 
-\item{shrinkage}{Numeric vector with values in [0,1). Defaults to 0.}
+\item{shrinkage}{Numeric vector with values in [0,1). Defaults to 0.
+from section 6.6.3 of Spiegelhalter et al. (2004) to the setting of replication studies.
+ @details \code{powerSignificanceInterim} is the vectorized version of 
+ \code{.powerSignificanceInterim_}.
+\code{\link[base]{Vectorize}} is used to vectorize the function.}
 }
 \value{
 The probability of statistical significance in the specified direction 
@@ -47,8 +55,7 @@ in the replication study.
 Computes the power of a replication study taking into account data from an interim analysis.
 }
 \details{
-This is an extension of \code{PowerSignificance()} and adapts the `interim power'
-from section 6.6.3 of Spiegelhalter et al. (2004) to the setting of replication studies.
+This is an extension of \code{powerSignificance()} and adapts the `interim power'
 }
 \examples{
 powerSignificanceInterim(zo = 2, zi = 2, c = 1, f = 1/2,
