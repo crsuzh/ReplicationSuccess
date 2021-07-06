@@ -71,7 +71,7 @@
 
             ## determining parameters based on design prior
             if (designPrior == "conditional") {
-                s <- shrinkage
+                s <- shrinkage # minor: in some functions (powerReplicationSuccess eg) we have s <- 1 - shrinkage
                 H <- 0
             } else if (designPrior == "predictive") {
                 s <- shrinkage
@@ -158,11 +158,13 @@
 #' @param d The minimum relative effect size (ratio of the effect estimate from
 #'     the replication study to the effect estimate from the original study) to
 #'     achieve replication success.
-#' @param level Replication success level. Default is 0.025.
+#' @param level Numeric vector of replication success levels. The default is
+#'     0.025. #to be consistent with powerReplicationSuccess
 #' @param alternative Either "one.sided" (default) or "two.sided". Specifies if
 #'     the replication success level is one-sided or two-sided. If one-sided,
 #'     sample size calculations are based on a one-sided assessment of
 #'     replication success in the direction of the original effect estimate.
+#'     # Also for two-sided if strict = FALSE?
 #' @param type Type of recalibration. Can be either "golden" (default),
 #'     "nominal" (no recalibration), "liberal", "controlled". "golden" ensures
 #'     that for an original study just significant at the specified
