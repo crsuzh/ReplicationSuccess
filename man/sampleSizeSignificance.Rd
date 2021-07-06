@@ -43,7 +43,7 @@ variance to the variance of the original effect estimate.
 Default is 0 (no heterogeneity).}
 
 \item{shrinkage}{Is only taken into account when \code{power} is specified.
-A number in [0,1] with 0. Specifies the shrinkage of the original effect
+A number in [0,1) with default 0. Specifies the shrinkage of the original effect
 towards zero (e.g., \code{shrinkage = 0.25} implies a shrinkage by a factor of 25\%).
 Is only taken into account when \code{designPrior} is "conditional" or "predictive".}
 }

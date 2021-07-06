@@ -36,7 +36,7 @@ Default is 1.}
 
 \item{alternative}{Specifies if the replication success level is "greater" (default), "less", or "two.sided".}
 
-\item{shrinkage}{Numeric vector with values in [0,1]. Defaults to 0.}
+\item{shrinkage}{Numeric vector with values in [0,1). Defaults to 0.}
 }
 \value{
 The probability of statistical significance in the specified direction 

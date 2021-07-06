@@ -13,7 +13,7 @@
 #' "predictive" refers to a flat prior.
 #' @param analysisPrior Either "flat" (default) or "original".
 #' @param alternative Specifies if the replication success level is "greater" (default), "less", or "two.sided".
-#' @param shrinkage Numeric vector with values in [0,1]. Defaults to 0.
+#' @param shrinkage Numeric vector with values in [0,1). Defaults to 0.
 #' @details This is an extension of \code{PowerSignificance()} and adapts the `interim power'
 #' from section 6.6.3 of Spiegelhalter et al. (2004) to the setting of replication studies.
 #' @return The probability of statistical significance in the specified direction 
@@ -97,7 +97,7 @@ powerSignificanceInterim <- function(zo,
     stopifnot(is.numeric(shrinkage),
               length(shrinkage) > 0,
               is.finite(shrinkage),
-              0 <= shrinkage, shrinkage <= 1)
+              0 <= shrinkage, shrinkage < 1)
               
   s <- 1 - shrinkage
   
