@@ -20,6 +20,9 @@
 #' @param shrinkage Numeric vector with values in [0,1]. Defaults to 0.
 #' @details This is an extension of \code{powerSignificance()} and adapts the `interim power'
 #' from section 6.6.3 of Spiegelhalter et al. (2004) to the setting of replication studies.
+#'  @details \code{powerSignificanceInterim} is the vectorized version of 
+#'  \code{.powerSignificanceInterim_}.
+#' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @return The probability of statistical significance in the specified direction 
 #' at the end of the replication study given the data collected so far 
 #' in the replication study.
