@@ -51,7 +51,7 @@ test_that("numeric test for powerReplicationSuccess(): 2", {
 
 test_that("powerReplicationSuccess() vs .powerReplicationSuccessNum_", {
     cvec <- c(0.001, 0.5, 1, 2, 100)
-    vec01bound <- c(0, 0.0386, 0.5031, 1)
+    vec01bound <- c(0, 0.0386, 0.5031, 0.99)
     vec55 <- c(-5, -2.6288, 0, 0.0427, 4)
     ## only compute the same for alternative="two.sided" with strict=TRUE
     alternative <- c("two.sided")
