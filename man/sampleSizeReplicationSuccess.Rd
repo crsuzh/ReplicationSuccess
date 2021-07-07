@@ -27,13 +27,10 @@ the replication study to the effect estimate from the original study) to
 achieve replication success.}
 
 \item{level}{Numeric vector of replication success levels. The default is
-0.025. #to be consistent with powerReplicationSuccess}
+0.025.}
 
 \item{alternative}{Either "one.sided" (default) or "two.sided". Specifies if
-the replication success level is one-sided or two-sided. If one-sided,
-sample size calculations are based on a one-sided assessment of
-replication success in the direction of the original effect estimate.
-# Also for two-sided if strict = FALSE?}
+the replication success level is one-sided or two-sided.}
 
 \item{type}{Type of recalibration. Can be either "golden" (default),
 "nominal" (no recalibration), "liberal", "controlled". "golden" ensures
