@@ -58,6 +58,7 @@ zBox <- function(zo, zr, c, level = 0.05,
               is.numeric(c),
               length(c) >= 1,
               is.finite(c),
+              c > 0,
 
               is.numeric(level),
               length(level) >= 1,

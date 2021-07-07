@@ -240,7 +240,7 @@ powerReplicationSuccessTargetPower <- function(power, zo, c, level, designPrior,
     stopifnot(is.numeric(shrinkage),
               length(shrinkage) == 1,
               is.finite(shrinkage),
-              0 <= shrinkage, shrinkage <= 1)
+              0 <= shrinkage, shrinkage < 1)
 
 
     ## check if original study was not significant, then power is zero

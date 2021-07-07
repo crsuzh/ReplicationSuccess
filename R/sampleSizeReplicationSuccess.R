@@ -268,7 +268,7 @@ sampleSizeReplicationSuccessTarget <- function(zo, c, p, level, designPrior, alt
     stopifnot(is.numeric(shrinkage),
               length(shrinkage) == 1,
               is.finite(shrinkage),
-              0 <= shrinkage, shrinkage <= 1)
+              0 <= shrinkage, shrinkage < 1)
 
     mylower <- 0
     myupper <- 1000
