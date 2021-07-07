@@ -2,9 +2,9 @@
 
 The R package ReplicationSuccess contains utilities for design and analysis of
 replication studies. Traditional methods based on statistical significance, as
-well as more recently developed methods such as the sceptical *p**-value are
-included. In addition, datasets from four large-scale replication projects are
-included. The package also provides functions to compute the *p*-value from the
+well as more recently developed methods such as the sceptical *p*-value are
+included. Data sets from four large-scale replication projects are also
+provided. The package also includes functions to compute the *p*-value from the
 harmonic mean chi-squared test as well as the *p*-value for intrinsic
 credibility.
 
