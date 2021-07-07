@@ -76,7 +76,7 @@ zSceptical(zo = 3, zr = 2, c = 2)
 \references{
 Held, L. (2020). A new standard for the analysis and design of replication
 studies (with discussion). \emph{Journal of the Royal Statistical Society: Series A
-(Statistics in Society)}. 183(2):431 - 448. \url{https://doi.org/10.1111/rssa.12493}
+(Statistics in Society)}. 183(2):431 - 448. \doi{10.1111/rssa.12493}
 
 Held, L., Micheloud, C. & Pawel, S. (2020). The assessment of replication success
 based on relative effect size. \url{https://arxiv.org/abs/2009.07782}

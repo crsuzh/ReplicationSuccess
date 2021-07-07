@@ -44,12 +44,12 @@ pReplicate(zo = c(2, 3, 4))
 }
 \references{
 Killeen, P. R. (2005). An alternative to null-hypothesis significance
-tests. \emph{Psychological Science}, \bold{16}(5), 345--353. \url{https://doi.org/10.1111/j.0956-7976.2005.01538.x}
+tests. \emph{Psychological Science}, \bold{16}(5), 345--353. \doi{10.1111/j.0956-7976.2005.01538.x}
 
 Senn, S. (2002). Letter to the Editor, \emph{Statistics in Medicine}, \bold{21}, 2437--2444.
 
 Held, L. (2019). The assessment of intrinsic credibility and a new argument for p < 0.005.
-\emph{Royal Society Open Science}, 6:181534. \url{https://dx.doi.org/10.1098/rsos.181534}
+\emph{Royal Society Open Science}, 6:181534. \doi{10.1098/rsos.181534}
 }
 \author{
 Leonhard Held

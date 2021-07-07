@@ -15,7 +15,7 @@
 #' Hedges, L. V., Schauer, J. M. (2019). More Than One Replication Study Is
 #' Needed for Unambiguous Tests of Replication. Journal of Educational and
 #' Behavioral Statistics, 44(5), 543-570.
-#' \url{https://doi.org/10.3102/1076998619852953}
+#' \doi{10.3102/1076998619852953}
 #' @seealso \code{\link{predictionInterval}}
 #' @author Samuel Pawel
 #' @examples
