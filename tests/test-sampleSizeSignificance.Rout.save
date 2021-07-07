@@ -1,11 +1,13 @@
 
-R version 4.0.2 (2020-06-22) -- "Taking Off Again"
+R version 4.0.3 (2020-10-10) -- "Bunny-Wunnies Freak Out"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -67,7 +69,7 @@ Type 'q()' to quit R.
 > apply_grid <- expand.grid(priors = c("conditional", "predictive", "EB"),
 +                           h = c(0, 0.1),
 +                           shrinkage = c(0, 0.75),
-+                           alt = c("greater", "two.sided"),
++                           alt = c("one.sided", "two.sided"),
 +                           stringsAsFactors = FALSE)
 > for (i in seq(1, nrow(apply_grid))) {
 +   print(apply_grid[i,])
@@ -80,42 +82,42 @@ Type 'q()' to quit R.
 +                               shrinkage = apply_grid$shrinkage[i])
 +   print(round(c, digits = 5))
 + }
-       priors h shrinkage     alt
-1 conditional 0         0 greater
+       priors h shrinkage       alt
+1 conditional 0         0 one.sided
 [1] 0.38641 1.54564     Inf 1.54564 0.38641
-      priors h shrinkage     alt
-2 predictive 0         0 greater
-[1]     NaN     NaN     NaN 2.64240 0.44059
-  priors h shrinkage     alt
-3     EB 0         0 greater
-[1]     NaN     NaN     NaN 5.68100 0.50569
-       priors   h shrinkage     alt
-4 conditional 0.1         0 greater
+      priors h shrinkage       alt
+2 predictive 0         0 one.sided
+[1] 0.44059 2.64240     NaN 2.64240 0.44059
+  priors h shrinkage       alt
+3     EB 0         0 one.sided
+[1] 0.50569 5.68100     NaN 5.68100 0.50569
+       priors   h shrinkage       alt
+4 conditional 0.1         0 one.sided
 [1] 0.38641 1.54564     Inf 1.54564 0.38641
-      priors   h shrinkage     alt
-5 predictive 0.1         0 greater
-[1]     NaN     NaN     NaN 2.95872 0.45233
-  priors   h shrinkage     alt
-6     EB 0.1         0 greater
-[1]     NaN     NaN     NaN 7.60909 0.52828
-       priors h shrinkage     alt
-7 conditional 0      0.75 greater
+      priors   h shrinkage       alt
+5 predictive 0.1         0 one.sided
+[1] 0.45233 2.95872     NaN 2.95872 0.45233
+  priors   h shrinkage       alt
+6     EB 0.1         0 one.sided
+[1] 0.52828 7.60909     NaN 7.60909 0.52828
+       priors h shrinkage       alt
+7 conditional 0      0.75 one.sided
 [1]  6.18256 24.73023      Inf 24.73023  6.18256
-      priors h shrinkage     alt
-8 predictive 0      0.75 greater
-[1]      NaN      NaN      NaN      NaN 113.1002
-  priors h shrinkage     alt
-9     EB 0      0.75 greater
-[1]     NaN     NaN     NaN 5.68100 0.50569
-        priors   h shrinkage     alt
-10 conditional 0.1      0.75 greater
+      priors h shrinkage       alt
+8 predictive 0      0.75 one.sided
+[1] 113.1002      NaN      NaN      NaN 113.1002
+  priors h shrinkage       alt
+9     EB 0      0.75 one.sided
+[1] 0.50569 5.68100     NaN 5.68100 0.50569
+        priors   h shrinkage       alt
+10 conditional 0.1      0.75 one.sided
 [1]  6.18256 24.73023      Inf 24.73023  6.18256
-       priors   h shrinkage     alt
-11 predictive 0.1      0.75 greater
-[1]      NaN      NaN      NaN      NaN 453.9128
-   priors   h shrinkage     alt
-12     EB 0.1      0.75 greater
-[1]     NaN     NaN     NaN 7.60909 0.52828
+       priors   h shrinkage       alt
+11 predictive 0.1      0.75 one.sided
+[1] 453.9128      NaN      NaN      NaN 453.9128
+   priors   h shrinkage       alt
+12     EB 0.1      0.75 one.sided
+[1] 0.52828 7.60909     NaN 7.60909 0.52828
         priors h shrinkage       alt
 13 conditional 0         0 two.sided
 [1] 0.49055 1.96222     Inf 1.96222 0.49055
@@ -155,4 +157,4 @@ Type 'q()' to quit R.
 > 
 > proc.time()
    user  system elapsed 
-  0.198   0.004   0.197 
+  0.496   0.164   0.352 

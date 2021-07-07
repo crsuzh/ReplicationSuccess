@@ -2,19 +2,42 @@ Package: ReplicationSuccess
 Type: Package
 Title: Design and Analysis of Replication Studies
 Version: 0.2
-Date: 2021-07-06
-Author: Leonhard Held [aut], Samuel Pawel [ctb], Charlotte Micheloud [ctb]
-Maintainer: Leonhard Held <leonhard.held@uzh.ch>
-Description: Contains utilities for design and analysis of replication studies. Traditional methods based on statistical signficance and confidence intervals, as well as more recently developed methods such as the sceptical p-value are included. Also provides functions to compute the p-value from the harmonic mean chi-squared test, the p-value for intrinsic credibility as well as the threshold for intrinsic credibility. Contains data sets from four large-scale replication projects.
+Date: 2021-07-07
+Authors@R:
+    c(person(given = "Leonhard",
+             family = "Held",
+             role = c("aut"),
+             email = "leonhard.held@uzh.ch",
+             comment = c(ORCID = "0000-0002-8686-5325")),
+      person(given = "Samuel",
+             family = "Pawel",
+	     email = "samuel.pawel@uzh.ch",
+             role = c("aut"),
+             comment = c(ORCID = "0000-0003-2779-320X")),
+     person(given = "Charlotte",
+             family = "Micheloud",
+	     email = "charlotte.micheloud@uzh.ch",
+             role = c("aut"),
+             comment = c(ORCID = "0000-0002-4995-4505")),
+      person(given = "Florian",
+             family = "Gerber",
+	     email = "florian.gerber@uzh.ch",
+	     role = c("cre"),
+             comment = "0000-0001-8545-5263"))
+Description: Contains utilities for design and analysis of replication studies.
+    Traditional methods based on statistical signficance and confidence intervals,
+    as well as more recently developed methods such as the sceptical p-value are
+    included. Also provides functions to compute the p-value from the harmonic
+    mean chi-squared test, the p-value for intrinsic credibility as well as the
+    threshold for intrinsic credibility. Contains data sets from four large-scale
+    replication projects.
+URL: https://github.com/florafauna/ReplicationSuccess
+BugReports: https://github.com/florafauna/ReplicationSuccess/issues
+Depends: R (>= 3.5)
 VignetteBuilder: knitr
 Imports: rootSolve
 Suggests: knitr, roxygen2, testthat
 License: GPL (>=2)
+LazyData: true
 NeedsCompilation: no
-Packaged: 2021-03-23 09:08:53 UTC; rforge
-Repository: R-Forge
-Repository/R-Forge/Project: replication
-Repository/R-Forge/Revision: 169
-Repository/R-Forge/DateTimeStamp: 2021-03-23 08:53:15
-Date/Publication: 2021-03-23 08:53:15
 RoxygenNote: 7.1.1

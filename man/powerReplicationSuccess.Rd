@@ -45,7 +45,7 @@ ensures that for an original study just significant at the specified
 effect estimate is larger than the original one. See
 \code{\link{levelSceptical}} for details about recalibration types.}
 
-\item{shrinkage}{Numeric vector with values in [0,1]. Defaults to 0.
+\item{shrinkage}{Numeric vector with values in [0,1). Defaults to 0.
 Specifies the shrinkage of the original effect estimate towards zero,
 e.g., the effect is shrunken by a factor of 25\% for
 \code{shrinkage=0.25}. Is only taken into account if the

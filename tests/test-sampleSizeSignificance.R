@@ -41,7 +41,7 @@ zo <- seq(-4, 4, 2)
 apply_grid <- expand.grid(priors = c("conditional", "predictive", "EB"),
                           h = c(0, 0.1),
                           shrinkage = c(0, 0.75),
-                          alt = c("greater", "two.sided"),
+                          alt = c("one.sided", "two.sided"),
                           stringsAsFactors = FALSE)
 for (i in seq(1, nrow(apply_grid))) {
   print(apply_grid[i,])

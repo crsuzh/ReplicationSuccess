@@ -10,7 +10,7 @@ sampleSizeSignificance(
   power = NA,
   d = NA,
   level = 0.025,
-  alternative = c("one.sided", "two.sided", "less", "greater"),
+  alternative = c("one.sided", "two.sided"),
   designPrior = c("conditional", "predictive", "EB"),
   h = 0,
   shrinkage = 0
@@ -26,9 +26,9 @@ from the replication study to the effect estimate from the original study).}
 
 \item{level}{Significance level. Default is 0.025.}
 
-\item{alternative}{Either "one.sided" (default), "two.sided", "less",
-or "greater".  Specifies direction of the alternative.
-"one.sided" assumes an effect in the same direction as the original estimate.}
+\item{alternative}{Either "one.sided" (default) or "two.sided".
+Specifies direction of the alternative. "one.sided" assumes an effect in the
+same direction as the original estimate.}
 
 \item{designPrior}{Is only taken into account when \code{power} is specified.
 Either "conditional" (default), "predictive", or "EB".  
@@ -43,7 +43,7 @@ variance to the variance of the original effect estimate.
 Default is 0 (no heterogeneity).}
 
 \item{shrinkage}{Is only taken into account when \code{power} is specified.
-A number in [0,1] with 0. Specifies the shrinkage of the original effect
+A number in [0,1) with default 0. Specifies the shrinkage of the original effect
 towards zero (e.g., \code{shrinkage = 0.25} implies a shrinkage by a factor of 25\%).
 Is only taken into account when \code{designPrior} is "conditional" or "predictive".}
 }
@@ -64,7 +64,7 @@ shrinkage, and relative heterogeneity also have to be specified.
 }
 \examples{
 sampleSizeSignificance(zo = p2z(0.005), power = 0.8)
-sampleSizeSignificance(zo = p2z(0.005, alternative = "greater"), power = 0.8)
+sampleSizeSignificance(zo = p2z(0.005, alternative = "one.sided"), power = 0.8)
 sampleSizeSignificance(zo = p2z(0.005), power = 0.8, designPrior = "predictive")
 
 sampleSizeSignificance(zo = 3, power = 0.8, designPrior = "predictive", 
@@ -73,7 +73,7 @@ sampleSizeSignificance(zo = 3, power = 0.8, designPrior = "EB",
                        h = 0.5)
                        
 # required relative sample size for 0.8 power as function of original p-value
-zo <- p2z(seq(0.0001, 0.05, 0.0001))
+zo <- p2z(seq(0.0001, 0.05, length.out=100))
 oldPar <- par(mfrow = c(1,2))
 plot(z2p(zo), sampleSizeSignificance(zo = zo, designPrior = "conditional", power = 0.8),
      type = "l", ylim = c(0.5, 10), log = "y", lwd = 1.5, ylab = "Relative sample size",
@@ -88,7 +88,7 @@ legend("topleft", legend = c("conditional", "predictive", "EB"),
 sampleSizeSignificance(zo = p2z(0.005), d = 1)
 sampleSizeSignificance(zo = p2z(0.005), d = 0.5)
 # required relative effect size of 0.8 power as function of original p-value
-zo <- p2z(seq(0.0001, 0.05, 0.0001))
+zo <- p2z(seq(0.0001, 0.05, length.out=100))
 plot(z2p(zo), sampleSizeSignificance(zo = zo, d = 0.8, level = 0.025),
      type = "l", ylim = c(0.5, 10), log = "y", lwd = 1.5, ylab = "Relative sample size",
     xlab = expression(italic(p)[o]), las = 1)
