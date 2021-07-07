@@ -9,7 +9,7 @@ powerSignificance(
   c = 1,
   level = 0.025,
   designPrior = c("conditional", "predictive", "EB"),
-  alternative = c("one.sided", "two.sided", "greater", "less"),
+  alternative = c("one.sided", "two.sided"),
   h = 0,
   shrinkage = 0,
   strict = FALSE
@@ -41,7 +41,7 @@ Default is 0 (no heterogeneity).
 Is only taken into account when \code{designPrior = "predictive"} or
 \code{designPrior = "EB"}.}
 
-\item{shrinkage}{Numeric vector with values in [0,1]. Defaults to 0.
+\item{shrinkage}{Numeric vector with values in [0,1). Defaults to 0.
 Specifies the shrinkage of the original effect estimate towards zero, e.g.,
 the effect is shrunken by a factor of 25\% for \code{shrinkage = 0.25}.
 Is only taken into account if the \code{designPrior} is "conditional" or "predictive".}
@@ -68,14 +68,14 @@ powerSignificance(zo = p2z(0.005), c = 2)
 powerSignificance(zo = p2z(0.005), c = 2, designPrior = "predictive")
 powerSignificance(zo = p2z(0.005), c = 2, alternative = "two.sided")
 powerSignificance(zo = -3, c = 2, designPrior = "predictive",
-                  alternative = "less")
+                  alternative = "one.sided")
 powerSignificance(zo = p2z(0.005), c = 1/2)
 powerSignificance(zo = p2z(0.005), c = 1/2, designPrior = "predictive")
 powerSignificance(zo = p2z(0.005), c = 1/2, alternative = "two.sided")
 powerSignificance(zo = p2z(0.005), c = 1/2, designPrior = "predictive",
                   alternative = "two.sided")
 powerSignificance(zo = p2z(0.005), c = 1/2, designPrior = "predictive",
-                  alternative = "greater", h = 0.5, shrinkage = 0.5)
+                  alternative = "one.sided", h = 0.5, shrinkage = 0.5)
 powerSignificance(zo = p2z(0.005), c = 1/2, designPrior = "EB",
                   alternative = "two.sided", h = 0.5)
                   

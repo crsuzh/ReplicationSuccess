@@ -42,7 +42,7 @@
               is.numeric(shrinkage),
               length(shrinkage) == 1,
               is.finite(shrinkage),
-              0 <= shrinkage, shrinkage <= 1)
+              0 <= shrinkage, shrinkage < 1)
 
     ## sample size calculation based on power
     if (is.na(d)) {
@@ -85,8 +85,6 @@
             }
         }
     } else { ## sample size calculation based on relative effect size
-        ## input checks
-        if (!is.numeric(d)) stop("d must be numeric")
         zalpha <- qnorm(1 - level)
         zalpha <- p2z(p = level, alternative = alternative)
         c <- zalpha^2/(d^2*zo^2)
@@ -126,8 +124,8 @@
 #'     variance of the original effect estimate. Default is 0 (no
 #'     heterogeneity).
 #' @param shrinkage Is only taken into account when \code{power} is specified. A
-#'     number in [0,1] with 0. Specifies the shrinkage of the original effect
-#'     towards zero (e.g., \code{shrinkage = 0.25} implies a shrinkage by a
+#'     number in [0,1) with default 0. Specifies the shrinkage of the original effect
+#'     towards zero (e.g., \code{shrinkage = 0.25} implies shrinkage by a
 #'     factor of 25\%). Is only taken into account when \code{designPrior} is
 #'     "conditional" or "predictive".
 #' @return The relative sample size to achieve significance in the specified
@@ -205,6 +203,8 @@ sampleSizeSignificanceTarget <- function(c, zo, level, power, alternative,
                                         h = 0,
                                         shrinkage = 0) {
 
+
+
     stopifnot(is.numeric(zo),
               length(zo) == 1,
               is.finite(zo))
@@ -240,7 +240,7 @@ sampleSizeSignificanceTarget <- function(c, zo, level, power, alternative,
               is.numeric(shrinkage),
               length(shrinkage) == 1,
               is.finite(shrinkage),
-              0 <= shrinkage, shrinkage <= 1)
+              0 <= shrinkage, shrinkage < 1)
 
     n.l <- 0
     n.u <- 1000
@@ -311,5 +311,6 @@ sampleSizeSignificanceTarget <- function(c, zo, level, power, alternative,
     }
     return(c)
 }
+
 
 sampleSizeSignificanceNum <- Vectorize(.sampleSizeSignificanceNum_)

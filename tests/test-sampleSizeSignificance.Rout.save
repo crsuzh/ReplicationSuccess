@@ -1,11 +1,13 @@
 
-R version 4.0.2 (2020-06-22) -- "Taking Off Again"
+R version 4.0.3 (2020-10-10) -- "Bunny-Wunnies Freak Out"
 Copyright (C) 2020 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -80,6 +82,7 @@ Type 'q()' to quit R.
 +                               shrinkage = apply_grid$shrinkage[i])
 +   print(round(c, digits = 5))
 + }
+
       priors h shrinkage       alt
 1 conditional 0         0 one.sided
 [1] 0.38641 1.54564     Inf 1.54564 0.38641
@@ -155,4 +158,4 @@ Type 'q()' to quit R.
 > 
 > proc.time()
    user  system elapsed 
-  0.198   0.004   0.197 
+  0.496   0.164   0.352 

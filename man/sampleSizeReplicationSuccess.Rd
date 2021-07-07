@@ -46,7 +46,7 @@ where the contribution of the original study is shrunken towards zero based
 on the evidence in the original study (with an empirical Bayes shrinkage estimator).}
 
 \item{shrinkage}{Is only taken into account when \code{power} is specified.
-A number in [0,1] with default 0.
+A number in [0,1) with default 0.
 Specifies the shrinkage of the original effect estimate towards zero
 (e.g., the effect is shrunken by a factor of 25\% for \code{shrinkage = 0.25}).
 Is only taken into account when the \code{designPrior} is "conditional" or "predictive".}

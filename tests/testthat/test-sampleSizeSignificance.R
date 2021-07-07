@@ -29,7 +29,7 @@ test_that("numeric test for sampleSizeSignificance(): 2", {
                               h = apply_grid$h[i],
                               shrinkage = apply_grid$shrinkage[i])
     })
-    
+
     expect_equal_tol(out, list(
                               c(0.386409827001236,1.54563930800494,Inf,1.54563930800494,0.386409827001236),
                               c(0.440562894751761,2.64240442300288,NA,2.64240442300288,0.440562894751761),

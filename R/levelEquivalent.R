@@ -26,7 +26,7 @@
 #' levelEquivalent(dinf = 0.8, level = 0.05, alternative="two.sided")
 #' @export
 levelEquivalent <- function(dinf, level=0.025,
-                            alternative=c("one.sided", "two.sided", "greater", "less")){
+                            alternative=c("one.sided", "two.sided")){
     stopifnot(is.numeric(dinf),
               length(dinf) >= 1,
               is.finite(dinf),
