@@ -47,3 +47,41 @@ test_that("numeric test for powerReplicationSuccess(): 2", {
                           c(0.977226371859, 0.180025396625, 0, 0, 0, 0.180025396625, 0.977226371859),
                           c(0.875842012298, 0.298600320185, 0, 0, 0,0.298600320185, 0.875842012298)))
 })
+
+
+test_that("powerReplicationSuccess() vs .powerReplicationSuccessNum_", {
+    cvec <- c(0.001, 0.5, 1, 2, 100)
+    vec01bound <- c(0, 0.0386, 0.5031, 0.99)
+    vec55 <- c(-5, -2.6288, 0, 0.0427, 4)
+    ## only compute the same for alternative="two.sided" with strict=TRUE
+    alternative <- c("two.sided")
+    designPrior <- c("conditional", "predictive", "EB")
+    ## usually level not larger than 0.5
+    levelvec <- c(0.001, 0.025, 0.2, 0.49)
+    type <- c("golden", "nominal")
+    pars_grid <- expand.grid(zo = vec55,
+                             c = cvec,
+                             level = levelvec,
+                             alternative = alternative,
+                             designPrior = designPrior,
+                             type = type,
+                             shrinkage = vec01bound,
+                             h = 0, ## heterogeneity not supported in legacy version
+                             strict = TRUE,
+                             stringsAsFactors = FALSE)
+
+    ## test all configurations separately
+    pars_grid <- cbind(pars_grid, new = NA, legacy = NA)
+    powerReplicationSuccess <- ReplicationSuccess::powerReplicationSuccess
+    f_num <- ReplicationSuccess:::powerReplicationSuccessNum
+    for (i in seq_len(nrow(pars_grid))) {
+        pars_grid[i,10] <- try(do.call("powerReplicationSuccess", args = pars_grid[i,1:9]),
+                               silent = TRUE)
+        pars_grid[i,11] <- try(do.call("f_num", args = pars_grid[i,1:7]),
+                               silent = TRUE)
+    }
+
+
+    ## 1e-05 the approximation error of the numerical implementation
+    expect_equal(object = pars_grid[,10], expected = pars_grid[,11], tolerance = 1e-04)
+})
