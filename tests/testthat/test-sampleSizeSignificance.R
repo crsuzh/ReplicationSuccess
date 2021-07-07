@@ -61,9 +61,9 @@ test_that("numeric test for sampleSizeSignificance(): 2", {
 
 
 
-test_that("sampleSizeSignificance() vs .sampleSizeSignificanceNum_", {
+test_that("sampleSizeSignificance() vs sampleSizeSignificanceNum", {
     vec01 <- c(0.001, 0.2532, 0.99)
-    vec01bound <- c(0, 0.0386, 0.5031, 1)
+    vec01bound <- c(0, 0.0386, 0.5031, 0.99)
     vec55 <- c(-5, -2.6288, 0, 4)
     alternative <- c("two.sided", "one.sided")
     designPrior <- c("conditional", "predictive", "EB")
@@ -89,19 +89,16 @@ test_that("sampleSizeSignificance() vs .sampleSizeSignificanceNum_", {
 
     ## test all configurations separately
     pars_grid <- cbind(rbind(pars_grid_power, pars_grid_d), new=NA, legacy=NA)
-    .sampleSizeSignificanceNum_ <- ReplicationSuccess:::.sampleSizeSignificanceNum_
+    sampleSizeSignificanceNum <- ReplicationSuccess:::sampleSizeSignificanceNum
     for(i in seq_len(nrow(pars_grid))){
         pars_grid[i,9] <- do.call("sampleSizeSignificance", args = pars_grid[i,1:8])
-        pars_grid[i,10] <- do.call(".sampleSizeSignificanceNum_", args = pars_grid[i,1:8])
+        pars_grid[i,10] <- do.call("sampleSizeSignificanceNum", args = pars_grid[i,1:8])
     }
-    
+
     ## exclude cases with large vales
-    pars_grid <- pars_grid[pars_grid$new < 500,]
-    expect_equal(object=is.na(pars_grid[,9]), expected=is.na(pars_grid[,9]))
-    pars_grid_nonNA <- pars_grid[!(is.na(pars_grid[,9]) & is.na(pars_grid[,9])),]
-    expect_equal_tol(object = pars_grid_nonNA[,9],
-                     expected = pars_grid_nonNA[,10], tol = 0.1)
-    
+    pars_grid <- pars_grid[pars_grid$new < 1000,]
+    expect_equal(object=is.na(pars_grid[,9]), expected=is.na(pars_grid[,10]))
+    pars_grid_nonNA <- pars_grid[!is.na(pars_grid[,9]) & !is.na(pars_grid[,10]),]
+    expect_equal(object = pars_grid_nonNA[,9], expected = pars_grid_nonNA[,10], tol = 0.1)
+
 })
-
-
