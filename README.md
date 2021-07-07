@@ -12,7 +12,7 @@ credibility.
 
 ReplicationSuccess will soon be available on CRAN. The development version
 can be installed from GitHub
-```{r}
+```r
 ## package "remotes" required for installation from github
 remotes::install_github(repo = "florafauna/ReplicationSuccess")
 ```
@@ -20,7 +20,7 @@ remotes::install_github(repo = "florafauna/ReplicationSuccess")
 ## How to use the package
 
 A good start is to read the vignette. It can be accessed with the command
-```{r}
+```r
 vignette("ReplicationSuccess")
 ```
 
@@ -31,14 +31,14 @@ recommend to read our papers:
   studies (with discussion). *Journal of the Royal Statistical Society: Series A
   (Statistics in Society)*. 183(2):431-448. <https://doi.org/10.1111/rssa.12493>
   
-  - Held, L., Micheloud, C., Pawel, S. (2020). The assessment of replication
+  - Held, L., Micheloud, C., Pawel, S. (2021). The assessment of replication
   success based on relative effect size. <https://arxiv.org/abs/2009.07782>
   
   - Held, L. (2020). The harmonic mean chi-squared test to substantiate
     scientific findings. *Journal of the Royal Statistical Society: Series C
     (Applied Statistics)*, 69:697-708. <https://doi.org/10.1111/rssc.12410>
     
-  - Micheloud, C., Held, L. (2020). Power Calculations for Replication Studies.
+  - Micheloud, C., Held, L. (2021). Power Calculations for Replication Studies.
     <https://arxiv.org/abs/2004.10814>
     
   - Pawel, S., Held, L. (2020). Probabilistic forecasting of replication
@@ -46,5 +46,5 @@ recommend to read our papers:
     <https://doi.org/10.1371/journal.pone.0231416>
     
   - Held, L. (2019). The assessment of intrinsic credibility and a new argument
-    for p < 0.005. *Royal Society Open Science*, 6:181534.
+    for *p* < 0.005. *Royal Society Open Science*, 6:181534.
     <https://dx.doi.org/10.1098/rsos.181534>
