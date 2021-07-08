@@ -35,3 +35,6 @@ check: $(TAR)
 
 covr: 
 	$(RSCRIPT) -e "covr::package_coverage()"
+
+manual: update-src
+	$(R) -e 'devtools::build_manual(pkg = ".", path = ".")'
