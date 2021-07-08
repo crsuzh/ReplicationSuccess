@@ -2,15 +2,13 @@
 ## sapply(list.files("../../R", pattern='\\.R$', full.names = TRUE), source)
 
 context("predictionInterval")
-source("helpers.R")
-
 
 test_that("numeric test for predictionInterval(): 1", {
     za <- qnorm(p = 0.025, lower.tail = FALSE)
-    expect_equal_tol(object = predictionInterval(thetao = za, seo = 1, ser = 1, 
-                                                 designPrior = "conditional"),
-                     expected = data.frame(lower = 0, mean = za, upper = 2*za),
-                     tol = 0.0001)
+    expect_equal(object = predictionInterval(thetao = za, seo = 1, ser = 1,
+                                             designPrior = "conditional"),
+                 expected = data.frame(lower = 0, mean = za, upper = 2*za),
+                 tol = 0.0001)
 })
 
 
@@ -21,15 +19,14 @@ test_that("numeric test for predictionInterval(): 2", {
                               seo = 1,
                               ser = c(0.5, 2),
                               stringsAsFactors = FALSE)
-    out <- lapply(X=seq_len(nrow(apply_grid)), FUN=function(i){
+    out <- lapply(X=seq_len(nrow(apply_grid)), FUN = function(i){
         predictionInterval(thetao = thetao,
                             seo = apply_grid$seo[i],
                             ser = apply_grid$ser[i],
                             tau = apply_grid$tau[i],
                             designPrior = apply_grid$priors[i])
     })
-    
-    expect_equal_tol(out,
+    expect_equal(out,
                      list(structure(list(lower = c(-2.97998199227003, -0.979981992270027, 
 1.02001800772997), mean = c(-2, 0, 2), upper = c(-1.02001800772997, 
 0.979981992270027, 2.97998199227003)), class = "data.frame", row.names = c(NA, 
