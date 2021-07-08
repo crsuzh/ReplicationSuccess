@@ -1,3 +1,9 @@
+               CHANGES IN ReplicationSuccess VERSION 0.2 (2021-07-09)
+
+    -    sampleSizeSignificance, powerReplicationSuccess, sampleSizeReplicationSuccess now use analytic implementation instead of numerical implementation
+    -    development version of the package migrated to GitHub
+
+
                CHANGES IN ReplicationSuccess VERSION 0.1-4 (2020-12-01)
 
     -    new function T1EpSceptical

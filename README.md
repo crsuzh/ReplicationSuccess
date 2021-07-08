@@ -20,7 +20,7 @@ devtools::install_github(repo = "florafauna/ReplicationSuccess")
 
 ## Introduction in vignette
 
-Use `vignette("ReplicationSuccess")` to access the vinette from R. 
+Use `vignette("ReplicationSuccess")` to access the vignette from R. 
 
 ## Publications
 
