@@ -42,10 +42,10 @@ pIntrinsic(z = 2)
 \references{
 Matthews, R. A. J. (2018).  Beyond 'significance': principles and practice of the analysis of credibility.
 \emph{Royal Society Open Science}, 5:171047.
-\url{https://doi.org/10.1098/rsos.171047}
+\doi{10.1098/rsos.171047}
 
 Held, L. (2019). The assessment of intrinsic credibility and a new argument for p < 0.005.
-\emph{Royal Society Open Science}, 6:181534. \url{https://dx.doi.org/10.1098/rsos.181534}
+\emph{Royal Society Open Science}, 6:181534. \doi{10.1098/rsos.181534}
 }
 \author{
 Leonhard Held
