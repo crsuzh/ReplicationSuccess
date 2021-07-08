@@ -2,9 +2,10 @@
 #'
 #' The level for the sceptical p-value is computed based on the specified
 #' alternative and calibration type.
-#' @param level Numeric vector of required significance levels.
+#' @param level Numeric vector of required replication success levels.
 #' @param alternative Either "one.sided" (default), "two.sided", "greater", or "less".
-#' Specifies if the significance level is one-sided or two-sided. If the significance level is one-sided,
+#' Specifies if the replication success level is one-sided or two-sided. 
+#' If the level is one-sided,
 #' then a one-sided level for the sceptical p-value is computed.
 #' @param type The calibration type can be either "golden" (default), "nominal", "liberal", or "controlled".
 #' \code{type="golden"} ensures that for an original study just significant at the specified \code{level},
@@ -29,10 +30,10 @@
 #' based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
 #' @author Leonhard Held
 #' @examples
-#' levelSceptical(level = 0.025, type = "nominal")
-#' levelSceptical(level = 0.025, type = "liberal")
-#' levelSceptical(level = 0.025, type = "controlled")
-#' levelSceptical(level = 0.025, type = "golden")
+#' levelSceptical(level = 0.025, alternative = "one.sided", type = "nominal")
+#' levelSceptical(level = 0.025, alternative = "one.sided", type = "liberal")
+#' levelSceptical(level = 0.025, alternative = "one.sided", type = "controlled")
+#' levelSceptical(level = 0.025, alternative = "one.sided", type = "golden")
 #' @export
 levelSceptical <- function(level, 
                            alternative = c("one.sided", "two.sided", "greater", "less"), 

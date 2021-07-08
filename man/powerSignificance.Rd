@@ -30,8 +30,8 @@ the contribution of the original study is shrunken towards zero based
 on the evidence in the original study (with an empirical Bayes shrinkage estimator).}
 
 \item{alternative}{Either "one.sided" (default) or "two.sided".
-Specifies if the replication success level is one-sided or two-sided.
-If the replication success level is one-sided, then power calculations are based on a
+Specifies if the significance level is one-sided or two-sided.
+If the level is one-sided, then power calculations are based on a
 one-sided assessment of replication success in the direction of the
 original effect estimates.}
 
@@ -48,7 +48,8 @@ Is only taken into account if the \code{designPrior} is "conditional" or "predic
 
 \item{strict}{Logical vector indicating whether the probability for significance
 in the opposite direction of the original effect estimate should also be 
-taken into account. Default is \code{FALSE}.}
+taken into account. Default is \code{FALSE}. 
+Only taken into account when \code{alternative = "two.sided"}.}
 }
 \value{
 The probability that a replication study yields a significant effect estimate
@@ -110,7 +111,7 @@ Society)}. 183(2):431 - 448. \doi{10.1111/rssa.12493}
 Pawel, S., Held, L. (2020). Probabilistic forecasting of replication studies.
 PLoS ONE 15(4):e0231416. \doi{10.1371/journal.pone.0231416}
 
-Held, L., Micheloud, C. & Pawel, S. (2020). The assessment of replication
+Held, L., Micheloud, C. & Pawel, S. (2021). The assessment of replication
 success based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
 }
 \seealso{

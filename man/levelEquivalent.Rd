@@ -11,10 +11,11 @@ levelEquivalent(dinf, level = 0.025, alternative = c("one.sided", "two.sided"))
 deemed to be impossible for borderline significant original studies
 with p-values equal to \code{level}.}
 
-\item{level}{Numeric vector of required significance levels. Defaults to 0.025.}
+\item{level}{Numeric vector of required replication success levels. Defaults to 0.025.}
 
 \item{alternative}{Either "one.sided" (default) or "two.sided".
-Specifies if the significance level is one-sided or two-sided. If the significance level is one-sided,
+Specifies if the replication success level is one-sided or two-sided. 
+If the replication success level is one-sided,
 then a one-sided level for the sceptical p-value is computed.}
 }
 \value{
@@ -36,7 +37,7 @@ Held, L. (2020). A new standard for the analysis and design of replication studi
 \emph{Journal of the Royal Statistical Society: Series A (Statistics in Society)}, \bold{183}, 431-448.
 \doi{10.1111/rssa.12493}
 
-Held, L., Micheloud, C. & Pawel, S. (2020). The assessment of replication success
+Held, L., Micheloud, C. & Pawel, S. (2021). The assessment of replication success
 based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
 }
 \seealso{

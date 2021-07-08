@@ -133,6 +133,7 @@
 #' @param strict Logical vector indicating whether the probability for
 #'     replication success in the opposite direction of the original effect
 #'     estimate should also be taken into account. Default is \code{FALSE}.
+#'     Only taken into account when \code{alternative = "two.sided"}.
 #' @return The power for replication success.
 #' @details \code{powerReplicationSuccess} is the vectorized version of
 #'     \code{.powerReplicationSuccess_}. \code{\link[base]{Vectorize}} is used
@@ -148,12 +149,18 @@
 #' \code{\link{levelSceptical}}
 #' @examples
 #' ## larger sample size in replication (c > 1)
-#' powerReplicationSuccess(zo = p2z(0.005), c = 2)
-#' powerReplicationSuccess(zo = p2z(0.005), c = 2, designPrior = "predictive")
+#' powerReplicationSuccess(zo = p2z(0.005), c = 2, level = 0.025, designPrior = "conditional")
+#' powerReplicationSuccess(zo = p2z(0.005), c = 2, level = 0.025, designPrior = "predictive")
 #'
 #' ## smaller sample size in replication (c < 1)
-#' powerReplicationSuccess(zo = p2z(0.005), c = 1/2)
-#' powerReplicationSuccess(zo = p2z(0.005), c = 1/2, designPrior = "predictive")
+#' powerReplicationSuccess(zo = p2z(0.005), c = 1/2, level = 0.025, designPrior = "conditional")
+#' powerReplicationSuccess(zo = p2z(0.005), c = 1/2, level = 0.025, designPrior = "predictive")
+#' 
+#' powerReplicationSuccess(zo = p2z(0.00005), c = 2, level = 0.05, 
+#'                         alternative = "two.sided",  strict = TRUE, shrinkage = 0.9)
+#' powerReplicationSuccess(zo = p2z(0.00005), c = 2, level = 0.05, 
+#'                         alternative = "two.sided", strict = FALSE, shrinkage = 0.9)
+#' 
 #' @export
 powerReplicationSuccess <- Vectorize(.powerReplicationSuccess_)
 
