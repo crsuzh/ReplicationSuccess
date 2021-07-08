@@ -5,7 +5,7 @@
 #' @param w Numeric vector of weights.
 #' @param alternative Either "greater" (default), "less", "two.sided", or "none".
 #' Specifies the alternative to be considered in the computation of the p-value.
-#' @param bound If \code{FALSE} (default), p-values that cannot be computed are reported as \code{NA}.
+#' @param bound If \code{FALSE} (default), p-values that cannot be computed are reported as \code{NaN}.
 #' If \code{TRUE}, they are reported as "> bound".
 #' @return \code{hMeanChiSq} returns the p-values from the harmonic mean chi-squared test
 #' based on the study-specific z-values. 
@@ -58,19 +58,19 @@ hMeanChiSq <- function(z, w = rep(1, length(z)),
         if(bound)
             res <- if(check_greater) res/(2^n) else paste(">", format(break_p, scientific = FALSE))
         else
-            res <- if(check_greater) res/(2^n) else NA
+            res <- if(check_greater) res/(2^n) else NaN
     }
     if(alternative == "less"){
         if(bound)
             res <- if(check_less) res/(2^n) else paste(">", format(break_p, scientific = FALSE))
         else
-            res <- if(check_less) res/(2^n) else NA
+            res <- if(check_less) res/(2^n) else NaN
     }
     if(alternative == "two.sided"){
         if(bound)
             res <- if(check_greater || check_less) res/(2^(n-1)) else paste(">", format(2*break_p, scientific = FALSE))
         else
-            res <- if(check_greater || check_less) res/(2^(n-1)) else NA
+            res <- if(check_greater || check_less) res/(2^(n-1)) else NaN
     }
     ## no chnage to res for alternative == "none"
     return(res)
@@ -129,19 +129,19 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
             if(bound)
                 res <- if(check_greater) res/(2^n) else paste(">", format(break_p, scientific = FALSE))
             else
-                res <- if(check_greater || check_less) res/(2^n) else NA
+                res <- if(check_greater || check_less) res/(2^n) else NaN
         }
         if(alternative == "less"){
             if(bound)
                 res <- if(check_less) res/(2^n) else paste(">", format(break_p, scientific = FALSE))
             else
-                res <- if(check_greater || check_less) res/(2^n) else NA
+                res <- if(check_greater || check_less) res/(2^n) else NaN
         }
         if(alternative == "two.sided"){
             if(bound)
                 res <- if(check_greater || check_less) res/(2^(n-1)) else paste(">", format(2*break_p, scientific = FALSE))
             else
-                res <- if(check_greater || check_less) res/(2^(n-1)) else NA
+                res <- if(check_greater || check_less) res/(2^(n-1)) else NaN
         }
     }
     if(alternative == "none"){

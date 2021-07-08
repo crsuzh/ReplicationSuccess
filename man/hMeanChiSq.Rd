@@ -38,7 +38,7 @@ hMeanChiSqCI(
 \item{alternative}{Either "greater" (default), "less", "two.sided", or "none".
 Specifies the alternative to be considered in the computation of the p-value.}
 
-\item{bound}{If \code{FALSE} (default), p-values that cannot be computed are reported as \code{NA}.
+\item{bound}{If \code{FALSE} (default), p-values that cannot be computed are reported as \code{NaN}.
 If \code{TRUE}, they are reported as "> bound".}
 
 \item{thetahat}{Numeric vector of parameter estimates.}
