@@ -103,9 +103,9 @@ the sceptical $p$-value and related power and sample size calculations
 \citep{Held2020}. Methods to compute the $p$-value for intrinsic
 credibility \citep{Held2019a}, the harmonic mean $\chi^2$-test \citep{Held2020b},
 forecasting of replication studies \citep{Pawel2020}, and interim analyses of
-replication studies \citep{Micheloud2020} were added subsequently. Recently, substantial
+replication studies \citep{MicheloudHeld2021} were added subsequently. Recently, substantial
 changes to many of the existing functions were made due to a recalibration of
-the sceptical $p$-value approach \citep{Held_etal2020}.
+the sceptical $p$-value approach \citep{Held_etal2021}.
 Use \texttt{news(package = "ReplicationSuccess")} to see a history of the
 changes. The development version of \texttt{ReplicationSuccess} is available on
 GitHub (\url{https://github.com/florafauna/ReplicationSuccess/}, the stable version
@@ -516,7 +516,7 @@ The smallest level $\alpha$ at which replication success can be declared corresp
 to the sceptical $p$-value. %, analogous to the duality of ordinary $p$-values and 
 % confidence intervals. 
 See Figure \ref{fig:examplerevBayes} for a practical illustration of the procedure,
-also see \citet{Held2020} and \citet{Held_etal2020} for technical details.
+also see \citet{Held2020} and \citet{Held_etal2021} for technical details.
 
 \begin{figure}[!h]
 << "plot-pSceptical", echo = FALSE, fig.height = 4 >>=
@@ -698,7 +698,7 @@ The four types can be summarized as follows:
 \end{itemize}
 \citet{Held2020} only used the nominal level and it led to relatively
 low rates of replication success in the case studies considered.
-\citet{Held_etal2020} further studied properties of the different
+\citet{Held_etal2021} further studied properties of the different
 levels and concluded that the nominal level may be too stringent for
 most realistic scenarios, instead the golden level was recommended as
 default choice to assess replication success. It provides an attractive
@@ -888,7 +888,7 @@ $p$-value or $z$-value of the original study.}
 The requirements on the $p$-value of statistical significance of the replication 
 study ($p_r < \alpha$) and of replication success ($p_S < \alpha_S$) 
 can both be transformed to requirements on the relative effect size 
-$d = \hat{\theta}_r/\hat{\theta}_o$ \citep{Held_etal2020}.
+$d = \hat{\theta}_r/\hat{\theta}_o$ \citep{Held_etal2021}.
 % (the 
 % ratio of the replication effect estimate to the original effect estimate).
 In short, significance of the replication study (or replication success) is 
@@ -935,7 +935,7 @@ a power (re)calculation at interim.
 study after an interim analysis has been performed, taking into account the
 results from the first part of the study.
 The power at interim is a useful tool to decide whether a replication 
-study should be stopped prematurely for futility \citep{Micheloud2020}.
+study should be stopped prematurely for futility \citep{MicheloudHeld2021}.
 The function 
 \texttt{powerSignificanceInterim} is an extension of \texttt{powerSignificance}
 and requires in addition the specification of \texttt{zi}, the $z$-value 
