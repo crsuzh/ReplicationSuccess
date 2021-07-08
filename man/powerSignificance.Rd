@@ -52,8 +52,7 @@ taken into account. Default is \code{FALSE}.}
 }
 \value{
 The probability that a replication study yields a significant effect estimate
-in the specified direction. An error is returned if it is impossible to obtain the
-specified power.
+in the specified direction.
 }
 \description{
 The power for significance is computed based on the result of
