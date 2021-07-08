@@ -44,11 +44,11 @@ levelSceptical(level = 0.025, type = "golden")
 \references{
 Held, L. (2020). A new standard for the analysis and design of replication studies (with discussion).
 \emph{Journal of the Royal Statistical Society: Series A (Statistics in Society)}, \bold{183}, 431-448.
-\url{https://doi.org/10.1111/rssa.12493}
+\doi{10.1111/rssa.12493}
 
 Held, L. (2020). The harmonic mean chi-squared test to substantiate scientific findings.
 \emph{Journal of the Royal Statistical Society: Series C (Applied Statistics)}, \bold{69}, 697-708.
-\url{https://doi.org/10.1111/rssc.12410}
+\doi{10.1111/rssc.12410}
 
 Held, L., Micheloud, C. & Pawel, S. (2020). The assessment of replication success
 based on relative effect size. \url{https://arxiv.org/abs/2009.07782}

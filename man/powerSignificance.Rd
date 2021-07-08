@@ -97,7 +97,7 @@ legend("topright", legend = c("conditional", "predictive", "EB"),
 \references{
 Goodman, S. N. (1992). A comment on replication, p-values and evidence, 
 \emph{Statistics in Medicine}, \bold{11}, 875--879. 
-\url{https://dx.doi.org/10.1002/sim.4780110705}
+\doi{10.1002/sim.4780110705}
      
 Senn, S. (2002). Letter to the Editor, \emph{Statistics in Medicine}, 
 \bold{21}, 2437--2444. 
@@ -105,10 +105,10 @@ Senn, S. (2002). Letter to the Editor, \emph{Statistics in Medicine},
 Held, L. (2020). A new standard for the analysis and design of replication 
 studies (with discussion). 
 \emph{Journal of the Royal Statistical Society: Series A (Statistics in 
-Society)}. 183(2):431 - 448. \url{https://doi.org/10.1111/rssa.12493}
+Society)}. 183(2):431 - 448. \doi{10.1111/rssa.12493}
 
 Pawel, S., Held, L. (2020). Probabilistic forecasting of replication studies.
-PLoS ONE 15(4):e0231416. \url{https://doi.org/10.1371/journal.pone.0231416}
+PLoS ONE 15(4):e0231416. \doi{10.1371/journal.pone.0231416}
 
 Held, L., Micheloud, C. & Pawel, S. (2020). The assessment of replication
 success based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
