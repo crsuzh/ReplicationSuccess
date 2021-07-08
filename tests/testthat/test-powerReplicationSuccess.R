@@ -2,22 +2,20 @@
 ## sapply(list.files("../../R", pattern='\\.R$', full.names = TRUE), source)
 
 context("powerReplicationSuccess")
-source("helpers.R")
 
 
 test_that("numeric test for powerReplicationSuccess(): 1", {
-    expect_equal_tol(object = powerReplicationSuccess(zo = qnorm(p = 1 - 0.05/2),
-                                    c = 1, level = 0.05,
-                                    alternative = "two.sided",
-                                    type = "nominal"),
-                     expected = 0)
-
-    expect_equal_tol(object = powerReplicationSuccess(zo = qnorm(p = 1 - 0.0056/2),
-                                    c = 1, level = 0.05,
-                                    alternative = "two.sided",
-                                    type = "nominal"), 
-                     expected = 0.5,
-                     tol = 0.01)
+    expect_equal(object = powerReplicationSuccess(zo = qnorm(p = 1 - 0.05/2),
+                                                  c = 1, level = 0.05,
+                                                  alternative = "two.sided",
+                                                  type = "nominal"),
+                 expected = 0)
+    expect_equal(object = powerReplicationSuccess(zo = qnorm(p = 1 - 0.0056/2),
+                                                  c = 1, level = 0.05,
+                                                  alternative = "two.sided",
+                                                  type = "nominal"),
+                 expected = 0.5,
+                 tol = 0.01)
     
 })
 
@@ -36,16 +34,15 @@ test_that("numeric test for powerReplicationSuccess(): 2", {
                                alternative = apply_grid$alt[i],
                                type = "nominal")
     })
-    
-    expect_equal_tol(out,
-                     list(c(4.30651110224e-01, 6.58940633183e-09, 0, 0, 0, 6.58940633183e-09, 4.30651110224e-01),
-                          c(4.43281086648e-01, 1.73576581216e-06, 0, 0, 0, 1.73576581216e-06, 4.43281086648e-01),
-                          c(8.74983256919e-01, 3.12385006455e-28, 0, 0, 0, 3.12385006455e-28, 8.74983256919e-01),
-                          c( 7.4668926659280443481e-01, 1.2644672285096127461e-10, 0, 0, 0, 1.2644672285096127461e-10, 7.4668926659280443481e-01),
-                          c(0.621076958271, 0.174118774024, 0, 0, 0, 0.174118774024, 0.621076958271),
-                          c(0.599376841233, 0.221872456556, 0, 0, 0, 0.221872456556, 0.599376841233),
-                          c(0.977226371859, 0.180025396625, 0, 0, 0, 0.180025396625, 0.977226371859),
-                          c(0.875842012298, 0.298600320185, 0, 0, 0,0.298600320185, 0.875842012298)))
+    expect_equal(out,
+                 list(c(4.30651110224e-01, 6.58940633183e-09, 0, 0, 0, 6.58940633183e-09, 4.30651110224e-01),
+                      c(4.43281086648e-01, 1.73576581216e-06, 0, 0, 0, 1.73576581216e-06, 4.43281086648e-01),
+                      c(8.74983256919e-01, 3.12385006455e-28, 0, 0, 0, 3.12385006455e-28, 8.74983256919e-01),
+                      c(7.4668926659280443481e-01, 1.2644672285096127461e-10, 0, 0, 0, 1.2644672285096127461e-10, 7.4668926659280443481e-01),
+                      c(0.621076958271, 0.174118774024, 0, 0, 0, 0.174118774024, 0.621076958271),
+                      c(0.599376841233, 0.221872456556, 0, 0, 0, 0.221872456556, 0.599376841233),
+                      c(0.977226371859, 0.180025396625, 0, 0, 0, 0.180025396625, 0.977226371859),
+                      c(0.875842012298, 0.298600320185, 0, 0, 0,0.298600320185, 0.875842012298)))
 })
 
 
@@ -69,7 +66,6 @@ test_that("powerReplicationSuccess() vs .powerReplicationSuccessNum_", {
                              h = 0, ## heterogeneity not supported in legacy version
                              strict = TRUE,
                              stringsAsFactors = FALSE)
-
     ## test all configurations separately
     pars_grid <- cbind(pars_grid, new = NA, legacy = NA)
     powerReplicationSuccess <- ReplicationSuccess::powerReplicationSuccess
@@ -80,8 +76,6 @@ test_that("powerReplicationSuccess() vs .powerReplicationSuccessNum_", {
         pars_grid[i,11] <- try(do.call("f_num", args = pars_grid[i,1:7]),
                                silent = TRUE)
     }
-
-
     ## 1e-05 the approximation error of the numerical implementation
     expect_equal(object = pars_grid[,10], expected = pars_grid[,11], tolerance = 1e-04)
 })
