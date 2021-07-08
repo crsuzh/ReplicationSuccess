@@ -4,28 +4,27 @@ The R package ReplicationSuccess contains utilities for design and analysis of
 replication studies. Traditional methods based on statistical significance, as
 well as more recently developed methods such as the sceptical *p*-value are
 included. Data sets from four large-scale replication projects are also
-provided. The package also includes functions to compute the *p*-value from the
+provided. The package includes functions to compute the *p*-value from the
 harmonic mean chi-squared test as well as the *p*-value for intrinsic
 credibility.
 
 ## Installation
 
-ReplicationSuccess will soon be available on CRAN. The development version
-can be installed from GitHub
+CRAN version:
 ```r
-## package "remotes" required for installation from github
-remotes::install_github(repo = "florafauna/ReplicationSuccess")
+install.packages("ReplicationSuccess")
 ```
 
-## How to use the package
-
-A good start is to read the vignette. It can be accessed with the command
+Development version from github:
 ```r
-vignette("ReplicationSuccess")
+devtools::install_github(repo = "florafauna/ReplicationSuccess")
 ```
 
-For a deeper understanding of the theory underlying ReplicationSuccess we 
-recommend to read our papers:
+## Introduction in vignette
+
+Use `vignette("ReplicationSuccess")` to access the vinette from R. 
+
+## Publications
 
   - Held, L. (2020). A new standard for the analysis and design of replication
   studies (with discussion). *Journal of the Royal Statistical Society: Series A
