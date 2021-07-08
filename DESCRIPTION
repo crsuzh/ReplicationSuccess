@@ -3,7 +3,7 @@ Type: Package
 Title: Design and Analysis of Replication Studies
 Version: 0.2
 Date: 2021-07-08
-Authors@R:
+Authors@R: 
     c(person(given = "Leonhard",
              family = "Held",
              role = c("aut"),
@@ -25,9 +25,9 @@ Authors@R:
 	         role = c("cre"),
              comment = c(ORCID = "0000-0001-8545-5263")))
 Description: Provides utilities for the design and analysis of replication studies.
-    Features methods for both traditional methods based on statistical significance and
-    more recent methods such as the sceptical *p*-value as well as *p*-values derived
-    from the harmonic mean chi-squared test and the intrinsic credibility.
+    Features both traditional methods based on statistical significance and
+    more recent methods such as the sceptical p-value. Also includes related
+    methods such as the harmonic mean chi-squared test and intrinsic credibility.
     Contains datasets from four large-scale replication projects.
 URL: https://github.com/florafauna/ReplicationSuccess
 BugReports: https://github.com/florafauna/ReplicationSuccess/issues
