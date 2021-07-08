@@ -2,8 +2,8 @@
 
 Provides utilities for the design and analysis of replication studies.
 Features both traditional methods based on statistical significance and
-more recent methods such as the sceptical p-value. Also includes related
-methods such as the harmonic mean chi-squared test and intrinsic credibility.
+more recent methods such as the sceptical p-value. Also provides related
+methods including the harmonic mean chi-squared test and intrinsic credibility.
 Contains datasets from four large-scale replication projects.
 
 ## Installation
