@@ -103,7 +103,7 @@
 #' heterogeneity also have to be specified.
 #' @name sampleSizeSignificance
 #' @rdname sampleSizeSignificance
-#' @author Leonhard Held, Samuel Pawel, Charlotte Micheloud
+#' @author Leonhard Held, Samuel Pawel, Charlotte Micheloud, Florian Gerber
 #' @param zo A vector of z-values from original studies.
 #' @param power The power to achieve replication success.
 #' @param d The minimum relative effect size (ratio of the effect estimate from

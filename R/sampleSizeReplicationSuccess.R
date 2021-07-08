@@ -195,7 +195,7 @@
 #'
 #' Held, L., Micheloud, C. & Pawel, S. (2020). The assessment of replication success
 #' based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
-#' @author Leonhard Held, Charlotte Micheloud
+#' @author Leonhard Held, Charlotte Micheloud, Samuel Pawel, Florian Gerber
 #' @seealso \code{\link{pSceptical}}, \code{\link{powerReplicationSuccess}}, \code{\link{levelSceptical}}
 #' @examples
 #' ## based on power

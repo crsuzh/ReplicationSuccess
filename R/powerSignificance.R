@@ -94,8 +94,8 @@
 #' @param h The relative between-study heterogeneity, i.e., the ratio of the heterogeneity
 #' variance to the variance of the original effect estimate.
 #' Default is 0 (no heterogeneity).
-#' Is only taken into account when \code{designPrior = "predictive"} or
-#' \code{designPrior = "EB"}.
+#' Is only taken into account when \code{designPrior} = "predictive" or
+#' \code{designPrior} = "EB".
 #' @param shrinkage Numeric vector with values in [0,1). Defaults to 0.
 #' Specifies the shrinkage of the original effect estimate towards zero, e.g.,
 #' the effect is shrunken by a factor of 25\% for \code{shrinkage = 0.25}.
@@ -103,7 +103,7 @@
 #' @param strict Logical vector indicating whether the probability for significance
 #' in the opposite direction of the original effect estimate should also be 
 #' taken into account. Default is \code{FALSE}. 
-#' Only taken into account when \code{alternative = "two.sided"}.
+#' Only taken into account when \code{alternative} = "two.sided".
 #' @return The probability that a replication study yields a significant effect estimate
 #' in the specified direction.
 #' @details \code{powerSignificance} is the vectorized version of \code{.powerSignificance_}.

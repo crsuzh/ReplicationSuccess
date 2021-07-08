@@ -106,7 +106,7 @@
 #' @param level Numeric vector of replication success levels. The default is
 #'     0.025.
 #' @param designPrior Either "conditional" (default), "predictive", or "EB". If
-#'     \code{"EB"}, the power is computed under a predictive distribution, where
+#'     "EB", the power is computed under a predictive distribution, where
 #'     the contribution of the original study is shrunken towards zero based on
 #'     the evidence in the original study (with an empirical Bayes shrinkage
 #'     estimator).
@@ -116,7 +116,7 @@
 #'     on a one-sided assessment of replication success in the direction of the
 #'     original effect estimates.
 #' @param type Recalibration type can be either "golden" (default), "nominal"
-#'     (no recalibration), "liberal", or "controlled". \code{type="golden"}
+#'     (no recalibration), "liberal", or "controlled". \code{type} = "golden"
 #'     ensures that for an original study just significant at the specified
 #'     \code{level}, replication success is only possible if the replication
 #'     effect estimate is larger than the original one. See
@@ -124,16 +124,16 @@
 #' @param shrinkage Numeric vector with values in [0,1). Defaults to 0.
 #'     Specifies the shrinkage of the original effect estimate towards zero,
 #'     e.g., the effect is shrunken by a factor of 25\% for
-#'     \code{shrinkage=0.25}. Is only taken into account if the
+#'     \code{shrinkage = 0.25}. Is only taken into account if the
 #'     \code{designPrior} is "conditional" or "predictive".
 #' @param h Numeric vector of relative heterogeneity variances i.e., the ratio
 #'     of the heterogeneity variance to the variance of the original effect
 #'     estimate. Default is 0 (no heterogeneity). Is only taken into account
-#'     when \code{designPrior = "predictive"} or \code{designPrior = "EB"}.
+#'     when \code{designPrior} = "predictive" or \code{designPrior} = "EB".
 #' @param strict Logical vector indicating whether the probability for
 #'     replication success in the opposite direction of the original effect
 #'     estimate should also be taken into account. Default is \code{FALSE}.
-#'     Only taken into account when \code{alternative = "two.sided"}.
+#'     Only taken into account when \code{alternative} = "two.sided".
 #' @return The power for replication success.
 #' @details \code{powerReplicationSuccess} is the vectorized version of
 #'     \code{.powerReplicationSuccess_}. \code{\link[base]{Vectorize}} is used

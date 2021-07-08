@@ -32,13 +32,14 @@ on the evidence in the original study (with an empirical Bayes shrinkage estimat
 \item{alternative}{Either "one.sided" (default) or "two.sided".
 Specifies if the significance level is one-sided or two-sided.
 If the significance level is one-sided, then power calculations are based on a
-one-sided assessment of significance in the direction of the original effect estimates.}
+one-sided assessment of significance in the direction of the
+original effect estimates.}
 
 \item{h}{The relative between-study heterogeneity, i.e., the ratio of the heterogeneity
 variance to the variance of the original effect estimate.
 Default is 0 (no heterogeneity).
-Is only taken into account when \code{designPrior = "predictive"} or
-\code{designPrior = "EB"}.}
+Is only taken into account when \code{designPrior} = "predictive" or
+\code{designPrior} = "EB".}
 
 \item{shrinkage}{Numeric vector with values in [0,1). Defaults to 0.
 Specifies the shrinkage of the original effect estimate towards zero, e.g.,
@@ -48,7 +49,7 @@ Is only taken into account if the \code{designPrior} is "conditional" or "predic
 \item{strict}{Logical vector indicating whether the probability for significance
 in the opposite direction of the original effect estimate should also be 
 taken into account. Default is \code{FALSE}. 
-Only taken into account when \code{alternative = "two.sided"}.}
+Only taken into account when \code{alternative} = "two.sided".}
 }
 \value{
 The probability that a replication study yields a significant effect estimate

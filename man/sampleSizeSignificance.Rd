@@ -113,5 +113,5 @@ success based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
 \code{\link{powerSignificance}}
 }
 \author{
-Leonhard Held, Samuel Pawel, Charlotte Micheloud
+Leonhard Held, Samuel Pawel, Charlotte Micheloud, Florian Gerber
 }
