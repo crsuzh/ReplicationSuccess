@@ -107,10 +107,10 @@ Camerer, C. F., Dreber, A., Forsell, E., Ho, T.-H., Huber, J.,
     laboratory experiments in economics. \emph{Science}, 351, 1433-1436.
     \doi{10.1126/science.aaf0918}
 
-    Camerer, C. F., Dreber, A., Holzmeister,
-    F., Ho, T.-H., Huber, J., Johannesson, M., ... Wu, H. (2018). Evaluating
-    the replicability of social science experiments in Nature and Science
-    between 2010 and 2015. \emph{Nature Human Behaviour}, 2, 637-644.
+    Camerer, C. F., Dreber, A., Holzmeister, F., Ho, T.-H., Huber, J.,
+    Johannesson, M., ... Wu, H. (2018). Evaluating the replicability of
+    social science experiments in Nature and Science between 2010 and 2015.
+    \emph{Nature Human Behaviour}, 2, 637-644.
     \doi{10.1038/s41562-018-0399-z}
 
 Cova, F., Strickland, B., Abatista, A., Allard, A., Andow, J., Attie, M., ...
@@ -122,7 +122,7 @@ psychological science. \emph{Science}, 349, aac4716.
 \doi{10.1126/science.aac4716}
 
 Pawel, S., Held, L. (2020). Probabilistic forecasting of replication studies.
-    PLoS ONE 15(4):e0231416. \doi{10.1371/journal.pone.0231416}
+    \emph{PLoS ONE}, 15(4):e0231416. \doi{10.1371/journal.pone.0231416}
 }
 \seealso{
 \code{\link{SSRP}}
