@@ -90,7 +90,7 @@ sampleSizeReplicationSuccess(zo = p2z(0.0025), d = 0.9, level = 0.025,
 Held, L. (2020). A new standard for the analysis and design of
     replication studies (with discussion). \emph{Journal of the Royal
     Statistical Society: Series A (Statistics in Society)}. 183(2):431 - 448.
-    \url{https://doi.org/10.1111/rssa.12493}
+    \doi{10.1111/rssa.12493}
 
 Held, L., Micheloud, C. & Pawel, S. (2020). The assessment of replication success
 based on relative effect size. \url{https://arxiv.org/abs/2009.07782}

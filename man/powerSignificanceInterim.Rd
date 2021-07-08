@@ -35,10 +35,7 @@ Default is 1.}
 \item{analysisPrior}{Either "flat" (default) or "original".}
 
 \item{alternative}{Either "one.sided" (default) or "two.sided".
-Specifies if the significance level is one-sided or two-sided.
-Interim power calculations are always based on a
-one-sided assessment of replication success in the direction of the
-original effect estimates.}
+Specifies if the significance level is one-sided or two-sided.}
 
 \item{shrinkage}{Numeric vector with values in [0,1). Defaults to 0.
 from section 6.6.3 of Spiegelhalter et al. (2004) to the setting of replication studies.
