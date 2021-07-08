@@ -10,7 +10,7 @@ hMeanChiSq(
   z,
   w = rep(1, length(z)),
   alternative = c("greater", "less", "two.sided", "none"),
-  bound = TRUE
+  bound = FALSE
 )
 
 hMeanChiSqMu(
@@ -19,7 +19,7 @@ hMeanChiSqMu(
   w = rep(1, length(thetahat)),
   mu = 0,
   alternative = c("greater", "less", "two.sided", "none"),
-  bound = TRUE
+  bound = FALSE
 )
 
 hMeanChiSqCI(
@@ -38,8 +38,8 @@ hMeanChiSqCI(
 \item{alternative}{Either "greater" (default), "less", "two.sided", or "none".
 Specifies the alternative to be considered in the computation of the p-value.}
 
-\item{bound}{If \code{TRUE} (default), p-values that cannot be computed are reported as "> bound".
-If \code{TRUE}, they are reported as \code{NA}.}
+\item{bound}{If \code{FALSE} (default), p-values that cannot be computed are reported as \code{NA}.
+If \code{TRUE}, they are reported as "> bound".}
 
 \item{thetahat}{Numeric vector of parameter estimates.}
 

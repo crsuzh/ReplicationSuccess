@@ -5,8 +5,8 @@
 #' @param w Numeric vector of weights.
 #' @param alternative Either "greater" (default), "less", "two.sided", or "none".
 #' Specifies the alternative to be considered in the computation of the p-value.
-#' @param bound If \code{TRUE} (default), p-values that cannot be computed are reported as "> bound".
-#' If \code{TRUE}, they are reported as \code{NA}.
+#' @param bound If \code{FALSE} (default), p-values that cannot be computed are reported as \code{NA}.
+#' If \code{TRUE}, they are reported as "> bound".
 #' @return \code{hMeanChiSq} returns the p-values from the harmonic mean chi-squared test
 #' based on the study-specific z-values. 
 #' @references Held, L. (2020). The harmonic mean chi-squared test to substantiate scientific findings.
@@ -31,7 +31,7 @@
 #' hMeanChiSq(p2z(pvalues, alternative="less"),  w=1/se^2, alternative="none")
 #' @export
 hMeanChiSq <- function(z, w = rep(1, length(z)),
-                       alternative = c("greater", "less", "two.sided", "none"), bound=TRUE){
+                       alternative = c("greater", "less", "two.sided", "none"), bound=FALSE){
     stopifnot(is.numeric(z),
               length(z) > 0,
               is.finite(z),
@@ -51,29 +51,26 @@ hMeanChiSq <- function(z, w = rep(1, length(z)),
     n <- length(z)
     zH2 <- sum(sqrt(w))^2 / sum(w / z^2)
     res <- pchisq(zH2, df = 1, lower.tail = FALSE)
-    check_greater <- min(z) > 0
-    check_less <- max(z) < 0
+    check_greater <- min(z) >= 0
+    check_less <- max(z) <= 0
     break_p <- 1 / (2^n)
     if(alternative == "greater"){
         if(bound)
-            ## FG: better use `res <- if() {} else {}`.
-            ## only use ifelse() if first argument is a vector. 
-            ## what happens when z==0?
-            res <- ifelse(check_greater, res/(2^n), paste(">", format(break_p, scientific = FALSE)))
+            res <- if(check_greater) res/(2^n) else paste(">", format(break_p, scientific = FALSE))
         else
-            res <- ifelse(check_greater | check_less, res/(2^n), NA)
+            res <- if(check_greater) res/(2^n) else NA
     }
     if(alternative == "less"){
         if(bound)
-            res <- ifelse(check_less, res/(2^n), paste(">", format(break_p, scientific = FALSE)))
+            res <- if(check_less) res/(2^n) else paste(">", format(break_p, scientific = FALSE))
         else
-            res <- ifelse(check_greater | check_less, res/(2^n), NA)
+            res <- if(check_less) res/(2^n) else NA
     }
     if(alternative == "two.sided"){
         if(bound)
-            res <- ifelse(check_greater | check_less, res/(2^(n-1)), paste(">", format(2*break_p, scientific = FALSE)))
+            res <- if(check_greater || check_less) res/(2^(n-1)) else paste(">", format(2*break_p, scientific = FALSE))
         else
-            res <- ifelse(check_greater | check_less, res/(2^(n-1)), NA)
+            res <- if(check_greater || check_less) res/(2^(n-1)) else NA
     }
     ## no chnage to res for alternative == "none"
     return(res)
@@ -94,7 +91,7 @@ hMeanChiSq <- function(z, w = rep(1, length(z)),
 #' hMeanChiSqMu(thetahat=estimate, se=se, alternative="two.sided", mu=-0.1)
 #' @export
 hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
-                         alternative =c("greater", "less", "two.sided", "none"), bound=TRUE){
+                         alternative =c("greater", "less", "two.sided", "none"), bound=FALSE){
     stopifnot(is.numeric(thetahat),
               length(thetahat) > 0,
               is.finite(thetahat),
@@ -125,35 +122,30 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
         z <- (thetahat - mu) / se
         zH2 <- sum(sqrt(w))^2 / sum(w/z^2)
         res <- pchisq(zH2, df = 1, lower.tail = FALSE)
-        check_greater <- min(z) > 0
-        check_less <- max(z) < 0
+        check_greater <- min(z) >= 0
+        check_less <- max(z) <= 0
         break_p <- 1/(2^n)
         if(alternative == "greater"){
-            if(bound == TRUE)
-                res <- ifelse(check_greater, res/(2^n),
-                              paste(">", format(break_p, scientific = FALSE)))
-            if(bound == FALSE)
-                res <- ifelse(check_greater | check_less, res/(2^n), NA)
+            if(bound)
+                res <- if(check_greater) res/(2^n) else paste(">", format(break_p, scientific = FALSE))
+            else
+                res <- if(check_greater || check_less) res/(2^n) else NA
         }
         if(alternative == "less"){
-            if(bound == TRUE)
-                res <- ifelse(check_less, res/(2^n),
-                              paste(">", format(break_p, scientific = FALSE)))
-            if(bound == FALSE)
-                res <- ifelse(check_greater | check_less, res/(2^n), NA)
+            if(bound)
+                res <- if(check_less) res/(2^n) else paste(">", format(break_p, scientific = FALSE))
+            else
+                res <- if(check_greater || check_less) res/(2^n) else NA
         }
         if(alternative == "two.sided"){
-            if(bound == TRUE)
-                res <- ifelse(check_greater | check_less, res/(2^(n-1)),
-                              paste(">", format(2*break_p, scientific = FALSE)))
-            if(bound == FALSE)
-                res <- ifelse(check_greater | check_less, res/(2^(n-1)), NA)
+            if(bound)
+                res <- if(check_greater || check_less) res/(2^(n-1)) else paste(">", format(2*break_p, scientific = FALSE))
+            else
+                res <- if(check_greater || check_less) res/(2^(n-1)) else NA
         }
     }
     if(alternative == "none"){
         zH2 <- numeric(m)
-        ## needs to allow for vectorial arugments
-        ## FG: why does alternative != "none" not need this loop?
         sw <- sum(sqrt(w))^2
         for(i in 1:m){
             z <- (thetahat - mu[i]) / se
