@@ -22,7 +22,7 @@
 
 % title, author, date, etc.
 \title{\textbf{Design and Analysis of Replication Studies with \texttt{ReplicationSuccess}}}
-\author{\textbf{Leonhard Held, Charlotte Micheloud, Samuel Pawel} \\
+\author{\textbf{Leonhard Held, Charlotte Micheloud, Samuel Pawel, Florian Gerber} \\
 Epidemiology, Biostatistics and Prevention Institute (EBPI) \\
 Center for Reproducible Science (CRS) \\
 University of Zurich, Switzerland}
@@ -99,18 +99,17 @@ from four large-scale replication projects which are also included in the
 package.
 
 \texttt{ReplicationSuccess} was first created to provide software for computing 
-the sceptical $p$-value and related power and sample size calculations 
-\citep{Held2020}. Methods to compute the $p$-value for intrinsic 
+the sceptical $p$-value and related power and sample size calculations
+\citep{Held2020}. Methods to compute the $p$-value for intrinsic
 credibility \citep{Held2019a}, the harmonic mean $\chi^2$-test \citep{Held2020b},
-forecasting of replication studies \citep{Pawel2020}, and interim analyses of 
-replication studies \citep{Micheloud2020} were added subsequently. Recently, substantial 
+forecasting of replication studies \citep{Pawel2020}, and interim analyses of
+replication studies \citep{Micheloud2020} were added subsequently. Recently, substantial
 changes to many of the existing functions were made due to a recalibration of
 the sceptical $p$-value approach \citep{Held_etal2020}.
-Use \texttt{news(package = "ReplicationSuccess")} to see a history of the 
-changes. \texttt{ReplicationSuccess} has not yet been released on CRAN but
-can be installed from R-Forge by running the command
-\texttt{install.packages("ReplicationSuccess", repos = "http://R-Forge.R-project.org")}
-in an R-session.
+Use \texttt{news(package = "ReplicationSuccess")} to see a history of the
+changes. The development version of \texttt{ReplicationSuccess} is available on
+GitHub (\url{https://github.com/florafauna/ReplicationSuccess/}, the stable version
+is available on CRAN (\url{https://cran.r-project.org/web/packages/ReplicationSuccess/}).
 
 \subsection{Statistical framework}
 \texttt{ReplicationSuccess} assumes a simple but general statistical framework: 
@@ -131,7 +130,7 @@ The squared standard errors are usually inversely proportional to
 the sample size of each study, $\sigma^2_o = \kappa^2/n_o$ and 
 $\sigma^2_r = \kappa^2/n_r$ for some unit variance $\kappa^2$. The variance 
 ratio can then be identified as the relative sample size $c = n_r/n_o$. 
-This may require some adaptation for certain effect sizes.
+This may require some adaptation for certain types of effect sizes.
 Computation of these quantities from real data will be illustrated below.
 
 
@@ -186,17 +185,18 @@ estimates on correlation scale as well as effective sample size for both
 the original and replication were available are included in the package.
 \end{itemize}
 
-In all data sets, effect estimates are provided as correlation coefficients 
+In all data sets, effect estimates are provided as correlation coefficients
 ($r$), as well as Fisher $z$-transformed correlation coefficients
-($\hat{\theta} = \text{tanh}^{-1}(r)$). 
-In the descriptive analysis of data from replication projects it has become common
-practice to transform effect sizes to the correlation scale, because correlations 
-are bounded to the interval between minus one and one and 
-thus easy to compare and interpret. Design and statistical analysis, on the other hand,
-is then usually carried out on a scale where the estimates are approximately normally 
-distributed. For correlation coefficients this is the case after applying the
-Fisher $z$-transformation, which leads to their variance asymptotically being only a function 
-of the study sample size $n$, \ie $\Var(\hat{\theta}) = 1/(n - 3)$ \citep{Fisher1921}.
+($\hat{\theta} = \text{tanh}^{-1}(r)$). In the descriptive analysis of data from
+replication projects it has become common practice to transform effect sizes to
+the correlation scale, because correlations are bounded to the interval between
+minus one and one and thus easy to compare and interpret. Design and statistical
+analysis, on the other hand, is then usually carried out on a scale where the
+distribution of the estimates are is well approximated by a normal distribution.
+For correlation coefficients this is the case after applying the Fisher
+$z$-transformation, which leads to their variance asymptotically being only a
+function of the study sample size $n$, \ie $\Var(\hat{\theta}) = 1/(n - 3)$
+\citep{Fisher1921}.
 
 
 The data can be loaded with the command \texttt{data("RProjects")}. For a
@@ -234,7 +234,7 @@ paints the following picture.
 par(mfrow = c(2, 2), las = 1, mai = rep(0.65, 4))
 for (p in unique(RProjects$project)) {
     data_project <- subset(RProjects, project == p)
-    significant <- ifelse(data_project$pr < 0.05, "#DF536BCC", "#00000080")
+    significant <- ifelse(data_project$pr1 < 0.025, "#DF536BCC", "#00000080")
     plot(rr ~ ro, data = data_project, ylim = c(-0.5, 1), col = significant,
          xlim = c(-0.1, 1), main = p, xlab = expression(italic(r)[o]), 
          cex = 0.7, pch = 19, ylab = expression(italic(r)[r]))
@@ -260,8 +260,13 @@ the determination of the sample size.
 
 \subsection{Statistical significance}
 \paragraph{Analysis}
-The most commonly used approach is to declare a replication successful if both, 
-original and replication study, achieve statistical significance (in the same direction).
+The most commonly used approach is to declare a replication successful if both,
+original and replication study, achieve statistical significance (in the same
+direction). The significance level is conventionally chosen to be 0.05 for
+two-sided $p$-values, respectively, 0.025 for one-sided $p$-values. Working with
+one-sided $p$-values is usually simpler since effect direction is automatically
+taken into account, while with two-sided $p$-values one has also to check
+whether the original and replication estimate go in the same direction.
 % There are some variations of this approach, for example,
 % \citet{Camerer2016} only assessed whether the replication effect is significant in
 % the same direction, but not whether the original effect shows the same significance 
@@ -427,10 +432,10 @@ between original and replication effect estimate. A popular approach is to check
 whether the replication estimate is contained within a prediction interval 
 based on the original estimate \citep{Patil2016, Pawel2020}. 
 This approach based on a $(1 - \alpha)$
-prediction interval is in fact equivalent to conducting a meta-analytic $Q$-test 
+prediction interval is equivalent to conducting a meta-analytic $Q$-test
 with the two estimates, and rejecting compatibility when the corresponding $p$-value
 $p_Q < \alpha$ \citep{Hedges2019b}. The $p$-value from the $Q$-test is usually
-preferred, since it tells quantitatively how compatible the estimates. In contrast,
+preferred, since it tells quantitatively how compatible the estimates are. In contrast,
 a prediction interval can give a better idea about the range of plausible 
 replication effect estimates besides the observed one. Both approaches are
 available in  \texttt{ReplicationSuccess}: The function \texttt{Qtest} returns
@@ -462,7 +467,7 @@ for (p in unique(RProjects$project)) {
                              ser = data_project$se_fisr)
     ## transforming back to correlation scale 
     PI <- tanh(PI)
-    incompatible <- pQ < 0.05
+    incompatible <- pQ < 0.05 ## incompatible at 5% level
     color <- ifelse(incompatible == FALSE, "#00000099", "#DF536BCC")
     study <- seq(1, nrow(data_project))
     plot(data_project$rr, study, col = color, pch = 20, cex = 0.5,
@@ -511,7 +516,7 @@ The smallest level $\alpha$ at which replication success can be declared corresp
 to the sceptical $p$-value. %, analogous to the duality of ordinary $p$-values and 
 % confidence intervals. 
 See Figure \ref{fig:examplerevBayes} for a practical illustration of the procedure,
-also see \citet{Held2020, Held_etal2020} for technical details.
+also see \citet{Held2020} and \citet{Held_etal2020} for technical details.
 
 \begin{figure}[!h]
 << "plot-pSceptical", echo = FALSE, fig.height = 4 >>=
@@ -673,7 +678,7 @@ The four types can be summarized as follows:
   \item \textit{golden}: Ensures that for original studies, which are just 
   significant at the specified significance level $\alpha$, replication success 
   is only possible if the replication effect estimate is larger than the original 
-  one (\ie if  there is no shrinkage).
+  one (\ie if  there is no shrinkage). This is our recommended default level.
 \item \textit{controlled}: When original and replication effect
   estimate have the same variance ($c=1$), this type ensures type-I
   error control at $\alpha^2$ for \texttt{alternative = "two.sided"}
@@ -732,8 +737,8 @@ RProjects$ps <- with(RProjects,
 boxplot(ps ~ project, data = RProjects, las = 1, cex.axis = 0.7, ylim = c(0, 1),
         xlab = "Project", ylab = expression(italic(tilde(p))[S]), outline = FALSE,
         col = "#0000000D")
-abline(h = alpha/2, lty = 1, col = 4)
-axis(side = 4, at = alpha/2, col.axis = 4, col = 4, las = 1, cex.axis = 0.5)
+abline(h = 0.025, lty = 2)
+axis(side = 4, at = 0.025, las = 1, cex.axis = 0.5)
 stripchart(ps ~ project, data = RProjects, vertical = TRUE, add = TRUE,
            pch = 20, method = "jitter", jitter = 0.3, cex = 1, col = "#00000099")
 
@@ -741,13 +746,13 @@ for (p in unique(RProjects$project)) {
     data_project <- subset(RProjects, project == p)
     cat(paste0(p, ": \n"))
     success_scept <- (data_project$ps < 0.025)
-    cat(paste0(round(mean(success_scept)*100, 2), 
+    cat(paste0(round(mean(success_scept)*100, 2),
                "% smaller than 0.025 (one-sided sceptical p-value) \n"))
     success_tradit <- (data_project$po1 < 0.025) & (data_project$pr1 < 0.025)
-    cat(paste0(round(mean(success_tradit)*100, 2), 
+    cat(paste0(round(mean(success_tradit)*100, 2),
                "% smaller than 0.025 (both one-sided traditional p-values) \n"))
     if(sum(success_scept != success_tradit) > 0){
-        discrep <- data_project[(success_scept != success_tradit), 
+        discrep <- data_project[(success_scept != success_tradit),
                                 c("ro", "rr", "c", "po1", "pr1", "ps")]
         ## print effect estimates, 1sided p-values, and c of discrepant studies
         cat("Discrepant studies: \n")
@@ -755,18 +760,17 @@ for (p in unique(RProjects$project)) {
   }
   cat("\n \n")
 }
-@ 
-For many studies, replication success is declared both based on
-significance and on the sceptical $p$-value. However, six replications
-show discrepant results. The sceptical $p$-value may not indicate
-replication success when there is substantial shrinkage of the
-replication effect estimate relative to the original one, even if both
-estimates are significant (this is the case for one study in the
-psychology project, two studies in the social sciences project, one
-study in the philosophy project).  On the other hand, provided there is not
-much shrinkage, it may indicate replication success for
-non-significant original or replication studies (this is the case for two
-studies in the psychology project).
+@
+For most studies, the two approaches agree and replication success is declared
+both based on significance and on the sceptical $p$-value. However, six
+replications show discrepant results. The sceptical $p$-value may not indicate
+replication success when there is substantial shrinkage of the replication
+effect estimate relative to the original one, even if both estimates are
+significant (this is the case for one study in the psychology project, two
+studies in the social sciences project, one study in the philosophy project). On
+the other hand, provided there is not much shrinkage, it may still indicate
+replication success for non-significant original or replication studies (this is
+the case for two studies in the psychology project).
 
 
 
@@ -905,7 +909,7 @@ For the \citet{Morewedge2010} replication, the
 minimum relative effect size to achieve replication success at the golden level
 turns out to be $\dmin = \Sexpr{round(dminrs, 2)}$. Since the observed relative
 effect size  is $d = \Sexpr{round(d, 2)} > \Sexpr{round(dminrs, 2)}$,
-the replication is deemed successful.
+the replication is successful.
 
 \paragraph{Design}
 The methodology described above can be inverted such that the relative sample
@@ -976,45 +980,45 @@ abline(a = 0, b = 1, col = "grey")
 % \end{figure}
 
 \subsection{Between-study heterogeneity}
-It is often more realistic to assume that the effects underlying the estimates 
-from original and replication studies are not exactly the same but that there is 
-between-study heterogeneity. This can be caused, for example, if the replication
-study is conducted in a different laboratory with different equipment. For this reason, 
-many functions in \texttt{ReplicationSuccess} allow to incorporate additionally
-uncertainty due to between-study heterogeneity into the predictive model. For example,
-\texttt{sampleSizeSignificance} or \texttt{predictionInterval} allow to specify 
-\texttt{h}, the relative between-study heterogeneity variance $h = \tau^2/\sigma^2$, 
-\ie the ratio of the heterogeneity variance to the variance of the original effect estimate.
-By default, \texttt{h} is set to zero, however, if between-study heterogeneity is
-expected, \eg a different population of study participants is used, this should
-be considered in the design. See also \citet{Pawel2020} for more details.
+It is often more realistic to assume that the unknown effect sizes from original
+and replication studies are not exactly the same but that there is between-study
+heterogeneity. This can be the case, for example, if the replication study is
+conducted with a different population of participants (\eg in a different
+country) or in another laboratory with different equipment. For this reason, the
+functions for design of replication studies allow to incorporate additionally
+uncertainty due to between-study heterogeneity. For example,
+\texttt{sampleSizeSignificance} or \texttt{predictionInterval} allows to specify
+the argument \texttt{h}, the relative between-study heterogeneity variance
+$h = \tau^2/\sigma^2$, \ie the ratio of the heterogeneity variance to the
+variance of the original effect estimate. By default, \texttt{h} is set to zero,
+however, if between-study heterogeneity is expected, \eg a different population
+of study participants is used, this should be considered in the design. See
+\citet{Pawel2020} for more details.
 
 \subsection{Data-driven shrinkage with empirical Bayes}
-The functions \texttt{sampleSizeSignificance} and 
-\texttt{powerSignificance} allow to specify the argument \texttt{shrinkage}, in order
-to shrink the original effect estimate towards zero by a certain (arbitrary) amount. 
-A more principled approach is to use a design prior which induces
-shrinkage and then estimate the prior variance by empirical Bayes. This leads to
-``data-driven'' shrinkage that is larger when there was only weak evidence for the
-effect, and smaller when there was strong evidence for the effect (shown in Figure
-\ref{fig:ebshrinkage}). 
-Furthermore, under this prior, the specified between-study heterogeneity will also 
-induce shrinkage towards zero, for details see \citet{Pawel2020}.
-Empirical Bayes shrinkage is currently supported for the functions 
-\texttt{sampleSizeSignificance}, \texttt{powerSignificance}, and 
-\texttt{predictionInterval} by setting the design prior argument to \texttt{"EB"}.
+The functions for design of replication studies allow to specify the argument
+\texttt{shrinkage}, in order to shrink the original effect estimate towards zero
+by a certain (arbitrary) amount. A more principled approach is to use a design
+prior which induces shrinkage and then estimate the prior variance by empirical
+Bayes. This leads to ``data-driven'' shrinkage that is larger when there was
+only weak evidence for the effect, and smaller when there was strong evidence
+for the effect (shown in Figure \ref{fig:ebshrinkage}). Furthermore, under this
+prior, the specified between-study heterogeneity will also induce shrinkage
+towards zero, for details see \citet{Pawel2020}. Empirical Bayes shrinkage can
+be enabled by setting the design prior argument to \texttt{"EB"}.
 \begin{figure}[!htbp]
 << "shrinkage", echo = FALSE, fig.height = 3.5 >>=
 zo <- seq(0, 4, 0.01)
 s <- pmax(1 - 1/zo^2, 0)
-plot(zo, s, type = "l", ylim = c(0, 1), las = 1,
-     xlab = expression(paste(italic(z)[o])), ylab = "Shrinkage factor",
+shrinkage <- (1 - s)*100
+plot(zo, shrinkage, type = "l", ylim = c(0, 100), las = 1,
+     xlab = expression(paste(italic(z)[o])), ylab = "Shrinkage (%)",
      yaxt = "n")
-axis(side = 2, at = seq(0, 1, 0.25), las = 1)
+axis(side = 2, at = seq(0, 100, 25), las = 1)
 axis(side = 3, at = seq(0, 4, by = 1), 
      labels = c(signif(z2p(seq(0, 3, by = 1), alternative = "one.sided"), 2), 
                 signif(z2p(4, alternative = "one.sided"), 1)))
-abline(h = seq(0, 1, 0.25), lty = 1, col = adjustcolor("lightgrey", alpha.f = 0.3))
+abline(h = seq(0, 100, 25), lty = 1, col = adjustcolor("lightgrey", alpha.f = 0.3))
 mtext(text = expression(italic(p)[o]), side = 3, line = 2)
 @
 \caption{Empirical Bayes shrinkage when there is no between-study heterogeneity.}
@@ -1023,15 +1027,9 @@ mtext(text = expression(italic(p)[o]), side = 3, line = 2)
 
 
 \section{Outlook}
-% This vignette is meant to give an overview of the currently implemented
-% functionality of the \texttt{ReplicationSuccess} package. The
-% theory underlying the reverse-Bayes approach to quantify replication success
-% was only explained on a high-level and we refer to the articles
-% \citet{Held2020, Held_etal2020} for details. 
-Development on \texttt{ReplicationSuccess} will continue and we plan to 
-submit a stable version to CRAN at some point in the future. We invite anyone with
+Development on \texttt{ReplicationSuccess} will continue. We invite anyone with
 ideas for new functionality, bug-reports, or other contributions to the package
-to get in touch with us. 
+to get in touch with us over GitHub (\url{https://github.com/florafauna/ReplicationSuccess/}).
 
 \bibliography{bibliography}
 
