@@ -24,12 +24,11 @@ Authors@R:
 	         email = "florian.gerber@uzh.ch",
 	         role = c("cre"),
              comment = c(ORCID = "0000-0001-8545-5263")))
-Description: Contains utilities for design and analysis of replication studies.
-    Traditional methods based on statistical significance,
-    as well as more recently developed methods such as the sceptical p-value are
-    included. Also provides functions to compute the p-value from the harmonic
-    mean chi-squared test and the p-value for intrinsic credibility.
-    Contains data sets from four large-scale replication projects.
+Description: Provides utilities for the design and analysis of replication studies.
+    Features both traditional methods based on statistical significance and
+    more recent methods such as the sceptical p-value. Also provides related
+    methods including the harmonic mean chi-squared test and intrinsic credibility.
+    Contains datasets from four large-scale replication projects.
 URL: https://github.com/florafauna/ReplicationSuccess
 BugReports: https://github.com/florafauna/ReplicationSuccess/issues
 Depends: R (>= 3.5)
