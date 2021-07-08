@@ -192,7 +192,7 @@ replication projects it has become common practice to transform effect sizes to
 the correlation scale, because correlations are bounded to the interval between
 minus one and one and thus easy to compare and interpret. Design and statistical
 analysis, on the other hand, is then usually carried out on a scale where the
-distribution of the estimates are is well approximated by a normal distribution.
+distribution of the estimates is well approximated by a normal distribution.
 For correlation coefficients this is the case after applying the Fisher
 $z$-transformation, which leads to their variance asymptotically being only a
 function of the study sample size $n$, \ie $\Var(\hat{\theta}) = 1/(n - 3)$
@@ -711,7 +711,7 @@ level turns out to be $\Sexpr{round(thresh_gol, 3)}$.  In the
 $p_\text{S} = \Sexpr{ps1} < \Sexpr{round(thresh_gol, 3)}$, so the
 replication is successful at the golden level.  A side-remark: The
 controlled threshold of $\Sexpr{round(thresh_contr, 3)}$ is slightly
-smaller than the value of the golden level
+larger than the value of the golden level
 $\Sexpr{round(thresh_gol, 3)}$, which means that the golden level 
 controls the  type-I error rate for $c \geq 1$.
 
@@ -944,9 +944,10 @@ study already completed. Moreover, the argument \texttt{designPrior} can
 be set to  \texttt{"conditional"}, \texttt{"informed predictive"} and 
 \texttt{"predictive"}. Finally, the argument \texttt{analysisPrior} allows 
 to also take the original result into account in the analysis of the 
-replication study. The function \texttt{sampleSizeSignificanceInterim} can 
-be used to re-estimate the sample size of the replication study when
-results from an interim analysis are available. 
+replication study. 
+% The function \texttt{sampleSizeSignificanceInterim} can 
+% be used to re-estimate the sample size of the replication study when
+% results from an interim analysis are available. 
 
 % Figure~\ref{fig:PowerSignificanceInterim} shows the conditional and the
 % predictive power of the replication studies that continued into stage 2. 
@@ -986,8 +987,9 @@ heterogeneity. This can be the case, for example, if the replication study is
 conducted with a different population of participants (\eg in a different
 country) or in another laboratory with different equipment. For this reason, the
 functions for design of replication studies allow to incorporate additionally
-uncertainty due to between-study heterogeneity. For example,
-\texttt{sampleSizeSignificance} or \texttt{predictionInterval} allows to specify
+uncertainty due to between-study heterogeneity. Some functions 
+in the package (\eg
+\texttt{sampleSizeSignificance} or \texttt{predictionInterval}) allows to specify
 the argument \texttt{h}, the relative between-study heterogeneity variance
 $h = \tau^2/\sigma^2$, \ie the ratio of the heterogeneity variance to the
 variance of the original effect estimate. By default, \texttt{h} is set to zero,
