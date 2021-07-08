@@ -85,7 +85,6 @@
             }
         }
     } else { ## sample size calculation based on relative effect size
-        zalpha <- qnorm(1 - level)
         zalpha <- p2z(p = level, alternative = alternative)
         c <- zalpha^2/(d^2*zo^2)
     }
@@ -155,7 +154,7 @@
 #' sampleSizeSignificance(zo = 3, power = 0.8, designPrior = "EB",
 #'                        h = 0.5)
 #'
-#' # required relative sample size for 0.8 power as function of original p-value
+#' # sample size to achieve  0.8 power as function of original p-value
 #' zo <- p2z(seq(0.0001, 0.05, 0.0001))
 #' oldPar <- par(mfrow = c(1,2))
 #' plot(z2p(zo), sampleSizeSignificance(zo = zo, designPrior = "conditional", power = 0.8),
@@ -170,7 +169,7 @@
 #'
 #' sampleSizeSignificance(zo = p2z(0.005), d = 1)
 #' sampleSizeSignificance(zo = p2z(0.005), d = 0.5)
-#' # required relative effect size of 0.8 power as function of original p-value
+#' # sample size based on minimum relative effect size of 0.8
 #' zo <- p2z(seq(0.0001, 0.05, 0.0001))
 #' plot(z2p(zo), sampleSizeSignificance(zo = zo, d = 0.8, level = 0.025),
 #'      type = "l", ylim = c(0.5, 10), log = "y", lwd = 1.5, ylab = "Relative sample size",
