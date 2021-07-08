@@ -104,7 +104,7 @@ print(round(exp(CI2b),2))
 \references{
 Held, L. (2020). The harmonic mean chi-squared test to substantiate scientific findings.
 \emph{Journal of the Royal Statistical Society: Series C (Applied Statistics)}, \bold{69}, 697-708.
-\url{https://doi.org/10.1111/rssc.12410}
+\doi{10.1111/rssc.12410}
 }
 \author{
 Leonhard Held

@@ -21,83 +21,87 @@ sampleSizeSignificance(
 
 \item{power}{The power to achieve replication success.}
 
-\item{d}{The minimum relative effect size (ratio of the effect estimate
-from the replication study to the effect estimate from the original study).}
+\item{d}{The minimum relative effect size (ratio of the effect estimate from
+the replication study to the effect estimate from the original study).}
 
 \item{level}{Significance level. Default is 0.025.}
 
-\item{alternative}{Either "one.sided" (default) or "two.sided".
-Specifies direction of the alternative. "one.sided" assumes an effect in the
-same direction as the original estimate.}
+\item{alternative}{Either "one.sided" (default) or "two.sided". Specifies
+direction of the alternative. "one.sided" assumes an effect in the same
+direction as the original estimate.}
 
 \item{designPrior}{Is only taken into account when \code{power} is specified.
-Either "conditional" (default), "predictive", or "EB".  
-If "EB", the power is computed under a predictive distribution
-where the contribution of the original study is 
-shrunken towards zero based on the evidence in the original study 
-(with an empirical Bayes shrinkage estimator).}
+Either "conditional" (default), "predictive", or "EB". If "EB", the power
+is computed under a predictive distribution where the contribution of the
+original study is shrunken towards zero based on the evidence in the
+original study (with an empirical Bayes shrinkage estimator).}
 
-\item{h}{Is only taken into account when \code{power} is specified and \code{designPrior} is "predictive" or "EB".
-The relative between-study heterogeneity, i.e., the ratio of the heterogeneity
-variance to the variance of the original effect estimate.
-Default is 0 (no heterogeneity).}
+\item{h}{Is only taken into account when \code{power} is specified and
+\code{designPrior} is "predictive" or "EB". The relative between-study
+heterogeneity, i.e., the ratio of the heterogeneity variance to the
+variance of the original effect estimate. Default is 0 (no
+heterogeneity).}
 
-\item{shrinkage}{Is only taken into account when \code{power} is specified.
-A number in [0,1) with default 0. Specifies the shrinkage of the original effect
-towards zero (e.g., \code{shrinkage = 0.25} implies a shrinkage by a factor of 25\%).
-Is only taken into account when \code{designPrior} is "conditional" or "predictive".}
+\item{shrinkage}{Is only taken into account when \code{power} is specified. A
+number in [0,1) with default 0. Specifies the shrinkage of the original effect
+towards zero (e.g., \code{shrinkage = 0.25} implies shrinkage by a
+factor of 25\%). Is only taken into account when \code{designPrior} is
+"conditional" or "predictive".}
 }
 \value{
-The relative sample size to achieve significance in the specified direction.
-If larger than 1000 then NA is returned.
+The relative sample size to achieve significance in the specified
+    direction. If impossible to achieve the desired power for specified
+    inputs \code{NaN} is returned.
 }
 \description{
-The relative sample size to achieve significance of the replication study is 
-computed based on the z-value of the original study, the significance level 
-and either the power or the minimum relative effect size.
-When the approach based on power is used, the arguments design prior,
-shrinkage, and relative heterogeneity also have to be specified.
+The relative sample size to achieve significance of the replication study is
+computed based on the z-value of the original study, the significance level
+and either the power or the minimum relative effect size. When the approach
+based on power is used, the arguments design prior, shrinkage, and relative
+heterogeneity also have to be specified.
 }
 \details{
-\code{sampleSizeSignificance} is the vectorized version of \code{.sampleSizeSignificance_}.
-\code{\link[base]{Vectorize}} is used to vectorize the function.
+\code{sampleSizeSignificance} is the vectorized version of
+    \code{.sampleSizeSignificance_}. \code{\link[base]{Vectorize}} is used to
+    vectorize the function.
 }
 \examples{
 sampleSizeSignificance(zo = p2z(0.005), power = 0.8)
-sampleSizeSignificance(zo = p2z(0.005, alternative = "one.sided"), power = 0.8)
+sampleSizeSignificance(zo = p2z(0.005, alternative = "two.sided"), power = 0.8)
 sampleSizeSignificance(zo = p2z(0.005), power = 0.8, designPrior = "predictive")
 
-sampleSizeSignificance(zo = 3, power = 0.8, designPrior = "predictive", 
+sampleSizeSignificance(zo = 3, power = 0.8, designPrior = "predictive",
                        shrinkage = 0.5, h = 0.25)
-sampleSizeSignificance(zo = 3, power = 0.8, designPrior = "EB", 
+sampleSizeSignificance(zo = 3, power = 0.8, designPrior = "EB",
                        h = 0.5)
-                       
+
 # required relative sample size for 0.8 power as function of original p-value
-zo <- p2z(seq(0.0001, 0.05, length.out=100))
+zo <- p2z(seq(0.0001, 0.05, 0.0001))
 oldPar <- par(mfrow = c(1,2))
 plot(z2p(zo), sampleSizeSignificance(zo = zo, designPrior = "conditional", power = 0.8),
      type = "l", ylim = c(0.5, 10), log = "y", lwd = 1.5, ylab = "Relative sample size",
      xlab = expression(italic(p)[o]), las = 1)
-lines(z2p(zo), sampleSizeSignificance(zo = zo, designPrior = "predictive", power = 0.8), 
+lines(z2p(zo), sampleSizeSignificance(zo = zo, designPrior = "predictive", power = 0.8),
       lwd = 2, lty = 2)
 lines(z2p(zo), sampleSizeSignificance(zo = zo, designPrior = "EB", power = 0.8),
       lwd = 1.5, lty = 3)
-legend("topleft", legend = c("conditional", "predictive", "EB"), 
+legend("topleft", legend = c("conditional", "predictive", "EB"),
        title = "Design prior", lty = c(1, 2, 3), lwd = 1.5, bty = "n")
-       
+
 sampleSizeSignificance(zo = p2z(0.005), d = 1)
 sampleSizeSignificance(zo = p2z(0.005), d = 0.5)
 # required relative effect size of 0.8 power as function of original p-value
-zo <- p2z(seq(0.0001, 0.05, length.out=100))
+zo <- p2z(seq(0.0001, 0.05, 0.0001))
 plot(z2p(zo), sampleSizeSignificance(zo = zo, d = 0.8, level = 0.025),
      type = "l", ylim = c(0.5, 10), log = "y", lwd = 1.5, ylab = "Relative sample size",
     xlab = expression(italic(p)[o]), las = 1)
 par(oldPar)
 }
 \references{
-Held, L. (2020). A new standard for the analysis and design of replication studies (with discussion).
-\emph{Journal of the Royal Statistical Society: Series A (Statistics in Society)}, \bold{183}, 431-448.
-\url{https://doi.org/10.1111/rssa.12493}
+Held, L. (2020). A new standard for the analysis and design of
+    replication studies (with discussion). \emph{Journal of the Royal
+    Statistical Society: Series A (Statistics in Society)}, \bold{183},
+    431-448. \url{https://doi.org/10.1111/rssa.12493}
 
 Pawel, S., Held, L. (2020). Probabilistic forecasting of replication studies. \emph{PLoS ONE} 15(4):e0231416.
 \url{https://doi.org/10.1371/journal.pone.0231416}

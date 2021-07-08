@@ -71,7 +71,7 @@ T1EpSceptical(level = levelSceptical(level = 0.025, alternative = "one.sided",
 \references{
 Held, L. (2020). The harmonic mean chi-squared test to substantiate scientific
 findings.  \emph{Journal of the Royal Statistical Society: Series C
-(Applied Statistics)}, \bold{69}, 697-708. \url{https://doi.org/10.1111/rssc.12410}
+(Applied Statistics)}, \bold{69}, 697-708. \doi{10.1111/rssc.12410}
 
 Held, L., Micheloud, C. & Pawel, S. (2020). The assessment of replication success
 based on relative effect size. \url{https://arxiv.org/abs/2009.07782}

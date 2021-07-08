@@ -32,8 +32,8 @@
     K <- zo^2 / zalphas^2
     
     if (zalphas > zo) {
-      warning(paste("Replication success is not achievable at this level as |",
-                    zo, "| < ", round(p2z(levelSceptical(level = level,
+      warning(paste("Replication success is not achievable at this level as |zo| =",
+                    abs(round(zo, 2)), " < ", round(p2z(levelSceptical(level = level,
                                                         alternative = alternative,
                                                         type = type)), 3)))
       d <- NA
