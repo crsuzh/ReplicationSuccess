@@ -20,7 +20,7 @@
 #'
 #' Held, L. (2020). A new standard for the analysis and design of replication studies (with discussion).
 #' \emph{Journal of the Royal Statistical Society: Series A (Statistics in Society)}.
-#' \url{https://doi.org/10.1111/rssa.12493}
+#' \doi{10.1111/rssa.12493}
 #' @author Leonhard Held
 #' @examples
 #' pBox(zo = p2z(0.01), zr = p2z(0.02), c = 2)
