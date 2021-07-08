@@ -6,7 +6,7 @@
 
 - development version of the package migrated to GitHub
 
-- vectorization in most functions now with `Vectorize` instead of `mapply`
+- vectorization in functions now with `Vectorize` instead of `mapply`
 
 - unit tests migrated to testthat
 
