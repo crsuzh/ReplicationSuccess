@@ -47,7 +47,7 @@
 #' Computes the minimum relative effect size to achieve replication success
 #'
 #' The minimum relative effect size (replication to original) to achieve replication success
-#' is computed based on the result of the original study and the corresponding variance ratio (relative sample size).
+#' is computed based on the result of the original study and the corresponding variance ratio.
 #' 
 #' @param zo Numeric vector of z-values from original studies. 
 #' @param c Numeric vector of variance ratios of the original and replication effect estimates.
@@ -64,8 +64,9 @@
 #' @return The minimum relative effect size to achieve replication success.
 #' @details \code{effectSizeReplicationSuccess} is the vectorized version of \code{.effectSizeReplicationSuccess_}.
 #' \code{\link[base]{Vectorize}} is used to vectorize the function.
-#' @references Held, L., Micheloud, C. & Pawel, S. (2021).
-#' The assessment of replication success based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
+#' @references
+#' Held, L., Micheloud, C., Pawel, S. (2021). The assessment of replication
+#' success based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
 #' @author Leonhard Held, Charlotte Micheloud, Samuel Pawel, Florian Gerber
 #' @seealso \code{\link{sampleSizeReplicationSuccess}}, \code{\link{levelSceptical}}
 #' @examples

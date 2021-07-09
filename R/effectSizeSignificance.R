@@ -38,11 +38,12 @@
 #' size of the original study.
 #' @param level Significance level. Default is 0.025.
 #' @param alternative Specifies if the significance level is "one.sided" (default) or "two.sided".
-#' @return The minimum relative effect size to achieve significance of the replication study.
+#' @return The minimum relative effect size to achieve significance in the replication study.
 #' @details \code{effectSizeSignificance} is the vectorized version of \code{.effectSizeSignificance_}.
 #' \code{\link[base]{Vectorize}} is used to vectorize the function.
-#' @references Held, L., Micheloud, C. & Pawel, S. (2021).
-#' The assessment of replication success based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
+#' @references
+#' Held, L., Micheloud, C., Pawel, S. (2021). The assessment of replication
+#' success based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
 #' @author Charlotte Micheloud, Samuel Pawel, Florian Gerber
 #' @seealso \code{\link{effectSizeReplicationSuccess}}
 #' @examples

@@ -140,11 +140,11 @@
 #' @details \code{T1EpSceptical} is the vectorized version of \code{.T1EpSceptical_}.
 #' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @references
-#' Held, L. (2020). The harmonic mean chi-squared test to substantiate scientific
-#' findings.  \emph{Journal of the Royal Statistical Society: Series C
+#' Held, L. (2020). The harmonic mean chi-squared test to substantiate
+#' scientific findings. \emph{Journal of the Royal Statistical Society: Series C
 #' (Applied Statistics)}, \bold{69}, 697-708. \doi{10.1111/rssc.12410}
 #'
-#' Held, L., Micheloud, C. & Pawel, S. (2020). The assessment of replication success
+#' Held, L., Micheloud, C., Pawel, S. (2021). The assessment of replication success
 #' based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
 #' @author Samuel Pawel, Leonhard Held
 #' @seealso \code{\link{pSceptical}}, \code{\link{levelSceptical}}, \code{\link{PPpSceptical}}

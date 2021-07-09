@@ -116,18 +116,19 @@
 #' Senn, S. (2002). Letter to the Editor, \emph{Statistics in Medicine}, 
 #' \bold{21}, 2437--2444. 
 #' 
-#' Held, L. (2020). A new standard for the analysis and design of replication 
-#' studies (with discussion). 
-#' \emph{Journal of the Royal Statistical Society: Series A (Statistics in 
-#' Society)}. 183(2):431 - 448. \doi{10.1111/rssa.12493}
+#' Held, L. (2020). A new standard for the analysis and design of replication
+#' studies (with discussion). \emph{Journal of the Royal Statistical Society:
+#' Series A (Statistics in Society)}, \bold{183}, 431-448.
+#' \doi{10.1111/rssa.12493}
+
 #' 
 #' Pawel, S., Held, L. (2020). Probabilistic forecasting of replication studies.
-#' PLoS ONE 15(4):e0231416. \doi{10.1371/journal.pone.0231416}
+#' \emph{PLoS ONE}. \bold{15}, e0231416. \doi{10.1371/journal.pone.0231416}
 #'
-#' Held, L., Micheloud, C. & Pawel, S. (2021). The assessment of replication
+#' Held, L., Micheloud, C., Pawel, S. (2021). The assessment of replication
 #' success based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
 #' @seealso \code{\link{sampleSizeSignificance}}, \code{\link{powerSignificanceInterim}}
-#' @author Leonhard Held, Samuel Pawel
+#' @author Leonhard Held, Samuel Pawel, Charlotte Micheloud, Florian Gerber
 #' @examples
 #' powerSignificance(zo = p2z(0.005), c = 2)
 #' powerSignificance(zo = p2z(0.005), c = 2, designPrior = "predictive")
@@ -146,15 +147,12 @@
 #'                   
 #' # power as function of original p-value
 #' po <- seq(0.0001, 0.06, 0.0001)
-#' plot(po, 
-#'      powerSignificance(zo = p2z(po), designPrior = "conditional"),
+#' plot(po, powerSignificance(zo = p2z(po), designPrior = "conditional"),
 #'      type = "l", ylim = c(0, 1), lwd = 1.5, las = 1, ylab = "Power", 
 #'      xlab = expression(italic(p)[o]))
-#' lines(po, 
-#'       powerSignificance(zo = p2z(po), designPrior = "predictive"), 
+#' lines(po, powerSignificance(zo = p2z(po), designPrior = "predictive"),
 #'       lwd = 2, lty = 2)
-#' lines(po, 
-#'       powerSignificance(zo = p2z(po), designPrior = "EB"), 
+#' lines(po, powerSignificance(zo = p2z(po), designPrior = "EB"),
 #'       lwd = 1.5, lty = 3)
 #' legend("topright", legend = c("conditional", "predictive", "EB"), 
 #'        title = "Design prior", lty = c(1, 2, 3), lwd = 1.5, bty = "n")

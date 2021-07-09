@@ -9,9 +9,9 @@
 #' If "sufficient", the sufficient bounds are computed.
 #' @return The bound for the p-values.
 #' @references
-#' Held, L. (2020). The harmonic mean chi-squared test to substantiate scientific findings.
-#' \emph{Journal of the Royal Statistical Society, Series C (Applied Statistics)}, to appear.
-#' \url{https://arxiv.org/abs/1911.10633}
+#' Held, L. (2020). The harmonic mean chi-squared test to substantiate
+#' scientific findings. \emph{Journal of the Royal Statistical Society: Series C
+#' (Applied Statistics)}, \bold{69}, 697-708. \doi{10.1111/rssc.12410}
 #' @author Leonhard Held
 #' @seealso \code{\link{hMeanChiSq}}
 #' @examples
