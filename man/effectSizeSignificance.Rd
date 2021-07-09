@@ -20,10 +20,10 @@ size of the original study.}
 
 \item{level}{Significance level. Default is 0.025.}
 
-\item{alternative}{Specifies if the replication success level is "one.sided" (default) or "two.sided".}
+\item{alternative}{Specifies if the significance level is "one.sided" (default) or "two.sided".}
 }
 \value{
-The minimum relative effect size to achieve significance of the replication study.
+The minimum relative effect size to achieve significance in the replication study.
 }
 \description{
 The minimum relative effect size (replication to original) to achieve significance
@@ -48,12 +48,12 @@ effectSizeSignificance(zo = zo, c = 50, level = 0.025,
                        alternative = "one.sided")
 }
 \references{
-Held, L., Micheloud, C. & Pawel, S. (2020).
-The assessment of replication success based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
+Held, L., Micheloud, C., Pawel, S. (2021). The assessment of replication
+success based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
 }
 \seealso{
 \code{\link{effectSizeReplicationSuccess}}
 }
 \author{
-Charlotte Micheloud
+Charlotte Micheloud, Samuel Pawel, Florian Gerber
 }

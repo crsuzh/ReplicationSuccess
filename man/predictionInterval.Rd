@@ -96,11 +96,11 @@ for (p in unique(RProjects$project)) {
 \references{
 Patil, P., Peng, R. D., Leek, J. T. (2016).
 What should researchers expect when they replicate studies? A statistical view of
-replicability in psychological science.
-\doi{10.1177/1745691616646366}
+replicability in psychological science. \emph{Perspectives on Psychological Science},
+\bold{11}, 539-544.  \doi{10.1177/1745691616646366}
 
 Pawel, S., Held, L. (2020). Probabilistic forecasting of replication studies.
-PLoS ONE 15(4):e0231416. \doi{10.1371/journal.pone.0231416}
+\emph{PLoS ONE}. \bold{15}, e0231416. \doi{10.1371/journal.pone.0231416}
 }
 \author{
 Samuel Pawel

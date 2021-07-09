@@ -85,16 +85,16 @@ legend("bottomright", legend = c(names(levels), "2TR"), lty = 1, lwd = 2,
        col = seq(1, length(levels) + 1))
 }
 \references{
-Held, L. (2020). The harmonic mean chi-squared test to substantiate scientific
-findings.  \emph{Journal of the Royal Statistical Society: Series C
+Held, L. (2020). The harmonic mean chi-squared test to substantiate
+scientific findings. \emph{Journal of the Royal Statistical Society: Series C
 (Applied Statistics)}, \bold{69}, 697-708. \doi{10.1111/rssc.12410}
 
-Held, L., Micheloud, C. & Pawel, S. (2020). The assessment of replication success
+Held, L., Micheloud, C., Pawel, S. (2021). The assessment of replication success
 based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
 
 Maca, J., Gallo, P., Branson, M., and Maurer, W. (2002).  Reconsidering some aspects
-of the two-trials paradigm. Journal of Biopharmaceutical Statistics, 12(2):107-119.
-\doi{10.1081/bip-120006450}
+of the two-trials paradigm. \emph{Journal of Biopharmaceutical Statistics}, \bold{12},
+107-119. \doi{10.1081/bip-120006450}
 }
 \seealso{
 \code{\link{pSceptical}}, \code{\link{levelSceptical}}, \code{\link{T1EpSceptical}}

@@ -27,9 +27,9 @@ pvalueBound(alpha = 0.025^2, n = 2, type = "necessary")
 pvalueBound(alpha = 0.025^2, n = 2, type = "sufficient")
 }
 \references{
-Held, L. (2020). The harmonic mean chi-squared test to substantiate scientific findings.
-\emph{Journal of the Royal Statistical Society, Series C (Applied Statistics)}, to appear.
-\url{https://arxiv.org/abs/1911.10633}
+Held, L. (2020). The harmonic mean chi-squared test to substantiate
+scientific findings. \emph{Journal of the Royal Statistical Society: Series C
+(Applied Statistics)}, \bold{69}, 697-708. \doi{10.1111/rssc.12410}
 }
 \seealso{
 \code{\link{hMeanChiSq}}
