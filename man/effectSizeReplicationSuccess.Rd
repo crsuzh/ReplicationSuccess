@@ -19,10 +19,10 @@ effectSizeReplicationSuccess(
 This is usually the ratio of the sample size of the replication study to the sample
 size of the original study.}
 
-\item{level}{Replication success significance level. Default is 0.025.}
+\item{level}{Replication success level. Default is 0.025.}
 
 \item{alternative}{Specifies if the replication success level is "one.sided" (default) or "two.sided".
-If the significance level is one-sided, then effect size calculations are based on a one-sided assessment of
+If the replication success level is one-sided, then effect size calculations are based on a one-sided assessment of
 replication success in the direction of the original effect estimate.}
 
 \item{type}{Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
@@ -35,7 +35,7 @@ The minimum relative effect size to achieve replication success.
 }
 \description{
 The minimum relative effect size (replication to original) to achieve replication success
-is computed based on the result of the original study and the corresponding variance ratio (relative sample size).
+is computed based on the result of the original study and the corresponding variance ratio.
 }
 \details{
 \code{effectSizeReplicationSuccess} is the vectorized version of \code{.effectSizeReplicationSuccess_}.
@@ -47,22 +47,23 @@ zo <- p2z(po, alternative = "one.sided")
 
 effectSizeReplicationSuccess(zo = zo, c = 1, level = 0.025,
                              alternative = "one.sided", type = "golden")
-
+                             
 effectSizeReplicationSuccess(zo = zo, c = 10, level = 0.025,
                              alternative = "one.sided", type = "golden")
+                             
 effectSizeReplicationSuccess(zo = zo, c= 2, level = 0.025,
                              alternative = "one.sided", type = "nominal")
-
+                             
 effectSizeReplicationSuccess(zo = zo, c = 2, level = 0.05,
                              alternative = "two.sided", type = "nominal")
 }
 \references{
-Held, L., Micheloud, C. & Pawel, S. (2020).
-The assessment of replication success based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
+Held, L., Micheloud, C., Pawel, S. (2021). The assessment of replication
+success based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
 }
 \seealso{
 \code{\link{sampleSizeReplicationSuccess}}, \code{\link{levelSceptical}}
 }
 \author{
-Leonhard Held, Charlotte Micheloud
+Leonhard Held, Charlotte Micheloud, Samuel Pawel, Florian Gerber
 }

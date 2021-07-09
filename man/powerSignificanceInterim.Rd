@@ -38,10 +38,8 @@ Default is 1.}
 Specifies if the significance level is one-sided or two-sided.}
 
 \item{shrinkage}{Numeric vector with values in [0,1). Defaults to 0.
-from section 6.6.3 of Spiegelhalter et al. (2004) to the setting of replication studies.
- @details \code{powerSignificanceInterim} is the vectorized version of 
- \code{.powerSignificanceInterim_}.
-\code{\link[base]{Vectorize}} is used to vectorize the function.}
+Specifies the shrinkage of the original effect estimate towards zero, e.g.,
+the effect is shrunken by a factor of 25\% for \code{shrinkage=0.25}.}
 }
 \value{
 The probability of statistical significance in the specified direction 
@@ -53,6 +51,11 @@ Computes the power of a replication study taking into account data from an inter
 }
 \details{
 This is an extension of \code{powerSignificance()} and adapts the `interim power'
+from section 6.6.3 of Spiegelhalter et al. (2004) to the setting of replication studies.
+
+\code{powerSignificanceInterim} is the vectorized version of 
+ \code{.powerSignificanceInterim_}.
+\code{\link[base]{Vectorize}} is used to vectorize the function.
 }
 \examples{
 powerSignificanceInterim(zo = 2, zi = 2, c = 1, f = 1/2,
@@ -81,7 +84,7 @@ Spiegelhalter, D. J., Abrams, K. R., and Myles, J. P. (2004).
 Bayesian Approaches to Clinical Trials and Health-Care
 Evaluation, volume 13. John Wiley & Sons
 
-Micheloud, C., Held, L. (2020). Power Calculations for Replication Studies.
+Micheloud, C., Held, L. (2021). Power Calculations for Replication Studies.
 \url{https://arxiv.org/abs/2004.10814}
 }
 \seealso{
@@ -89,6 +92,4 @@ Micheloud, C., Held, L. (2020). Power Calculations for Replication Studies.
 }
 \author{
 Charlotte Micheloud
-Specifies the shrinkage of the original effect estimate towards zero, e.g.,
-the effect is shrunken by a factor of 25\% for \code{shrinkage=0.25}.
 }

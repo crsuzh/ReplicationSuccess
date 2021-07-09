@@ -1,14 +1,15 @@
 #' Computes the level for the sceptical p-value
 #'
 #' The equivalent level for the sceptical p-value is computed based on
-#' the specified limiting relative effect size, the original level, and
+#' the specified limiting relative effect size, the replication success level, and
 #' the alternative. 
 #' @param dinf The limiting relative effect size bound below which replication success is
 #' deemed to be impossible for borderline significant original studies
 #' with p-values equal to \code{level}.
-#' @param level Numeric vector of required significance levels. Defaults to 0.025. 
+#' @param level Numeric vector of required replication success levels. Defaults to 0.025. 
 #' @param alternative Either "one.sided" (default) or "two.sided".
-#' Specifies if the significance level is one-sided or two-sided. If the significance level is one-sided,
+#' Specifies if the replication success level is one-sided or two-sided.
+#' If the replication success level is one-sided,
 #' then a one-sided level for the sceptical p-value is computed.
 #' @return Equivalent levels for the sceptical p-value corresponding to \code{dmin}=1.
 #' Thus, at the equivalent level, replication success is impossible for borderline significant original
@@ -17,8 +18,8 @@
 #' \emph{Journal of the Royal Statistical Society: Series A (Statistics in Society)}, \bold{183}, 431-448.
 #' \doi{10.1111/rssa.12493}
 #'
-#' Held, L., Micheloud, C. & Pawel, S. (2020). The assessment of replication success
-#' based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
+#' Held, L., Micheloud, C., Pawel, S. (2021). The assessment of replication
+#' success based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
 #' @seealso \code{\link{pSceptical}}, \code{\link{levelSceptical}}
 #' @author Leonhard Held
 #' @examples

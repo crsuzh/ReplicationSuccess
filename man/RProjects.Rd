@@ -104,13 +104,13 @@ ps <- with(RProjects, pSceptical(zo = fiso/se_fiso,
 \references{
 Camerer, C. F., Dreber, A., Forsell, E., Ho, T.-H., Huber, J.,
     Johannesson, M., ... Hang, W. (2016). Evaluating replicability of
-    laboratory experiments in economics. \emph{Science}, 351, 1433-1436.
+    laboratory experiments in economics. \emph{Science}, \bold{351}, 1433-1436.
     \doi{10.1126/science.aaf0918}
 
     Camerer, C. F., Dreber, A., Holzmeister, F., Ho, T.-H., Huber, J.,
     Johannesson, M., ... Wu, H. (2018). Evaluating the replicability of
     social science experiments in Nature and Science between 2010 and 2015.
-    \emph{Nature Human Behaviour}, 2, 637-644.
+    \emph{Nature Human Behaviour}, \bold{2}, 637-644.
     \doi{10.1038/s41562-018-0399-z}
 
 Cova, F., Strickland, B., Abatista, A., Allard, A., Andow, J., Attie, M., ...
@@ -118,11 +118,11 @@ Zhou, X. (2018). Estimating the reproducibility of experimental philosophy.
 \emph{Review of Philosophy and Psychology}. \doi{10.1007/s13164-018-0400-9}
 
 Open Science Collaboration. (2015). Estimating the reproducibility of
-psychological science. \emph{Science}, 349, aac4716.
+psychological science. \emph{Science}, \bold{349}, aac4716.
 \doi{10.1126/science.aac4716}
 
 Pawel, S., Held, L. (2020). Probabilistic forecasting of replication studies.
-    \emph{PLoS ONE}, 15(4):e0231416. \doi{10.1371/journal.pone.0231416}
+\emph{PLoS ONE}. \bold{15}, e0231416. \doi{10.1371/journal.pone.0231416}
 }
 \seealso{
 \code{\link{SSRP}}

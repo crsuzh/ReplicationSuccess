@@ -40,12 +40,13 @@ pIntrinsic(p = p, alternative = "one.sided", type = "Matthews")
 pIntrinsic(z = 2)
 }
 \references{
-Matthews, R. A. J. (2018).  Beyond 'significance': principles and practice of the analysis of credibility.
-\emph{Royal Society Open Science}, 5:171047.
-\doi{10.1098/rsos.171047}
+Matthews, R. A. J. (2018). Beyond 'significance': principles and
+    practice of the analysis of credibility. \emph{Royal Society Open
+    Science}, \bold{5}, 171047. \doi{10.1098/rsos.171047}
 
-Held, L. (2019). The assessment of intrinsic credibility and a new argument for p < 0.005.
-\emph{Royal Society Open Science}, 6:181534. \doi{10.1098/rsos.181534}
+Held, L. (2019). The assessment of intrinsic credibility and a new argument
+for \emph{p < 0.005}. \emph{Royal Society Open Science}, \bold{6}, 181534.
+\doi{10.1098/rsos.181534}
 }
 \author{
 Leonhard Held

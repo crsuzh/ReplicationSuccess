@@ -9,12 +9,14 @@
 #' @param type   Type of intrinsic p-value. Default is "Held" as in
 #' Held (2019). The other option is "Matthews" as in Matthews (2018).
 #' @return p-values for intrinsic credibility.
-#' @references Matthews, R. A. J. (2018).  Beyond 'significance': principles and practice of the analysis of credibility.
-#' \emph{Royal Society Open Science}, 5:171047.
-#' \doi{10.1098/rsos.171047}
 #'
-#' Held, L. (2019). The assessment of intrinsic credibility and a new argument for p < 0.005.
-#' \emph{Royal Society Open Science}, 6:181534. \doi{10.1098/rsos.181534}
+#' @references Matthews, R. A. J. (2018). Beyond 'significance': principles and
+#'     practice of the analysis of credibility. \emph{Royal Society Open
+#'     Science}, \bold{5}, 171047. \doi{10.1098/rsos.171047}
+#'
+#' Held, L. (2019). The assessment of intrinsic credibility and a new argument
+#' for \emph{p < 0.005}. \emph{Royal Society Open Science}, \bold{6}, 181534.
+#' \doi{10.1098/rsos.181534}
 #' @author Leonhard Held
 #' @examples
 #' p <- c(0.005, 0.01, 0.05)

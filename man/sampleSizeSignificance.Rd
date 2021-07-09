@@ -72,8 +72,7 @@ sampleSizeSignificance(zo = p2z(0.005), power = 0.8, designPrior = "predictive")
 
 sampleSizeSignificance(zo = 3, power = 0.8, designPrior = "predictive",
                        shrinkage = 0.5, h = 0.25)
-sampleSizeSignificance(zo = 3, power = 0.8, designPrior = "EB",
-                       h = 0.5)
+sampleSizeSignificance(zo = 3, power = 0.8, designPrior = "EB",  h = 0.5)
 
 # sample size to achieve  0.8 power as function of original p-value
 zo <- p2z(seq(0.0001, 0.05, 0.0001))
@@ -98,20 +97,20 @@ plot(z2p(zo), sampleSizeSignificance(zo = zo, d = 0.8, level = 0.025),
 par(oldPar)
 }
 \references{
-Held, L. (2020). A new standard for the analysis and design of
-    replication studies (with discussion). \emph{Journal of the Royal
-    Statistical Society: Series A (Statistics in Society)}, \bold{183},
-    431-448. \doi{10.1111/rssa.12493}
+Held, L. (2020). A new standard for the analysis and design of replication
+studies (with discussion). \emph{Journal of the Royal Statistical Society:
+Series A (Statistics in Society)}, \bold{183}, 431-448.
+\doi{10.1111/rssa.12493}
 
-Pawel, S., Held, L. (2020). Probabilistic forecasting of replication studies. \emph{PLoS ONE} 15(4):e0231416.
-\doi{10.1371/journal.pone.0231416}
+Pawel, S., Held, L. (2020). Probabilistic forecasting of replication studies.
+\emph{PLoS ONE}. \bold{15}, e0231416. \doi{10.1371/journal.pone.0231416}
 
-Held, L., Micheloud, C. & Pawel, S. (2020). The assessment of replication
+Held, L., Micheloud, C., Pawel, S. (2021). The assessment of replication
 success based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
 }
 \seealso{
 \code{\link{powerSignificance}}
 }
 \author{
-Leonhard Held, Samuel Pawel, Charlotte Micheloud
+Leonhard Held, Samuel Pawel, Charlotte Micheloud, Florian Gerber
 }

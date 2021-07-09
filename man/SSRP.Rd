@@ -85,7 +85,7 @@ abline(a = 0, b = 1, col = "grey")
 Camerer, C. F., Dreber, A., Holzmeister, F., Ho, T.-H., Huber,
     J., Johannesson, M., ... Wu, H. (2018). Evaluating the replicability of
     social science experiments in Nature and Science between 2010 and 2015.
-    \emph{Nature Human Behaviour}, 2, 637-644.
+    \emph{Nature Human Behaviour}, \bold{2}, 637-644.
     \doi{10.1038/s41562-018-0399-z}
 }
 \seealso{

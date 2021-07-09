@@ -94,15 +94,16 @@
 #' @param h The relative between-study heterogeneity, i.e., the ratio of the heterogeneity
 #' variance to the variance of the original effect estimate.
 #' Default is 0 (no heterogeneity).
-#' Is only taken into account when \code{designPrior = "predictive"} or
-#' \code{designPrior = "EB"}.
+#' Is only taken into account when \code{designPrior} = "predictive" or
+#' \code{designPrior} = "EB".
 #' @param shrinkage Numeric vector with values in [0,1). Defaults to 0.
 #' Specifies the shrinkage of the original effect estimate towards zero, e.g.,
 #' the effect is shrunken by a factor of 25\% for \code{shrinkage = 0.25}.
 #' Is only taken into account if the \code{designPrior} is "conditional" or "predictive".
 #' @param strict Logical vector indicating whether the probability for significance
 #' in the opposite direction of the original effect estimate should also be 
-#' taken into account. Default is \code{FALSE}.
+#' taken into account. Default is \code{FALSE}. 
+#' Only taken into account when \code{alternative} = "two.sided".
 #' @return The probability that a replication study yields a significant effect estimate
 #' in the specified direction.
 #' @details \code{powerSignificance} is the vectorized version of \code{.powerSignificance_}.
@@ -115,18 +116,19 @@
 #' Senn, S. (2002). Letter to the Editor, \emph{Statistics in Medicine}, 
 #' \bold{21}, 2437--2444. 
 #' 
-#' Held, L. (2020). A new standard for the analysis and design of replication 
-#' studies (with discussion). 
-#' \emph{Journal of the Royal Statistical Society: Series A (Statistics in 
-#' Society)}. 183(2):431 - 448. \doi{10.1111/rssa.12493}
+#' Held, L. (2020). A new standard for the analysis and design of replication
+#' studies (with discussion). \emph{Journal of the Royal Statistical Society:
+#' Series A (Statistics in Society)}, \bold{183}, 431-448.
+#' \doi{10.1111/rssa.12493}
+
 #' 
 #' Pawel, S., Held, L. (2020). Probabilistic forecasting of replication studies.
-#' PLoS ONE 15(4):e0231416. \doi{10.1371/journal.pone.0231416}
+#' \emph{PLoS ONE}. \bold{15}, e0231416. \doi{10.1371/journal.pone.0231416}
 #'
-#' Held, L., Micheloud, C. & Pawel, S. (2020). The assessment of replication
+#' Held, L., Micheloud, C., Pawel, S. (2021). The assessment of replication
 #' success based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
 #' @seealso \code{\link{sampleSizeSignificance}}, \code{\link{powerSignificanceInterim}}
-#' @author Leonhard Held, Samuel Pawel
+#' @author Leonhard Held, Samuel Pawel, Charlotte Micheloud, Florian Gerber
 #' @examples
 #' powerSignificance(zo = p2z(0.005), c = 2)
 #' powerSignificance(zo = p2z(0.005), c = 2, designPrior = "predictive")
@@ -145,15 +147,12 @@
 #'                   
 #' # power as function of original p-value
 #' po <- seq(0.0001, 0.06, 0.0001)
-#' plot(po, 
-#'      powerSignificance(zo = p2z(po), designPrior = "conditional"),
+#' plot(po, powerSignificance(zo = p2z(po), designPrior = "conditional"),
 #'      type = "l", ylim = c(0, 1), lwd = 1.5, las = 1, ylab = "Power", 
 #'      xlab = expression(italic(p)[o]))
-#' lines(po, 
-#'       powerSignificance(zo = p2z(po), designPrior = "predictive"), 
+#' lines(po, powerSignificance(zo = p2z(po), designPrior = "predictive"),
 #'       lwd = 2, lty = 2)
-#' lines(po, 
-#'       powerSignificance(zo = p2z(po), designPrior = "EB"), 
+#' lines(po, powerSignificance(zo = p2z(po), designPrior = "EB"),
 #'       lwd = 1.5, lty = 3)
 #' legend("topright", legend = c("conditional", "predictive", "EB"), 
 #'        title = "Design prior", lty = c(1, 2, 3), lwd = 1.5, bty = "n")
