@@ -6,16 +6,15 @@
 \usage{
 levelSceptical(
   level,
-  alternative = c("one.sided", "two.sided", "greater", "less"),
+  alternative = c("one.sided", "two.sided"),
   type = c("golden", "nominal", "liberal", "controlled")
 )
 }
 \arguments{
 \item{level}{Numeric vector of required replication success levels.}
 
-\item{alternative}{Either "one.sided" (default), "two.sided", "greater", or "less".
-Specifies if the replication success level is one-sided or two-sided. 
-If the level is one-sided,
+\item{alternative}{Either "one.sided" (default) or "two.sided".
+Specifies if the replication success level is one-sided or two-sided. If the replication success level is one-sided,
 then a one-sided level for the sceptical p-value is computed.}
 
 \item{type}{The calibration type can be either "golden" (default), "nominal", "liberal", or "controlled".

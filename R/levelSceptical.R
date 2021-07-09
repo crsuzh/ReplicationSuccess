@@ -3,9 +3,8 @@
 #' The level for the sceptical p-value is computed based on the specified
 #' alternative and calibration type.
 #' @param level Numeric vector of required replication success levels.
-#' @param alternative Either "one.sided" (default), "two.sided", "greater", or "less".
-#' Specifies if the replication success level is one-sided or two-sided. 
-#' If the level is one-sided,
+#' @param alternative Either "one.sided" (default) or "two.sided".
+#' Specifies if the replication success level is one-sided or two-sided. If the replication success level is one-sided,
 #' then a one-sided level for the sceptical p-value is computed.
 #' @param type The calibration type can be either "golden" (default), "nominal", "liberal", or "controlled".
 #' \code{type} = "golden" ensures that for an original study just significant at the specified \code{level},
@@ -36,7 +35,7 @@
 #' levelSceptical(level = 0.025, alternative = "one.sided", type = "golden")
 #' @export
 levelSceptical <- function(level, 
-                           alternative = c("one.sided", "two.sided", "greater", "less"), 
+                           alternative = c("one.sided", "two.sided"), 
                            type = c("golden", "nominal", "liberal", "controlled")){
 
     stopifnot(is.numeric(level),
@@ -62,7 +61,7 @@ levelSceptical <- function(level,
             ## t1 <- (2*level)^2 ## level is a one-sided significance level
             res <- 2*(1 - pnorm(q = qnorm(p = 1 - t1/2)/2))
         } 
-        if (alternative %in% c("one.sided", "greater", "less")) {
+        if (alternative == "one.sided") {
             ## t1 <- level*(level/2) ## level is a two-sided significance level
             t1 <- 2*level^2 ## level is a one-sided significance level
             res <- 1 - pnorm(q = qnorm(p = 1 - t1)/2)
