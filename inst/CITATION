@@ -1,24 +1,86 @@
- 
 citHeader(paste("To cite the R-package 'ReplicationSuccess' in publications,",
-                "please use:")) 	  
+                "please use:"))
 
 citEntry(entry = "article",
-	 title = "A new standard for the analysis and design of replication studies (with discussion)",
-	 author = c(person(given = "Leonhard", family = "Held", role = "aut")), 
+         title = "A new standard for the analysis and design of replication studies (with discussion)",
+         author = c(person(given = "Leonhard", family = "Held", role = "aut")),
          url = "https://doi.org/10.1111/rssa.12493",
          journal = "Journal of the Royal Statistical Society, Series A (Statistics in Society)",  
-	 volume = "183",
+         volume = "183",
          number = "2",
-         pages = "431 - 448",
-	 year = 2020,
-	 textVersion = paste("Held, L. (2020).",
-	                     "A new standard for the analysis and design of replication studies (with discussion).",
+         pages = "431-448",
+         year = 2020,
+         textVersion = paste("Held, L. (2020).",
+                             "A new standard for the analysis and design of replication studies (with discussion).",
                              "Journal of the Royal Statistical Society: Series A (Statistics in Society).",
-                             "183(2):431--448.",
-			     "https://doi.org/10.1111/rssa.12493"
-	 	    	     ))
+                             "183(2):431-448.",
+                             "https://doi.org/10.1111/rssa.12493"
+                             ))
 
 
+citEntry(entry = "article",
+         title = "The harmonic mean chi-squared test to substantiate scientific findings",
+         author = c(person(given = "Leonhard", family = "Held", role = "aut")),
+         url = "https://doi.org/10.1111/rssc.12410",
+         journal = "Journal of the Royal Statistical Society: Series C (Applied Statistics)",
+         volume = "69",
+         number = "3",
+         pages = "697-708",
+         year = 2020,
+         textVersion = paste("Held, L. (2020).",
+                             "The harmonic mean chi-squared test to substantiate scientific findings.",
+                             "Journal of the Royal Statistical Society: Series C (Applied Statistics).",
+                             "69(3):697-708",
+                             "https://doi.org/10.1111/rssc.12410"
+                             ))
 
 
+citEntry(entry = "article",
+         title = "Probabilistic forecasting of replication studies",
+         author = c(person(given = "Samuel", family = "Pawel", role = "aut"),
+                    person(given = "Leonhard", family = "Held", role = "aut")),
+         url = "https://doi.org/10.1371/journal.pone.0231416",
+         journal = "PLoS ONE",
+         volume = "15",
+         number = "4",
+         pages = "e0231416",
+         year = 2020,
+         textVersion = paste("Pawel, S., Held, L. (2020).",
+                             "Probabilistic forecasting of replication studies.",
+                             "PLoS ONE.",
+                             "15(4):e0231416.",
+                             "https://doi.org/10.1371/journal.pone.0231416"
+                             ))
 
+
+citEntry(entry = "article",
+         title = "The assessment of replication success based on relative effect size",
+         author = c(person(given = "Leonhard", family = "Held", role = "aut"),
+                    person(given = "Charlotte", family = "Micheloud", role = "aut"),
+                    person(given = "Samuel", family = "Pawel", role = "aut")),
+         url = "https://arxiv.org/abs/2009.07782",
+         journal = "The Annals of Applied Statistics",
+         note = "to appear",
+         year = 2021,
+         textVersion = paste("Held, L., Micheloud, C., Pawel, S. (2021).",
+                             "The assessment of replication success based on relative effect size.",
+                             "The Annals of Applied Statistics.",
+                             "to appear.",
+                             "https://arxiv.org/abs/2009.07782"
+                             ))
+
+
+citEntry(entry = "article",
+         title = "Power Calculations for Replication Studies",
+         author = c(person(given = "Leonhard", family = "Held", role = "aut"),
+                    person(given = "Charlotte", family = "Micheloud", role = "aut")),
+         url = "https://arxiv.org/abs/2004.10814",
+         journal = "Statistical Science",
+         note = "to appear",
+         year = 2021,
+         textVersion = paste("Micheloud, C., Held, L. (2021).",
+                             "Power Calculations for Replication Studies.",
+                             "Statistical Science.",
+                             "to appear.",
+                             "https://arxiv.org/abs/2004.10814"
+                             ))
