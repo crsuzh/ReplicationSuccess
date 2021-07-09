@@ -4,7 +4,7 @@
 #' alternative and calibration type.
 #' @param level Numeric vector of required replication success levels.
 #' @param alternative Either "one.sided" (default) or "two.sided".
-#' Specifies if the replication success is one-sided or two-sided. If the replication success level is one-sided,
+#' Specifies if the replication success level is one-sided or two-sided. If the replication success level is one-sided,
 #' then a one-sided level for the sceptical p-value is computed.
 #' @param type The calibration type can be either "golden" (default), "nominal", "liberal", or "controlled".
 #' \code{type} = "golden" ensures that for an original study just significant at the specified \code{level},
