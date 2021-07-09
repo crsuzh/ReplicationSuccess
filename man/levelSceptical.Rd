@@ -12,9 +12,11 @@ levelSceptical(
 }
 \arguments{
 \item{level}{Numeric vector of required replication success levels.}
+
 \item{alternative}{Either "one.sided" (default) or "two.sided".
-Specifies if the significance level is one-sided or two-sided. If the significance level is one-sided,
+Specifies if the replication success is one-sided or two-sided. If the replication success level is one-sided,
 then a one-sided level for the sceptical p-value is computed.}
+
 \item{type}{The calibration type can be either "golden" (default), "nominal", "liberal", or "controlled".
 \code{type} = "golden" ensures that for an original study just significant at the specified \code{level},
 replication success is only possible if the replication effect estimate is larger than the original one.
