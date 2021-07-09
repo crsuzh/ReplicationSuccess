@@ -6,14 +6,14 @@
 \usage{
 levelSceptical(
   level,
-  alternative = c("one.sided", "two.sided", "greater", "less"),
+  alternative = c("one.sided", "two.sided"),
   type = c("golden", "nominal", "liberal", "controlled")
 )
 }
 \arguments{
 \item{level}{Numeric vector of required significance levels.}
 
-\item{alternative}{Either "one.sided" (default), "two.sided", "greater", or "less".
+\item{alternative}{Either "one.sided" (default) or "two.sided".
 Specifies if the significance level is one-sided or two-sided. If the significance level is one-sided,
 then a one-sided level for the sceptical p-value is computed.}
 
