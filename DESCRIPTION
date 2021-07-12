@@ -29,7 +29,7 @@ Description: Provides utilities for the design and analysis of replication studi
     more recent methods such as the sceptical p-value. Also provides related
     methods including the harmonic mean chi-squared test and intrinsic credibility.
     Contains datasets from four large-scale replication projects.
-URL: https://github.com/florafauna/ReplicationSuccess
+URL: https://florafauna.github.io/ReplicationSuccess
 BugReports: https://github.com/florafauna/ReplicationSuccess/issues
 Depends: R (>= 3.5)
 VignetteBuilder: knitr
