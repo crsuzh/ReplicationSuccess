@@ -17,7 +17,7 @@ update-src:
 
 lib: update-src
 	mkdir -p lib
-	$(R) CMD INSTALL -l lib .
+	$(R) CMD INSTALL -l lib . --no-lock
 
 test-package:
 	$(RSCRIPT) -e "devtools::test('.')"
@@ -29,7 +29,7 @@ check-cran: $(TAR)
 	$(R) CMD check --as-cran $(TAR) 
 
 check: $(TAR)
-	$(R) CMD check $(TAR)
+	$(R) CMD check $(TAR) 
 
 covr: 
 	$(RSCRIPT) -e "covr::package_coverage()"
