@@ -6,7 +6,8 @@ TAR = $(PACKAGE)_$(VERSION).tar.gz
 
 
 
-.PHONY: test-package update-src lib rm check-cran check covr
+.PHONY: test-package update-src lib check-cran check covr manual \
+	winbuild winbuild-devel webpage clean
 
 
 update-src:
@@ -16,10 +17,7 @@ update-src:
 
 lib: update-src
 	mkdir -p lib
-	$(R) CMD INSTALL -l lib .
-
-rm:
-	rm -rf lib
+	$(R) CMD INSTALL -l lib . --no-lock
 
 test-package:
 	$(RSCRIPT) -e "devtools::test('.')"
@@ -31,10 +29,24 @@ check-cran: $(TAR)
 	$(R) CMD check --as-cran $(TAR) 
 
 check: $(TAR)
-	$(R) CMD check $(TAR)
+	$(R) CMD check $(TAR) 
 
 covr: 
 	$(RSCRIPT) -e "covr::package_coverage()"
 
 manual: update-src
 	$(R) -e 'devtools::build_manual(pkg = ".", path = ".")'
+
+
+winbuild: update-src
+	$(RSCRIPT) -e "devtools::check_win_release()"
+
+winbuild-devel: update-src
+	$(RSCRIPT) -e "devtools::check_win_devel()"
+
+webpage: update-src
+	$(RSCRIPT) -e 'pkgdown::build_site()'
+
+clean:
+	rm -rf lib ReplicationSuccess.Rcheck *.tar.gz
+
