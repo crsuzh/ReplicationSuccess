@@ -23,7 +23,7 @@ test-package:
 	$(RSCRIPT) -e "devtools::test('.')"
 
 $(TAR): update-src
-	$(R) CMD build .
+	$(R) CMD build . --compact-vignettes="both"
 
 check-cran: $(TAR)
 	$(R) CMD check --as-cran $(TAR) 
