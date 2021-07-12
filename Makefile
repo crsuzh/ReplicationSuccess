@@ -14,6 +14,7 @@ update-src:
 	sed -i -r -- 's/^Version:.*/Version: '$(VERSION)'/g' DESCRIPTION ;      
 	sed -i -r -- 's/^Date:.*/Date: '`date +'%F'`'/g' DESCRIPTION ;
 	$(RSCRIPT) -e "roxygen2::roxygenize(\".\")"
+	$(RSCRIPT) -e 'pkgdown::build_site()'
 
 lib: update-src
 	mkdir -p lib
@@ -44,5 +45,7 @@ winbuild: update-src
 winbuild-devel: update-src
 	$(RSCRIPT) -e "devtools::check_win_devel()"
 
+
 clean:
 	rm -rf lib ReplicationSuccess.Rcheck *.tar.gz
+
