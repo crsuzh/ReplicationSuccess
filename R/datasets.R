@@ -163,7 +163,7 @@
 #' RProjects$pr1 <- z2p(z = RProjects$zr, alternative = "greater")
 #'
 #' ## Plots of effect estimates
-#' par(mfrow = c(2, 2), las = 1, mai = rep(0.65, 4))
+#' parOld <- par(mfrow = c(2, 2))
 #' for (p in unique(RProjects$project)) {
 #'   data_project <- subset(RProjects, project == p)
 #'   plot(rr ~ ro, data = data_project, ylim = c(-0.5, 1),
@@ -172,12 +172,13 @@
 #'   abline(h = 0, lty = 2)
 #'   abline(a = 0, b = 1, col = "grey")
 #' }
-#'
+#' par(parOld)
+#' 
 #' ## Plots of peer beliefs
 #' RProjects$significant <- factor(RProjects$pr < 0.05,
 #'                                 levels = c(FALSE, TRUE),
 #'                                 labels = c("no", "yes"))
-#' par(mfrow = c(1, 2), las = 1, mai = rep(0.9, 4))
+#' parOld <- par(mfrow = c(1, 2))
 #' for (p in c("Experimental Economics", "Social Sciences")) {
 #'   data_project <- subset(RProjects, project == p)
 #'   boxplot(pm_belief ~ significant, data = data_project, ylim = c(0, 1),
@@ -185,12 +186,11 @@
 #'   stripchart(pm_belief ~ significant, data = data_project, vertical = TRUE,
 #'              add = TRUE, pch = 1, method = "jitter")
 #' }
-#'
+#' par(parOld)
 #'
 #' ## Computing the sceptical p-value
 #' ps <- with(RProjects, pSceptical(zo = fiso/se_fiso,
 #'                                  zr = fisr/se_fisr,
 #'                                  c = se_fiso^2/se_fisr^2))
-#'
 #' @keywords data
 "RProjects"

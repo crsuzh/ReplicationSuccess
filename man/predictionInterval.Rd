@@ -75,7 +75,7 @@ legend("topleft", c("predictive", "conditional", "EB"), title = "designPrior",
        
 # compute prediction intervals for replication projects
 data("RProjects", package = "ReplicationSuccess")
-par(mfrow = c(2, 2), las = 1, mai = rep(0.65, 4))
+parOld <- par(mfrow = c(2, 2))
 for (p in unique(RProjects$project)) {
   data_project <- subset(RProjects, project == p)
   PI <- predictionInterval(thetao = data_project$fiso, seo = data_project$se_fiso, 
@@ -92,6 +92,7 @@ for (p in unique(RProjects$project)) {
          code = 3, col = color)
   abline(v = 0, lty = 3)
 }
+par(parOld)
 }
 \references{
 Patil, P., Peng, R. D., Leek, J. T. (2016).
