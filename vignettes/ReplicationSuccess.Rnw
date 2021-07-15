@@ -231,7 +231,7 @@ paints the following picture.
 
 << "plot-projects", fig.height = 5 >>=
 ## plots of effect estimates
-par(mfrow = c(2, 2), las = 1, mai = rep(0.65, 4))
+parOld <- par(mfrow = c(2, 2), las = 1, mai = rep(0.65, 4))
 for (p in unique(RProjects$project)) {
     data_project <- subset(RProjects, project == p)
     significant <- ifelse(data_project$pr1 < 0.025, "#DF536BCC", "#00000080")
@@ -530,7 +530,7 @@ ssv <- function(zo, so, a) {
 }
 
 ## Parameters and computations
-options(scipen = 5)
+optionsOld <- options(scipen = 5)
 theta_o <- morewedge$fiso
 theta_r <- morewedge$fisr
 so <- morewedge$se_fiso
@@ -1009,7 +1009,7 @@ prior, the specified between-study heterogeneity will also induce shrinkage
 towards zero, for details see \citet{Pawel2020}. Empirical Bayes shrinkage can
 be enabled by setting the design prior argument to \texttt{"EB"}.
 \begin{figure}[!htbp]
-<< "shrinkage", echo = FALSE, fig.height = 3.5 >>=
+<<"shrinkage", echo = FALSE, fig.height = 3.5 >>=
 zo <- seq(0, 4, 0.01)
 s <- pmax(1 - 1/zo^2, 0)
 shrinkage <- (1 - s)*100
@@ -1034,5 +1034,10 @@ ideas for new functionality, bug-reports, or other contributions to the package
 to get in touch with us over GitHub (\url{https://github.com/florafauna/ReplicationSuccess/}).
 
 \bibliography{bibliography}
+
+<<include=FALSE>>=
+options(optionsOld)
+par(parOld)
+@ 
 
 \end{document}
