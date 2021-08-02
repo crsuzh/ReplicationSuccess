@@ -107,7 +107,7 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
               min(w) > 0,
 
               is.numeric(mu),
-              length(mu) == 1 || length(mu) == length(thetahat),
+              length(mu) > 0,
               is.finite(mu),
 
               !is.null(alternative))
