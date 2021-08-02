@@ -178,7 +178,6 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
 #' print(round(exp(CI1b),2))
 #' print(round(exp(CI2b),2))
 #' @export
-#' @importFrom rootSolve uniroot.all
 #' @import stats
 hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
                          alternative = c("two.sided", "greater", "less", "none"),
@@ -221,11 +220,10 @@ hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
     eps <- 1e-6
     factor <- 5
     if(alternative=="none"){
-        CI <- rootSolve::uniroot.all(target, thetahat=thetahat, se=se, w=w, 
-                                     alternative=alternative, alpha=alpha, 
-                                     lower=mint-factor*z*minse, 
-                                     upper=maxt+factor*z*maxse)
-        ## FG: return full uniroot.all() output as CI?
+        CI <- unirootAll(target, thetahat=thetahat, se=se, w=w, 
+                         alternative=alternative, alpha=alpha, 
+                         interval = mint + c(-minse, maxse)*factor*z)
+        ## FG: return full unirootAll() output as CI?
     }
     if(alternative=="two.sided"){
         lower <- uniroot(target, thetahat=thetahat, se=se, w=w, alternative=alternative,
@@ -247,4 +245,31 @@ hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
         CI <- c(lower, upper)
     }
     return(CI)
+}
+
+## find multiple roots
+##
+## fork from rootSolve::uniroot.all(), package version 1.8.2.2
+#' @import stats 
+unirootAll <- function(f, interval, 
+                       n = 100, # large n than in rootSolve::uniroot.all()
+                       tol = .Machine$double.eps^0.2,
+                       maxiter = 1000, trace = 0,
+                       ...) 
+{
+    stopifnot(is.function(f), length(formals(f)) >= 1,
+              is.numeric(interval), length(interval) == 2,
+              is.finite(interval), interval[1] < interval[2],
+              is.numeric(n), length(n) == 1, is.finite(n), n >= 2)
+    n <- round(n)
+    ## 'tol', 'maxiter', 'trace' are checked in uniroot()
+    
+    xseq <- seq(interval[1], interval[2], length.out = n + 1)
+    mod <- f(xseq, ...)
+    Equi <- xseq[which(mod == 0)]
+    index <- which(mod[1:n] * mod[2:(n + 1)] < 0)
+    for (i in index)
+        Equi <- c(Equi, uniroot(f, lower = xseq[i], upper = xseq[i + 1], maxiter = maxiter,
+                                tol = tol, trace = trace, ...)$root)
+    Equi
 }

@@ -34,7 +34,6 @@ URL: https://florafauna.github.io/ReplicationSuccess/
 BugReports: https://github.com/florafauna/ReplicationSuccess/issues/
 Depends: R (>= 3.5)
 VignetteBuilder: knitr
-Imports: rootSolve
 Suggests: knitr, roxygen2, testthat
 License: GPL (>=2)
 LazyData: true
