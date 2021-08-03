@@ -27,7 +27,8 @@ hMeanChiSqCI(
   se,
   w = rep(1, length(thetahat)),
   alternative = c("two.sided", "greater", "less", "none"),
-  level = 0.95
+  level = 0.95,
+  n = 1000
 )
 }
 \arguments{
@@ -48,6 +49,9 @@ If \code{TRUE}, they are reported as "> bound".}
 \item{mu}{The null hypothesis value. Defaults to 0.}
 
 \item{level}{Numeric vector specifying the level of the confidence interval. Defaults to 0.95.}
+
+\item{n}{Number of subintervals on which \code{\link[stats]{uniroot}} is called.
+Passed to \code{\link{unirootAll}}. Default is 1000.}
 }
 \value{
 \code{hMeanChiSq} returns the p-values from the harmonic mean chi-squared test
@@ -59,7 +63,7 @@ based on study-specific estimates and standard errors.
 \code{hMeanChiSqCI} returns confidence interval(s) from inverting the harmonic mean chi-squared test
 based on study-specific estimates and standard errors. If \code{alternative} is "none",
 the return value may be a set of (non-overlapping) confidence intervals.
-In that case, the output is a vector of length 2n, where n is the number of confidence intervals.
+If more than one interval are retured, the output is a matrix.
 }
 \description{
 p-values and confidence intervals from the harmonic mean chi-squared test
@@ -69,37 +73,67 @@ p-values and confidence intervals from the harmonic mean chi-squared test
 pvalues <- c(0.0245, 0.1305, 0.00025, 0.2575, 0.128)
 lower <- c(0.04, 0.21, 0.12, 0.07, 0.41)
 upper <- c(1.14, 1.54, 0.60, 3.75, 1.27)
-se <- ci2se(lower, upper, ratio=TRUE)
-estimate <- ci2estimate(lower, upper, ratio=TRUE)
+se <- ci2se(lower = lower, upper = upper, ratio = TRUE)
+thetahat <- ci2estimate(lower = lower, upper = upper, ratio = TRUE)
 
 ## hMeanChiSq() --------
-hMeanChiSq(p2z(pvalues, alternative="less"), alternative="less")
-hMeanChiSq(p2z(pvalues, alternative="less"), alternative="two.sided")
-hMeanChiSq(p2z(pvalues, alternative="less"), alternative="none")
+hMeanChiSq(z = p2z(p = pvalues, alternative = "less"),
+           alternative = "less")
+hMeanChiSq(z = p2z(p = pvalues, alternative = "less"),
+           alternative = "two.sided")
+hMeanChiSq(z = p2z(p = pvalues, alternative = "less"),
+           alternative = "none")
 
-hMeanChiSq(p2z(pvalues, alternative="less"),  w=1/se^2, alternative="less")
-hMeanChiSq(p2z(pvalues, alternative="less"),  w=1/se^2, alternative="two.sided")
-hMeanChiSq(p2z(pvalues, alternative="less"),  w=1/se^2, alternative="none")
+hMeanChiSq(z = p2z(p = pvalues, alternative = "less"),
+           w = 1 / se^2, alternative = "less")
+hMeanChiSq(z = p2z(p = pvalues, alternative = "less"),
+           w = 1 / se^2, alternative = "two.sided")
+hMeanChiSq(z = p2z(p = pvalues, alternative = "less"),
+           w = 1 / se^2, alternative = "none")
 
 
 ## hMeanChiSqMu() --------
-hMeanChiSqMu(thetahat=estimate, se=se, alternative="two.sided")
-hMeanChiSqMu(thetahat=estimate, se=se, w=1/se^2, alternative="two.sided")
-hMeanChiSqMu(thetahat=estimate, se=se, alternative="two.sided", mu=-0.1)
+hMeanChiSqMu(thetahat = thetahat, se = se, alternative = "two.sided")
+hMeanChiSqMu(thetahat = thetahat, se = se, w = 1 / se^2,
+             alternative = "two.sided")
+hMeanChiSqMu(thetahat = thetahat, se = se, alternative = "two.sided",
+             mu = -0.1)
 
 
 ## hMeanChiSqCI() --------
 ## two-sided
-CI1 <- hMeanChiSqCI(thetahat=estimate, se=se, w=1/se^2, alternative="two.sided")
-CI2 <- hMeanChiSqCI(thetahat=estimate, se=se, w=1/se^2, alternative="two.sided", level=0.99875)
+CI1 <- hMeanChiSqCI(thetahat = thetahat, se = se, w = 1 / se^2,
+                    alternative = "two.sided")
+CI2 <- hMeanChiSqCI(thetahat = thetahat, se = se, w = 1 / se^2,
+                    alternative = "two.sided", level = 0.99875)
 ## one-sided
-CI1b <- hMeanChiSqCI(thetahat=estimate, se=se, w=1/se^2, alternative="less", level=0.975)
-CI2b <- hMeanChiSqCI(thetahat=estimate, se=se, w=1/se^2, alternative="less", level=1-0.025^2)
-## confidence intervals on hazard ratio scale
-print(round(exp(CI1),2))
-print(round(exp(CI2),2))
-print(round(exp(CI1b),2))
-print(round(exp(CI2b),2))
+CI1b <- hMeanChiSqCI(thetahat = thetahat, se = se, w = 1 / se^2,
+                     alternative = "less", level = 0.975)
+CI2b <- hMeanChiSqCI(thetahat = thetahat, se = se, w = 1 / se^2,
+                     alternative = "less", level = 1 - 0.025^2)
+
+## confidence intervals on hazard ratio scale 
+print(exp(CI1), digits = 2)
+print(exp(CI2), digits = 2)
+print(exp(CI1b), digits = 2)
+print(exp(CI2b), digits = 2)
+
+
+## example with confidence region consisting of disjunct intervals
+thetahat2 <- c(-3.7, 2.1, 2.5) 
+se2 <- c(1.5, 2.2, 3.1)
+level <- 0.95; alpha <- 1 - level
+muSeq <- seq(-7, 6, length.out = 1000)
+pValueSeq <- hMeanChiSqMu(thetahat = thetahat2, se = se2,
+                          alternative = "none", mu = muSeq)
+(CIs <- hMeanChiSqCI(thetahat = thetahat2, se = se2, alternative = "none"))
+
+plot(x = muSeq, y = pValueSeq, type = "l", panel.first = grid(lty = 1),
+     xlab = expression(mu), ylab = "p-value")
+abline(v = thetahat2, h = alpha, lty = 2)
+arrows(x0 = CIs[, 1], x1 = CIs[, 2], y0 = alpha,
+       y1 = alpha, col = "darkgreen", lwd=3, angle = 90, code = 3)
+
 }
 \references{
 Held, L. (2020). The harmonic mean chi-squared test to substantiate scientific findings.
@@ -107,5 +141,5 @@ Held, L. (2020). The harmonic mean chi-squared test to substantiate scientific f
 \doi{10.1111/rssc.12410}
 }
 \author{
-Leonhard Held
+Leonhard Held, Florian Gerber
 }
