@@ -28,7 +28,8 @@ hMeanChiSqCI(
   w = rep(1, length(thetahat)),
   alternative = c("two.sided", "greater", "less", "none"),
   level = 0.95,
-  n = 1000
+  n = 1000,
+  factor = 5
 )
 }
 \arguments{
@@ -50,8 +51,10 @@ If \code{TRUE}, they are reported as "> bound".}
 
 \item{level}{Numeric vector specifying the level of the confidence interval. Defaults to 0.95.}
 
-\item{n}{Number of subintervals on which \code{\link[stats]{uniroot}} is called.
-Passed to \code{\link{unirootAll}}. Default is 1000.}
+\item{n}{Number of subintervals on which \code{\link[stats]{uniroot}} is called.}
+
+\item{factor}{Factor to control the search interval of the numerical root-finder.
+Increasing this value increases the interval to be searched. Default is 5.}
 }
 \value{
 \code{hMeanChiSq} returns the p-values from the harmonic mean chi-squared test
@@ -63,7 +66,7 @@ based on study-specific estimates and standard errors.
 \code{hMeanChiSqCI} returns confidence interval(s) from inverting the harmonic mean chi-squared test
 based on study-specific estimates and standard errors. If \code{alternative} is "none",
 the return value may be a set of (non-overlapping) confidence intervals.
-If more than one interval are retured, the output is a matrix.
+If more than one interval are returned, the output is a matrix.
 }
 \description{
 p-values and confidence intervals from the harmonic mean chi-squared test
@@ -132,7 +135,7 @@ plot(x = muSeq, y = pValueSeq, type = "l", panel.first = grid(lty = 1),
      xlab = expression(mu), ylab = "p-value")
 abline(v = thetahat2, h = alpha, lty = 2)
 arrows(x0 = CIs[, 1], x1 = CIs[, 2], y0 = alpha,
-       y1 = alpha, col = "darkgreen", lwd=3, angle = 90, code = 3)
+       y1 = alpha, col = "darkgreen", lwd = 3, angle = 90, code = 3)
 
 }
 \references{

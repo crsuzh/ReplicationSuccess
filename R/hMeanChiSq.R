@@ -171,11 +171,12 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
 #' @rdname hMeanChiSq
 #' @param level Numeric vector specifying the level of the confidence interval. Defaults to 0.95.
 #' @param n Number of subintervals on which \code{\link[stats]{uniroot}} is called.
-#' Passed to \code{\link{unirootAll}}. Default is 1000. 
+#' @param factor Factor to control the search interval of the numerical root-finder.
+#' Increasing this value increases the interval to be searched. Default is 5.  
 #' @return \code{hMeanChiSqCI} returns confidence interval(s) from inverting the harmonic mean chi-squared test
 #' based on study-specific estimates and standard errors. If \code{alternative} is "none",
 #' the return value may be a set of (non-overlapping) confidence intervals.
-#' If more than one interval are retured, the output is a matrix.
+#' If more than one interval are returned, the output is a matrix.
 #' @examples
 #'
 #'
@@ -211,13 +212,13 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
 #'      xlab = expression(mu), ylab = "p-value")
 #' abline(v = thetahat2, h = alpha, lty = 2)
 #' arrows(x0 = CIs[, 1], x1 = CIs[, 2], y0 = alpha,
-#'        y1 = alpha, col = "darkgreen", lwd=3, angle = 90, code = 3)
+#'        y1 = alpha, col = "darkgreen", lwd = 3, angle = 90, code = 3)
 #' 
 #' @export
 #' @import stats
 hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
                          alternative = c("two.sided", "greater", "less", "none"),
-                         level = 0.95, n=1000){
+                         level = 0.95, n=1000, factor = 5){
     stopifnot(is.numeric(thetahat),
               length(thetahat) > 0,
               is.finite(thetahat),
@@ -238,7 +239,14 @@ hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
     stopifnot(is.numeric(level),
               length(level) == 1,
               is.finite(level),
-              0 < level, level < 1)
+              0 < level, level < 1,
+
+              is.numeric(n), length(n) == 1,
+              is.finite(n), n >= 2)
+    n <- round(n)
+    
+    stopifnot(is.numeric(factor), length(factor) == 1,
+              is.finite(factor), factor > 0)
 
     ## target function to compute the limits of the CI
     target <- function(limit){
@@ -251,14 +259,14 @@ hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
     maxt <- thetahat[maxi]
     minse <- se[mini]
     maxse <- se[maxi]
-    alpha <- 1-level
-    z <- abs(qnorm(alpha)) # FG: does it make sense to use z? for alpha = .5, z is zero.
+    alpha <- 1 - level
+    z1 <- max(-qnorm(alpha), 1)
     eps <- 1e-6
-    factor <- 5
     
     if(alternative == "none"){
-        CI <- unirootAll(f = target, lower = mint - 3 * minse,
-                         upper = maxt + 3 * maxse, n = n)
+        CI <- unirootAll(f = target,
+                         lower = mint - factor * z1 * minse,
+                         upper = maxt + factor * z1 * maxse, n = n)
         if(length(CI) > 2){
             CI <- matrix(data = CI, ncol = 2, byrow = TRUE)
             colnames(CI) <- c("lower", "upper")
@@ -266,22 +274,25 @@ hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
             
     }
     if(alternative == "two.sided"){
-        lower <- uniroot(f = target, lower = mint - factor * z * minse,
+        lower <- uniroot(f = target,
+                         lower = mint - factor * z1 * minse,
                          upper = mint - eps * minse)$root
         upper <- uniroot(f = target, lower = maxt + eps * maxse,
-                         upper = maxt + factor * z * maxse)$root
+                         upper = maxt + factor * z1 * maxse)$root
         CI <- c(lower, upper)
     }
     if(alternative == "greater"){
-        lower <- uniroot(f = target, lower = mint - factor * z * minse,
+        lower <- uniroot(f = target,
+                         lower = mint - factor * z1 * minse,
                          upper = mint - eps * minse)$root
         upper <- Inf
         CI <- c(lower, upper)
     }
     if(alternative == "less"){
         lower <- -Inf
-        upper <- uniroot(f = target, lower = maxt + eps * maxse,
-                         upper = maxt + factor * z * maxse)$root
+        upper <- uniroot(f = target,
+                         lower = maxt + eps * maxse,
+                         upper = maxt + factor * z1 * maxse)$root
         CI <- c(lower, upper)
     }
     return(CI)
