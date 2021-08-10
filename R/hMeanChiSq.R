@@ -38,7 +38,7 @@
 #' @export
 hMeanChiSq <- function(z, w = rep(1, length(z)),
                        alternative = c("greater", "less", "two.sided", "none"),
-                       bound=FALSE){
+                       bound = FALSE){
     stopifnot(is.numeric(z),
               length(z) > 0,
               is.finite(z),
@@ -219,7 +219,7 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
 #' @import stats
 hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
                          alternative = c("two.sided", "greater", "less", "none"),
-                         level = 0.95, n=1000, factor = 5){
+                         level = 0.95, n = 1000, factor = 5){
     stopifnot(is.numeric(thetahat),
               length(thetahat) > 0,
               is.finite(thetahat),
