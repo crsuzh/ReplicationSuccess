@@ -63,13 +63,16 @@ based on the study-specific z-values.
 \code{hMeanChiSqMu} returns the p-value from the harmonic mean chi-squared test
 based on study-specific estimates and standard errors.
 
-\code{hMeanChiSqCI} returns confidence interval(s) from inverting the harmonic mean chi-squared test
-based on study-specific estimates and standard errors. If \code{alternative} is "none",
-the return value may be a set of (non-overlapping) confidence intervals.
-If more than one interval are returned, the output is a matrix.
+\code{hMeanChiSqCI} returns a matrix with the columns "lower" and "upper"
+giving the confidence interval(s) obtained by inverting the harmonic mean chi-squared test
+based on study-specific estimates and standard errors.
 }
 \description{
 p-values and confidence intervals from the harmonic mean chi-squared test
+}
+\note{
+For \code{hMeanChiSqCI(alternative = "none")}, we recommend checking the correctness
+of the intervals by plotting the p-value function as shown in the example.
 }
 \examples{
 ## Example from Fisher (1999) as discussed in Held (2020)

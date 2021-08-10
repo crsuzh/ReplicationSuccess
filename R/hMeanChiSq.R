@@ -173,10 +173,11 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
 #' @param n Number of subintervals on which \code{\link[stats]{uniroot}} is called.
 #' @param factor Factor to control the search interval of the numerical root-finder.
 #' Increasing this value increases the interval to be searched. Default is 5.  
-#' @return \code{hMeanChiSqCI} returns confidence interval(s) from inverting the harmonic mean chi-squared test
-#' based on study-specific estimates and standard errors. If \code{alternative} is "none",
-#' the return value may be a set of (non-overlapping) confidence intervals.
-#' If more than one interval are returned, the output is a matrix.
+#' @return \code{hMeanChiSqCI} returns a matrix with the columns "lower" and "upper"
+#' giving the confidence interval(s) obtained by inverting the harmonic mean chi-squared test
+#' based on study-specific estimates and standard errors.
+#' @note For \code{hMeanChiSqCI(alternative = "none")}, we recommend checking the correctness
+#' of the intervals by plotting the p-value function as shown in the example. 
 #' @examples
 #'
 #'
@@ -279,21 +280,21 @@ hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
                          upper = mint - eps * minse)$root
         upper <- uniroot(f = target, lower = maxt + eps * maxse,
                          upper = maxt + factor * z1 * maxse)$root
-        CI <- c(lower, upper)
+        CI <- cbind(lower, upper)
     }
     if(alternative == "greater"){
         lower <- uniroot(f = target,
                          lower = mint - factor * z1 * minse,
                          upper = mint - eps * minse)$root
         upper <- Inf
-        CI <- c(lower, upper)
+        CI <- cbind(lower, upper)
     }
     if(alternative == "less"){
         lower <- -Inf
         upper <- uniroot(f = target,
                          lower = maxt + eps * maxse,
                          upper = maxt + factor * z1 * maxse)$root
-        CI <- c(lower, upper)
+        CI <- cbind(lower, upper)
     }
     return(CI)
 }
