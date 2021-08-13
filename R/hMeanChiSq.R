@@ -268,11 +268,8 @@ hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
         CI <- unirootAll(f = target,
                          lower = mint - factor * z1 * minse,
                          upper = maxt + factor * z1 * maxse, n = n)
-        if(length(CI) > 2){
-            CI <- matrix(data = CI, ncol = 2, byrow = TRUE)
-            colnames(CI) <- c("lower", "upper")
-        }
-            
+        CI <- matrix(data = CI, ncol = 2, byrow = TRUE)
+        colnames(CI) <- c("lower", "upper")
     }
     if(alternative == "two.sided"){
         lower <- uniroot(f = target,
