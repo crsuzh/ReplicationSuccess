@@ -172,7 +172,9 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
 #' @param level Numeric vector specifying the level of the confidence interval. Defaults to 0.95.
 #' @param n Number of subintervals on which \code{\link[stats]{uniroot}} is called.
 #' @param factor Factor to control the search interval of the numerical root-finder.
-#' Increasing this value increases the interval to be searched. Default is 5.  
+#' Increasing this value increases the interval to be searched. Default is 5.
+#' @param useUnirootAll whether to use unirootAll or the more targeted root finding procedure.
+#' Only relevant for \code{alternative = "none"}.
 #' @return \code{hMeanChiSqCI} returns a matrix with the columns "lower" and "upper"
 #' giving the confidence interval(s) obtained by inverting the harmonic mean chi-squared test
 #' based on study-specific estimates and standard errors.
@@ -219,7 +221,7 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
 #' @import stats
 hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
                          alternative = c("two.sided", "greater", "less", "none"),
-                         level = 0.95, n = 1000, factor = 5){
+                         level = 0.95, n = 1000, factor = 5, useUnirootAll = FALSE){
     stopifnot(is.numeric(thetahat),
               length(thetahat) > 0,
               is.finite(thetahat),
@@ -247,13 +249,24 @@ hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
     n <- round(n)
     
     stopifnot(is.numeric(factor), length(factor) == 1,
-              is.finite(factor), factor > 0)
+              is.finite(factor), factor > 0,
+
+              is.logical(useUnirootAll),
+              length(useUnirootAll) == 1,
+              is.finite(useUnirootAll))
 
     ## target function to compute the limits of the CI
     target <- function(limit){
         hMeanChiSqMu(thetahat = thetahat, se = se, w = w, mu = limit,
                      alternative = alternative, bound = FALSE) - alpha
     }
+
+    ## sort 'thetahat', 'se', 'w'
+    indOrd <- order(thetahat)
+    thetahat <- thetahat[indOrd]; se <- se[indOrd]; w <- w[indOrd]
+    
+    nThetahat <- length(thetahat)
+    
     mini <- which.min(thetahat)
     maxi <- which.max(thetahat)
     mint <- thetahat[mini]
@@ -265,10 +278,44 @@ hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
     eps <- 1e-6
     
     if(alternative == "none"){
-        CI <- unirootAll(f = target,
-                         lower = mint - factor * z1 * minse,
-                         upper = maxt + factor * z1 * maxse, n = n)
-        CI <- matrix(data = CI, ncol = 2, byrow = TRUE)
+        if(useUnirootAll){
+            CI <- unirootAll(f = target, lower = mint - factor * z1 * minse,
+                             upper = maxt + factor * z1 * maxse, n = n)
+            CI <- matrix(data = CI, ncol = 2, byrow = TRUE)
+        } else {
+            ## ----------------------------
+            ## find lower bound such that: lower < thetahat[1] AND target(lower) < alpha 
+            lower <- mint - z1 * minse
+            while(target(lower) > 0)
+                lower <- lower - minse
+            
+            ## find root between 'lower' and 'thetahat[1]'
+            CIlower <- uniroot(f = target, lower = lower, upper = thetahat[1])$root
+            
+            ## -------------------------
+            ## check between thetahats whether 'target' goes below 'alpha'
+            ## if so, search CI limits
+            CImiddle <- matrix(NA, nrow = 2, ncol = nThetahat - 1)
+            for(i in 1:(nThetahat - 1)){
+                opt <- optimize(f = target, lower = thetahat[i], upper = thetahat[i + 1])
+                if(opt$objective <= 0){
+                    CImiddle[1, i] <- uniroot(f = target, lower = thetahat[i], upper = opt$minimum)$root
+                    CImiddle[2, i] <- uniroot(f = target, lower = opt$minimum, upper = thetahat[i + 1])$root
+                }
+            }
+            CImiddle <- CImiddle[!is.na(CImiddle)]
+            
+            ## -------------------------
+            ## find upper bound such that: upper > thetahat[nThetahat] AND target(upper) < alpha 
+            upper <- maxt + maxse
+            while(target(upper) > 0)
+                upper <- upper + z1 * maxse
+            
+            ## find root between 'lower' and 'thetahat[1]'
+            CIupper <- uniroot(f = target, lower = thetahat[nThetahat], upper = upper)$root
+            
+            CI <- matrix(c(CIlower, CImiddle, CIupper), ncol = 2, byrow = TRUE)
+        }
         colnames(CI) <- c("lower", "upper")
     }
     if(alternative == "two.sided"){

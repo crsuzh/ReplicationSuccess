@@ -29,7 +29,8 @@ hMeanChiSqCI(
   alternative = c("two.sided", "greater", "less", "none"),
   level = 0.95,
   n = 1000,
-  factor = 5
+  factor = 5,
+  useUnirootAll = FALSE
 )
 }
 \arguments{
@@ -55,6 +56,9 @@ If \code{TRUE}, they are reported as "> bound".}
 
 \item{factor}{Factor to control the search interval of the numerical root-finder.
 Increasing this value increases the interval to be searched. Default is 5.}
+
+\item{useUnirootAll}{whether to use unirootAll or the more targeted root finding procedure.
+Only relevant for \code{alternative = "none"}.}
 }
 \value{
 \code{hMeanChiSq} returns the p-values from the harmonic mean chi-squared test
