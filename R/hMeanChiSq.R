@@ -226,9 +226,10 @@ hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
                          level = 0.95, wGamma = rep(1, length(thetahat) - 1)){
     stopifnot(is.numeric(thetahat),
               length(thetahat) > 0,
-              is.finite(thetahat),
-              
-              is.numeric(se),
+              is.finite(thetahat))
+    if(any(duplicated(thetahat)))
+        stop("Duplicated values in 'thetahat' are not supported.")
+    stopifnot(is.numeric(se),
               length(se) == 1 || length(se) == length(thetahat),
               is.finite(se),
               min(se) > 0,
@@ -288,7 +289,7 @@ hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
         ## check between thetahats whether 'target' goes below 'alpha'
         ## if so, search CI limits
         CImiddle <- matrix(NA, nrow = 2, ncol = nThetahat - 1)
-        gam <- matrix(NA, nrow = 2, ncol = nThetahat - 1)
+        gam <- matrix(NA, nrow = nThetahat - 1, ncol = 2)
         colnames(gam) <- c("minimum", "pvalue_fun/gamma")
         for(i in 1:(nThetahat - 1)){
                 opt <- optimize(f = target, lower = thetahat[i], upper = thetahat[i + 1])
@@ -340,7 +341,7 @@ hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
                          upper = maxt + factor * z1 * maxse)$root
         return(list(CI = cbind(lower, upper)))
     }
-    stop("function not expected to arrive here.")
+    stop("function not get here.")
 }
 
 #' Find multiple roots in interval
