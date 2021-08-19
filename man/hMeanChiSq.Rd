@@ -4,7 +4,7 @@
 \alias{hMeanChiSq}
 \alias{hMeanChiSqMu}
 \alias{hMeanChiSqCI}
-\title{p-values and confidence intervals from the harmonic mean chi-squared test}
+\title{harmonic mean chi-squared test}
 \usage{
 hMeanChiSq(
   z,
@@ -28,9 +28,7 @@ hMeanChiSqCI(
   w = rep(1, length(thetahat)),
   alternative = c("two.sided", "greater", "less", "none"),
   level = 0.95,
-  n = 1000,
-  factor = 5,
-  useUnirootAll = FALSE
+  wGamma = rep(1, length(thetahat) - 1)
 )
 }
 \arguments{
@@ -52,31 +50,28 @@ If \code{TRUE}, they are reported as "> bound".}
 
 \item{level}{Numeric vector specifying the level of the confidence interval. Defaults to 0.95.}
 
-\item{n}{Number of subintervals on which \code{\link[stats]{uniroot}} is called.}
-
-\item{factor}{Factor to control the search interval of the numerical root-finder.
-Increasing this value increases the interval to be searched. Default is 5.}
-
-\item{useUnirootAll}{whether to use unirootAll or the more targeted root finding procedure.
-Only relevant for \code{alternative = "none"}.}
+\item{wGamma}{Numeric vector of length \code{thetahat - 1} specifying weights used to
+summarize the gamma values, i.e.,
+the local minima of the p-value function between the thetahats. Defaults is a vector of 1s.}
 }
 \value{
-\code{hMeanChiSq} returns the p-values from the harmonic mean chi-squared test
+\code{hMeanChiSq}: returns the p-values from the harmonic mean chi-squared test
 based on the study-specific z-values.
 
-\code{hMeanChiSqMu} returns the p-value from the harmonic mean chi-squared test
+\code{hMeanChiSqMu}: returns the p-value from the harmonic mean chi-squared test
 based on study-specific estimates and standard errors.
 
-\code{hMeanChiSqCI} returns a matrix with the columns "lower" and "upper"
-giving the confidence interval(s) obtained by inverting the harmonic mean chi-squared test
-based on study-specific estimates and standard errors.
+\code{hMeanChiSqCI}: returns a list containing confidence interval(s)
+obtained by inverting the harmonic mean chi-squared test based on study-specific
+estimates and standard errors. The list contains:
+\item{CI}{Confidence interval(s).}\cr\cr
+If the \code{alternative} is "none", the list also contains:
+\item{gamma}{Local minima of the p-value function between the thetahats.}
+\item{gammaMean}{Mean of all gammas weights by \code{wGamma}.}
+\item{gammaHMean}{Harmonic mean of all gammas weights by \code{wGamma}.}
 }
 \description{
-p-values and confidence intervals from the harmonic mean chi-squared test
-}
-\note{
-For \code{hMeanChiSqCI(alternative = "none")}, we recommend checking the correctness
-of the intervals by plotting the p-value function as shown in the example.
+p-values and confidence intervals from the harmonic mean chi-squared test.
 }
 \examples{
 ## Example from Fisher (1999) as discussed in Held (2020)
@@ -109,7 +104,6 @@ hMeanChiSqMu(thetahat = thetahat, se = se, w = 1 / se^2,
 hMeanChiSqMu(thetahat = thetahat, se = se, alternative = "two.sided",
              mu = -0.1)
 
-
 ## hMeanChiSqCI() --------
 ## two-sided
 CI1 <- hMeanChiSqCI(thetahat = thetahat, se = se, w = 1 / se^2,
@@ -123,26 +117,27 @@ CI2b <- hMeanChiSqCI(thetahat = thetahat, se = se, w = 1 / se^2,
                      alternative = "less", level = 1 - 0.025^2)
 
 ## confidence intervals on hazard ratio scale 
-print(exp(CI1), digits = 2)
-print(exp(CI2), digits = 2)
-print(exp(CI1b), digits = 2)
-print(exp(CI2b), digits = 2)
+print(exp(CI1$CI), digits = 2)
+print(exp(CI2$CI), digits = 2)
+print(exp(CI1b$CI), digits = 2)
+print(exp(CI2b$CI), digits = 2)
 
 
 ## example with confidence region consisting of disjunct intervals
-thetahat2 <- c(-3.7, 2.1, 2.5) 
+thetahat2 <- c(-3.7, 2.1, 2.5)
 se2 <- c(1.5, 2.2, 3.1)
 level <- 0.95; alpha <- 1 - level
 muSeq <- seq(-7, 6, length.out = 1000)
 pValueSeq <- hMeanChiSqMu(thetahat = thetahat2, se = se2,
                           alternative = "none", mu = muSeq)
-(CIs <- hMeanChiSqCI(thetahat = thetahat2, se = se2, alternative = "none"))
+(hm <- hMeanChiSqCI(thetahat = thetahat2, se = se2, alternative = "none"))
 
 plot(x = muSeq, y = pValueSeq, type = "l", panel.first = grid(lty = 1),
      xlab = expression(mu), ylab = "p-value")
 abline(v = thetahat2, h = alpha, lty = 2)
-arrows(x0 = CIs[, 1], x1 = CIs[, 2], y0 = alpha,
+arrows(x0 = hm$CI[, 1], x1 = hm$CI[, 2], y0 = alpha,
        y1 = alpha, col = "darkgreen", lwd = 3, angle = 90, code = 3)
+points(hm$gamma, col = "red", pch = 19, cex = 2)
 
 }
 \references{
