@@ -28,7 +28,7 @@ hMeanChiSqCI(
   w = rep(1, length(thetahat)),
   alternative = c("two.sided", "greater", "less", "none"),
   level = 0.95,
-  wGamma = rep(1, length(thetahat) - 1)
+  wGamma = rep(1, length(unique(thetahat)) - 1)
 )
 }
 \arguments{
@@ -50,7 +50,7 @@ If \code{TRUE}, they are reported as "> bound".}
 
 \item{level}{Numeric vector specifying the level of the confidence interval. Defaults to 0.95.}
 
-\item{wGamma}{Numeric vector of length \code{thetahat - 1} specifying weights used to
+\item{wGamma}{Numeric vector of length \code{unique(thetahat) - 1} specifying weights used to
 summarize the gamma values, i.e.,
 the local minima of the p-value function between the thetahats. Defaults is a vector of 1s.}
 }
@@ -67,8 +67,8 @@ estimates and standard errors. The list contains:
 \item{CI}{Confidence interval(s).}\cr\cr
 If the \code{alternative} is "none", the list also contains:
 \item{gamma}{Local minima of the p-value function between the thetahats.}
-\item{gammaMean}{Mean of all gammas weights by \code{wGamma}.}
-\item{gammaHMean}{Harmonic mean of all gammas weights by \code{wGamma}.}
+\item{gammaMean}{Mean of all gammas weighted by \code{wGamma}.}
+\item{gammaHMean}{Harmonic mean of all gammas weighted by \code{wGamma}.}
 }
 \description{
 p-values and confidence intervals from the harmonic mean chi-squared test.

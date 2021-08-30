@@ -171,7 +171,7 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
 
 #' @rdname hMeanChiSq
 #' @param level Numeric vector specifying the level of the confidence interval. Defaults to 0.95.
-#' @param wGamma Numeric vector of length \code{thetahat - 1} specifying weights used to
+#' @param wGamma Numeric vector of length \code{unique(thetahat) - 1} specifying weights used to
 #' summarize the gamma values, i.e.,
 #' the local minima of the p-value function between the thetahats. Defaults is a vector of 1s.
 #' @return \code{hMeanChiSqCI}: returns a list containing confidence interval(s)
@@ -180,8 +180,8 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
 #' \item{CI}{Confidence interval(s).}\cr\cr
 #' If the \code{alternative} is "none", the list also contains:
 #' \item{gamma}{Local minima of the p-value function between the thetahats.}
-#' \item{gammaMean}{Mean of all gammas weights by \code{wGamma}.}
-#' \item{gammaHMean}{Harmonic mean of all gammas weights by \code{wGamma}.}
+#' \item{gammaMean}{Mean of all gammas weighted by \code{wGamma}.}
+#' \item{gammaHMean}{Harmonic mean of all gammas weighted by \code{wGamma}.}
 #' @examples
 #'
 #' ## hMeanChiSqCI() --------
@@ -223,12 +223,10 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
 #' @import stats
 hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
                          alternative = c("two.sided", "greater", "less", "none"),
-                         level = 0.95, wGamma = rep(1, length(thetahat) - 1)){
+                         level = 0.95, wGamma = rep(1, length(unique(thetahat)) - 1)){
     stopifnot(is.numeric(thetahat),
               length(thetahat) > 0,
               is.finite(thetahat))
-    if(any(duplicated(thetahat)))
-        stop("Duplicated values in 'thetahat' are not supported.")
     stopifnot(is.numeric(se),
               length(se) == 1 || length(se) == length(thetahat),
               is.finite(se),
@@ -248,7 +246,7 @@ hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
               0 < level, level < 1,
 
               is.numeric(wGamma),
-              length(wGamma) == length(thetahat) -1,
+              length(wGamma) == length(unique(thetahat)) -1,
               is.finite(w),
               min(w) > 0)
 
@@ -259,10 +257,13 @@ hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
     }
 
     ## sort 'thetahat', 'se', 'w'
+    
     indOrd <- order(thetahat)
     thetahat <- thetahat[indOrd]; se <- se[indOrd]; w <- w[indOrd]
-    
-    nThetahat <- length(thetahat)
+
+    ## minima are only search between distinct thetahat elements
+    thetahatUnique <- unique(thetahat)
+    nThetahatUnique <- length(thetahatUnique)
     
     mini <- which.min(thetahat)
     maxi <- which.max(thetahat)
@@ -288,30 +289,32 @@ hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
         ## -------------------------
         ## check between thetahats whether 'target' goes below 'alpha'
         ## if so, search CI limits
-        CImiddle <- matrix(NA, nrow = 2, ncol = nThetahat - 1)
-        gam <- matrix(NA, nrow = nThetahat - 1, ncol = 2)
+        CImiddle <- matrix(NA, nrow = 2, ncol = nThetahatUnique - 1)
+        gam <- matrix(NA, nrow = nThetahatUnique - 1, ncol = 2)
         colnames(gam) <- c("minimum", "pvalue_fun/gamma")
-        for(i in 1:(nThetahat - 1)){
-                opt <- optimize(f = target, lower = thetahat[i], upper = thetahat[i + 1])
+        for(i in 1:(nThetahatUnique - 1)){
+            opt <- optimize(f = target, lower = thetahatUnique[i],
+                            upper = thetahatUnique[i + 1])
                 gam[i,] <- c(opt$minimum, opt$objective + alpha)
                 if(opt$objective <= 0){
-                    CImiddle[1, i] <- uniroot(f = target, lower = thetahat[i],
+                    CImiddle[1, i] <- uniroot(f = target, lower = thetahatUnique[i],
                                               upper = opt$minimum)$root
                     CImiddle[2, i] <- uniroot(f = target, lower = opt$minimum,
-                                              upper = thetahat[i + 1])$root
+                                              upper = thetahatUnique[i + 1])$root
                 }
         }
         CImiddle <- CImiddle[!is.na(CImiddle)]
         
         ## -------------------------
-        ## find upper bound such that: upper > thetahat[nThetahat] AND target(upper) < alpha 
+        ## find upper bound such that:
+        ## upper > thetahat[length(thetahat)] AND target(upper) < alpha 
         upper <- maxt + maxse
         while(target(upper) > 0)
             upper <- upper + z1 * maxse
         
         ## find root between 'lower' and 'thetahat[1]'
-        CIupper <- uniroot(f = target, lower = thetahat[nThetahat], upper = upper)$root
-        
+        CIupper <- uniroot(f = target, lower = thetahat[length(thetahat)],
+                           upper = upper)$root
         CI <- matrix(c(CIlower, CImiddle, CIupper), ncol = 2, byrow = TRUE)
         colnames(CI) <- c("lower", "upper")
         return(list(CI = CI,
