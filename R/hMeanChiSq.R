@@ -257,7 +257,6 @@ hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
     }
 
     ## sort 'thetahat', 'se', 'w'
-    
     indOrd <- order(thetahat)
     thetahat <- thetahat[indOrd]; se <- se[indOrd]; w <- w[indOrd]
 
@@ -278,7 +277,7 @@ hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
     if(alternative == "none"){
         
         ## ----------------------------
-        ## find lower bound such that: lower < thetahat[1] AND target(lower) < alpha 
+        ## find lower bound such that: lower < thetahat[1] AND target(lower) < 0 
         lower <- mint - z1 * minse
         while(target(lower) > 0)
             lower <- lower - minse
@@ -307,7 +306,7 @@ hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
         
         ## -------------------------
         ## find upper bound such that:
-        ## upper > thetahat[length(thetahat)] AND target(upper) < alpha 
+        ## upper > thetahat[length(thetahat)] AND target(upper) < 0 
         upper <- maxt + maxse
         while(target(upper) > 0)
             upper <- upper + z1 * maxse
