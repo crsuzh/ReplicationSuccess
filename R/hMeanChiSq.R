@@ -128,8 +128,8 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
               is.numeric(tau2),
               length(tau2) == 1,
               is.finite(tau2),
-              0 <= tau2, tau2 <= 1,
-
+              0 <= tau2,
+              
               !is.null(alternative))
     alternative <- match.arg(alternative)
     stopifnot(is.logical(bound),
@@ -243,7 +243,7 @@ hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)), tau2 = 0,
               is.numeric(tau2),
               length(tau2) == 1,
               is.finite(tau2),
-              0 <= tau2, tau2 <= 1,
+              0 <= tau2,
               
               is.numeric(w),
               length(w) == length(thetahat),
