@@ -18,6 +18,7 @@ hMeanChiSqMu(
   se,
   w = rep(1, length(thetahat)),
   mu = 0,
+  tau2 = 0,
   alternative = c("greater", "less", "two.sided", "none"),
   bound = FALSE
 )
@@ -26,6 +27,7 @@ hMeanChiSqCI(
   thetahat,
   se,
   w = rep(1, length(thetahat)),
+  tau2 = 0,
   alternative = c("two.sided", "greater", "less", "none"),
   level = 0.95,
   wGamma = rep(1, length(unique(thetahat)) - 1)
@@ -47,6 +49,9 @@ If \code{TRUE}, they are reported as "> bound".}
 \item{se}{Numeric vector of standard errors.}
 
 \item{mu}{The null hypothesis value. Defaults to 0.}
+
+\item{tau2}{Between-study variance tau^2. Can be estmated, e.g., by
+\code{\link[meta]{metagen}}. Defaults to 0.}
 
 \item{level}{Numeric vector specifying the level of the confidence interval. Defaults to 0.95.}
 

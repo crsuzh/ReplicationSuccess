@@ -89,6 +89,8 @@ hMeanChiSq <- function(z, w = rep(1, length(z)),
 #' @param thetahat Numeric vector of parameter estimates. 
 #' @param se Numeric vector of standard errors.
 #' @param mu The null hypothesis value. Defaults to 0.
+#' @param tau2 Between-study variance tau^2. Can be estmated, e.g., by
+#' \code{\link[meta]{metagen}}. Defaults to 0.
 #' @return \code{hMeanChiSqMu}: returns the p-value from the harmonic mean chi-squared test
 #' based on study-specific estimates and standard errors.
 #' @examples
@@ -102,6 +104,7 @@ hMeanChiSq <- function(z, w = rep(1, length(z)),
 #'              mu = -0.1)
 #' @export
 hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
+                         tau2 = 0,
                          alternative = c("greater", "less", "two.sided", "none"),
                          bound = FALSE){
     stopifnot(is.numeric(thetahat),
@@ -122,6 +125,11 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
               length(mu) > 0,
               is.finite(mu),
 
+              is.numeric(tau2),
+              length(tau2) == 1,
+              is.finite(tau2),
+              0 <= tau2, tau2 <= 1,
+
               !is.null(alternative))
     alternative <- match.arg(alternative)
     stopifnot(is.logical(bound),
@@ -131,7 +139,7 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
     n <- length(thetahat)
     m <- length(mu)
     if(alternative != "none"){
-        z <- (thetahat - mu) / se
+        z <- (thetahat - mu) / sqrt(se^2 + tau2)
         zH2 <- sum(sqrt(w))^2 / sum(w / z^2)
         res <- pchisq(zH2, df = 1, lower.tail = FALSE)
         check_greater <- min(z) >= 0
@@ -161,7 +169,7 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
         zH2 <- numeric(m)
         sw <- sum(sqrt(w))^2
         for(i in 1:m){
-            z <- (thetahat - mu[i]) / se
+            z <- (thetahat - mu[i]) / sqrt(se^2 + tau2)
             zH2[i] <-  sw / sum(w / z^2)
         }
         res <- pchisq(q = zH2, df = 1, lower.tail = FALSE)
@@ -221,7 +229,7 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
 #'
 #' @export
 #' @import stats
-hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
+hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)), tau2 = 0, 
                          alternative = c("two.sided", "greater", "less", "none"),
                          level = 0.95, wGamma = rep(1, length(unique(thetahat)) - 1)){
     stopifnot(is.numeric(thetahat),
@@ -231,6 +239,11 @@ hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
               length(se) == 1 || length(se) == length(thetahat),
               is.finite(se),
               min(se) > 0,
+
+              is.numeric(tau2),
+              length(tau2) == 1,
+              is.finite(tau2),
+              0 <= tau2, tau2 <= 1,
               
               is.numeric(w),
               length(w) == length(thetahat),
@@ -252,7 +265,7 @@ hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
 
     ## target function to compute the limits of the CI
     target <- function(limit){
-        hMeanChiSqMu(thetahat = thetahat, se = se, w = w, mu = limit,
+        hMeanChiSqMu(thetahat = thetahat, se = se, w = w, mu = limit, tau2 = tau2,
                      alternative = alternative, bound = FALSE) - alpha
     }
 

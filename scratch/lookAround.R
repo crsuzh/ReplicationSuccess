@@ -6,13 +6,14 @@ library("ReplicationSuccess")
 library(devtools)
 
 ## example with confidence region consisting of disjunct intervals
-thetahat2 <- c(-3.7, 2.1, 2.1, 2.5, 2.5, 2.5) 
-se2 <- c(1.5, 2.2, 3.1, 1, 2.2, .1)
+thetahat2 <- c(-3.7, 2.1, 2.5) 
+se2 <- c(1.5, 2.2, .8)
 level <- 0.95; alpha <- 1 - level
 muSeq <- seq(-7, 6, length.out = 1000)
-pValueSeq <- hMeanChiSqMu(thetahat = thetahat2, se = se2,
+tau2 <- 0
+pValueSeq <- hMeanChiSqMu(thetahat = thetahat2, se = se2, tau2 = tau2,
                           alternative = "none", mu = muSeq)
-(hm <- hMeanChiSqCI(thetahat = thetahat2, se = se2, alternative = "none"))
+(hm <- hMeanChiSqCI(thetahat = thetahat2, se = se2, tau2 = tau2, alternative = "none"))
 
 plot(x = muSeq, y = pValueSeq, type = "l", panel.first = grid(lty = 1),
      xlab = expression(mu), ylab = "p-value")
