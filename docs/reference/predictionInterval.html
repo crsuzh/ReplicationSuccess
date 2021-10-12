@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ReplicationSuccess</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -93,7 +93,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/florafauna/ReplicationSuccess/">
+  <a href="https://github.com/SamCH93/ReplicationSuccess/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -112,7 +112,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Prediction interval for effect estimate of replication study</h1>
-    <small class="dont-index">Source: <a href='https://github.com/florafauna/ReplicationSuccess/blob/master/R/predictionInterval.R'><code>R/predictionInterval.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/SamCH93/ReplicationSuccess/blob/master/R/predictionInterval.R'><code>R/predictionInterval.R</code></a></small>
     <div class="hidden name"><code>predictionInterval.Rd</code></div>
     </div>
 
@@ -219,7 +219,7 @@ replicability in psychological science. <em>Perspectives on Psychological Scienc
 </div><div class='img'><img src='predictionInterval-1.png' alt='' width='700' height='433' /></div><div class='input'>       
 <span class='co'># compute prediction intervals for replication projects</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"RProjects"</span>, package <span class='op'>=</span> <span class='st'>"ReplicationSuccess"</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>2</span><span class='op'>)</span>, las <span class='op'>=</span> <span class='fl'>1</span>, mai <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0.65</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>parOld</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
 <span class='kw'>for</span> <span class='op'>(</span><span class='va'>p</span> <span class='kw'>in</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>RProjects</span><span class='op'>$</span><span class='va'>project</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>data_project</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>RProjects</span>, <span class='va'>project</span> <span class='op'>==</span> <span class='va'>p</span><span class='op'>)</span>
   <span class='va'>PI</span> <span class='op'>&lt;-</span> <span class='fu'>predictionInterval</span><span class='op'>(</span>thetao <span class='op'>=</span> <span class='va'>data_project</span><span class='op'>$</span><span class='va'>fiso</span>, seo <span class='op'>=</span> <span class='va'>data_project</span><span class='op'>$</span><span class='va'>se_fiso</span>, 
@@ -236,7 +236,8 @@ replicability in psychological science. <em>Perspectives on Psychological Scienc
          code <span class='op'>=</span> <span class='fl'>3</span>, col <span class='op'>=</span> <span class='va'>color</span><span class='op'>)</span>
   <span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>v <span class='op'>=</span> <span class='fl'>0</span>, lty <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='img'><img src='predictionInterval-2.png' alt='' width='700' height='433' /></div></pre>
+</div><div class='img'><img src='predictionInterval-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span><span class='va'>parOld</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

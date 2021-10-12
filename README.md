@@ -15,7 +15,7 @@ install.packages("ReplicationSuccess")
 
 Development version from github:
 ```r
-devtools::install_github(repo = "florafauna/ReplicationSuccess")
+devtools::install_github(repo = "SamCH93/ReplicationSuccess")
 ```
 
 ## Introduction in vignette

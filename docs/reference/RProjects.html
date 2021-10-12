@@ -97,7 +97,7 @@ nrSample size in replication study
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ReplicationSuccess</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -118,7 +118,7 @@ nrSample size in replication study
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/florafauna/ReplicationSuccess/">
+  <a href="https://github.com/SamCH93/ReplicationSuccess/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -137,7 +137,7 @@ nrSample size in replication study
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Data from four large-scale replication projects</h1>
-    <small class="dont-index">Source: <a href='https://github.com/florafauna/ReplicationSuccess/blob/master/R/datasets.R'><code>R/datasets.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/SamCH93/ReplicationSuccess/blob/master/R/datasets.R'><code>R/datasets.R</code></a></small>
     <div class="hidden name"><code>RProjects.Rd</code></div>
     </div>
 
@@ -230,7 +230,7 @@ doi: <a href='https://doi.org/10.1126/science.aac4716'>10.1126/science.aac4716</
 <span class='va'>RProjects</span><span class='op'>$</span><span class='va'>pr1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ci2se.html'>z2p</a></span><span class='op'>(</span>z <span class='op'>=</span> <span class='va'>RProjects</span><span class='op'>$</span><span class='va'>zr</span>, alternative <span class='op'>=</span> <span class='st'>"greater"</span><span class='op'>)</span>
 
 <span class='co'>## Plots of effect estimates</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>2</span><span class='op'>)</span>, las <span class='op'>=</span> <span class='fl'>1</span>, mai <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0.65</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>parOld</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
 <span class='kw'>for</span> <span class='op'>(</span><span class='va'>p</span> <span class='kw'>in</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>RProjects</span><span class='op'>$</span><span class='va'>project</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>data_project</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>RProjects</span>, <span class='va'>project</span> <span class='op'>==</span> <span class='va'>p</span><span class='op'>)</span>
   <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>rr</span> <span class='op'>~</span> <span class='va'>ro</span>, data <span class='op'>=</span> <span class='va'>data_project</span>, ylim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>0.5</span>, <span class='fl'>1</span><span class='op'>)</span>,
@@ -239,12 +239,13 @@ doi: <a href='https://doi.org/10.1126/science.aac4716'>10.1126/science.aac4716</
   <span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>h <span class='op'>=</span> <span class='fl'>0</span>, lty <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
   <span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fl'>0</span>, b <span class='op'>=</span> <span class='fl'>1</span>, col <span class='op'>=</span> <span class='st'>"grey"</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='img'><img src='RProjects-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='img'><img src='RProjects-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span><span class='va'>parOld</span><span class='op'>)</span>
+
 <span class='co'>## Plots of peer beliefs</span>
 <span class='va'>RProjects</span><span class='op'>$</span><span class='va'>significant</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>RProjects</span><span class='op'>$</span><span class='va'>pr</span> <span class='op'>&lt;</span> <span class='fl'>0.05</span>,
                                 levels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>FALSE</span>, <span class='cn'>TRUE</span><span class='op'>)</span>,
                                 labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"no"</span>, <span class='st'>"yes"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>, las <span class='op'>=</span> <span class='fl'>1</span>, mai <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>0.9</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>parOld</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
 <span class='kw'>for</span> <span class='op'>(</span><span class='va'>p</span> <span class='kw'>in</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Experimental Economics"</span>, <span class='st'>"Social Sciences"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>data_project</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>RProjects</span>, <span class='va'>project</span> <span class='op'>==</span> <span class='va'>p</span><span class='op'>)</span>
   <span class='fu'><a href='https://rdrr.io/r/graphics/boxplot.html'>boxplot</a></span><span class='op'>(</span><span class='va'>pm_belief</span> <span class='op'>~</span> <span class='va'>significant</span>, data <span class='op'>=</span> <span class='va'>data_project</span>, ylim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>,
@@ -252,13 +253,12 @@ doi: <a href='https://doi.org/10.1126/science.aac4716'>10.1126/science.aac4716</
   <span class='fu'><a href='https://rdrr.io/r/graphics/stripchart.html'>stripchart</a></span><span class='op'>(</span><span class='va'>pm_belief</span> <span class='op'>~</span> <span class='va'>significant</span>, data <span class='op'>=</span> <span class='va'>data_project</span>, vertical <span class='op'>=</span> <span class='cn'>TRUE</span>,
              add <span class='op'>=</span> <span class='cn'>TRUE</span>, pch <span class='op'>=</span> <span class='fl'>1</span>, method <span class='op'>=</span> <span class='st'>"jitter"</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='img'><img src='RProjects-2.png' alt='' width='700' height='433' /></div><div class='input'>
+</div><div class='img'><img src='RProjects-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span><span class='va'>parOld</span><span class='op'>)</span>
 
 <span class='co'>## Computing the sceptical p-value</span>
 <span class='va'>ps</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>RProjects</span>, <span class='fu'><a href='pSceptical.html'>pSceptical</a></span><span class='op'>(</span>zo <span class='op'>=</span> <span class='va'>fiso</span><span class='op'>/</span><span class='va'>se_fiso</span>,
                                  zr <span class='op'>=</span> <span class='va'>fisr</span><span class='op'>/</span><span class='va'>se_fisr</span>,
                                  c <span class='op'>=</span> <span class='va'>se_fiso</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>/</span><span class='va'>se_fisr</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
-
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

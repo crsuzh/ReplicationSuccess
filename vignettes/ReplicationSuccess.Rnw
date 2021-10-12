@@ -108,7 +108,7 @@ changes to many of the existing functions were made due to a recalibration of
 the sceptical $p$-value approach \citep{Held_etal2021}.
 Use \texttt{news(package = "ReplicationSuccess")} to see a history of the
 changes. The development version of \texttt{ReplicationSuccess} is available on
-GitHub (\url{https://github.com/florafauna/ReplicationSuccess/}, the stable version
+GitHub (\url{https://github.com/SamCH93/ReplicationSuccess/}, the stable version
 is available on CRAN (\url{https://cran.r-project.org/web/packages/ReplicationSuccess/}).
 
 \subsection{Statistical framework}
@@ -1031,7 +1031,7 @@ mtext(text = expression(italic(p)[o]), side = 3, line = 2)
 \section{Outlook}
 Development on \texttt{ReplicationSuccess} will continue. We invite anyone with
 ideas for new functionality, bug-reports, or other contributions to the package
-to get in touch with us over GitHub (\url{https://github.com/florafauna/ReplicationSuccess/}).
+to get in touch with us over GitHub (\url{https://github.com/SamCH93/ReplicationSuccess/}).
 
 \bibliography{bibliography}
 

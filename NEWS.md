@@ -1,3 +1,13 @@
+# ReplicationSuccess 1.1.0
+
+- New maintainer Samuel Pawel
+- bugfixes hMeanChiSqMu
+- replace rootSolve::uniroot.all with custom function
+
+# ReplicationSuccess 1.0
+
+- CRAN release
+
 # ReplicationSuccess 0.2
 
 - `sampleSizeSignificance`, `powerReplicationSuccess`,

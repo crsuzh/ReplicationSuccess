@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>p-values and confidence intervals from the harmonic mean chi-squared test — hMeanChiSq • ReplicationSuccess</title>
+<title>harmonic mean chi-squared test — hMeanChiSq • ReplicationSuccess</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="p-values and confidence intervals from the harmonic mean chi-squared test — hMeanChiSq" />
-<meta property="og:description" content="p-values and confidence intervals from the harmonic mean chi-squared test" />
+<meta property="og:title" content="harmonic mean chi-squared test — hMeanChiSq" />
+<meta property="og:description" content="p-values and confidence intervals from the harmonic mean chi-squared test." />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ReplicationSuccess</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -93,7 +93,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/florafauna/ReplicationSuccess/">
+  <a href="https://github.com/SamCH93/ReplicationSuccess/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -111,13 +111,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>p-values and confidence intervals from the harmonic mean chi-squared test</h1>
-    <small class="dont-index">Source: <a href='https://github.com/florafauna/ReplicationSuccess/blob/master/R/hMeanChiSq.R'><code>R/hMeanChiSq.R</code></a></small>
+    <h1>harmonic mean chi-squared test</h1>
+    <small class="dont-index">Source: <a href='https://github.com/SamCH93/ReplicationSuccess/blob/master/R/hMeanChiSq.R'><code>R/hMeanChiSq.R</code></a></small>
     <div class="hidden name"><code>hMeanChiSq.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>p-values and confidence intervals from the harmonic mean chi-squared test</p>
+    <p>p-values and confidence intervals from the harmonic mean chi-squared test.</p>
     </div>
 
     <pre class="usage"><span class='fu'>hMeanChiSq</span><span class='op'>(</span>
@@ -141,7 +141,8 @@
   <span class='va'>se</span>,
   w <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>thetahat</span><span class='op'>)</span><span class='op'>)</span>,
   alternative <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"two.sided"</span>, <span class='st'>"greater"</span>, <span class='st'>"less"</span>, <span class='st'>"none"</span><span class='op'>)</span>,
-  level <span class='op'>=</span> <span class='fl'>0.95</span>
+  level <span class='op'>=</span> <span class='fl'>0.95</span>,
+  wGamma <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>thetahat</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>-</span> <span class='fl'>1</span><span class='op'>)</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -181,18 +182,29 @@ If <code>TRUE</code>, they are reported as "&gt; bound".</p></td>
       <th>level</th>
       <td><p>Numeric vector specifying the level of the confidence interval. Defaults to 0.95.</p></td>
     </tr>
+    <tr>
+      <th>wGamma</th>
+      <td><p>Numeric vector of length <code>unique(thetahat) - 1</code> specifying weights used to
+summarize the gamma values, i.e.,
+the local minima of the p-value function between the thetahats. Defaults is a vector of 1s.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>hMeanChiSq</code> returns the p-values from the harmonic mean chi-squared test
+    <p><code>hMeanChiSq</code>: returns the p-values from the harmonic mean chi-squared test
 based on the study-specific z-values.</p>
-<p><code>hMeanChiSqMu</code> returns the p-value from the harmonic mean chi-squared test
+<p><code>hMeanChiSqMu</code>: returns the p-value from the harmonic mean chi-squared test
 based on study-specific estimates and standard errors.</p>
-<p><code>hMeanChiSqCI</code> returns confidence interval(s) from inverting the harmonic mean chi-squared test
-based on study-specific estimates and standard errors. If <code>alternative</code> is "none",
-the return value may be a set of (non-overlapping) confidence intervals.
-In that case, the output is a vector of length 2n, where n is the number of confidence intervals.</p>
+<p><code>hMeanChiSqCI</code>: returns a list containing confidence interval(s)
+obtained by inverting the harmonic mean chi-squared test based on study-specific
+estimates and standard errors. The list contains:</p>
+<dt>CI</dt><dd><p>Confidence interval(s).</p></dd>
+If the alternative is "none", the list also contains:
+<dt>gamma</dt><dd><p>Local minima of the p-value function between the thetahats.</p></dd>
+<dt>gammaMean</dt><dd><p>Mean of all gammas weighted by <code>wGamma</code>.</p></dd>
+<dt>gammaHMean</dt><dd><p>Harmonic mean of all gammas weighted by <code>wGamma</code>.</p></dd>
+
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Held, L. (2020). The harmonic mean chi-squared test to substantiate scientific findings.
@@ -200,45 +212,94 @@ In that case, the output is a vector of length 2n, where n is the number of conf
 doi: <a href='https://doi.org/10.1111/rssc.12410'>10.1111/rssc.12410</a></p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
-    <p>Leonhard Held</p>
+    <p>Leonhard Held, Florian Gerber</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Example from Fisher (1999) as discussed in Held (2020)</span>
 <span class='va'>pvalues</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.0245</span>, <span class='fl'>0.1305</span>, <span class='fl'>0.00025</span>, <span class='fl'>0.2575</span>, <span class='fl'>0.128</span><span class='op'>)</span>
 <span class='va'>lower</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.04</span>, <span class='fl'>0.21</span>, <span class='fl'>0.12</span>, <span class='fl'>0.07</span>, <span class='fl'>0.41</span><span class='op'>)</span>
 <span class='va'>upper</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1.14</span>, <span class='fl'>1.54</span>, <span class='fl'>0.60</span>, <span class='fl'>3.75</span>, <span class='fl'>1.27</span><span class='op'>)</span>
-<span class='va'>se</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ci2se.html'>ci2se</a></span><span class='op'>(</span><span class='va'>lower</span>, <span class='va'>upper</span>, ratio<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='va'>estimate</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ci2se.html'>ci2estimate</a></span><span class='op'>(</span><span class='va'>lower</span>, <span class='va'>upper</span>, ratio<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>se</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ci2se.html'>ci2se</a></span><span class='op'>(</span>lower <span class='op'>=</span> <span class='va'>lower</span>, upper <span class='op'>=</span> <span class='va'>upper</span>, ratio <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>thetahat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='ci2se.html'>ci2estimate</a></span><span class='op'>(</span>lower <span class='op'>=</span> <span class='va'>lower</span>, upper <span class='op'>=</span> <span class='va'>upper</span>, ratio <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'>## hMeanChiSq() --------</span>
-<span class='fu'>hMeanChiSq</span><span class='op'>(</span><span class='fu'><a href='ci2se.html'>p2z</a></span><span class='op'>(</span><span class='va'>pvalues</span>, alternative<span class='op'>=</span><span class='st'>"less"</span><span class='op'>)</span>, alternative<span class='op'>=</span><span class='st'>"less"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.0004840125</div><div class='input'><span class='fu'>hMeanChiSq</span><span class='op'>(</span><span class='fu'><a href='ci2se.html'>p2z</a></span><span class='op'>(</span><span class='va'>pvalues</span>, alternative<span class='op'>=</span><span class='st'>"less"</span><span class='op'>)</span>, alternative<span class='op'>=</span><span class='st'>"two.sided"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.000968025</div><div class='input'><span class='fu'>hMeanChiSq</span><span class='op'>(</span><span class='fu'><a href='ci2se.html'>p2z</a></span><span class='op'>(</span><span class='va'>pvalues</span>, alternative<span class='op'>=</span><span class='st'>"less"</span><span class='op'>)</span>, alternative<span class='op'>=</span><span class='st'>"none"</span><span class='op'>)</span>
+<span class='fu'>hMeanChiSq</span><span class='op'>(</span>z <span class='op'>=</span> <span class='fu'><a href='ci2se.html'>p2z</a></span><span class='op'>(</span>p <span class='op'>=</span> <span class='va'>pvalues</span>, alternative <span class='op'>=</span> <span class='st'>"less"</span><span class='op'>)</span>,
+           alternative <span class='op'>=</span> <span class='st'>"less"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.0004840125</div><div class='input'><span class='fu'>hMeanChiSq</span><span class='op'>(</span>z <span class='op'>=</span> <span class='fu'><a href='ci2se.html'>p2z</a></span><span class='op'>(</span>p <span class='op'>=</span> <span class='va'>pvalues</span>, alternative <span class='op'>=</span> <span class='st'>"less"</span><span class='op'>)</span>,
+           alternative <span class='op'>=</span> <span class='st'>"two.sided"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.000968025</div><div class='input'><span class='fu'>hMeanChiSq</span><span class='op'>(</span>z <span class='op'>=</span> <span class='fu'><a href='ci2se.html'>p2z</a></span><span class='op'>(</span>p <span class='op'>=</span> <span class='va'>pvalues</span>, alternative <span class='op'>=</span> <span class='st'>"less"</span><span class='op'>)</span>,
+           alternative <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 0.0154884</div><div class='input'>
-<span class='fu'>hMeanChiSq</span><span class='op'>(</span><span class='fu'><a href='ci2se.html'>p2z</a></span><span class='op'>(</span><span class='va'>pvalues</span>, alternative<span class='op'>=</span><span class='st'>"less"</span><span class='op'>)</span>,  w<span class='op'>=</span><span class='fl'>1</span><span class='op'>/</span><span class='va'>se</span><span class='op'>^</span><span class='fl'>2</span>, alternative<span class='op'>=</span><span class='st'>"less"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.0003410182</div><div class='input'><span class='fu'>hMeanChiSq</span><span class='op'>(</span><span class='fu'><a href='ci2se.html'>p2z</a></span><span class='op'>(</span><span class='va'>pvalues</span>, alternative<span class='op'>=</span><span class='st'>"less"</span><span class='op'>)</span>,  w<span class='op'>=</span><span class='fl'>1</span><span class='op'>/</span><span class='va'>se</span><span class='op'>^</span><span class='fl'>2</span>, alternative<span class='op'>=</span><span class='st'>"two.sided"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.0006820365</div><div class='input'><span class='fu'>hMeanChiSq</span><span class='op'>(</span><span class='fu'><a href='ci2se.html'>p2z</a></span><span class='op'>(</span><span class='va'>pvalues</span>, alternative<span class='op'>=</span><span class='st'>"less"</span><span class='op'>)</span>,  w<span class='op'>=</span><span class='fl'>1</span><span class='op'>/</span><span class='va'>se</span><span class='op'>^</span><span class='fl'>2</span>, alternative<span class='op'>=</span><span class='st'>"none"</span><span class='op'>)</span>
+<span class='fu'>hMeanChiSq</span><span class='op'>(</span>z <span class='op'>=</span> <span class='fu'><a href='ci2se.html'>p2z</a></span><span class='op'>(</span>p <span class='op'>=</span> <span class='va'>pvalues</span>, alternative <span class='op'>=</span> <span class='st'>"less"</span><span class='op'>)</span>,
+           w <span class='op'>=</span> <span class='fl'>1</span> <span class='op'>/</span> <span class='va'>se</span><span class='op'>^</span><span class='fl'>2</span>, alternative <span class='op'>=</span> <span class='st'>"less"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.0003410182</div><div class='input'><span class='fu'>hMeanChiSq</span><span class='op'>(</span>z <span class='op'>=</span> <span class='fu'><a href='ci2se.html'>p2z</a></span><span class='op'>(</span>p <span class='op'>=</span> <span class='va'>pvalues</span>, alternative <span class='op'>=</span> <span class='st'>"less"</span><span class='op'>)</span>,
+           w <span class='op'>=</span> <span class='fl'>1</span> <span class='op'>/</span> <span class='va'>se</span><span class='op'>^</span><span class='fl'>2</span>, alternative <span class='op'>=</span> <span class='st'>"two.sided"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.0006820365</div><div class='input'><span class='fu'>hMeanChiSq</span><span class='op'>(</span>z <span class='op'>=</span> <span class='fu'><a href='ci2se.html'>p2z</a></span><span class='op'>(</span>p <span class='op'>=</span> <span class='va'>pvalues</span>, alternative <span class='op'>=</span> <span class='st'>"less"</span><span class='op'>)</span>,
+           w <span class='op'>=</span> <span class='fl'>1</span> <span class='op'>/</span> <span class='va'>se</span><span class='op'>^</span><span class='fl'>2</span>, alternative <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 0.01091258</div><div class='input'>
 
 <span class='co'>## hMeanChiSqMu() --------</span>
-<span class='fu'>hMeanChiSqMu</span><span class='op'>(</span>thetahat<span class='op'>=</span><span class='va'>estimate</span>, se<span class='op'>=</span><span class='va'>se</span>, alternative<span class='op'>=</span><span class='st'>"two.sided"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.0009954952</div><div class='input'><span class='fu'>hMeanChiSqMu</span><span class='op'>(</span>thetahat<span class='op'>=</span><span class='va'>estimate</span>, se<span class='op'>=</span><span class='va'>se</span>, w<span class='op'>=</span><span class='fl'>1</span><span class='op'>/</span><span class='va'>se</span><span class='op'>^</span><span class='fl'>2</span>, alternative<span class='op'>=</span><span class='st'>"two.sided"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.000723444</div><div class='input'><span class='fu'>hMeanChiSqMu</span><span class='op'>(</span>thetahat<span class='op'>=</span><span class='va'>estimate</span>, se<span class='op'>=</span><span class='va'>se</span>, alternative<span class='op'>=</span><span class='st'>"two.sided"</span>, mu<span class='op'>=</span><span class='op'>-</span><span class='fl'>0.1</span><span class='op'>)</span>
+<span class='fu'>hMeanChiSqMu</span><span class='op'>(</span>thetahat <span class='op'>=</span> <span class='va'>thetahat</span>, se <span class='op'>=</span> <span class='va'>se</span>, alternative <span class='op'>=</span> <span class='st'>"two.sided"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.0009954952</div><div class='input'><span class='fu'>hMeanChiSqMu</span><span class='op'>(</span>thetahat <span class='op'>=</span> <span class='va'>thetahat</span>, se <span class='op'>=</span> <span class='va'>se</span>, w <span class='op'>=</span> <span class='fl'>1</span> <span class='op'>/</span> <span class='va'>se</span><span class='op'>^</span><span class='fl'>2</span>,
+             alternative <span class='op'>=</span> <span class='st'>"two.sided"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.000723444</div><div class='input'><span class='fu'>hMeanChiSqMu</span><span class='op'>(</span>thetahat <span class='op'>=</span> <span class='va'>thetahat</span>, se <span class='op'>=</span> <span class='va'>se</span>, alternative <span class='op'>=</span> <span class='st'>"two.sided"</span>,
+             mu <span class='op'>=</span> <span class='op'>-</span><span class='fl'>0.1</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 0.003089007</div><div class='input'>
-
 <span class='co'>## hMeanChiSqCI() --------</span>
 <span class='co'>## two-sided</span>
-<span class='va'>CI1</span> <span class='op'>&lt;-</span> <span class='fu'>hMeanChiSqCI</span><span class='op'>(</span>thetahat<span class='op'>=</span><span class='va'>estimate</span>, se<span class='op'>=</span><span class='va'>se</span>, w<span class='op'>=</span><span class='fl'>1</span><span class='op'>/</span><span class='va'>se</span><span class='op'>^</span><span class='fl'>2</span>, alternative<span class='op'>=</span><span class='st'>"two.sided"</span><span class='op'>)</span>
-<span class='va'>CI2</span> <span class='op'>&lt;-</span> <span class='fu'>hMeanChiSqCI</span><span class='op'>(</span>thetahat<span class='op'>=</span><span class='va'>estimate</span>, se<span class='op'>=</span><span class='va'>se</span>, w<span class='op'>=</span><span class='fl'>1</span><span class='op'>/</span><span class='va'>se</span><span class='op'>^</span><span class='fl'>2</span>, alternative<span class='op'>=</span><span class='st'>"two.sided"</span>, level<span class='op'>=</span><span class='fl'>0.99875</span><span class='op'>)</span>
+<span class='va'>CI1</span> <span class='op'>&lt;-</span> <span class='fu'>hMeanChiSqCI</span><span class='op'>(</span>thetahat <span class='op'>=</span> <span class='va'>thetahat</span>, se <span class='op'>=</span> <span class='va'>se</span>, w <span class='op'>=</span> <span class='fl'>1</span> <span class='op'>/</span> <span class='va'>se</span><span class='op'>^</span><span class='fl'>2</span>,
+                    alternative <span class='op'>=</span> <span class='st'>"two.sided"</span><span class='op'>)</span>
+<span class='va'>CI2</span> <span class='op'>&lt;-</span> <span class='fu'>hMeanChiSqCI</span><span class='op'>(</span>thetahat <span class='op'>=</span> <span class='va'>thetahat</span>, se <span class='op'>=</span> <span class='va'>se</span>, w <span class='op'>=</span> <span class='fl'>1</span> <span class='op'>/</span> <span class='va'>se</span><span class='op'>^</span><span class='fl'>2</span>,
+                    alternative <span class='op'>=</span> <span class='st'>"two.sided"</span>, level <span class='op'>=</span> <span class='fl'>0.99875</span><span class='op'>)</span>
 <span class='co'>## one-sided</span>
-<span class='va'>CI1b</span> <span class='op'>&lt;-</span> <span class='fu'>hMeanChiSqCI</span><span class='op'>(</span>thetahat<span class='op'>=</span><span class='va'>estimate</span>, se<span class='op'>=</span><span class='va'>se</span>, w<span class='op'>=</span><span class='fl'>1</span><span class='op'>/</span><span class='va'>se</span><span class='op'>^</span><span class='fl'>2</span>, alternative<span class='op'>=</span><span class='st'>"less"</span>, level<span class='op'>=</span><span class='fl'>0.975</span><span class='op'>)</span>
-<span class='va'>CI2b</span> <span class='op'>&lt;-</span> <span class='fu'>hMeanChiSqCI</span><span class='op'>(</span>thetahat<span class='op'>=</span><span class='va'>estimate</span>, se<span class='op'>=</span><span class='va'>se</span>, w<span class='op'>=</span><span class='fl'>1</span><span class='op'>/</span><span class='va'>se</span><span class='op'>^</span><span class='fl'>2</span>, alternative<span class='op'>=</span><span class='st'>"less"</span>, level<span class='op'>=</span><span class='fl'>1</span><span class='op'>-</span><span class='fl'>0.025</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span>
-<span class='co'>## confidence intervals on hazard ratio scale</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='va'>CI1</span><span class='op'>)</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.21 0.74</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='va'>CI2</span><span class='op'>)</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.16 0.97</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='va'>CI1b</span><span class='op'>)</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.00 0.74</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='va'>CI2b</span><span class='op'>)</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.00 0.97</div></pre>
+<span class='va'>CI1b</span> <span class='op'>&lt;-</span> <span class='fu'>hMeanChiSqCI</span><span class='op'>(</span>thetahat <span class='op'>=</span> <span class='va'>thetahat</span>, se <span class='op'>=</span> <span class='va'>se</span>, w <span class='op'>=</span> <span class='fl'>1</span> <span class='op'>/</span> <span class='va'>se</span><span class='op'>^</span><span class='fl'>2</span>,
+                     alternative <span class='op'>=</span> <span class='st'>"less"</span>, level <span class='op'>=</span> <span class='fl'>0.975</span><span class='op'>)</span>
+<span class='va'>CI2b</span> <span class='op'>&lt;-</span> <span class='fu'>hMeanChiSqCI</span><span class='op'>(</span>thetahat <span class='op'>=</span> <span class='va'>thetahat</span>, se <span class='op'>=</span> <span class='va'>se</span>, w <span class='op'>=</span> <span class='fl'>1</span> <span class='op'>/</span> <span class='va'>se</span><span class='op'>^</span><span class='fl'>2</span>,
+                     alternative <span class='op'>=</span> <span class='st'>"less"</span>, level <span class='op'>=</span> <span class='fl'>1</span> <span class='op'>-</span> <span class='fl'>0.025</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span>
+
+<span class='co'>## confidence intervals on hazard ratio scale </span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='va'>CI1</span><span class='op'>$</span><span class='va'>CI</span><span class='op'>)</span>, digits <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      lower upper
+#&gt; [1,]  0.21  0.74</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='va'>CI2</span><span class='op'>$</span><span class='va'>CI</span><span class='op'>)</span>, digits <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      lower upper
+#&gt; [1,]  0.16  0.97</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='va'>CI1b</span><span class='op'>$</span><span class='va'>CI</span><span class='op'>)</span>, digits <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      lower upper
+#&gt; [1,]     0  0.74</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='va'>CI2b</span><span class='op'>$</span><span class='va'>CI</span><span class='op'>)</span>, digits <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      lower upper
+#&gt; [1,]     0  0.97</div><div class='input'>
+
+<span class='co'>## example with confidence region consisting of disjunct intervals</span>
+<span class='va'>thetahat2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>3.7</span>, <span class='fl'>2.1</span>, <span class='fl'>2.5</span><span class='op'>)</span>
+<span class='va'>se2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1.5</span>, <span class='fl'>2.2</span>, <span class='fl'>3.1</span><span class='op'>)</span>
+<span class='va'>level</span> <span class='op'>&lt;-</span> <span class='fl'>0.95</span>; <span class='va'>alpha</span> <span class='op'>&lt;-</span> <span class='fl'>1</span> <span class='op'>-</span> <span class='va'>level</span>
+<span class='va'>muSeq</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>7</span>, <span class='fl'>6</span>, length.out <span class='op'>=</span> <span class='fl'>1000</span><span class='op'>)</span>
+<span class='va'>pValueSeq</span> <span class='op'>&lt;-</span> <span class='fu'>hMeanChiSqMu</span><span class='op'>(</span>thetahat <span class='op'>=</span> <span class='va'>thetahat2</span>, se <span class='op'>=</span> <span class='va'>se2</span>,
+                          alternative <span class='op'>=</span> <span class='st'>"none"</span>, mu <span class='op'>=</span> <span class='va'>muSeq</span><span class='op'>)</span>
+<span class='op'>(</span><span class='va'>hm</span> <span class='op'>&lt;-</span> <span class='fu'>hMeanChiSqCI</span><span class='op'>(</span>thetahat <span class='op'>=</span> <span class='va'>thetahat2</span>, se <span class='op'>=</span> <span class='va'>se2</span>, alternative <span class='op'>=</span> <span class='st'>"none"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $CI
+#&gt;           lower     upper
+#&gt; [1,] -4.7459650 -2.564739
+#&gt; [2,] -0.2457423  4.885610
+#&gt; 
+#&gt; $gamma
+#&gt;        minimum pvalue_fun/gamma
+#&gt; [1,] -1.584762       0.01227696
+#&gt; [2,]  2.277232       0.87220092
+#&gt; 
+#&gt; $gammaMean
+#&gt; [1] 0.4422389
+#&gt; 
+#&gt; $gammaHMean
+#&gt; [1] 0.02421311
+#&gt; </div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>muSeq</span>, y <span class='op'>=</span> <span class='va'>pValueSeq</span>, type <span class='op'>=</span> <span class='st'>"l"</span>, panel.first <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/graphics/grid.html'>grid</a></span><span class='op'>(</span>lty <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>,
+     xlab <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/expression.html'>expression</a></span><span class='op'>(</span><span class='va'>mu</span><span class='op'>)</span>, ylab <span class='op'>=</span> <span class='st'>"p-value"</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>v <span class='op'>=</span> <span class='va'>thetahat2</span>, h <span class='op'>=</span> <span class='va'>alpha</span>, lty <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/arrows.html'>arrows</a></span><span class='op'>(</span>x0 <span class='op'>=</span> <span class='va'>hm</span><span class='op'>$</span><span class='va'>CI</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span>, x1 <span class='op'>=</span> <span class='va'>hm</span><span class='op'>$</span><span class='va'>CI</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>]</span>, y0 <span class='op'>=</span> <span class='va'>alpha</span>,
+       y1 <span class='op'>=</span> <span class='va'>alpha</span>, col <span class='op'>=</span> <span class='st'>"darkgreen"</span>, lwd <span class='op'>=</span> <span class='fl'>3</span>, angle <span class='op'>=</span> <span class='fl'>90</span>, code <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/points.html'>points</a></span><span class='op'>(</span><span class='va'>hm</span><span class='op'>$</span><span class='va'>gamma</span>, col <span class='op'>=</span> <span class='st'>"red"</span>, pch <span class='op'>=</span> <span class='fl'>19</span>, cex <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='img'><img src='hMeanChiSq-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
