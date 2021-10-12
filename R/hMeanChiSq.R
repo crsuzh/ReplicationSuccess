@@ -1,5 +1,6 @@
-#' p-values and confidence intervals from the harmonic mean chi-squared test
+#' harmonic mean chi-squared test
 #'
+#' p-values and confidence intervals from the harmonic mean chi-squared test.
 #' @rdname hMeanChiSq
 #' @param z Numeric vector of z-values. 
 #' @param w Numeric vector of weights.
@@ -7,7 +8,7 @@
 #' Specifies the alternative to be considered in the computation of the p-value.
 #' @param bound If \code{FALSE} (default), p-values that cannot be computed are reported as \code{NaN}.
 #' If \code{TRUE}, they are reported as "> bound".
-#' @return \code{hMeanChiSq} returns the p-values from the harmonic mean chi-squared test
+#' @return \code{hMeanChiSq}: returns the p-values from the harmonic mean chi-squared test
 #' based on the study-specific z-values. 
 #' @references Held, L. (2020). The harmonic mean chi-squared test to substantiate scientific findings.
 #' \emph{Journal of the Royal Statistical Society: Series C (Applied Statistics)}, \bold{69}, 697-708.
@@ -88,7 +89,7 @@ hMeanChiSq <- function(z, w = rep(1, length(z)),
 #' @param thetahat Numeric vector of parameter estimates. 
 #' @param se Numeric vector of standard errors.
 #' @param mu The null hypothesis value. Defaults to 0.
-#' @return \code{hMeanChiSqMu} returns the p-value from the harmonic mean chi-squared test
+#' @return \code{hMeanChiSqMu}: returns the p-value from the harmonic mean chi-squared test
 #' based on study-specific estimates and standard errors.
 #' @examples
 #' 
@@ -170,16 +171,18 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
 
 #' @rdname hMeanChiSq
 #' @param level Numeric vector specifying the level of the confidence interval. Defaults to 0.95.
-#' @param n Number of subintervals on which \code{\link[stats]{uniroot}} is called.
-#' @param factor Factor to control the search interval of the numerical root-finder.
-#' Increasing this value increases the interval to be searched. Default is 5.  
-#' @return \code{hMeanChiSqCI} returns a matrix with the columns "lower" and "upper"
-#' giving the confidence interval(s) obtained by inverting the harmonic mean chi-squared test
-#' based on study-specific estimates and standard errors.
-#' @note For \code{hMeanChiSqCI(alternative = "none")}, we recommend checking the correctness
-#' of the intervals by plotting the p-value function as shown in the example. 
+#' @param wGamma Numeric vector of length \code{unique(thetahat) - 1} specifying weights used to
+#' summarize the gamma values, i.e.,
+#' the local minima of the p-value function between the thetahats. Defaults is a vector of 1s.
+#' @return \code{hMeanChiSqCI}: returns a list containing confidence interval(s)
+#' obtained by inverting the harmonic mean chi-squared test based on study-specific
+#' estimates and standard errors. The list contains:
+#' \item{CI}{Confidence interval(s).}\cr\cr
+#' If the \code{alternative} is "none", the list also contains:
+#' \item{gamma}{Local minima of the p-value function between the thetahats.}
+#' \item{gammaMean}{Mean of all gammas weighted by \code{wGamma}.}
+#' \item{gammaHMean}{Harmonic mean of all gammas weighted by \code{wGamma}.}
 #' @examples
-#'
 #'
 #' ## hMeanChiSqCI() --------
 #' ## two-sided
@@ -194,37 +197,37 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
 #'                      alternative = "less", level = 1 - 0.025^2)
 #'
 #' ## confidence intervals on hazard ratio scale 
-#' print(exp(CI1), digits = 2)
-#' print(exp(CI2), digits = 2)
-#' print(exp(CI1b), digits = 2)
-#' print(exp(CI2b), digits = 2)
+#' print(exp(CI1$CI), digits = 2)
+#' print(exp(CI2$CI), digits = 2)
+#' print(exp(CI1b$CI), digits = 2)
+#' print(exp(CI2b$CI), digits = 2)
 #'
 #'
 #' ## example with confidence region consisting of disjunct intervals
-#' thetahat2 <- c(-3.7, 2.1, 2.5) 
+#' thetahat2 <- c(-3.7, 2.1, 2.5)
 #' se2 <- c(1.5, 2.2, 3.1)
 #' level <- 0.95; alpha <- 1 - level
 #' muSeq <- seq(-7, 6, length.out = 1000)
 #' pValueSeq <- hMeanChiSqMu(thetahat = thetahat2, se = se2,
 #'                           alternative = "none", mu = muSeq)
-#' (CIs <- hMeanChiSqCI(thetahat = thetahat2, se = se2, alternative = "none"))
-#' 
+#' (hm <- hMeanChiSqCI(thetahat = thetahat2, se = se2, alternative = "none"))
+#'
 #' plot(x = muSeq, y = pValueSeq, type = "l", panel.first = grid(lty = 1),
 #'      xlab = expression(mu), ylab = "p-value")
 #' abline(v = thetahat2, h = alpha, lty = 2)
-#' arrows(x0 = CIs[, 1], x1 = CIs[, 2], y0 = alpha,
+#' arrows(x0 = hm$CI[, 1], x1 = hm$CI[, 2], y0 = alpha,
 #'        y1 = alpha, col = "darkgreen", lwd = 3, angle = 90, code = 3)
-#' 
+#' points(hm$gamma, col = "red", pch = 19, cex = 2)
+#'
 #' @export
 #' @import stats
 hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
                          alternative = c("two.sided", "greater", "less", "none"),
-                         level = 0.95, n = 1000, factor = 5){
+                         level = 0.95, wGamma = rep(1, length(unique(thetahat)) - 1)){
     stopifnot(is.numeric(thetahat),
               length(thetahat) > 0,
-              is.finite(thetahat),
-              
-              is.numeric(se),
+              is.finite(thetahat))
+    stopifnot(is.numeric(se),
               length(se) == 1 || length(se) == length(thetahat),
               is.finite(se),
               min(se) > 0,
@@ -242,18 +245,25 @@ hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
               is.finite(level),
               0 < level, level < 1,
 
-              is.numeric(n), length(n) == 1,
-              is.finite(n), n >= 2)
-    n <- round(n)
-    
-    stopifnot(is.numeric(factor), length(factor) == 1,
-              is.finite(factor), factor > 0)
+              is.numeric(wGamma),
+              length(wGamma) == length(unique(thetahat)) -1,
+              is.finite(w),
+              min(w) > 0)
 
     ## target function to compute the limits of the CI
     target <- function(limit){
         hMeanChiSqMu(thetahat = thetahat, se = se, w = w, mu = limit,
                      alternative = alternative, bound = FALSE) - alpha
     }
+
+    ## sort 'thetahat', 'se', 'w'
+    indOrd <- order(thetahat)
+    thetahat <- thetahat[indOrd]; se <- se[indOrd]; w <- w[indOrd]
+
+    ## minima are only search between distinct thetahat elements
+    thetahatUnique <- unique(thetahat)
+    nThetahatUnique <- length(thetahatUnique)
+    
     mini <- which.min(thetahat)
     maxi <- which.max(thetahat)
     mint <- thetahat[mini]
@@ -263,16 +273,53 @@ hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
     alpha <- 1 - level
     z1 <- max(-qnorm(alpha), 1)
     eps <- 1e-6
-    
+    factor <- 5
     if(alternative == "none"){
-        CI <- unirootAll(f = target,
-                         lower = mint - factor * z1 * minse,
-                         upper = maxt + factor * z1 * maxse, n = n)
-        if(length(CI) > 2){
-            CI <- matrix(data = CI, ncol = 2, byrow = TRUE)
-            colnames(CI) <- c("lower", "upper")
+        
+        ## ----------------------------
+        ## find lower bound such that: lower < thetahat[1] AND target(lower) < 0 
+        lower <- mint - z1 * minse
+        while(target(lower) > 0)
+            lower <- lower - minse
+        
+        ## find root between 'lower' and 'thetahat[1]'
+        CIlower <- uniroot(f = target, lower = lower, upper = thetahat[1])$root
+        
+        ## -------------------------
+        ## check between thetahats whether 'target' goes below 'alpha'
+        ## if so, search CI limits
+        CImiddle <- matrix(NA, nrow = 2, ncol = nThetahatUnique - 1)
+        gam <- matrix(NA, nrow = nThetahatUnique - 1, ncol = 2)
+        colnames(gam) <- c("minimum", "pvalue_fun/gamma")
+        for(i in 1:(nThetahatUnique - 1)){
+            opt <- optimize(f = target, lower = thetahatUnique[i],
+                            upper = thetahatUnique[i + 1])
+                gam[i,] <- c(opt$minimum, opt$objective + alpha)
+                if(opt$objective <= 0){
+                    CImiddle[1, i] <- uniroot(f = target, lower = thetahatUnique[i],
+                                              upper = opt$minimum)$root
+                    CImiddle[2, i] <- uniroot(f = target, lower = opt$minimum,
+                                              upper = thetahatUnique[i + 1])$root
+                }
         }
-            
+        CImiddle <- CImiddle[!is.na(CImiddle)]
+        
+        ## -------------------------
+        ## find upper bound such that:
+        ## upper > thetahat[length(thetahat)] AND target(upper) < 0 
+        upper <- maxt + maxse
+        while(target(upper) > 0)
+            upper <- upper + z1 * maxse
+        
+        ## find root between 'lower' and 'thetahat[1]'
+        CIupper <- uniroot(f = target, lower = thetahat[length(thetahat)],
+                           upper = upper)$root
+        CI <- matrix(c(CIlower, CImiddle, CIupper), ncol = 2, byrow = TRUE)
+        colnames(CI) <- c("lower", "upper")
+        return(list(CI = CI,
+                    gamma = gam,
+                    gammaMean = weighted.mean(x = gam[,"pvalue_fun/gamma"], w = wGamma),
+                    gammaHMean = sum(wGamma) / sum(wGamma / gam[,"pvalue_fun/gamma"])))
     }
     if(alternative == "two.sided"){
         lower <- uniroot(f = target,
@@ -280,23 +327,23 @@ hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
                          upper = mint - eps * minse)$root
         upper <- uniroot(f = target, lower = maxt + eps * maxse,
                          upper = maxt + factor * z1 * maxse)$root
-        CI <- cbind(lower, upper)
+        return(list(CI = cbind(lower, upper)))
     }
     if(alternative == "greater"){
         lower <- uniroot(f = target,
                          lower = mint - factor * z1 * minse,
                          upper = mint - eps * minse)$root
         upper <- Inf
-        CI <- cbind(lower, upper)
+        return(list(CI = cbind(lower, upper)))
     }
     if(alternative == "less"){
         lower <- -Inf
         upper <- uniroot(f = target,
                          lower = maxt + eps * maxse,
                          upper = maxt + factor * z1 * maxse)$root
-        CI <- cbind(lower, upper)
+        return(list(CI = cbind(lower, upper)))
     }
-    return(CI)
+    stop("function not get here.")
 }
 
 #' Find multiple roots in interval
