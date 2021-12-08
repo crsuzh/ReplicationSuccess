@@ -12,7 +12,14 @@
  \usepackage[round]{natbib}
 \bibliographystyle{apalikedoiurl}
 \usepackage{doi}
-\usepackage[dvipsnames]{xcolor}
+
+%% do not reload the xcolor package, otherwise the colors defined by knitr
+%% are purged
+% \usepackage[dvipsnames]{xcolor}
+
+%% could alternatively load xcolor and redefine knitr color (however, not robust
+%% to changes of knitr)
+% \definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
 
 % own commands
 %% custom commands
@@ -39,6 +46,8 @@ University of Zurich, Switzerland}
 \date{Package version \Sexpr{packageVersion(pkg = "ReplicationSuccess")}}
 
 % hyperref options
+\definecolor{darkcoral}{rgb}{0.8, 0.36, 0.27}
+\definecolor{darkcyan}{rgb}{0.0, 0.55, 0.55}
 \usepackage{hyperref}  
 \hypersetup{
   bookmarksopen=true, 
@@ -46,10 +55,10 @@ University of Zurich, Switzerland}
   pdftitle={ReplicationSuccess}, 
   pdfauthor={Leonhard Held, Charlotte Micheloud, Samuel Pawel},
   colorlinks=true,
-  linkcolor=BrickRed,
+  linkcolor=darkcoral,
   anchorcolor=black,
-  citecolor=BlueViolet,
-  urlcolor=BrickRed,
+  citecolor=darkcyan,
+  urlcolor=darkcoral,
 }
 
 \begin{document}
