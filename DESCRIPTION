@@ -2,7 +2,7 @@ Package: ReplicationSuccess
 Type: Package
 Title: Design and Analysis of Replication Studies
 Version: 1.1.0
-Date: 2021-10-12
+Date: 2021-12-08
 Authors@R: 
     c(person(given = "Leonhard",
              family = "Held",

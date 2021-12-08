@@ -10,12 +10,22 @@
 \usepackage{graphics}
 \usepackage{amsmath, amssymb}
  \usepackage[round]{natbib}
-% \bibliographystyle{plainnat}
 \bibliographystyle{apalikedoiurl}
 \usepackage{doi}
 \usepackage[dvipsnames]{xcolor}
-\usepackage{todonotes}
-\input{newCommands.tex} 
+
+% own commands
+%% custom commands
+\newcommand{\eg}{\textit{e.\,g.\,}} % e.g.
+\newcommand{\ie}{\textit{i.\,e.\,}} % i.e.
+\newcommand{\cf}{\textit{cf\,}} % cf
+\DeclareMathOperator{\Nor}{N} % Normal
+\DeclareMathOperator{\Var}{Var} % Variance
+\DeclareMathOperator{\E}{\mathsf{E}} % Expectation
+\DeclareMathOperator{\Cov}{Cov} % Covariance
+\DeclareMathOperator{\Corr}{Corr} % Correlation
+\DeclareMathOperator{\se}{se} % Standard error
+\newcommand{\dmin}{d_{\tiny \mbox{min}}}
 
 % margins %
 \usepackage[a4paper, total={6.5in, 10in}]{geometry}
@@ -26,7 +36,7 @@
 Epidemiology, Biostatistics and Prevention Institute (EBPI) \\
 Center for Reproducible Science (CRS) \\
 University of Zurich, Switzerland}
-\date{Package version \Sexpr{packageVersion(pkg = "ReplicationSuccess")}}%\today}
+\date{Package version \Sexpr{packageVersion(pkg = "ReplicationSuccess")}}
 
 % hyperref options
 \usepackage{hyperref}  
@@ -867,13 +877,14 @@ axis(side = 3, at = seq(0.0, 0.025, by = 0.005),
      labels = c("", round(p2z(p = seq(0.005, 0.025, by = 0.005), 
                               alternative = "one.sided"), 2)))
 mtext(text = expression(paste(italic(z)[o])), side = 3, line = 2)
-lines(po, sampleSizeReplicationSuccess(zo = p2z(po, alternative = "one.sided"), 
-                                  power = 0.8,
-                                  level = 0.025,
-                                  designPrior = "predictive",
-                                  alternative = "one.sided", 
-                                  type = "golden"), 
-      lwd = 2, lty = 2)
+suppressWarnings({
+    lines(po, sampleSizeReplicationSuccess(zo = p2z(po, alternative = "one.sided"),
+                                           power = 0.8, level = 0.025,
+                                           designPrior = "predictive",
+                                           alternative = "one.sided",
+                                           type = "golden"),
+          lwd = 2, lty = 2)
+})
 legend("topleft", legend = c("conditional", "predictive"), 
        title = "Design prior", lty = c(1, 2), lwd = 1.5, bty = "n")
 @
@@ -956,7 +967,7 @@ replication study.
 % than the conditional power.
 
 % \begin{figure}
-<<echo = FALSE, fig.height = 3.5, eval = FALSE >>=
+<< echo = FALSE, fig.height = 3.5, eval = FALSE >>=
 data("SSRP")
 intpow_cond <- with(SSRP, powerSignificanceInterim(zo = fiso/se_fiso, zi = fisi/se_fisi, c = nr/no, 
                                                    f = ni/nr, designPrior = "conditional"))
