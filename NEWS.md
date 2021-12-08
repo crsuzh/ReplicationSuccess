@@ -1,3 +1,7 @@
+# ReplicationSuccess 1.1.1
+
+- Fixed a bug that prevented vignette building on R devel with updated texlive
+
 # ReplicationSuccess 1.1.0
 
 - New maintainer Samuel Pawel
