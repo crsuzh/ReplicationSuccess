@@ -57,3 +57,6 @@ package version 1.8.2.2.
 \seealso{
 \code{\link[base]{Vectorize}}
 }
+\author{
+Florian Gerber
+}

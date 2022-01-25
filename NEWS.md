@@ -1,6 +1,7 @@
 # ReplicationSuccess 1.2
 
 - New data set  `protzko2020` 
+- fixed a bug in the error message of `effectSizeReplicationSuccess`
 
 # ReplicationSuccess 1.1.1
 
@@ -9,8 +10,8 @@
 # ReplicationSuccess 1.1.0
 
 - New maintainer Samuel Pawel
-- bugfixes hMeanChiSqMu
-- replace rootSolve::uniroot.all with custom function
+- bugfixes `hMeanChiSqMu`
+- replace rootSolve::uniroot.all with custom function `unirootAll`
 
 # ReplicationSuccess 1.0
 

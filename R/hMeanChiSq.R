@@ -365,6 +365,7 @@ hMeanChiSqCI <- function(thetahat, se, w = rep(1, length(thetahat)),
 #' @return A numeric vector of the roots found in the interval.
 #' @references This function is inspired by rootSolve::uniroot.all(),
 #' package version 1.8.2.2.
+#' @author Florian Gerber
 #' @import stats
 #' @seealso \code{\link[base]{Vectorize}} 
 #' @examples
