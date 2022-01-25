@@ -1,3 +1,7 @@
+# ReplicationSuccess 1.2
+
+- New data set  `protzko2020` 
+
 # ReplicationSuccess 1.1.1
 
 - Fixed a bug that prevented vignette building on R devel with updated texlive
