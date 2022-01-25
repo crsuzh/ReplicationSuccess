@@ -41,12 +41,11 @@
 
 <meta property="og:title" content="Data from Protzko et al. (2020) — protzko2020" />
 <meta property="og:description" content="Data from &quot;High Replicability of Newly-Discovered Social-behavioral
-Findings is Achievable&quot; by Protzko et al. (2020). The following variables are
-included
-StudyStudy identifier
-TypeType of study, either &quot;original&quot;, &quot;self-replication&quot;, or
+Findings is Achievable&quot; by Protzko et al. (2020). The variables are as follows:
+studyStudy identifier
+typeType of study, either &quot;original&quot;, &quot;self-replication&quot;, or
 &quot;external-replication&quot;
-dStandardized mean difference effect estimate
+smdStandardized mean difference effect estimate
 seStandard error of standardized mean difference effect estimate
 nTotal sample size of study
 
@@ -129,12 +128,11 @@ nTotal sample size of study
 
     <div class="ref-description">
     <p>Data from "High Replicability of Newly-Discovered Social-behavioral
-Findings is Achievable" by Protzko et al. (2020). The following variables are
-included</p><dl>
-<dt><code>Study</code></dt><dd><p>Study identifier</p></dd>
-<dt><code>Type</code></dt><dd><p>Type of study, either "original", "self-replication", or
+Findings is Achievable" by Protzko et al. (2020). The variables are as follows:</p><dl>
+<dt><code>study</code></dt><dd><p>Study identifier</p></dd>
+<dt><code>type</code></dt><dd><p>Type of study, either "original", "self-replication", or
 "external-replication"</p></dd>
-<dt><code>d</code></dt><dd><p>Standardized mean difference effect estimate</p></dd>
+<dt><code>smd</code></dt><dd><p>Standardized mean difference effect estimate</p></dd>
 <dt><code>se</code></dt><dd><p>Standard error of standardized mean difference effect estimate</p></dd>
 <dt><code>n</code></dt><dd><p>Total sample size of study</p></dd>
 
@@ -188,16 +186,16 @@ J., ... Nosek, B. A. (2021, January 5). Results &amp; Data. Retrieved from
 <span class='co'>## forestplots of effect estimates</span>
 <span class='fu'><a href='https://rdrr.io/r/grDevices/dev.html'>graphics.off</a></span><span class='op'>(</span><span class='op'>)</span>
 <span class='va'>parOld</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>8</span>, <span class='fl'>4</span>, <span class='fl'>2</span><span class='op'>)</span>, mfrow <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>studies</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>protzko2020</span><span class='op'>$</span><span class='va'>Study</span><span class='op'>)</span>
-<span class='kw'>for</span> <span class='op'>(</span><span class='va'>study</span> <span class='kw'>in</span> <span class='va'>studies</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>studies</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>protzko2020</span><span class='op'>$</span><span class='va'>study</span><span class='op'>)</span>
+<span class='kw'>for</span> <span class='op'>(</span><span class='va'>s</span> <span class='kw'>in</span> <span class='va'>studies</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='co'>## compute CIs</span>
-  <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>protzko2020</span>, <span class='va'>Study</span> <span class='op'>==</span> <span class='va'>study</span><span class='op'>)</span>
+  <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>protzko2020</span>, <span class='va'>study</span> <span class='op'>==</span> <span class='va'>s</span><span class='op'>)</span>
   <span class='va'>za</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>qnorm</a></span><span class='op'>(</span>p <span class='op'>=</span> <span class='fl'>0.975</span><span class='op'>)</span>
-  <span class='va'>plotDF</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>lower <span class='op'>=</span> <span class='va'>dat</span><span class='op'>$</span><span class='va'>d</span> <span class='op'>-</span> <span class='va'>za</span><span class='op'>*</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>se</span>,
-                       est <span class='op'>=</span> <span class='va'>dat</span><span class='op'>$</span><span class='va'>d</span>,
-                       upper <span class='op'>=</span> <span class='va'>dat</span><span class='op'>$</span><span class='va'>d</span> <span class='op'>+</span> <span class='va'>za</span><span class='op'>*</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>se</span><span class='op'>)</span>
+  <span class='va'>plotDF</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>lower <span class='op'>=</span> <span class='va'>dat</span><span class='op'>$</span><span class='va'>smd</span> <span class='op'>-</span> <span class='va'>za</span><span class='op'>*</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>se</span>,
+                       est <span class='op'>=</span> <span class='va'>dat</span><span class='op'>$</span><span class='va'>smd</span>,
+                       upper <span class='op'>=</span> <span class='va'>dat</span><span class='op'>$</span><span class='va'>smd</span> <span class='op'>+</span> <span class='va'>za</span><span class='op'>*</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>se</span><span class='op'>)</span>
 <span class='va'>colpalette</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#000000"</span>, <span class='st'>"#1B9E77"</span>, <span class='st'>"#D95F02"</span><span class='op'>)</span>
-<span class='va'>cols</span> <span class='op'>&lt;-</span> <span class='va'>colpalette</span><span class='op'>[</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>Type</span><span class='op'>]</span>
+<span class='va'>cols</span> <span class='op'>&lt;-</span> <span class='va'>colpalette</span><span class='op'>[</span><span class='va'>dat</span><span class='op'>$</span><span class='va'>type</span><span class='op'>]</span>
 <span class='va'>yseq</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'>## forestplot</span>
@@ -209,7 +207,7 @@ J., ... Nosek, B. A. (2021, January 5). Results &amp; Data. Retrieved from
        code <span class='op'>=</span> <span class='fl'>3</span>, length <span class='op'>=</span> <span class='fl'>0.05</span>, col <span class='op'>=</span> <span class='va'>cols</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/points.html'>points</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>yseq</span>, x <span class='op'>=</span> <span class='va'>plotDF</span><span class='op'>$</span><span class='va'>est</span>, pch <span class='op'>=</span> <span class='fl'>20</span>, lwd <span class='op'>=</span> <span class='fl'>2</span>, col <span class='op'>=</span> <span class='va'>cols</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/axis.html'>axis</a></span><span class='op'>(</span>side <span class='op'>=</span> <span class='fl'>2</span>, at <span class='op'>=</span> <span class='va'>yseq</span>, las <span class='op'>=</span> <span class='fl'>1</span>, labels <span class='op'>=</span> <span class='va'>dat</span><span class='op'>$</span><span class='va'>Type</span>, cex.axis <span class='op'>=</span> <span class='fl'>0.85</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/title.html'>title</a></span><span class='op'>(</span>main <span class='op'>=</span> <span class='va'>study</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/title.html'>title</a></span><span class='op'>(</span>main <span class='op'>=</span> <span class='va'>s</span><span class='op'>)</span>
 <span class='op'>}</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span><span class='va'>parOld</span><span class='op'>)</span>
 </div></pre>

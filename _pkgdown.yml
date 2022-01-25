@@ -1,0 +1,7 @@
+figures:
+  dev: grDevices::png
+  fig.ext: png
+  dpi: 320
+  fig.width: 7.3
+  fig.height: 5
+  fig.retina: 2

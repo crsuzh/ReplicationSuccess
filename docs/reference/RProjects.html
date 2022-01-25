@@ -61,6 +61,9 @@ poTwo-sided p-value from significance test of effect estimate
 from original study
 prTwo-sided p-value from significance test of effect estimate
 from replication study
+pm_beliefPeer belief about whether replication effect estimate
+will achieve statistical significance elicited through prediction market (only
+available for EERP and SSRP)
 noSample size in original study
 nrSample size in replication study
 
@@ -163,6 +166,9 @@ of replication study</p></dd>
 from original study</p></dd>
 <dt><code>pr</code></dt><dd><p>Two-sided p-value from significance test of effect estimate
 from replication study</p></dd>
+<dt><code>pm_belief</code></dt><dd><p>Peer belief about whether replication effect estimate
+will achieve statistical significance elicited through prediction market (only
+available for EERP and SSRP)</p></dd>
 <dt><code>no</code></dt><dd><p>Sample size in original study</p></dd>
 <dt><code>nr</code></dt><dd><p>Sample size in replication study</p></dd>
 
@@ -178,22 +184,48 @@ from replication study</p></dd>
     <p>A data frame with 143 rows and 13 variables</p>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
-    <p>RPP: <a href='https://github.com/CenterForOpenScience/rpp/'>https://github.com/CenterForOpenScience/rpp/</a></p>
-<p>EERP: <a href='https://osf.io/pnwuz/'>https://osf.io/pnwuz/</a></p>
-<p>SSRP: <a href='https://osf.io/abu7k'>https://osf.io/abu7k</a></p>
-<p>EPRP: <a href='https://osf.io/4ewkh/'>https://osf.io/4ewkh/</a></p>
+    <p>RPP: The source files were downloaded from
+    <a href='https://github.com/CenterForOpenScience/rpp/'>https://github.com/CenterForOpenScience/rpp/</a>. The "masterscript.R"
+    file was executed and the relevant variables were extracted from the
+    generated "final" object (standard errors of Fisher-z transformed
+    correlations) and "MASTER" object (everything else). The data set is
+    licensed under a CC0 1.0 Universal, see
+    <a href='https://creativecommons.org/publicdomain/zero/1.0/'>https://creativecommons.org/publicdomain/zero/1.0/</a> for the terms of
+    reuse.</p>
+<p>EERP: The source files were downloaded from <a href='https://osf.io/pnwuz/'>https://osf.io/pnwuz/</a>. The
+required data were then manually extracted from the code in the files
+"effectdata.py" (sample sizes) and "create_studydetails.do" (everything
+else). Data regarding the prediction market and survey beliefs were manually
+extracted from table S3 of the supplementary materials of the EERP. The
+authors of this R package have been granted permission to share this data set
+by the coordinators of the EERP.</p>
+<p>SSRP: The relevant variables were extracted from the file
+"D3 - ReplicationResults.csv" downloaded from <a href='https://osf.io/abu7k'>https://osf.io/abu7k</a>. For
+replications which underwent only the first stage, the data from the first
+stage were taken as the data for the replication study. For the replications
+which reached the second stage, the pooled data from both stages were taken
+as the data for the replication study. Data regarding survey and prediction
+market beliefs were extracted from the "D6 - MeanPeerBeliefs.csv" file, which
+was downloaded from <a href='https://osf.io/vr6p8/'>https://osf.io/vr6p8/</a>. The data set is licensed
+under a CC0 1.0 Universal, see
+<a href='https://creativecommons.org/publicdomain/zero/1.0/'>https://creativecommons.org/publicdomain/zero/1.0/</a> for the terms of
+reuse.</p>
+<p>EPRP: Data were taken from the "XPhiReplicability_CompleteData.csv" file,
+which was downloaded from <a href='https://osf.io/4ewkh/'>https://osf.io/4ewkh/</a>. The authors of this R
+package have been granted permission to share this data set by the
+coordinators of the EPRP.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Two-sided p-values were calculated assuming normality of Fisher-z
     transformed effect estimates. From the RPP only the <em>meta-analytic
     subset</em> is included, which consists of 73 out of 100 study pairs for
     which the standard error of the z-transformed correlation coeffient can
-    be computed. For the RPP also sample sizes were recalculated from
+    be computed. For the RPP sample sizes were recalculated from the reported
     standard errors of Fisher z-transformed correlation coefficients. From
     the EPRP only 31 out of 40 study pairs are included where effective
     sample size for original and replication study are available
-    simultaneously. For details about how the the data was preprocessed see
-    supplement S1 of Pawel and Held (2020).</p>
+    simultaneously. For more details about how the the data was preprocessed
+    see source below and supplement S1 of Pawel and Held (2020).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Camerer, C. F., Dreber, A., Forsell, E., Ho, T.-H., Huber, J.,
@@ -239,7 +271,7 @@ doi: <a href='https://doi.org/10.1126/science.aac4716'>10.1126/science.aac4716</
   <span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>h <span class='op'>=</span> <span class='fl'>0</span>, lty <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
   <span class='fu'><a href='https://rdrr.io/r/graphics/abline.html'>abline</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fl'>0</span>, b <span class='op'>=</span> <span class='fl'>1</span>, col <span class='op'>=</span> <span class='st'>"grey"</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='img'><img src='RProjects-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span><span class='va'>parOld</span><span class='op'>)</span>
+</div><div class='img'><img src='RProjects-1.png' alt='' width='2336' height='1600' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span><span class='va'>parOld</span><span class='op'>)</span>
 
 <span class='co'>## Plots of peer beliefs</span>
 <span class='va'>RProjects</span><span class='op'>$</span><span class='va'>significant</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>RProjects</span><span class='op'>$</span><span class='va'>pr</span> <span class='op'>&lt;</span> <span class='fl'>0.05</span>,
@@ -253,7 +285,7 @@ doi: <a href='https://doi.org/10.1126/science.aac4716'>10.1126/science.aac4716</
   <span class='fu'><a href='https://rdrr.io/r/graphics/stripchart.html'>stripchart</a></span><span class='op'>(</span><span class='va'>pm_belief</span> <span class='op'>~</span> <span class='va'>significant</span>, data <span class='op'>=</span> <span class='va'>data_project</span>, vertical <span class='op'>=</span> <span class='cn'>TRUE</span>,
              add <span class='op'>=</span> <span class='cn'>TRUE</span>, pch <span class='op'>=</span> <span class='fl'>1</span>, method <span class='op'>=</span> <span class='st'>"jitter"</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='img'><img src='RProjects-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span><span class='va'>parOld</span><span class='op'>)</span>
+</div><div class='img'><img src='RProjects-2.png' alt='' width='2336' height='1600' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span><span class='va'>parOld</span><span class='op'>)</span>
 
 <span class='co'>## Computing the sceptical p-value</span>
 <span class='va'>ps</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/with.html'>with</a></span><span class='op'>(</span><span class='va'>RProjects</span>, <span class='fu'><a href='pSceptical.html'>pSceptical</a></span><span class='op'>(</span>zo <span class='op'>=</span> <span class='va'>fiso</span><span class='op'>/</span><span class='va'>se_fiso</span>,

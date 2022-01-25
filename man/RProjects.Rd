@@ -8,13 +8,39 @@
 A data frame with 143 rows and 13 variables
 }
 \source{
-RPP: \url{https://github.com/CenterForOpenScience/rpp/}
+RPP: The source files were downloaded from
+    \url{https://github.com/CenterForOpenScience/rpp/}. The "masterscript.R"
+    file was executed and the relevant variables were extracted from the
+    generated "final" object (standard errors of Fisher-z transformed
+    correlations) and "MASTER" object (everything else). The data set is
+    licensed under a CC0 1.0 Universal, see
+    \url{https://creativecommons.org/publicdomain/zero/1.0/} for the terms of
+    reuse.
 
-EERP: \url{https://osf.io/pnwuz/}
+EERP: The source files were downloaded from \url{https://osf.io/pnwuz/}. The
+required data were then manually extracted from the code in the files
+"effectdata.py" (sample sizes) and "create_studydetails.do" (everything
+else). Data regarding the prediction market and survey beliefs were manually
+extracted from table S3 of the supplementary materials of the EERP. The
+authors of this R package have been granted permission to share this data set
+by the coordinators of the EERP.
 
-SSRP: \url{https://osf.io/abu7k}
+SSRP: The relevant variables were extracted from the file
+"D3 - ReplicationResults.csv" downloaded from \url{https://osf.io/abu7k}. For
+replications which underwent only the first stage, the data from the first
+stage were taken as the data for the replication study. For the replications
+which reached the second stage, the pooled data from both stages were taken
+as the data for the replication study. Data regarding survey and prediction
+market beliefs were extracted from the "D6 - MeanPeerBeliefs.csv" file, which
+was downloaded from \url{https://osf.io/vr6p8/}. The data set is licensed
+under a CC0 1.0 Universal, see
+\url{https://creativecommons.org/publicdomain/zero/1.0/} for the terms of
+reuse.
 
-EPRP: \url{https://osf.io/4ewkh/}
+EPRP: Data were taken from the "XPhiReplicability_CompleteData.csv" file,
+which was downloaded from \url{https://osf.io/4ewkh/}. The authors of this R
+package have been granted permission to share this data set by the
+coordinators of the EPRP.
 }
 \usage{
 data(RProjects)
@@ -42,6 +68,9 @@ of replication study}
 from original study}
 \item{\code{pr}}{Two-sided p-value from significance test of effect estimate
 from replication study}
+\item{\code{pm_belief}}{Peer belief about whether replication effect estimate
+will achieve statistical significance elicited through prediction market (only
+available for EERP and SSRP)}
 \item{\code{no}}{Sample size in original study}
 \item{\code{nr}}{Sample size in replication study}
 }
@@ -51,12 +80,12 @@ Two-sided p-values were calculated assuming normality of Fisher-z
     transformed effect estimates. From the RPP only the \emph{meta-analytic
     subset} is included, which consists of 73 out of 100 study pairs for
     which the standard error of the z-transformed correlation coeffient can
-    be computed. For the RPP also sample sizes were recalculated from
+    be computed. For the RPP sample sizes were recalculated from the reported
     standard errors of Fisher z-transformed correlation coefficients. From
     the EPRP only 31 out of 40 study pairs are included where effective
     sample size for original and replication study are available
-    simultaneously. For details about how the the data was preprocessed see
-    supplement S1 of Pawel and Held (2020).
+    simultaneously. For more details about how the the data was preprocessed
+    see source below and supplement S1 of Pawel and Held (2020).
 }
 \examples{
 data("RProjects", package = "ReplicationSuccess")

@@ -19,13 +19,12 @@ data("protzko2020")
 }
 \description{
 Data from "High Replicability of Newly-Discovered Social-behavioral
-Findings is Achievable" by Protzko et al. (2020). The following variables are
-included
+Findings is Achievable" by Protzko et al. (2020). The variables are as follows:
 \describe{
-\item{\code{Study}}{Study identifier}
-\item{\code{Type}}{Type of study, either "original", "self-replication", or
+\item{\code{study}}{Study identifier}
+\item{\code{type}}{Type of study, either "original", "self-replication", or
 "external-replication"}
-\item{\code{d}}{Standardized mean difference effect estimate}
+\item{\code{smd}}{Standardized mean difference effect estimate}
 \item{\code{se}}{Standard error of standardized mean difference effect estimate}
 \item{\code{n}}{Total sample size of study}
 }
@@ -53,16 +52,16 @@ data("protzko2020", package = "ReplicationSuccess")
 ## forestplots of effect estimates
 graphics.off()
 parOld <- par(mar = c(5, 8, 4, 2), mfrow = c(4, 4))
-studies <- unique(protzko2020$Study)
-for (study in studies) {
+studies <- unique(protzko2020$study)
+for (s in studies) {
   ## compute CIs
-  dat <- subset(protzko2020, Study == study)
+  dat <- subset(protzko2020, study == s)
   za <- qnorm(p = 0.975)
-  plotDF <- data.frame(lower = dat$d - za*dat$se,
-                       est = dat$d,
-                       upper = dat$d + za*dat$se)
+  plotDF <- data.frame(lower = dat$smd - za*dat$se,
+                       est = dat$smd,
+                       upper = dat$smd + za*dat$se)
 colpalette <- c("#000000", "#1B9E77", "#D95F02")
-cols <- colpalette[dat$Type]
+cols <- colpalette[dat$type]
 yseq <- seq(1, nrow(dat))
 
 ## forestplot
@@ -74,7 +73,7 @@ arrows(x0 = plotDF$lower, x1 = plotDF$upper, y0 = yseq, angle = 90,
        code = 3, length = 0.05, col = cols)
 points(y = yseq, x = plotDF$est, pch = 20, lwd = 2, col = cols)
 axis(side = 2, at = yseq, las = 1, labels = dat$Type, cex.axis = 0.85)
-title(main = study)
+title(main = s)
 }
 par(parOld)
 }

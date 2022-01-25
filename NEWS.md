@@ -1,7 +1,8 @@
 # ReplicationSuccess 1.2
 
-- New data set  `protzko2020` 
+- New data set `protzko2020` 
 - fixed a bug in the error message of `effectSizeReplicationSuccess`
+- Added license information and improved documentation of data set `RProjects`
 
 # ReplicationSuccess 1.1.1
 

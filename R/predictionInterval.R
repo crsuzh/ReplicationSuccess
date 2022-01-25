@@ -88,27 +88,6 @@
 #' @author Samuel Pawel
 #' @examples
 #' predictionInterval(thetao = c(1.5, 2, 5), seo = 1, ser = 0.5, designPrior = "EB")
-#'   
-#' # plot prediction intervals for different original effect estimates
-#' thetao <- c(2, 2.5, 3)
-#' pi_pred <- predictionInterval(thetao = thetao, seo = 1, ser = 1)
-#' pi_cond <- predictionInterval(thetao = thetao, seo = 1, ser = 1, 
-#'                               designPrior = "conditional")
-#' pi_eb <- predictionInterval(thetao = thetao, seo = 1, ser = 1, designPrior = "EB")
-#' plot(thetao - 0.03, pi_pred$mean, xlim = c(1, 3.5), ylim = c(-2, 7), pch = 20, xaxt = "n",
-#'      xlab = expression(hat(theta)[o]), ylab = expression(hat(theta)[r]), las = 2)
-#' axis(side = 1, at = thetao)
-#' abline(h = 0, lty = 2, col = "gray70")
-#' arrows(thetao - 0.03, pi_pred$lower, thetao - 0.03, pi_pred$upper, 
-#'        length = 0.02, angle = 90, code = 3)
-#' points(thetao, pi_cond$mean, pch = 20, col = "darkred")
-#' arrows(thetao, pi_cond$lower, thetao, pi_cond$upper, length = 0.02, angle = 90, 
-#'        code = 3, col = "darkred")
-#' points(thetao + 0.03, pi_eb$mean, pch = 20, col = "darkblue")
-#' arrows(thetao + 0.03, pi_eb$lower, thetao + 0.03, pi_eb$upper, length = 0.02, angle = 90, 
-#'        code = 3, col = "darkblue")
-#' legend("topleft", c("predictive", "conditional", "EB"), title = "designPrior", 
-#'        pch = 20, col = c("black", "darkred", "darkblue"), bty = "n")
 #'        
 #' # compute prediction intervals for replication projects
 #' data("RProjects", package = "ReplicationSuccess")
