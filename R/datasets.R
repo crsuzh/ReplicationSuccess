@@ -230,12 +230,12 @@
 #' @description Data from "High Replicability of Newly-Discovered Social-behavioral
 #' Findings is Achievable" by Protzko et al. (2020). The variables are as follows:
 #' \describe{
-#' \item{\code{study}}{Study identifier}
+#' \item{\code{experiment}}{Experiment name}
 #' \item{\code{type}}{Type of study, either "original", "self-replication", or
 #' "external-replication"}
 #' \item{\code{smd}}{Standardized mean difference effect estimate}
 #' \item{\code{se}}{Standard error of standardized mean difference effect estimate}
-#' \item{\code{n}}{Total sample size of study}
+#' \item{\code{n}}{Total sample size of the study}
 #' }
 #'
 #' @details This data set originates from a prospective replication project
@@ -278,10 +278,10 @@
 #' ## forestplots of effect estimates
 #' graphics.off()
 #' parOld <- par(mar = c(5, 8, 4, 2), mfrow = c(4, 4))
-#' studies <- unique(protzko2020$study)
-#' for (s in studies) {
+#' experiments <- unique(protzko2020$experiment)
+#' for (ex in experiments) {
 #'   ## compute CIs
-#'   dat <- subset(protzko2020, study == s)
+#'   dat <- subset(protzko2020, experiment == ex)
 #'   za <- qnorm(p = 0.975)
 #'   plotDF <- data.frame(lower = dat$smd - za*dat$se,
 #'                        est = dat$smd,
@@ -291,15 +291,15 @@
 #' yseq <- seq(1, nrow(dat))
 #'
 #' ## forestplot
-#' plot(x = plotDF$est, y = , xlim = c(-0.15, 0.8),
+#' plot(x = plotDF$est, y = yseq, xlim = c(-0.15, 0.8),
 #'      ylim = c(0.8*min(yseq), 1.05*max(yseq)), type = "n",
 #'      yaxt = "n", xlab = "Effect estimate (SMD)", ylab = "")
 #' abline(v = 0, col = "#0000004D")
 #' arrows(x0 = plotDF$lower, x1 = plotDF$upper, y0 = yseq, angle = 90,
 #'        code = 3, length = 0.05, col = cols)
 #' points(y = yseq, x = plotDF$est, pch = 20, lwd = 2, col = cols)
-#' axis(side = 2, at = yseq, las = 1, labels = dat$Type, cex.axis = 0.85)
-#' title(main = s)
+#' axis(side = 2, at = yseq, las = 1, labels = dat$type, cex.axis = 0.85)
+#' title(main = ex)
 #' }
 #' par(parOld)
 #' @keywords data
