@@ -13,7 +13,7 @@ RPP: The source files were downloaded from
     file was executed and the relevant variables were extracted from the
     generated "final" object (standard errors of Fisher-z transformed
     correlations) and "MASTER" object (everything else). The data set is
-    licensed under a CC0 1.0 Universal, see
+    licensed under a CC0 1.0 Universal license, see
     \url{https://creativecommons.org/publicdomain/zero/1.0/} for the terms of
     reuse.
 
@@ -33,7 +33,7 @@ which reached the second stage, the pooled data from both stages were taken
 as the data for the replication study. Data regarding survey and prediction
 market beliefs were extracted from the "D6 - MeanPeerBeliefs.csv" file, which
 was downloaded from \url{https://osf.io/vr6p8/}. The data set is licensed
-under a CC0 1.0 Universal, see
+under a CC0 1.0 Universal license, see
 \url{https://creativecommons.org/publicdomain/zero/1.0/} for the terms of
 reuse.
 

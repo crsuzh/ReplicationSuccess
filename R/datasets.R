@@ -128,7 +128,7 @@
 #'     file was executed and the relevant variables were extracted from the
 #'     generated "final" object (standard errors of Fisher-z transformed
 #'     correlations) and "MASTER" object (everything else). The data set is
-#'     licensed under a CC0 1.0 Universal, see
+#'     licensed under a CC0 1.0 Universal license, see
 #'     \url{https://creativecommons.org/publicdomain/zero/1.0/} for the terms of
 #'     reuse.
 #'
@@ -148,7 +148,7 @@
 #' as the data for the replication study. Data regarding survey and prediction
 #' market beliefs were extracted from the "D6 - MeanPeerBeliefs.csv" file, which
 #' was downloaded from \url{https://osf.io/vr6p8/}. The data set is licensed
-#' under a CC0 1.0 Universal, see
+#' under a CC0 1.0 Universal license, see
 #' \url{https://creativecommons.org/publicdomain/zero/1.0/} for the terms of
 #' reuse.
 #'
@@ -233,6 +233,7 @@
 #' \item{\code{experiment}}{Experiment name}
 #' \item{\code{type}}{Type of study, either "original", "self-replication", or
 #' "external-replication"}
+#' \item{\code{lab}}{The lab which conducted the study, either 1, 2, 3, or 4.}
 #' \item{\code{smd}}{Standardized mean difference effect estimate}
 #' \item{\code{se}}{Standard error of standardized mean difference effect estimate}
 #' \item{\code{n}}{Total sample size of the study}

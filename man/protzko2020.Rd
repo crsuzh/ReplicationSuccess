@@ -24,6 +24,7 @@ Findings is Achievable" by Protzko et al. (2020). The variables are as follows:
 \item{\code{experiment}}{Experiment name}
 \item{\code{type}}{Type of study, either "original", "self-replication", or
 "external-replication"}
+\item{\code{lab}}{The lab which conducted the study, either 1, 2, 3, or 4.}
 \item{\code{smd}}{Standardized mean difference effect estimate}
 \item{\code{se}}{Standard error of standardized mean difference effect estimate}
 \item{\code{n}}{Total sample size of the study}
