@@ -30,7 +30,8 @@
 #'      zr = p2z(0.01, alternative = "one.sided"),
 #'      c = 1/2, alternative = "one.sided")
 #' @export
-pBox <- function(zo, zr, c, level = 0.05,
+pBox <- function(zo, zr, c, 
+                 level = 0.05,
                  alternative = c("two.sided", "one.sided")){
     stopifnot(!is.null(alternative))
     alternative <- match.arg(alternative)    
