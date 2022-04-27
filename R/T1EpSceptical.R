@@ -22,7 +22,8 @@
     ## compute normal quantile corresponding to level and type
     alphas <- levelSceptical(level = level, 
                              alternative = alternative, 
-                             type = type)
+                             type = type, 
+                             c = c)
     zas <- p2z(alphas, alternative = alternative)
     
     if (alternative == "two.sided") {
