@@ -1,53 +1,101 @@
+FZ <- function(z, c){
+  stopifnot((c>=0))
+  if(z<=0)
+    return(0)
+  if(c==0)
+    return(1-4*(1-pnorm(sqrt(z)))^2)
+  if(c==1)
+    return(pgamma(z, 1/2, 2))
+  f <- function(t, c, z){
+    if(c<1)
+      t1 <- exp(-(1-c)*z/(1-sqrt(1-4*(1-c)*t)))
+    if(c>1)
+      t1 <- exp(-(c-1)*z/(sqrt(1+4*(c-1)*t)-1))
+    t2 <- 1/sqrt(t*(1-4*t))
+    return(t1*t2)
+  }
+  myint <- integrate(f, lower=0, upper=1/4, z=z, c=c, rel.tol = .Machine$double.eps^0.5)$value
+  result <- 1-2/pi*myint
+  return(result)
+}
+
+
 #' @export
 .pSceptical_ <- function(zo,
                          zr,
                          c, 
                          alternative = c("one.sided", "two.sided"),
                          type = c("golden", "nominal", "liberal", "controlled")){
-    
-    stopifnot(is.numeric(zo),
-              length(zo) == 1,
-              is.finite(zo),
-
-              is.numeric(zr),
-              length(zr) == 1,
-              is.finite(zr),
-
-              is.numeric(c),
-              length(c) == 1,
-              is.finite(c),
-              0 <= c,
-              
-              !is.null(alternative))
-    alternative <- match.arg(alternative)
-
-    stopifnot(!is.null(type))
-    type <- match.arg(type)
-    
-    z <- zSceptical(zo = zo, zr = zr, c = c)
-    if(type == "nominal")
-        result <- z
-    if(type == "liberal"){
-        result <- z*sqrt(2)
-    }
-    if(type == "controlled"){
-        result <- p2z(p = sqrt((1 - pnorm(2*z))/2), alternative = "greater")
-    }
-    if(type == "golden"){
-            ## golden ratio 
-        phi <- (sqrt(5) + 1)/2  
-        result <- z*sqrt(phi)
-    }
+  
+  stopifnot(is.numeric(zo),
+            length(zo) == 1,
+            is.finite(zo),
+            
+            is.numeric(zr),
+            length(zr) == 1,
+            is.finite(zr),
+            
+            is.numeric(c),
+            length(c) == 1,
+            is.finite(c),
+            0 <= c,
+            
+            !is.null(alternative))
+  alternative <- match.arg(alternative)
+  
+  stopifnot(!is.null(type))
+  type <- match.arg(type)
+  
+  z <- zSceptical(zo = zo, zr = zr, c = c)
+  if(type == "nominal")
+    result <- z
+  if(type == "liberal"){
+    result <- z*sqrt(2)
+  }
+  if(type == "golden"){
+    ## golden ratio 
+    phi <- (sqrt(5) + 1)/2  
+    result <- z*sqrt(phi)
+  }
+  
+  if(type != "controlled"){
     res <- z2p(z = result, alternative = "two.sided")
     if(alternative == "one.sided") {
-        if(sign(zo) == sign(zr)) 
-            res <- res/2
-        else 
-            res <- 1 - res/2
+      if(sign(zo) == sign(zr)) 
+        res <- res/2
+      else 
+        res <- 1 - res/2
     }
-    return(res)
+  }
+  
+  
+  # special case, controlled comes at the end
+  if(type == "controlled"){
+    z <- c(zo, zr)
+    check_greater <- min(z) >= 0
+    check_less <- max(z) <= 0
+    n <- 2
+    
+    if(c == 1){
+      res2 <- hMeanChiSq(z = c(zo,zr), alternative= alternative)
+      res <- sqrt(res2)
+    }
+    
+    if(c != 1){
+      z <- zSceptical(zo = zo, zr=zr, c = c)
+      res2 <- (1 - FZ(z^2, c = c))
+      if (alternative == "one.sided") {
+        res2 <- res2/(2^n)
+      }
+      if (alternative == "two.sided") {
+        res2 <- res2/(2^(n - 1))
+      }
+      res <- sqrt(res2)
+    }
+  }
+  
+  return(res)
 }
-
 
 #' Computes the sceptical p-value and z-value
 #'
