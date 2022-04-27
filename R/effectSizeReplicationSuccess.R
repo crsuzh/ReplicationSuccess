@@ -27,7 +27,8 @@
     
     alphas <- levelSceptical(level = level, 
                              alternative = alternative, 
-                             type = type)
+                             type = type, 
+                             c = c)
     zalphas <- p2z(p = alphas, alternative = alternative)
     K <- zo^2 / zalphas^2
     
@@ -35,7 +36,8 @@
       warning(paste("Replication success is not achievable at this level as |zo| =",
                     abs(round(zo, 2)), " < ", round(p2z(levelSceptical(level = level,
                                                         alternative = alternative,
-                                                        type = type), alternative = alternative), 3)))
+                                                        type = type, 
+                                                        c = c), alternative = alternative), 3)))
       d <- NA
     } else {
         d <- if(c < Inf) sqrt(1 + c/(K - 1))/(sqrt(K * c)) else 1/sqrt(K * (K - 1))
