@@ -6,12 +6,15 @@
 \usage{
 levelSceptical(
   level,
+  c = NA,
   alternative = c("one.sided", "two.sided"),
   type = c("golden", "nominal", "liberal", "controlled")
 )
 }
 \arguments{
 \item{level}{Numeric vector of required replication success levels.}
+
+\item{c}{The variance ratio}
 
 \item{alternative}{Either "one.sided" (default) or "two.sided".
 Specifies if the replication success level is one-sided or two-sided. If the replication success level is one-sided,
