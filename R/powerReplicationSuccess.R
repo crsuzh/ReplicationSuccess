@@ -49,7 +49,8 @@
     zoabs <- abs(zo)
 
     ## if zoas < zalphaS, power is zero
-    alphaS <- levelSceptical(level = level, alternative = alternative, type = type)
+    alphaS <- levelSceptical(level = level, alternative = alternative, type = type, 
+                             c = c)
     zalphaS <- p2z(p = alphaS, alternative = alternative)
     if (zoabs < zalphaS) {
         power <- 0
