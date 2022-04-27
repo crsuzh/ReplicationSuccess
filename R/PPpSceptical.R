@@ -33,7 +33,8 @@
     ## compute normal quantile corresponding to level and type
     alphas <- levelSceptical(level = level, 
                              alternative = alternative, 
-                             type = type)
+                             type = type, 
+                             c = c)
     ## abs(.) is needed to deal with alternative="less"
     zas <- abs(p2z(p = alphas, alternative = alternative))
     
