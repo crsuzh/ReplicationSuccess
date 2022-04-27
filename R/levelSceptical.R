@@ -1,8 +1,49 @@
+#' @export
+.levelSceptical_ <- function(level, 
+                           c = NA,
+                           alternative = c("one.sided", "two.sided"), 
+                           type = c("golden", "nominal", "liberal", "controlled")){
+  
+  stopifnot(is.numeric(level),
+            length(level) >= 1,
+            is.finite(level),
+            0 < level, level < 1,
+            
+            !is.null(alternative))
+  targetT1E <- level^2 # this maybe needs to be adapted for two.sided?
+  alternative <- match.arg(alternative)
+  
+  stopifnot(!is.null(type))
+  type <- match.arg(type)
+  
+  if(type == "nominal")
+    res <- level
+  
+  if(type == "liberal")
+    res <- pIntrinsic(p = level, alternative = alternative, type = "Held")
+  
+  if(type == "controlled"){
+    mylower <- sqrt(targetT1E)
+    if(alternative=="one.sided")
+      myupper <- 0.5
+    if(alternative=="two.sided")
+      myupper <- 1-.Machine$double.eps^0.25
+    result <- uniroot(target, lower = mylower, upper = myupper,
+                      alternative = alternative, c = c,
+                      targetT1E = targetT1E)
+    res <- result$root
+  }
+  if(type == "golden"){
+    res <- pIntrinsic(p = level, alternative = alternative, type = "Matthews")
+  }
+  return(res)
+}
 #' Computes the level for the sceptical p-value
 #'
 #' The level for the sceptical p-value is computed based on the specified
 #' alternative and calibration type.
 #' @param level Numeric vector of required replication success levels.
+#' @param c The variance ratio
 #' @param alternative Either "one.sided" (default) or "two.sided".
 #' Specifies if the replication success level is one-sided or two-sided. If the replication success level is one-sided,
 #' then a one-sided level for the sceptical p-value is computed.
@@ -34,41 +75,5 @@
 #' levelSceptical(level = 0.025, alternative = "one.sided", type = "controlled")
 #' levelSceptical(level = 0.025, alternative = "one.sided", type = "golden")
 #' @export
-levelSceptical <- function(level, 
-                           alternative = c("one.sided", "two.sided"), 
-                           type = c("golden", "nominal", "liberal", "controlled")){
+levelSceptical <- Vectorize(.levelSceptical_)
 
-    stopifnot(is.numeric(level),
-              length(level) >= 1,
-              is.finite(level),
-              0 < level, level < 1,
-              
-              !is.null(alternative))
-    alternative <- match.arg(alternative)
-
-    stopifnot(!is.null(type))
-    type <- match.arg(type)
-        
-    if(type == "nominal")
-        res <- level
-    
-    if(type == "liberal")
-        res <- pIntrinsic(p = level, alternative = alternative, type = "Held")
-    
-    if(type == "controlled"){
-        if (alternative == "two.sided") {
-            t1 <- level^2 ## level is two-sided significance level
-            ## t1 <- (2*level)^2 ## level is a one-sided significance level
-            res <- 2*(1 - pnorm(q = qnorm(p = 1 - t1/2)/2))
-        } 
-        if (alternative == "one.sided") {
-            ## t1 <- level*(level/2) ## level is a two-sided significance level
-            t1 <- 2*level^2 ## level is a one-sided significance level
-            res <- 1 - pnorm(q = qnorm(p = 1 - t1)/2)
-        }
-    }
-    if(type == "golden"){
-        res <- pIntrinsic(p = level, alternative = alternative, type = "Matthews")
-    }
-    return(res)
-}
