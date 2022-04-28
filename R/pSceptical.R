@@ -84,10 +84,10 @@ FZ <- function(z, c){
       z <- zSceptical(zo = zo, zr=zr, c = c)
       res2 <- (1 - FZ(z^2, c = c))
       if (alternative == "one.sided") {
-        res2 <- res2/(2^n)
+        res2 <- ifelse(sign(zo) == sign(zr), res2/(2^n), NaN)
       }
       if (alternative == "two.sided") {
-        res2 <- res2/(2^(n - 1))
+        res2 <- ifelse(sign(zo) == sign(zr),  res2/(2^(n - 1)), NaN)
       }
       res <- sqrt(res2)
     }
