@@ -9,7 +9,7 @@ target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
 #' @export
 .levelSceptical_ <- function(level, 
                            c = NA,
-                           alternative = c("one.sided", "two.sided"), 
+                           alternative = c("one.sided", "two.sided", "greater", "less"), 
                            type = c("golden", "nominal", "liberal", "controlled")){
   
   stopifnot(is.numeric(level),

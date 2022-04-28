@@ -28,7 +28,7 @@
 #' pIntrinsic(z = 2)
 #' @export
 pIntrinsic <- function(p = z2p(z, alternative = alternative), z = NULL,
-                       alternative = c("two.sided", "one.sided"),
+                       alternative = c("two.sided", "one.sided", "less", "greater"),
                        type = c("Held", "Matthews")){
     stopifnot(is.numeric(p),
               length(p) > 0,

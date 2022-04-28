@@ -7,7 +7,7 @@
 levelSceptical(
   level,
   c = NA,
-  alternative = c("one.sided", "two.sided"),
+  alternative = c("one.sided", "two.sided", "greater", "less"),
   type = c("golden", "nominal", "liberal", "controlled")
 )
 }
