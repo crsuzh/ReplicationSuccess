@@ -2,7 +2,7 @@
 .effectSizeReplicationSuccess_ <- function(zo, 
                                            c = 1, 
                                            level = 0.025, 
-                                           alternative = c("one.sided", "two.sided"),
+                                           alternative = c("one.sided", "two.sided", "greater", "less"),
                                            type = c("golden", "nominal", "liberal", "controlled")){
     
     stopifnot(is.numeric(zo),

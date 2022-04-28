@@ -32,7 +32,7 @@ target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
   
   if(type == "controlled"){
     mylower <- sqrt(targetT1E)
-    if(alternative=="one.sided")
+    if(alternative=="one.sided" || alternative =="greater" || alternative == "less")
       myupper <- 0.5
     if(alternative=="two.sided")
       myupper <- 1-.Machine$double.eps^0.25
