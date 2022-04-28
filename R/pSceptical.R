@@ -1,24 +1,23 @@
 FZ <- function(z, c){
-  stopifnot((c>=0))
-  if(z<=0)
+  stopifnot((c >= 0))
+  if(z <= 0)
     return(0)
-  if(c==0)
-    return(1-4*(1-pnorm(sqrt(z)))^2)
-  if(c==1)
+  if(c == 0)
+    return(1 - 4 * (1 - pnorm(sqrt(z)))^2)
+  if(c == 1)
     return(pgamma(z, 1/2, 2))
   f <- function(t, c, z){
-    if(c<1)
-      t1 <- exp(-(1-c)*z/(1-sqrt(1-4*(1-c)*t)))
-    if(c>1)
-      t1 <- exp(-(c-1)*z/(sqrt(1+4*(c-1)*t)-1))
-    t2 <- 1/sqrt(t*(1-4*t))
-    return(t1*t2)
+    if(c < 1)
+      t1 <- exp(-(1-c)*z/(1-sqrt(1-(1-c)*t)))
+    if(c > 1)
+      t1 <- exp(-(c-1)*z/(sqrt(1+(c-1)*t)-1))
+    t2 <- 1/sqrt(t*(1-t))
+    return(t1 * t2)
   }
-  myint <- integrate(f, lower=0, upper=1/4, z=z, c=c, rel.tol = .Machine$double.eps^0.5)$value
-  result <- 1-2/pi*myint
+  myint <- integrate(f, lower = 0, upper = 1, z = z, c = c)$value
+  result <- 1-myint/pi
   return(result)
 }
-
 
 #' @export
 .pSceptical_ <- function(zo,
