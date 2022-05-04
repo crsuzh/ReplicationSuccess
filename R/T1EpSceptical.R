@@ -20,13 +20,27 @@
     type <- match.arg(type)
         
     ## compute normal quantile corresponding to level and type
-    alphas <- levelSceptical(level = level, 
-                             alternative = alternative, 
-                             type = type, 
-                             c = c)
-    zas <- p2z(alphas, alternative = alternative)
+    if(alternative == "two.sided"){
+      alphas <- levelSceptical(level = level, 
+                               alternative = "two.sided", 
+                               type = type, 
+                               c = c)
+      zas <- p2z(alphas, alternative = "two.sided")
+      
+    }
     
-    if (alternative == "two.sided") {
+    if(alternative == "one.sided" || alternative == "greater" || alternative == "less"){
+      alphas <- levelSceptical(level = level, 
+                               alternative = "one.sided", 
+                               type = type, 
+                               c = c)
+      zas <- p2z(alphas, alternative = alternative)
+      
+    }
+  
+    # quick fix for alternative problems
+
+    if(alternative == "two.sided") {
         ## if c = 1 compute analytically
         if (c == 1) {
             t1err <- 2*(1 - stats::pnorm(q = 2*zas))
@@ -170,3 +184,4 @@
 #'               c = 1, alternative = "one.sided",  type = "nominal")
 #' @export
 T1EpSceptical <- Vectorize(.T1EpSceptical_)
+
