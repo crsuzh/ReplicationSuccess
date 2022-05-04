@@ -32,7 +32,7 @@
     zalphas <- p2z(p = alphas, alternative = alternative)
     K <- zo^2 / zalphas^2
     
-    if (zalphas > zo) {
+    if (zalphas > abs(zo)) {
       warning(paste("Replication success is not achievable at this level as |zo| =",
                     abs(round(zo, 2)), " < ", round(p2z(levelSceptical(level = level,
                                                         alternative = alternative,
