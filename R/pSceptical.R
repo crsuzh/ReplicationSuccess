@@ -23,7 +23,7 @@ FZ <- function(z, c){
 .pSceptical_ <- function(zo,
                          zr,
                          c, 
-                         alternative = c("one.sided", "two.sided", "greater", "less"),
+                         alternative = c("one.sided", "two.sided"),
                          type = c("golden", "nominal", "liberal", "controlled")){
   
   stopifnot(is.numeric(zo),
@@ -69,19 +69,19 @@ FZ <- function(z, c){
   }
   
   if(alternative == "one.sided") {
-    res <- ifelse(sign(zo) == sign(zr), res/2, 1- res/2)
+    res <- ifelse(sign(zo) == sign(zr), res/2, 1-res/2)
   }
-  if(alternative == "greater"){
-    if(zo < 0) res <- NaN
-    if(zo > 0 && zr > 0) res <- res/2
-    if(zo > 0 && zr < 0) res <- 1 - res/2
-  }
-    
-    if(alternative == "less"){
-      if(zo > 0) res <- NaN
-      if(zo < 0 && zr < 0) res <- res/2
-      if(zo < 0 && zr > 0) res <- 1 - res/2
-    }
+  # if(alternative == "greater"){
+  #   if(zo < 0) res <- NaN
+  #   if(zo > 0 && zr > 0) res <- res/2
+  #   if(zo > 0 && zr < 0) res <- 1 - res/2
+  # }
+  #   
+  #   if(alternative == "less"){
+  #     if(zo > 0) res <- NaN
+  #     if(zo < 0 && zr < 0) res <- res/2
+  #     if(zo < 0 && zr > 0) res <- 1 - res/2
+  #   }
   return(res)
 }
 

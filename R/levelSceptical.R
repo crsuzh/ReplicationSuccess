@@ -3,13 +3,13 @@ target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
   myT1E <- T1EpSceptical(alternative = alternative, level = alphalevel, c = c, 
                          type="nominal")
   myT1E <- ifelse(alternative == "one.sided", myT1E/2, myT1E)
-  ## divide by two to 1-1 scenario
+  ## trick: divide by two to 1-1 scenario
   result <- myT1E - targetT1E
 }
 #' @export
 .levelSceptical_ <- function(level, 
                            c = NA,
-                           alternative = c("one.sided", "two.sided", "greater", "less"), 
+                           alternative = c("one.sided", "two.sided"), 
                            type = c("golden", "nominal", "liberal", "controlled")){
   
   stopifnot(is.numeric(level),
@@ -18,7 +18,8 @@ target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
             0 < level, level < 1,
             
             !is.null(alternative))
-  targetT1E <- level^2 # this maybe needs to be adapted for two.sided?
+  
+  targetT1E <- level^2 # because we only consider one and two sided
   alternative <- match.arg(alternative)
   
   stopifnot(!is.null(type))
@@ -32,7 +33,7 @@ target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
   
   if(type == "controlled"){
     mylower <- sqrt(targetT1E)
-    if(alternative=="one.sided" || alternative =="greater" || alternative == "less")
+    if(alternative=="one.sided")
       myupper <- 0.5
     if(alternative=="two.sided")
       myupper <- 1-.Machine$double.eps^0.25
