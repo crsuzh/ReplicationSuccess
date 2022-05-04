@@ -23,7 +23,7 @@ FZ <- function(z, c){
 .pSceptical_ <- function(zo,
                          zr,
                          c, 
-                         alternative = c("one.sided", "two.sided"),
+                         alternative = c("one.sided", "two.sided", "greater", "less"),
                          type = c("golden", "nominal", "liberal", "controlled")){
   
   stopifnot(is.numeric(zo),
@@ -46,53 +46,42 @@ FZ <- function(z, c){
   type <- match.arg(type)
   
   z <- zSceptical(zo = zo, zr = zr, c = c)
-  if(type == "nominal")
+  
+  if(type == "nominal"){
     result <- z
+    res <- z2p(z = result, alternative = "two.sided")
+  }    
   if(type == "liberal"){
     result <- z*sqrt(2)
+    res <- z2p(z = result, alternative = "two.sided")
   }
+    
   if(type == "golden"){
     ## golden ratio 
     phi <- (sqrt(5) + 1)/2  
     result <- z*sqrt(phi)
+    res <- z2p(z = result, alternative = "two.sided") 
   }
   
-  if(type != "controlled"){
-    res <- z2p(z = result, alternative = "two.sided")
-    if(alternative == "one.sided") {
-      if(sign(zo) == sign(zr)) 
-        res <- res/2
-      else 
-        res <- 1 - res/2
-    }
-  }
-  
-  
-  # special case, controlled comes at the end
   if(type == "controlled"){
-    z <- c(zo, zr)
-    check_greater <- min(z) >= 0
-    check_less <- max(z) <= 0
-    n <- 2
-    
-    if(c == 1){
-      res2 <- hMeanChiSq(z = c(zo,zr), alternative= alternative)
-      res <- sqrt(res2)
-    }
-    
-    if(c != 1){
-      z <- zSceptical(zo = zo, zr=zr, c = c)
-      res2 <- (1 - FZ(z^2, c = c))
-      if (alternative == "one.sided") {
-        res2 <- ifelse(sign(zo) == sign(zr), res2/(2^n), NaN)
-      }
-      if (alternative == "two.sided") {
-        res2 <- ifelse(sign(zo) == sign(zr),  res2/(2^(n - 1)), NaN)
-      }
-      res <- sqrt(res2)
-    }
+  res2 <- (1 - FZ(z^2, c = c))
+  res <- sqrt(res2)
   }
   
+  if(alternative == "one.sided") {
+    res <- ifelse(sign(zo) == sign(zr), res/2, 1- res/2)
+  }
+  if(alternative == "greater"){
+    if(zo < 0) res <- NaN
+    if(zo > 0 && zr > 0) res <- res/2
+    if(zo > 0 && zr < 0) res <- 1 - res/2
+  }
+    
+    if(alternative == "less"){
+      if(zo > 0) res <- NaN
+      if(zo < 0 && zr < 0) res <- res/2
+      if(zo < 0 && zr > 0) res <- 1 - res/2
+    }
   return(res)
 }
 
