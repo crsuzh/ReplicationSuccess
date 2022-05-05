@@ -31,12 +31,25 @@
     type <- match.arg(type)
     
     ## compute normal quantile corresponding to level and type
-    alphas <- levelSceptical(level = level, 
-                             alternative = alternative, 
-                             type = type, 
-                             c = c)
+    if(alternative == "two.sided"){
+      alphas <- levelSceptical(level = level, 
+                               alternative = "two.sided", 
+                               type = type, 
+                               c = c)
+      
+    }
+    
+    if(alternative == "one.sided" || alternative == "greater" || alternative == "less"){
+      alphas <- levelSceptical(level = level, 
+                               alternative = "one.sided", 
+                               type = type, 
+                               c = c)
+    }
+    
+    # quick fix for alternative problems
     ## abs(.) is needed to deal with alternative="less"
     zas <- abs(p2z(p = alphas, alternative = alternative))
+    #cm: really correct?
     
     ## compute mean based on alpha and power
     ## abs(.) is needed to deal with alternative="less"
