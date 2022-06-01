@@ -268,6 +268,7 @@ sampleSizeReplicationSuccessNum <- Vectorize(.sampleSizeReplicationSuccessNum_)
     
     if (type == "controlled"){
       # here put the numerical integration
+      stopifnot(level < power)
       c <-  sampleSizeReplicationSuccessNum(zo = zo, power = power, d = d, 
                                       level = level, alternative = alternative, 
                                       type = "controlled", 
