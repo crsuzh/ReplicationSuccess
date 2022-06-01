@@ -81,7 +81,7 @@ target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
 #' @examples
 #' levelSceptical(level = 0.025, alternative = "one.sided", type = "nominal")
 #' levelSceptical(level = 0.025, alternative = "one.sided", type = "liberal")
-#' levelSceptical(level = 0.025, alternative = "one.sided", type = "controlled")
+#' levelSceptical(level = 0.025, alternative = "one.sided", type = "controlled", c = 1)
 #' levelSceptical(level = 0.025, alternative = "one.sided", type = "golden")
 #' @export
 levelSceptical <- Vectorize(.levelSceptical_)

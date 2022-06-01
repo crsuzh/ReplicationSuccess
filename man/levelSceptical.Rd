@@ -41,7 +41,7 @@ alternative and calibration type.
 \examples{
 levelSceptical(level = 0.025, alternative = "one.sided", type = "nominal")
 levelSceptical(level = 0.025, alternative = "one.sided", type = "liberal")
-levelSceptical(level = 0.025, alternative = "one.sided", type = "controlled")
+levelSceptical(level = 0.025, alternative = "one.sided", type = "controlled", c = 1)
 levelSceptical(level = 0.025, alternative = "one.sided", type = "golden")
 }
 \references{

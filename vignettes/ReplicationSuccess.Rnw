@@ -685,7 +685,7 @@ the sceptical $p$-value are available and can be computed with the function
 (thresh_gol <- levelSceptical(level = 0.025, alternative = "one.sided", 
                               type = "golden"))
 (thresh_contr <- levelSceptical(level = 0.025, alternative = "one.sided", 
-                                type = "controlled"))
+                                type = "controlled", c = 1))
 (thresh_nom <- levelSceptical(level = 0.025, alternative = "one.sided", 
                               type = "nominal"))
 (thresh_lib <- levelSceptical(level = 0.025, alternative = "one.sided", 

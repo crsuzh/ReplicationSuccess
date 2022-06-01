@@ -52,7 +52,7 @@ and the alternative hypothesis.
 ## compare type-I error rate for different levels of replication success
 levels <- c("nominal" = levelSceptical(level = 0.025, type = "nominal"),
             "liberal" = levelSceptical(level = 0.025, type = "liberal"),
-            "controlled" = levelSceptical(level = 0.025, type = "controlled"),
+            "controlled" = levelSceptical(level = 0.025, type = "controlled", c = 1),
             "golden" = levelSceptical(level = 0.025, type = "golden"))
 c <- seq(0.2, 5, by = 0.05)
 t1 <- sapply(X = levels, FUN = function(l) {
@@ -65,7 +65,7 @@ legend("topright", legend = names(levels), lty = 1, lwd = 2, col = seq_along(lev
 ## check that one.sided controlled level controls type-I error rate for c = 1 
 ## at alpha = 0.05*0.025 = 0.00125
 T1EpSceptical(level = levelSceptical(level = 0.025, alternative = "one.sided", 
-                                     type = "controlled"), 
+                                     type = "controlled", c = 1), 
               c = 1, alternative = "one.sided",  type = "nominal")
 }
 \references{

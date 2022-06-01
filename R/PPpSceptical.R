@@ -162,7 +162,7 @@
 #' ## compare project power for different levels of replication success
 #' levels <- c("nominal" = levelSceptical(level = 0.025, type = "nominal"),
 #'             "liberal" = levelSceptical(level = 0.025, type = "liberal"),
-#'             "controlled" = levelSceptical(level = 0.025, type = "controlled"),
+#'             "controlled" = levelSceptical(level = 0.025, type = "controlled", c = 1),
 #'             "golden" = levelSceptical(level = 0.025, type = "golden"))
 #' c <- seq(0.4, 5, by = 0.01)
 #' alpha <- 0.025
