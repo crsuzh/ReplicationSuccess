@@ -62,6 +62,7 @@
 #' @param type Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
 #' "liberal", or "controlled". "golden" ensures that for an original study just significant at
 #' the specified \code{level}, replication success is only possible for replication effect estimates larger than the original one.
+#' "controlled" ensures exact Type-I error control at level \code{level}^2.
 #' See \code{\link{levelSceptical}} for details about recalibration types.
 #' @return The minimum relative effect size to achieve replication success.
 #' @details \code{effectSizeReplicationSuccess} is the vectorized version of \code{.effectSizeReplicationSuccess_}.

@@ -42,7 +42,9 @@ original effect estimates.}
 (no recalibration), "liberal", or "controlled". \code{type} = "golden"
 ensures that for an original study just significant at the specified
 \code{level}, replication success is only possible if the replication
-effect estimate is larger than the original one. See
+effect estimate is larger than the original one.
+"controlled" ensures exact Type-I error control at level \code{level}^2.
+ See
 \code{\link{levelSceptical}} for details about recalibration types.}
 
 \item{shrinkage}{Numeric vector with values in [0,1). Defaults to 0.

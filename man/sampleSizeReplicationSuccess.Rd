@@ -36,7 +36,8 @@ the replication success level is one-sided or two-sided.}
 "nominal" (no recalibration), "liberal", "controlled". "golden" ensures
 that for an original study just significant at the specified
 \code{level}, replication success is only possible if the replication
-effect estimate is at least as large as the original one. See
+effect estimate is at least as large as the original one.
+ "controlled" ensures exact Type-I error control at level \code{level}^2. See
 \code{\link{levelSceptical}} for details about recalibration types.}
 
 \item{designPrior}{Is only taken into account when \code{power} is specified.

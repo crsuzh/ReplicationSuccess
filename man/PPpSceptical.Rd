@@ -41,6 +41,7 @@ original and replication effect estimate.}
 "golden" ensures that for an original study just significant
 at the specified \code{level}, replication success is only possible if the
 replication effect estimate is at least as large as the original one.
+ "controlled" ensures exact Type-I error control at level \code{level}^2.
 See \code{\link{levelSceptical}} for details about recalibration types.}
 }
 \value{
