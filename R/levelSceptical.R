@@ -59,8 +59,7 @@ target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
 #' @param type The calibration type can be either "golden" (default), "nominal", "liberal", or "controlled".
 #' \code{type} = "golden" ensures that for an original study just significant at the specified \code{level},
 #' replication success is only possible if the replication effect estimate is larger than the original one.
-#' If \code{type =} "controlled", the type-I error rate is equal to \code{level}^2 (for \code{alternative} ="two.sided") or
-#' 2 \eqn{\times}{*}\code{level}^2 (for \code{alternative} = "one.sided") if the variance ratio is equal to 1.
+#' If \code{type =} "controlled", the type-I error rate is equal to \code{level}^2.
 #' The type \code{"nominal"} ensures that the type-I error rate is always smaller
 #' than \code{level}^2. Significance of both the original and replication study
 #' at \code{level} is then a necessary but not sufficient requirement for replication success.
