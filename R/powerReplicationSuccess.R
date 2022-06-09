@@ -121,7 +121,11 @@
 #'     ensures that for an original study just significant at the specified
 #'     \code{level}, replication success is only possible if the replication
 #'     effect estimate is larger than the original one.
-#'     "controlled" ensures exact Type-I error control at level \code{level}^2.
+#'     "controlled" ensures exact Type-I error control at level \code{level}^2
+#'     for \code{alternative} is "two.sided" or "one.sided" if the direction 
+#'     was pre-specified in advance. For \code{alternative} is "one.sided" 
+#'     and no pre-specified direction, the Type-I error rate is controlled at 
+#'     level 2 \code{level}^2.
 #'      See
 #'     \code{\link{levelSceptical}} for details about recalibration types.
 #' @param shrinkage Numeric vector with values in [0,1). Defaults to 0.
@@ -148,8 +152,10 @@
 #' Series A (Statistics in Society)}, \bold{183}, 431-448.
 #' \doi{10.1111/rssa.12493}
 #'
-#' Held, L., Micheloud, C., Pawel, S. (2021). The assessment of replication
-#' success based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
+#' Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
+#' success based on relative effect size.
+#' \emph{The Annals of Applied Statistics}, \bold{16}, 706-720.
+#'  \url{https://doi.org/10.1214/21-AOAS1502}
 #' @seealso \code{\link{sampleSizeReplicationSuccess}}, \code{\link{pSceptical}},
 #' \code{\link{levelSceptical}}
 #' @examples

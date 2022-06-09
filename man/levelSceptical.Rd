@@ -14,7 +14,7 @@ levelSceptical(
 \arguments{
 \item{level}{Numeric vector of required replication success levels.}
 
-\item{c}{The variance ratio}
+\item{c}{The variance ratio. Only used when \code{type = } "controlled".}
 
 \item{alternative}{Either "one.sided" (default) or "two.sided".
 Specifies if the replication success level is one-sided or two-sided. If the replication success level is one-sided,
@@ -23,9 +23,14 @@ then a one-sided level for the sceptical p-value is computed.}
 \item{type}{The calibration type can be either "golden" (default), "nominal", "liberal", or "controlled".
 \code{type} = "golden" ensures that for an original study just significant at the specified \code{level},
 replication success is only possible if the replication effect estimate is larger than the original one.
-If \code{type =} "controlled", the type-I error rate is equal to \code{level}^2.
+"controlled" ensures exact Type-I error control at level \code{level}^2
+for \code{alternative} is "two.sided" or "one.sided" if the direction 
+was pre-specified in advance. For \code{alternative} is "one.sided" 
+and no pre-specified direction, the Type-I error rate is controlled at 
+level 2 \code{level}^2.
 The type \code{"nominal"} ensures that the type-I error rate is always smaller
-than \code{level}^2. Significance of both the original and replication study
+than \code{level}^2 (or 2\code{level}^2 for \code{alternative =} "one.sided" 
+and no pre-specified direction). Significance of both the original and replication study
 at \code{level} is then a necessary but not sufficient requirement for replication success.
 If \code{type} is "liberal" then significance of both studies is a
 sufficient requirement for replication success if the variance ratio is equal to 1.}
@@ -52,8 +57,10 @@ Held, L. (2020). The harmonic mean chi-squared test to substantiate scientific f
 \emph{Journal of the Royal Statistical Society: Series C (Applied Statistics)}, \bold{69}, 697-708.
 \doi{10.1111/rssc.12410}
 
-Held, L., Micheloud, C., Pawel, S. (2021). The assessment of replication
-success based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
+Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
+success based on relative effect size.
+\emph{The Annals of Applied Statistics}, \bold{16}, 706-720.
+ \url{https://doi.org/10.1214/21-AOAS1502}
 }
 \author{
 Leonhard Held
