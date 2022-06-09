@@ -63,7 +63,7 @@ target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
 #' for \code{alternative} is "two.sided" or "one.sided" if the direction 
 #' was pre-specified in advance. For \code{alternative} is "one.sided" 
 #' and no pre-specified direction, the Type-I error rate is controlled at 
-#' level 2 \code{level}^2.
+#' level 2*\code{level}^2.
 #' The type \code{"nominal"} ensures that the type-I error rate is always smaller
 #' than \code{level}^2 (or 2\code{level}^2 for \code{alternative =} "one.sided" 
 #' and no pre-specified direction). Significance of both the original and replication study

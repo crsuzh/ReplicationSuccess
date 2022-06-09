@@ -127,7 +127,8 @@
 #' the original study.
 #' @param power Power to detect the assumed effect with a standard significance test
 #' in the original study.
-#' @param alternative Either "one.sided" (one.sided), "two.sided", "greater", or "less".
+#' @param alternative Specifies if \code{level} and 
+#' \code{alpha} are "two.sided" or one.sided ("one.sided", "greater", or "less").
 #' If "one.sided", the project power is computed based on a one-sided assessment of
 #' replication success in the direction of the original effect estimate.
 #' If "two.sided", the project power is computed based
@@ -145,7 +146,7 @@
 #'     for \code{alternative} is "two.sided" or "one.sided" if the direction 
 #'     was pre-specified in advance. For \code{alternative} is "one.sided" 
 #'     and no pre-specified direction, the Type-I error rate is controlled at 
-#'     level 2 \code{level}^2.
+#'     level 2*\code{level}^2.
 #' See \code{\link{levelSceptical}} for details about recalibration types.
 #' @return The project power.
 #' @details \code{PPpSceptical} is the vectorized version of \code{.PPpSceptical_}.

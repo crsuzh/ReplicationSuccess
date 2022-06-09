@@ -117,7 +117,7 @@ FZ <- function(z, c){
 #'     for \code{alternative} is "two.sided" or "one.sided" if the direction 
 #'     was pre-specified in advance. For \code{alternative} is "one.sided" 
 #'     and no pre-specified direction, the Type-I error rate is controlled at 
-#'     level 2 \code{level}^2.
+#'     level 2*\code{level}^2.
 #' See \code{\link{levelSceptical}} for details about recalibration types. 
 #' @return \code{pSceptical} returns the sceptical p-value.
 #' @details \code{pSceptical} is the vectorized version of \code{.pSceptical_}.

@@ -125,7 +125,7 @@
 #'     for \code{alternative} is "two.sided" or "one.sided" if the direction 
 #'     was pre-specified in advance. For \code{alternative} is "one.sided" 
 #'     and no pre-specified direction, the Type-I error rate is controlled at 
-#'     level 2 \code{level}^2.
+#'     level 2*\code{level}^2.
 #'      See
 #'     \code{\link{levelSceptical}} for details about recalibration types.
 #' @param shrinkage Numeric vector with values in [0,1). Defaults to 0.
