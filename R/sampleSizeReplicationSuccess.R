@@ -1,12 +1,16 @@
 ## numerical implementation
-sampleSizeReplicationSuccessTarget <- function(zo, c, p, level, designPrior, alternative, type = type,
-                                               shrinkage){
-  zr2 <- zr2quantile(zo = zo, c = c, p = p, designPrior = designPrior, 
-                     shrinkage = shrinkage)
-  pC <- pSceptical(zo = zo, zr = sqrt(zr2), c = c, 
-                   alternative = alternative, type = type)
-  return(pC - level)
+targetSS <- function(zo, c, power, level, designPrior, alternative, type = type,
+                     shrinkage){
+  term <- powerReplicationSuccess(zo = zo, 
+                                  c = c, 
+                                  level = level,
+                                  designPrior = designPrior,
+                                  alternative = alternative,
+                                  type = type,
+                                  shrinkage = shrinkage)
+  return(term - power)
 }
+
 
 .sampleSizeReplicationSuccessNum_ <- function(zo,
                                               power = NA,
@@ -16,7 +20,6 @@ sampleSizeReplicationSuccessTarget <- function(zo, c, p, level, designPrior, alt
                                               type = c("golden", "nominal", "liberal", "controlled"),
                                               designPrior = c("conditional", "predictive", "EB"),
                                               shrinkage = 0){
-  
   stopifnot(is.numeric(zo),
             length(zo) == 1,
             is.finite(zo))
@@ -52,27 +55,28 @@ sampleSizeReplicationSuccessTarget <- function(zo, c, p, level, designPrior, alt
             is.finite(shrinkage),
             0 <= shrinkage, shrinkage < 1)
   
-  mylower <- 0
+  eps = 10e-6
+  mylower <- eps
   myupper <- 1000
   
   ## sample size calculation based on power
   if (is.na(d)){
-    target.l <- sampleSizeReplicationSuccessTarget(c = mylower, 
-                                                   zo = zo,
-                                                   p = 1 - power,
-                                                   level = level,
-                                                   designPrior = designPrior,
-                                                   alternative = alternative,
-                                                   type = type,
-                                                   shrinkage = shrinkage)
-    target.u <- sampleSizeReplicationSuccessTarget(c = myupper, 
-                                                   zo = zo,
-                                                   p = 1 - power,
-                                                   level = level,
-                                                   designPrior = designPrior,
-                                                   alternative = alternative,
-                                                   type = type,
-                                                   shrinkage = shrinkage)
+    target.l <- targetSS(c = mylower,
+                         zo = zo,
+                         power = power,
+                         level = level,
+                         designPrior = designPrior,
+                         alternative = alternative,
+                         type = type,
+                         shrinkage = shrinkage)
+    target.u <- targetSS(c = myupper,
+                         zo = zo,
+                         power = power,
+                         level = level,
+                         designPrior = designPrior,
+                         alternative = alternative,
+                         type = type,
+                         shrinkage = shrinkage)
     if (sign(target.l) == sign(target.u)) {
       if(sign(target.u) > 0)
         c <- Inf
@@ -80,11 +84,11 @@ sampleSizeReplicationSuccessTarget <- function(zo, c, p, level, designPrior, alt
         c <- NA
     }
     else {
-      c <- uniroot(f = sampleSizeReplicationSuccessTarget, 
+      c <- uniroot(f = targetSS, 
                    lower = mylower, 
                    upper = myupper, 
                    zo = zo, 
-                   p = 1 - power, 
+                   power = power, 
                    level = level,
                    designPrior = designPrior,
                    alternative = alternative,
@@ -115,7 +119,11 @@ sampleSizeReplicationSuccessTarget <- function(zo, c, p, level, designPrior, alt
   return(c)
 }
 
-sampleSizeReplicationSuccessNum <- Vectorize(.sampleSizeReplicationSuccessNum_)
+
+sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
+
+
+
 
 
 
