@@ -2,7 +2,7 @@ Package: ReplicationSuccess
 Type: Package
 Title: Design and Analysis of Replication Studies
 Version: 1.2
-Date: 2022-06-17
+Date: 2022-07-01
 Authors@R: 
     c(person(given = "Leonhard",
              family = "Held",
@@ -33,6 +33,7 @@ Description: Provides utilities for the design and analysis of replication studi
 URL: https://SamCH93.github.io/ReplicationSuccess/
 BugReports: https://github.com/SamCH93/ReplicationSuccess/issues/
 Depends:
+Imports: ggplot2, meta
 VignetteBuilder: knitr
 Suggests: knitr, roxygen2, testthat
 License: GPL (>=2)
