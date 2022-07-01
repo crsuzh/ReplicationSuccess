@@ -145,8 +145,11 @@ scepticalCI <- function(thetao, thetar, seo, ser,
     CI <- matrix(c(CIlower, CImiddle, CIupper), ncol = 2, 
                  byrow = TRUE)
     colnames(CI) <- c("lower", "upper")
-    
+    if(nThetahatUnique != 1){
       return(list(CI = CI, minP = gam))
+    } else {
+      return(list(CI = CI))
+    }
   }
   if (alternative == "greater") {
     lower <- uniroot(f = target, lower = mint - factor * 
