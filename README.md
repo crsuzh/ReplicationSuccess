@@ -13,9 +13,9 @@ CRAN version:
 install.packages("ReplicationSuccess")
 ```
 
-Development version from github:
+Development version from github with latest developments:
 ```r
-devtools::install_github(repo = "SamCH93/ReplicationSuccess")
+devtools::install_github(repo = "SamCH93/ReplicationSuccess", ref = "T1Econtrol")
 ```
 
 ## Links
