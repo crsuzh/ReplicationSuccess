@@ -111,7 +111,7 @@ pValFunPlot <- function(thetao, thetar,
     
     trans <- function(x) (1-x) * 100
     breaks_y1 <- sort(c(alpha, pretty(lines$y)))
-    breaks_y2 <- sort(trans(c(breaks_y1)))
+    breaks_y2 <- round(sort(trans(c(breaks_y1))))
     transparency <- 1
     Q <- Qtest(thetahat[1], thetahat[2], se[1], se[2])
     
