@@ -71,6 +71,8 @@ opts_chunk$set(size = "small",
                cache = FALSE,
                message = FALSE,
                warning = FALSE)
+
+library(biostatUZH)
 @
 
 \maketitle
@@ -124,7 +126,7 @@ credibility \citep{Held2019a}, the harmonic mean $\chi^2$-test \citep{Held2020b}
 forecasting of replication studies \citep{Pawel2020}, and interim analyses of
 replication studies \citep{MicheloudHeld2021} were added subsequently. Recently, substantial
 changes to many of the existing functions were made due to a recalibration of
-the sceptical $p$-value approach \citep{Held_etal2021}.
+the sceptical $p$-value approach \citep{Held_etal2022}.
 Use \texttt{news(package = "ReplicationSuccess")} to see a history of the
 changes. The development version of \texttt{ReplicationSuccess} is available on
 GitHub (\url{https://github.com/SamCH93/ReplicationSuccess/}, the stable version
@@ -535,7 +537,7 @@ The smallest level $\alpha$ at which replication success can be declared corresp
 to the sceptical $p$-value. %, analogous to the duality of ordinary $p$-values and 
 % confidence intervals. 
 See Figure \ref{fig:examplerevBayes} for a practical illustration of the procedure,
-also see \citet{Held2020} and \citet{Held_etal2021} for technical details.
+also see \citet{Held2020} and \citet{Held_etal2022} for technical details.
 
 \begin{figure}[!h]
 << "plot-pSceptical", echo = FALSE, fig.height = 4 >>=
@@ -698,15 +700,17 @@ The four types can be summarized as follows:
   significant at the specified significance level $\alpha$, replication success 
   is only possible if the replication effect estimate is larger than the original 
   one (\ie if  there is no shrinkage). This is our recommended default level.
-\item \textit{controlled}: When original and replication effect
-  estimate have the same variance ($c=1$), this type ensures type-I
-  error control at $\alpha^2$ for \texttt{alternative = "two.sided"}
-  and at $2 \times \alpha^2$ for \texttt{alternative = "one.sided"}
-  (the conventional level for type I error control of two independent
-  experiments with two-sided testing at level $2 \times \alpha$ in the
-  first and one-sided testing at level $\alpha$ in the second). When
-  the variance of the replication effect estimate is smaller ($c>1$), the
-  type-I error decreases further.
+\item \textit{controlled}: Ensures exact Type-I error control at level $\alpha^2$ 
+for \texttt{alternative = "two.sided"} (where $\alpha$ is two-sided)
+or \texttt{"one.sided"} (where $\alpha$ is one-sided)
+if the direction was pre-specified 
+in advance. For alternative is \texttt{"one.sided"}
+and no pre-specified direction, the 
+Type-I error rate is controlled at level $2\alpha^2$ 
+(the conventional level for type I error control of two
+independent experiments with
+two-sided testing at level $2\alpha$ in the first and one-sided
+testing at level $\alpha$ in the second).
   \item \textit{nominal}: Ensures that the type-I error is always smaller than 
   $\alpha^2$. Significance of both the original and replication study at level 
   $\alpha$ is then a necessary but not sufficient requirement for replication
@@ -715,9 +719,20 @@ The four types can be summarized as follows:
   $\alpha$ is a  sufficient requirement for replication success if original 
   and replication effect estimate have the same variance ($c=1$).
 \end{itemize}
+
+<<>>=
+levCont_c1 <- levelSceptical(level = 0.025, 
+                             c = 1, alternative = "one.sided", 
+                             type = "controlled")
+levCont_c2 <- levelSceptical(level = 0.025, 
+                             c = 2, alternative = "one.sided", 
+                             type = "controlled")
+
+@
+
 \citet{Held2020} only used the nominal level and it led to relatively
 low rates of replication success in the case studies considered.
-\citet{Held_etal2021} further studied properties of the different
+\citet{Held_etal2022} further studied properties of the different
 levels and concluded that the nominal level may be too stringent for
 most realistic scenarios, instead the golden level was recommended as
 default choice to assess replication success. It provides an attractive
@@ -728,11 +743,14 @@ For the one-sided sceptical $p$-value and $\alpha = 0.025$, the golden
 level turns out to be $\Sexpr{round(thresh_gol, 3)}$.  In the
 \citet{Morewedge2010} replication example, we have
 $p_\text{S} = \Sexpr{ps1} < \Sexpr{round(thresh_gol, 3)}$, so the
-replication is successful at the golden level.  A side-remark: The
-controlled threshold of $\Sexpr{round(thresh_contr, 3)}$ is slightly
-larger than the value of the golden level
-$\Sexpr{round(thresh_gol, 3)}$, which means that the golden level 
-controls the  type-I error rate for $c \geq 1$.
+replication is successful at the golden level. The golden level 
+controls the  type-I error rate for $c \geq 1$, so does not provide
+exact Type-I error control for any $c$
+. \citet{Held_etal2022-Fram} recently proposed 
+the controlled level, which ensures exact Type-I error control for 
+any value of $c$. The controlled level is adaptive and depends on $c$. 
+It is for example $\Sexpr{formatPval(levCont_c1)}$ for $c = 1$ and 
+$\Sexpr{formatPval(levCont_c2)}$ for $c = 2$.
 
 {\flushleft\textit{Recalibration}} \\
 In practice it is easier to compute a recalibrated sceptical $p$-value
@@ -908,7 +926,7 @@ $p$-value or $z$-value of the original study.}
 The requirements on the $p$-value of statistical significance of the replication 
 study ($p_r < \alpha$) and of replication success ($p_S < \alpha_S$) 
 can both be transformed to requirements on the relative effect size 
-$d = \hat{\theta}_r/\hat{\theta}_o$ \citep{Held_etal2021}.
+$d = \hat{\theta}_r/\hat{\theta}_o$ \citep{Held_etal2022}.
 % (the 
 % ratio of the replication effect estimate to the original effect estimate).
 In short, significance of the replication study (or replication success) is 
