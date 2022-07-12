@@ -72,7 +72,6 @@ opts_chunk$set(size = "small",
                message = FALSE,
                warning = FALSE)
 
-library(biostatUZH)
 @
 
 \maketitle
@@ -749,8 +748,8 @@ exact Type-I error control for any $c$
 . \citet{Held_etal2022-Fram} recently proposed 
 the controlled level, which ensures exact Type-I error control for 
 any value of $c$. The controlled level is adaptive and depends on $c$. 
-It is for example $\Sexpr{formatPval(levCont_c1)}$ for $c = 1$ and 
-$\Sexpr{formatPval(levCont_c2)}$ for $c = 2$.
+It is for example $\Sexpr{round(levCont_c1, 3)}$ for $c = 1$ and 
+$\Sexpr{round(levCont_c2, 3)}$ for $c = 2$.
 
 {\flushleft\textit{Recalibration}} \\
 In practice it is easier to compute a recalibrated sceptical $p$-value

@@ -1,3 +1,8 @@
+# ReplicationSuccess 1.3 (under development)
+
+- Implemented `"controlled"` level 
+- Added one-sided p-values in `RProjects'
+
 # ReplicationSuccess 1.2
 
 - New data set `protzko2020` 
