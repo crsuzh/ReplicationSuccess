@@ -136,7 +136,7 @@ The (suitably transformed) effect estimates $\hat{\theta}_o$ and $\hat{\theta}_r
 from original (subscript $o$) and replication study (subscript $r$) are assumed 
 to be normally distributed around the unknown effect size $\theta$.
 Their variances are equal to their squared standard 
-errors $\sigma_o$ and $\sigma_r$ which are assumed to be known. 
+errors $\sigma_o^{2}$ and $\sigma_r^{2}$ which are assumed to be known.
 The same framework is also common in meta-analysis and can for example be 
 applied to mean differences, odds ratios (log transformation), or correlation 
 coefficients (Fisher $z$-transformation). 
