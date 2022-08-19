@@ -139,14 +139,6 @@
 #' in the pre-specified direction of the original and replication effect estimate.
 #' @param type Type of recalibration. Can be either "golden" (default),
 #' "nominal" (no recalibration), "liberal", or "controlled".
-#' "golden" ensures that for an original study just significant
-#' at the specified \code{level}, replication success is only possible if the
-#' replication effect estimate is at least as large as the original one.
-#' "controlled" ensures exact Type-I error control at level \code{level}^2
-#'     for \code{alternative} is "two.sided" or "one.sided" if the direction 
-#'     was pre-specified in advance. For \code{alternative} is "one.sided" 
-#'     and no pre-specified direction, the Type-I error rate is controlled at 
-#'     level 2*\code{level}^2.
 #' See \code{\link{levelSceptical}} for details about recalibration types.
 #' @return The project power.
 #' @details \code{PPpSceptical} is the vectorized version of \code{.PPpSceptical_}.
