@@ -29,10 +29,16 @@ formatPval <- function(x, break.eps = 1e-04, break.middle = 0.01, na.form = "NA"
 #' not related to the variance ratio.
 #' @param levelCI Level of the confidence interval to be added on the plot
 #' @param xlim limits of the x-axis of the plot
-#' @return \code{pValFunPlot} plots the p-value function
-#' @details the function also returns the minimum p-value, the 
-#' Q-test p-value and the two-sided p-value
+#' @return \code{pValFunPlot} plots the p-value function.
+#' The blue and purple lines 
+#' indicate the original and replication effect estimates, respectively.
+#' @details The function also returns the minimum p-value, the 
+#' Q-test p-value and the two-sided p-value.
 #' @author Leonhard Held, Florian Gerber, Charlotte Micheloud
+#' @references
+#' Held, L., Micheloud, C., Balabdaoui, F. (2022).
+#'  A Statistical Framework for Replicability. 
+#'  \url{https://arxiv.org/abs/2207.00464}
 #' @examples
 #' pValFunPlot(thetao = 2, thetar = 1.9, seo = 1, ser = 0.5, levelCI = 0.95)
 #' @import ggplot2
@@ -44,9 +50,11 @@ pValFunPlot <- function(thetao, thetar,
                         c = NA, 
                         levelCI = 0.95,
                         xlim = c(min(0, c(thetao, thetar) - 2 * c(seo, ser)),
-                                     max(0, c(thetao, thetar) + 2 * c(seo, ser)))){
+                                 max(0, c(thetao, thetar) + 2 * c(seo, ser)))){
   
   thetahat <-  c(thetao, thetar)
+  thetahatUnique <- unique(thetahat)
+  nThetahatUnique <- length(thetahatUnique)
   se <- c(seo, ser)
   c <- ifelse(is.na(c), seo^2/ser^2, c)
   x <- y <- x_minP <- y_minP <- xmin <- xmax <- ymin <- ymax <- NULL
@@ -63,31 +71,44 @@ pValFunPlot <- function(thetao, thetar,
     xlim[1] < xlim[2]
   )
   
-    alpha <- 1 - levelCI
-    mg <- metagen(TE = thetahat, seTE = se)
-    eps <- 0.0025 # for plotting error bars
-    eb_height <- ifelse(alpha > 0.025, 0.025, alpha - 0.001)
-    z1 <- thetahat[1]/se[1]
-    z2 <- thetahat[2]/se[2]
+  alpha <- 1 - levelCI
+  mg <- metagen(TE = thetahat, seTE = se)
+  eps <- 0.0025 # for plotting error bars
+  eb_height <- ifelse(alpha > 0.025, 0.025, alpha - 0.001)
+  z1 <- thetahat[1]/se[1]
+  z2 <- thetahat[2]/se[2]
+  
+  
+  if(c == Inf)
+    pS <- sqrt(pLimit(z1 = z1, z2 = z2))
+  else
+    pS <- pSceptical(zo = z1, zr = z2, c = c, alternative = "two.sided", 
+                     type = "controlled")
+  
+  muSeq <- seq(xlim[1], xlim[2], length.out = 1000)
+  createData <- function(){
+    pval <- numeric()
+    for(i in 1:length(muSeq))
+      pval[i] <- pValueMu(thetahat = thetahat, se = se, 
+                          c = c, mu = muSeq[i], 
+                          alternative = "two.sided", bound = FALSE)
     
-    
-    if(c == Inf)
-      pS <- sqrt(pLimit(z1 = z1, z2 = z2))
-    else
-      pS <- pSceptical(zo = z1, zr = z2, c = c, alternative = "two.sided", 
-                       type = "controlled")
-    
-    muSeq <- seq(xlim[1], xlim[2], length.out = 1000)
-    createData <- function(){
-      pval <- numeric()
-      for(i in 1:length(muSeq))
-        pval[i] <- pValueMu(thetahat = thetahat, se = se, 
-                            c = c, mu = muSeq[i], 
-                            alternative = "two.sided", bound = FALSE)
+    CIs <- scepticalCI(thetao = thetao, thetar = thetar, seo = seo,
+                       ser = ser, c = c,
+                       alternative = "two.sided", levelCI = levelCI)
+    if(nThetahatUnique == 1){
       
-      CIs <- scepticalCI(thetao = thetao, thetar = thetar, seo = seo,
-                         ser = ser, c = c,
-                         alternative = "two.sided", levelCI = levelCI)
+      df1 <- data.frame(x = muSeq,
+                        y = pval,
+                        stringsAsFactors = FALSE)
+      df2 <- data.frame(xmin = unname(CIs$CI[, 1]),
+                        xmax = unname(CIs$CI[, 2]),
+                        y = rep(alpha, nrow(CIs$CI)), 
+                        stringsAsFactors = FALSE)
+    }
+    
+    
+    if(nThetahatUnique != 1){ 
       idx <- which.min(CIs$minP[,2])
       minP_min <- CIs$minP[idx,2]
       x_minP_min <- CIs$minP[idx,1]
@@ -100,55 +121,71 @@ pValFunPlot <- function(thetao, thetar,
                         xmax = unname(CIs$CI[, 2]),
                         y = rep(alpha, nrow(CIs$CI)), 
                         stringsAsFactors = FALSE)
-      df2$ymax <- df2$y + eb_height
-      df2$ymin <- df2$y - eb_height
-      list(df1, df2)
     }
-    data <-  createData()
-    
-    lines <- data[[1]] ##do.call(`rbind`, lapply(data, `[[`, i = 1L))
-    errorbars <- data[[2]] ## do.call(`rbind`, lapply(data, `[[`, i = 2L))
-    
-    trans <- function(x) (1-x) * 100
-    breaks_y1 <- sort(c(alpha, pretty(lines$y)))
-    breaks_y2 <- round(sort(trans(c(breaks_y1))))
-    transparency <- 1
-    Q <- Qtest(thetahat[1], thetahat[2], se[1], se[2])
-    
-    if(pS^2 >= 0.0001)
+    df2$ymax <- df2$y + eb_height
+    df2$ymin <- df2$y - eb_height
+    list(df1, df2)
+  }
+  data <-  createData()
+  
+  lines <- data[[1]] ##do.call(`rbind`, lapply(data, `[[`, i = 1L))
+  errorbars <- data[[2]] ## do.call(`rbind`, lapply(data, `[[`, i = 2L))
+  
+  trans <- function(x) (1-x) * 100
+  breaks_y1 <- sort(c(alpha, pretty(lines$y)))
+  breaks_y2 <- round(sort(trans(c(breaks_y1))))
+  transparency <- 1
+  Q <- Qtest(thetahat[1], thetahat[2], se[1], se[2])
+  
+  if(pS^2 >= 0.0001)
+    if(nThetahatUnique != 1){
       title <- paste("min p =", formatPval(lines$y_minP[1]), "Q-test: p =", formatPval(Q),
                      "c =", format(c, digits=2, nsmall=2), "two-sided p =", formatPval(pS^2))
-    else
+    } else {
+      title <- paste("Q-test: p =", formatPval(Q),
+                     "c =", format(c, digits=2, nsmall=2), "two-sided p =", formatPval(pS^2))
+    }
+  else
+    if(nThetahatUnique != 1){
       title <- paste("min p =", formatPval(lines$y_minP[1]), "Q-test: p =", formatPval(Q),
                      "c =", format(c, digits=2, nsmall=2), "two-sided p", formatPval(pS^2))
-    
-    ggplot2::ggplot(data = lines, aes(x = x, y = y)) +
-      geom_line(alpha = transparency) +
-      geom_point(aes(x = x_minP, y = y_minP), alpha = transparency) +
-      geom_point(aes(x = 0, y = pS^2), alpha = transparency) +
-      geom_hline(yintercept = alpha, linetype = "dashed") +
-      geom_vline(xintercept = thetahat, linetype = "dashed", col=c(5,6)) +
-      geom_vline(xintercept = 0, linetype = "dashed", col="darkgrey") +
-      scale_y_continuous(name = "p-value",
-                         breaks = breaks_y1,
-                         limits = c(0, 1),
-                         sec.axis = sec_axis(trans = trans, 
-                                             name = "Confidence level [%]",
-                                             breaks = breaks_y2
-                         )) +
-      geom_segment(data = errorbars, aes(x = xmin, xend = xmax, y = y, yend = y)) +
-      geom_segment(data = errorbars, aes(x = xmin, xend = xmin, y = ymin, yend = ymax)) +
-      geom_segment(data = errorbars, aes(x = xmax, xend = xmax, y = ymin, yend = ymax)) +
-      xlim(xlim) +
-      labs(x = bquote(mu),
-           color = "Heterogeneity") +
-      theme_minimal() +
-      theme(axis.title.y.right = element_text(angle = 90),
-            legend.position = "bottom", 
-            plot.title = element_text(size = 10, face = "bold", hjust=0.5), 
-            # panel.grid.major.y = element_blank(),
-            panel.grid.minor.y = element_blank()) + 
-      ggtitle(title)
+    } else {
+      title <- paste("Q-test: p =", formatPval(Q),
+                     "c =", format(c, digits=2, nsmall=2), "two-sided p", formatPval(pS^2))
+    }
+  
+  plot <- ggplot2::ggplot(data = lines, aes(x = x, y = y)) +
+    geom_line(alpha = transparency) +
+    geom_point(aes(x = 0, y = pS^2), alpha = transparency) +
+    geom_hline(yintercept = alpha, linetype = "dashed") +
+    geom_vline(xintercept = thetahat, linetype = "dashed", col=c(5,6)) +
+    geom_vline(xintercept = 0, linetype = "dashed", col="darkgrey") +
+    scale_y_continuous(name = "p-value",
+                       breaks = breaks_y1,
+                       limits = c(0, 1),
+                       sec.axis = sec_axis(trans = trans, 
+                                           name = "Confidence level [%]",
+                                           breaks = breaks_y2
+                       )) +
+    geom_segment(data = errorbars, aes(x = xmin, xend = xmax, y = y, yend = y)) +
+    geom_segment(data = errorbars, aes(x = xmin, xend = xmin, y = ymin, yend = ymax)) +
+    geom_segment(data = errorbars, aes(x = xmax, xend = xmax, y = ymin, yend = ymax)) +
+    xlim(xlim) +
+    labs(x = bquote(mu),
+         color = "Heterogeneity") +
+    theme_minimal() +
+    theme(axis.title.y.right = element_text(angle = 90),
+          legend.position = "bottom", 
+          plot.title = element_text(size = 10, face = "bold", hjust=0.5), 
+          # panel.grid.major.y = element_blank(),
+          panel.grid.minor.y = element_blank()) + 
+    ggtitle(title)
+  
+  if(nThetahatUnique != 1)
+    plot <- plot +   geom_point(aes(x = x_minP, y = y_minP), alpha = transparency)
+  
+  plot
+  
 }
 
 

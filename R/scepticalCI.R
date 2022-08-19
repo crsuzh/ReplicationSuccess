@@ -80,6 +80,10 @@ pValueMu <- function(thetahat, se, mu = 0, c = 1,
 #' @author Leonhard Held, Florian Gerber, Charlotte Micheloud
 #' @examples
 #' scepticalCI(thetao = 2, thetar = 1.9, seo = 1, ser = 0.5, alternative = "two.sided", levelCI = 0.95)
+#' @references
+#' Held, L., Micheloud, C., Balabdaoui, F. (2022).
+#'  A Statistical Framework for Replicability. 
+#'  \url{https://arxiv.org/abs/2207.00464}
 #' @export
 #' 
 scepticalCI <- function(thetao, thetar, seo, ser, 

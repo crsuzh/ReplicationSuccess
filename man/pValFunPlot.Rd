@@ -35,18 +35,25 @@ not related to the variance ratio.}
 \item{xlim}{limits of the x-axis of the plot}
 }
 \value{
-\code{pValFunPlot} plots the p-value function
+\code{pValFunPlot} plots the p-value function.
+The blue and purple lines 
+indicate the original and replication effect estimates, respectively.
 }
 \description{
 Plots the p-value function based on the effect estimates 
 and standard errors of the original and the replication study.
 }
 \details{
-the function also returns the minimum p-value, the 
-Q-test p-value and the two-sided p-value
+The function also returns the minimum p-value, the 
+Q-test p-value and the two-sided p-value.
 }
 \examples{
 pValFunPlot(thetao = 2, thetar = 1.9, seo = 1, ser = 0.5, levelCI = 0.95)
+}
+\references{
+Held, L., Micheloud, C., Balabdaoui, F. (2022).
+ A Statistical Framework for Replicability. 
+ \url{https://arxiv.org/abs/2207.00464}
 }
 \author{
 Leonhard Held, Florian Gerber, Charlotte Micheloud
