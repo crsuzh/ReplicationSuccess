@@ -136,25 +136,19 @@
 #' effect estimates. This is usually the ratio of the sample
 #' size of the replication study to the sample size of the
 #' original study.
-#' @param alternative Either "one.sided" (one.sided), "two.sided", "greater", or "less".
-#' If "one.sided", the type-I error rate is computed based on a one-sided assessment of
-#' replication success in the direction of the original effect estimate.
+#' @param alternative Specifies if \code{level} 
+#' is "two.sided" or one.sided ("one.sided", "greater", or "less").
+#' If "one.sided", the type-I error rate is computed based on a one-sided assessment 
+#' of replication success in the direction of the original effect estimate.
 #' If "two.sided", the type-I error rate is computed based
 #' on a two-sided assessment of replication success regardless of the direction
 #' of the original and replication effect estimate.
 #' If "greater" or "less",  the type-I error rate is
 #' computed based on a one-sided assessment of replication success
 #' in the pre-specified direction of the original and replication effect estimate.
-#' @param type Type of recalibration. Recalibration type can be either "golden" (default), "nominal"
-#'     (no recalibration), "liberal", or "controlled". \code{type} = "golden"
-#'     ensures that for an original study just significant at the specified
-#'     \code{level}, replication success is only possible if the replication
-#'     effect estimate is larger than the original one.
-#'     "controlled" ensures exact Type-I error control at level \code{level}^2
-#'     for \code{alternative} is "two.sided" or "one.sided" if the direction 
-#'     was pre-specified in advance. For \code{alternative} is "one.sided" 
-#'     and no pre-specified direction, the Type-I error rate is controlled at 
-#'     level 2*\code{level}^2. See \code{\link{levelSceptical}} for details
+#' @param type Type of recalibration. Recalibration type can be either "golden" 
+#' (default), "nominal" (no recalibration), "liberal", or "controlled".
+#' See \code{\link{levelSceptical}} for details
 #' about recalibration types.
 #' @return The type-I error rate.
 #' @details \code{T1EpSceptical} is the vectorized version of \code{.T1EpSceptical_}.
