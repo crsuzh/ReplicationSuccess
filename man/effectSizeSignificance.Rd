@@ -53,7 +53,7 @@ effectSizeSignificance(zo = zo, c = 50, level = 0.025,
 Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
 success based on relative effect size.
 \emph{The Annals of Applied Statistics}, \bold{16}, 706-720.
- \url{https://doi.org/10.1214/21-AOAS1502}
+ \doi{10.1214/21-AOAS1502}
 }
 \seealso{
 \code{\link{effectSizeReplicationSuccess}}

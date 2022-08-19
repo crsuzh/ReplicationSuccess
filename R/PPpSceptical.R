@@ -151,7 +151,7 @@
 #' Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
 #' success based on relative effect size.
 #' \emph{The Annals of Applied Statistics}, \bold{16}, 706-720.
-#'  \url{https://doi.org/10.1214/21-AOAS1502}
+#'  \doi{10.1214/21-AOAS1502}
 #'
 #' Maca, J., Gallo, P., Branson, M., and Maurer, W. (2002).  Reconsidering some aspects
 #' of the two-trials paradigm. \emph{Journal of Biopharmaceutical Statistics}, \bold{12},

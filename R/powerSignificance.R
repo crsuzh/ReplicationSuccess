@@ -125,10 +125,11 @@
 #' Pawel, S., Held, L. (2020). Probabilistic forecasting of replication studies.
 #' \emph{PLoS ONE}. \bold{15}, e0231416. \doi{10.1371/journal.pone.0231416}
 #'
-#' Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
-#' success based on relative effect size.
-#' \emph{The Annals of Applied Statistics}, \bold{16}, 706-720.
-#'  \url{https://doi.org/10.1214/21-AOAS1502}
+#' Micheloud, C., Held, L. (2022). Power Calculations for Replication Studies.
+#' \emph{Statistical Science}, \bold{37}, 369-379. 
+#' \doi{10.1214/21-STS828} 
+#' 
+#' 
 #' @seealso \code{\link{sampleSizeSignificance}}, \code{\link{powerSignificanceInterim}}
 #' @author Leonhard Held, Samuel Pawel, Charlotte Micheloud, Florian Gerber
 #' @examples
