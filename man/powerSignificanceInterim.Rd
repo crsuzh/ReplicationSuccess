@@ -84,8 +84,8 @@ Spiegelhalter, D. J., Abrams, K. R., and Myles, J. P. (2004).
 Bayesian Approaches to Clinical Trials and Health-Care
 Evaluation, volume 13. John Wiley & Sons
 
-Micheloud, C., Held, L. (2021). Power Calculations for Replication Studies.
-\url{https://arxiv.org/abs/2004.10814}
+Micheloud, C., Held, L. (2022). Power Calculations for Replication Studies.
+ Statistical Science. 37:369-379. \doi{10.1214/21-STS828}
 }
 \seealso{
 \code{\link{sampleSizeSignificance}}, \code{\link{powerSignificance}}

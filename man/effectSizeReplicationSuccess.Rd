@@ -39,7 +39,6 @@ is computed based on the result of the original study and the corresponding vari
 }
 \details{
 \code{effectSizeReplicationSuccess} is the vectorized version of \code{.effectSizeReplicationSuccess_}.
-\code{\link[base]{Vectorize}} is used to vectorize the function.
 }
 \examples{
 po <- c(0.001, 0.002, 0.01, 0.02, 0.025)
@@ -58,8 +57,9 @@ effectSizeReplicationSuccess(zo = zo, c = 2, level = 0.05,
                              alternative = "two.sided", type = "nominal")
 }
 \references{
-Held, L., Micheloud, C., Pawel, S. (2021). The assessment of replication
-success based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
+Held, L., Micheloud, C., Pawel, S. (2022). The assessment of
+    replication success based on relative effect size. The Annals of Applied
+    Statistics. 16:706-720. \doi{10.1214/21-AOAS1502}
 }
 \seealso{
 \code{\link{sampleSizeReplicationSuccess}}, \code{\link{levelSceptical}}

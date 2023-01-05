@@ -83,8 +83,10 @@
 #' Series A (Statistics in Society)}, \bold{183}, 431-448.
 #' \doi{10.1111/rssa.12493}
 #'
-#' Held, L., Micheloud, C., Pawel, S. (2021). The assessment of replication success
-#' based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
+#' Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
+#'     success based on relative effect size. The Annals of Applied Statistics.
+#'     16:706-720. \doi{10.1214/21-AOAS1502}
+#'
 #' @author Leonhard Held
 #' @seealso \code{\link{sampleSizeReplicationSuccess}}, \code{\link{powerReplicationSuccess}}, \code{\link{levelSceptical}}
 #' @examples

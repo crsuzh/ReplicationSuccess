@@ -35,18 +35,20 @@ vignette("ReplicationSuccess")
 ## Publications
 
   - Held, L. (2020). A new standard for the analysis and design of replication
-  studies (with discussion). *Journal of the Royal Statistical Society: Series A
-  (Statistics in Society)*. 183(2):431-448. <https://doi.org/10.1111/rssa.12493>
+    studies (with discussion). *Journal of the Royal Statistical Society: Series
+    A (Statistics in Society)*. 183(2):431-448.
+    <https://doi.org/10.1111/rssa.12493>
   
-  - Held, L., Micheloud, C., Pawel, S. (2021). The assessment of replication
-  success based on relative effect size. <https://arxiv.org/abs/2009.07782>
+  - Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
+    success based on relative effect size. The Annals of Applied Statistics.
+    16:706-720. <https://doi.org/10.1214/21-AOAS1502>
   
   - Held, L. (2020). The harmonic mean chi-squared test to substantiate
     scientific findings. *Journal of the Royal Statistical Society: Series C
     (Applied Statistics)*, 69:697-708. <https://doi.org/10.1111/rssc.12410>
     
-  - Micheloud, C., Held, L. (2021). Power Calculations for Replication Studies.
-    <https://arxiv.org/abs/2004.10814>
+  - Micheloud, C., Held, L. (2022). Power Calculations for Replication Studies.
+    Statistical Science. 37:369-379. <https://doi.org/10.1214/21-STS828>
     
   - Pawel, S., Held, L. (2020). Probabilistic forecasting of replication
     studies. PLoS ONE 15(4):e0231416.
