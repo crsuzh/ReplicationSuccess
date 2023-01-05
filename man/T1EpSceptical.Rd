@@ -73,8 +73,9 @@ Held, L. (2020). The harmonic mean chi-squared test to substantiate
 scientific findings. \emph{Journal of the Royal Statistical Society: Series C
 (Applied Statistics)}, \bold{69}, 697-708. \doi{10.1111/rssc.12410}
 
-Held, L., Micheloud, C., Pawel, S. (2021). The assessment of replication success
-based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
+Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
+    success based on relative effect size. The Annals of Applied Statistics.
+    16:706-720. \doi{10.1214/21-AOAS1502}
 }
 \seealso{
 \code{\link{pSceptical}}, \code{\link{levelSceptical}}, \code{\link{PPpSceptical}}
