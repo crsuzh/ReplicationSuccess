@@ -2,7 +2,7 @@ Package: ReplicationSuccess
 Type: Package
 Title: Design and Analysis of Replication Studies
 Version: 1.2
-Date: 2022-01-26
+Date: 2023-01-05
 Authors@R: 
     c(person(given = "Leonhard",
              family = "Held",
@@ -12,7 +12,7 @@ Authors@R:
       person(given = "Samuel",
              family = "Pawel",
 	     email = "samuel.pawel@uzh.ch",
-             role = c("cre", "aut"),
+             role = c("aut"),
              comment = c(ORCID = "0000-0003-2779-320X")),
      person(given = "Charlotte",
              family = "Micheloud",
@@ -44,4 +44,5 @@ Suggests: knitr, roxygen2, testthat
 License: GPL (>=2)
 LazyData: true
 NeedsCompilation: no
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.1
+Encoding: UTF-8
