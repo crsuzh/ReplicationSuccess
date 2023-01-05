@@ -1,3 +1,9 @@
+# ReplicationSuccess 1.3
+
+- Change of maintainer
+- Transfer ownership of development repository to CRS
+- Update links throughout the entire repository following maintainer and ownership change
+
 # ReplicationSuccess 1.2
 
 - New data set `protzko2020` 
