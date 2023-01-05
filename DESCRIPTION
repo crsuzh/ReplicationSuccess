@@ -21,16 +21,22 @@ Authors@R:
              comment = c(ORCID = "0000-0002-4995-4505")),
       person(given = "Florian",
              family = "Gerber",
-	     email = "florian.gerber@uzh.ch",
-	     role = c("aut"),
-             comment = c(ORCID = "0000-0001-8545-5263")))
+             email = "florian.gerber@uzh.ch",
+             role = c("aut"),
+             comment = c(ORCID = "0000-0001-8545-5263")),
+      person(given = "Felix",
+             family = "Hofmann",
+             role = c("cre", "aut"),
+             email = "felix.hofmann2@uzh.ch",
+             comment = c(ORCID = "0000-0002-3891-6239"))
+      )
 Description: Provides utilities for the design and analysis of replication studies.
     Features both traditional methods based on statistical significance and
     more recent methods such as the sceptical p-value; Held L. (2020) <doi:10.1111/rssa.12493>.
     Also provides related methods including the harmonic mean chi-squared test; Held, L. (2020), <doi:10.1111/rssc.12410>,
     and intrinsic credibility; Held, L. (2019) <doi:10.1098/rsos.181534>.
     Contains datasets from four large-scale replication projects.
-URL: https://SamCH93.github.io/ReplicationSuccess/
+URL: https://crsuzh.github.io/ReplicationSuccess/
 BugReports: https://github.com/SamCH93/ReplicationSuccess/issues/
 Depends:
 VignetteBuilder: knitr
