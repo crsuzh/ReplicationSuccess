@@ -15,12 +15,12 @@ install.packages("ReplicationSuccess")
 
 Development version from github:
 ```r
-devtools::install_github(repo = "SamCH93/ReplicationSuccess")
+devtools::install_github(repo = "crsuzh/ReplicationSuccess")
 ```
 
 ## Links
 
-- Website (pkgdown): https://samch93.github.io/ReplicationSuccess/
+- Website (pkgdown): https://crsuzh.github.io/ReplicationSuccess/
 - CRAN repository: https://cran.r-project.org/web/packages/ReplicationSuccess/
 
 ## Introduction in vignette
