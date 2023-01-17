@@ -2,7 +2,7 @@ Package: ReplicationSuccess
 Type: Package
 Title: Design and Analysis of Replication Studies
 Version: 1.2
-Date: 2022-08-19
+Date: 2023-01-17
 Authors@R: 
     c(person(given = "Leonhard",
              family = "Held",
@@ -30,10 +30,9 @@ Description: Provides utilities for the design and analysis of replication studi
     Also provides related methods including the harmonic mean chi-squared test; Held, L. (2020), <doi:10.1111/rssc.12410>,
     and intrinsic credibility; Held, L. (2019) <doi:10.1098/rsos.181534>.
     Contains datasets from four large-scale replication projects.
-URL: https://SamCH93.github.io/ReplicationSuccess/
-BugReports: https://github.com/SamCH93/ReplicationSuccess/issues/
+URL: https://github.com/crsuzh/ReplicationSuccess/
+BugReports: https://github.com/crsuzh/ReplicationSuccess/issues/
 Depends:
-Imports: ggplot2, meta
 VignetteBuilder: knitr
 Suggests: knitr, roxygen2, testthat
 License: GPL (>=2)
