@@ -113,7 +113,7 @@
 #' Specifies if the significance level is one-sided or two-sided.
 #' If the significance level is one-sided, then sample size calculations are based on a
 #' one-sided assessment of significance in the direction of the
-#' original effect estimates.
+#' original effect estimate.
 #' @param designPrior Is only taken into account when \code{power} is specified.
 #'     Either "conditional" (default), "predictive", or "EB". If "EB", the power
 #'     is computed under a predictive distribution where the contribution of the

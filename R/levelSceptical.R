@@ -1,3 +1,8 @@
+# target calculates the T1E rate for a certain alternative, level and 
+# variance ratio and substracts the target T1E rate. 
+# Used in levelSceptical to calculate the controlled level for 
+# replication success 
+
 
 target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
   myT1E <- T1EpSceptical(alternative = alternative, level = alphalevel, c = c, 
@@ -25,24 +30,22 @@ target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
   stopifnot(!is.null(type))
   type <- match.arg(type)
   
-  if(type == "nominal")
+  if (type == "nominal") {
     res <- level
-  
-  if(type == "liberal")
+  } else if (type == "liberal") {
     res <- pIntrinsic(p = level, alternative = alternative, type = "Held")
-  
-  if(type == "controlled"){
+  } else if (type == "controlled") {
     mylower <- sqrt(targetT1E)
-    if(alternative=="one.sided")
+    if (alternative=="one.sided") {
       myupper <- 0.5
-    if(alternative=="two.sided")
+    } else if (alternative=="two.sided") {
       myupper <- 1-.Machine$double.eps^0.25
+  }
     result <- uniroot(target, lower = mylower, upper = myupper,
                       alternative = alternative, c = c,
                       targetT1E = targetT1E)
     res <- result$root
-  }
-  if(type == "golden"){
+  } else if (type == "golden") {
     res <- pIntrinsic(p = level, alternative = alternative, type = "Matthews")
   }
   return(res)
@@ -52,7 +55,7 @@ target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
 #' The level for the sceptical p-value is computed based on the specified
 #' alternative and calibration type.
 #' @param level Numeric vector of required replication success levels.
-#' @param c The variance ratio. Only used when \code{type = } "controlled".
+#' @param c The variance ratio. Only required when \code{type = } "controlled".
 #' @param alternative Either "one.sided" (default) or "two.sided".
 #' Specifies if the replication success level is one-sided or two-sided. If the replication success level is one-sided,
 #' then a one-sided level for the sceptical p-value is computed.

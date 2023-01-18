@@ -29,7 +29,7 @@
       
     }
     
-    if(alternative == "one.sided" || alternative == "greater" || alternative == "less"){
+    if (alternative != "two.sided") {
       alphas <- levelSceptical(level = level, 
                                alternative = "one.sided", 
                                type = type, 

@@ -31,7 +31,7 @@
     type <- match.arg(type)
     
     ## compute normal quantile corresponding to level and type
-    if(alternative == "two.sided"){
+    if (alternative == "two.sided") {
       alphas <- levelSceptical(level = level, 
                                alternative = "two.sided", 
                                type = type, 
@@ -39,7 +39,7 @@
       
     }
     
-    if(alternative == "one.sided" || alternative == "greater" || alternative == "less"){
+    if (alternative == "one.sided" || alternative == "greater" || alternative == "less") {
       alphas <- levelSceptical(level = level, 
                                alternative = "one.sided", 
                                type = type, 
@@ -78,7 +78,7 @@
         } 
     }
     
-    if (alternative %in% c("one.sided", "greater", "less")) {
+    if (alternative != "two.sided") {
                                         # define function to integrate over zo
         intFun <- function(zo) {
             ## compute minimal zr to achieve replication success given zo and level

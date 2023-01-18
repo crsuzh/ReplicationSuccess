@@ -1,30 +1,9 @@
-FZ <- function(z, c){
-  stopifnot((c >= 0))
-  if(z <= 0)
-    return(0)
-  if(c == 0)
-    return(1 - 4 * (1 - pnorm(sqrt(z)))^2)
-  if(c == 1)
-    return(pgamma(z, 1/2, 2))
-  f <- function(t, c, z){
-    if(c < 1)
-      t1 <- exp(-(1-c)*z/(1-sqrt(1-(1-c)*t)))
-    if(c > 1)
-      t1 <- exp(-(c-1)*z/(sqrt(1+(c-1)*t)-1))
-    t2 <- 1/sqrt(t*(1-t))
-    return(t1 * t2)
-  }
-  myint <- integrate(f, lower = 0, upper = 1, z = z, c = c)$value
-  result <- 1-myint/pi
-  return(result)
-}
-
 #' @export
 .pSceptical_ <- function(zo,
                          zr,
                          c, 
                          alternative = c("one.sided", "two.sided"),
-                         type = c("golden", "nominal", "liberal", "controlled")){
+                         type = c("golden", "nominal", "liberal", "controlled")) {
   
   stopifnot(is.numeric(zo),
             length(zo) == 1,
@@ -47,30 +26,31 @@ FZ <- function(z, c){
   
   z <- zSceptical(zo = zo, zr = zr, c = c)
   
-  if(type == "nominal"){
+  if(type == "nominal") {
     result <- z
     res <- z2p(z = result, alternative = "two.sided")
   }    
-  if(type == "liberal"){
-    result <- z*sqrt(2)
+  
+  if(type == "liberal") {
+    result <- z * sqrt(2)
     res <- z2p(z = result, alternative = "two.sided")
   }
     
   if(type == "golden"){
-    ## golden ratio 
     phi <- (sqrt(5) + 1)/2  
     result <- z*sqrt(phi)
     res <- z2p(z = result, alternative = "two.sided") 
   }
   
   if(type == "controlled"){
-  res2 <- (1 - FZ(z^2, c = c))
+  res2 <- (1 - FZ(z = z^2, c = c))
   res <- sqrt(res2)
   }
   
   if(alternative == "one.sided") {
-    res <- ifelse(sign(zo) == sign(zr), res/2, 1-res/2)
+    res <- ifelse(sign(zo) == sign(zr), res/2, 1 - res/2)
   }
+  
   # if(alternative == "greater"){
   #   if(zo < 0) res <- NaN
   #   if(zo > 0 && zr > 0) res <- res/2
@@ -190,7 +170,7 @@ zSceptical <- function(zo,
         z2 <- if(c == 1) z2H/2 else (sqrt(z2A*(z2A + (c - 1)*z2H)) - z2A)/(c - 1)
     } else {
         z2 <- ifelse(c == 1, 
-                     z2H/2,
+                     z2H / 2,
                      (sqrt(z2A*(z2A + (c - 1)*z2H)) - z2A)/(c - 1))
     }
      

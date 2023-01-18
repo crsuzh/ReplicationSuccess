@@ -14,7 +14,7 @@ levelSceptical(
 \arguments{
 \item{level}{Numeric vector of required replication success levels.}
 
-\item{c}{The variance ratio. Only used when \code{type = } "controlled".}
+\item{c}{The variance ratio. Only required when \code{type = } "controlled".}
 
 \item{alternative}{Either "one.sided" (default) or "two.sided".
 Specifies if the replication success level is one-sided or two-sided. If the replication success level is one-sided,

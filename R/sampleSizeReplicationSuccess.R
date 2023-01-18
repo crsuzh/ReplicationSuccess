@@ -177,7 +177,7 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
               is.finite(h),
               0 <= h)
 
-    if(!(type == "controlled")){
+    if(type != "controlled") {
     ## computing some quantities
     zoabs <- abs(zo)
     alphaS <- levelSceptical(level = level, alternative = alternative,
@@ -278,10 +278,11 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
       # here put the numerical integration
       stopifnot(level < power)
       c <-  sampleSizeReplicationSuccessNum(zo = zo, power = power, d = d, 
-                                      level = level, alternative = alternative, 
-                                      type = "controlled", 
-                                      designPrior = designPrior,
-                                      shrinkage = shrinkage)
+                                            level = level, 
+                                            alternative = alternative,
+                                            type = "controlled", 
+                                            designPrior = designPrior,
+                                            shrinkage = shrinkage)
     }
     return(c)
 }
