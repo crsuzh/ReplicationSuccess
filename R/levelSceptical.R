@@ -6,7 +6,7 @@
 
 target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
   myT1E <- T1EpSceptical(alternative = alternative, level = alphalevel, c = c, 
-                         type="nominal")
+                         type = "nominal")
   myT1E <- ifelse(alternative == "one.sided", myT1E/2, myT1E)
   ## trick: divide by two to 1-1 scenario
   result <- myT1E - targetT1E
