@@ -170,7 +170,7 @@ zSceptical <- function(zo,
         z2 <- if(c == 1) z2H/2 else (sqrt(z2A*(z2A + (c - 1)*z2H)) - z2A)/(c - 1)
     } else {
         z2 <- ifelse(c == 1, 
-                     z2H / 2,
+                     z2H/2,
                      (sqrt(z2A*(z2A + (c - 1)*z2H)) - z2A)/(c - 1))
     }
      

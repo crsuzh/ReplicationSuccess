@@ -20,7 +20,7 @@ devtools::install_github(repo = "crsuzh/ReplicationSuccess")
 
 ## Links
 
-- Website (pkgdown): https://github.com/crsuzh/ReplicationSuccess
+- Website (pkgdown): https://github.com/crsuzh/ReplicationSuccess/
 - CRAN repository: https://cran.r-project.org/web/packages/ReplicationSuccess/
 
 ## Introduction in vignette
