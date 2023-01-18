@@ -103,9 +103,8 @@ Series A (Statistics in Society)}, \bold{183}, 431-448.
 \doi{10.1111/rssa.12493}
 
 Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
-success based on relative effect size.
-\emph{The Annals of Applied Statistics}, \bold{16}, 706-720.
- \doi{10.1214/21-AOAS1502}
+    success based on relative effect size. The Annals of Applied Statistics.
+    16:706-720. \doi{10.1214/21-AOAS1502}
 }
 \seealso{
 \code{\link{pSceptical}}, \code{\link{powerReplicationSuccess}}, \code{\link{levelSceptical}}

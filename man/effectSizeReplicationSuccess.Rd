@@ -62,10 +62,9 @@ effectSizeReplicationSuccess(zo = zo, c = 2, level = 0.05,
                              alternative = "two.sided", type = "nominal")
 }
 \references{
-Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
-success based on relative effect size.
-\emph{The Annals of Applied Statistics}, \bold{16}, 706-720.
- \doi{10.1214/21-AOAS1502}
+Held, L., Micheloud, C., Pawel, S. (2022). The assessment of
+    replication success based on relative effect size. The Annals of Applied
+    Statistics. 16:706-720. \doi{10.1214/21-AOAS1502}
 }
 \seealso{
 \code{\link{sampleSizeReplicationSuccess}}, \code{\link{levelSceptical}}
