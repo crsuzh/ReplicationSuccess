@@ -90,6 +90,10 @@ Series A (Statistics in Society)}, \bold{183}, 431-448.
 
 Held, L., Micheloud, C., Pawel, S. (2021). The assessment of replication success
 based on relative effect size. \url{https://arxiv.org/abs/2009.07782}
+
+Micheloud, C., Balabdaoui, F., Held, L. (2022).  
+Beyond the two-trials rule: Type-I error control and sample size planning 
+with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
 }
 \seealso{
 \code{\link{sampleSizeReplicationSuccess}}, \code{\link{powerReplicationSuccess}}, \code{\link{levelSceptical}}

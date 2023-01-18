@@ -86,6 +86,11 @@ target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
 #' success based on relative effect size.
 #' \emph{The Annals of Applied Statistics}, \bold{16}, 706-720.
 #' \doi{10.1214/21-AOAS1502}
+#' 
+#' Micheloud, C., Balabdaoui, F., Held, L. (2022).  
+#' Beyond the two-trials rule: Type-I error control and sample size planning 
+#' with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
+#' 
 #' @author Leonhard Held
 #' @examples
 #' levelSceptical(level = 0.025, alternative = "one.sided", type = "nominal")
