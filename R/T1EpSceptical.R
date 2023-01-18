@@ -20,7 +20,7 @@
     type <- match.arg(type)
         
     ## compute normal quantile corresponding to level and type
-    if(alternative == "two.sided"){
+    if (alternative == "two.sided") {
       alphas <- levelSceptical(level = level, 
                                alternative = "two.sided", 
                                type = type, 
