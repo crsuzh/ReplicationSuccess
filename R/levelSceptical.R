@@ -91,6 +91,7 @@ target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
 #' Beyond the two-trials rule: Type-I error control and sample size planning 
 #' with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
 #' 
+
 #' @author Leonhard Held
 #' @examples
 #' levelSceptical(level = 0.025, alternative = "one.sided", type = "nominal")

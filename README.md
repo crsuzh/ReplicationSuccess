@@ -20,7 +20,8 @@ devtools::install_github(repo = "crsuzh/ReplicationSuccess")
 
 ## Links
 
-- Website (pkgdown): https://github.com/crsuzh/ReplicationSuccess/
+
+- Website (pkgdown): https://crsuzh.github.io/ReplicationSuccess/
 - CRAN repository: https://cran.r-project.org/web/packages/ReplicationSuccess/
 
 ## Introduction in vignette
@@ -35,8 +36,9 @@ vignette("ReplicationSuccess")
 ## Publications
 
   - Held, L. (2020). A new standard for the analysis and design of replication
-  studies (with discussion). *Journal of the Royal Statistical Society: Series A
-  (Statistics in Society)*. 183(2):431-448. <https://doi.org/10.1111/rssa.12493>
+    studies (with discussion). *Journal of the Royal Statistical Society: Series
+    A (Statistics in Society)*. 183(2):431-448.
+    <https://doi.org/10.1111/rssa.12493>
   
   - Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
   success based on relative effect size. *The Annals of Applied Statistics*. 
@@ -44,7 +46,7 @@ vignette("ReplicationSuccess")
   
   - Held, L. (2020). The harmonic mean chi-squared test to substantiate
     scientific findings. *Journal of the Royal Statistical Society: Series C
-    (Applied Statistics)*, 69:697-708. <https://doi.org/10.1111/rssc.12410>
+    (Applied Statistics)*, 69(3):697-708. <https://doi.org/10.1111/rssc.12410>
     
   - Micheloud, C., Held, L. (2021). Power Calculations for Replication Studies.
   *Statistical Science*. 37(3):369–379. <https://doi.org/10.1214/21-STS828>
@@ -54,7 +56,7 @@ vignette("ReplicationSuccess")
     <https://doi.org/10.1371/journal.pone.0231416>
     
   - Held, L. (2019). The assessment of intrinsic credibility and a new argument
-    for *p* < 0.005. *Royal Society Open Science*, 6:181534.
+    for *p* < 0.005. *Royal Society Open Science*, 6(3):181534.
     <https://dx.doi.org/10.1098/rsos.181534>
     
   - Micheloud, C., Balabdaoui, F., Held, L. (2022).  

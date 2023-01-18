@@ -1,7 +1,12 @@
-# ReplicationSuccess 1.3 (under development)
 
+# ReplicationSuccess 1.3
+
+- Change of maintainer
+- Transfer ownership of development repository to CRS
+- Update links throughout the entire repository following maintainer and ownership change
 - Implemented `"controlled"` level 
 - Added one-sided p-values in `RProjects'
+
 
 # ReplicationSuccess 1.2
 

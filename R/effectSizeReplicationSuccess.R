@@ -70,12 +70,9 @@
 #' See \code{\link{levelSceptical}} for details about recalibration types.
 #' @return The minimum relative effect size to achieve replication success.
 #' @details \code{effectSizeReplicationSuccess} is the vectorized version of \code{.effectSizeReplicationSuccess_}.
-#' \code{\link[base]{Vectorize}} is used to vectorize the function.
-#' @references
-#' Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
-#' success based on relative effect size.
-#' \emph{The Annals of Applied Statistics}, \bold{16}, 706-720.
-#'  \doi{10.1214/21-AOAS1502}
+#' @references Held, L., Micheloud, C., Pawel, S. (2022). The assessment of
+#'     replication success based on relative effect size. The Annals of Applied
+#'     Statistics. 16:706-720. \doi{10.1214/21-AOAS1502}
 #' @author Leonhard Held, Charlotte Micheloud, Samuel Pawel, Florian Gerber
 #' @seealso \code{\link{sampleSizeReplicationSuccess}}, \code{\link{levelSceptical}}
 #' @examples

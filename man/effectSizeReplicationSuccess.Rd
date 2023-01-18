@@ -44,7 +44,6 @@ is computed based on the result of the original study and the corresponding vari
 }
 \details{
 \code{effectSizeReplicationSuccess} is the vectorized version of \code{.effectSizeReplicationSuccess_}.
-\code{\link[base]{Vectorize}} is used to vectorize the function.
 }
 \examples{
 po <- c(0.001, 0.002, 0.01, 0.02, 0.025)
