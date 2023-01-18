@@ -85,7 +85,8 @@ Bayesian Approaches to Clinical Trials and Health-Care
 Evaluation, volume 13. John Wiley & Sons
 
 Micheloud, C., Held, L. (2022). Power Calculations for Replication Studies.
- Statistical Science. 37:369-379. \doi{10.1214/21-STS828}
+\emph{Statistical Science}, \bold{37}, 369-379. 
+\doi{10.1214/21-STS828}
 }
 \seealso{
 \code{\link{sampleSizeSignificance}}, \code{\link{powerSignificance}}

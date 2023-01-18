@@ -31,11 +31,25 @@
     type <- match.arg(type)
     
     ## compute normal quantile corresponding to level and type
-    alphas <- levelSceptical(level = level, 
-                             alternative = alternative, 
-                             type = type)
+    if (alternative == "two.sided") {
+      alphas <- levelSceptical(level = level, 
+                               alternative = "two.sided", 
+                               type = type, 
+                               c = c)
+      
+    }
+    
+    if (alternative != "two.sided") {
+      alphas <- levelSceptical(level = level, 
+                               alternative = "one.sided", 
+                               type = type, 
+                               c = c)
+    }
+    
+    # quick fix for alternative problems
     ## abs(.) is needed to deal with alternative="less"
     zas <- abs(p2z(p = alphas, alternative = alternative))
+    #cm: really correct?
     
     ## compute mean based on alpha and power
     ## abs(.) is needed to deal with alternative="less"
@@ -64,7 +78,7 @@
         } 
     }
     
-    if (alternative %in% c("one.sided", "greater", "less")) {
+    if (alternative != "two.sided") {
                                         # define function to integrate over zo
         intFun <- function(zo) {
             ## compute minimal zr to achieve replication success given zo and level
@@ -113,19 +127,18 @@
 #' the original study.
 #' @param power Power to detect the assumed effect with a standard significance test
 #' in the original study.
-#' @param alternative Either "one.sided" (default), "two.sided", "greater", or "less".
-#' If "one.sided", the type-I error rate is computed based on a one-sided
-#' assessment of replication success in the direction of the original effect estimate.
-#' If "two.sided", the type-I error rate is computed based on a two-sided assessment
-#' of replication success regardless of the direction of the original and replication
-#' effect estimate. If "greater" or "less", the type-I error rate is computed based on
-#' a one-sided assessment of replication success in the pre-specified direction of the
-#' original and replication effect estimate.
+#' @param alternative Specifies if \code{level} and 
+#' \code{alpha} are "two.sided" or one.sided ("one.sided", "greater", or "less").
+#' If "one.sided", the project power is computed based on a one-sided assessment of
+#' replication success in the direction of the original effect estimate.
+#' If "two.sided", the project power is computed based
+#' on a two-sided assessment of replication success regardless of the direction
+#' of the original and replication effect estimate.
+#' If "greater" or "less",  project power is
+#' computed based on a one-sided assessment of replication success
+#' in the pre-specified direction of the original and replication effect estimate.
 #' @param type Type of recalibration. Can be either "golden" (default),
 #' "nominal" (no recalibration), "liberal", or "controlled".
-#' "golden" ensures that for an original study just significant
-#' at the specified \code{level}, replication success is only possible if the
-#' replication effect estimate is at least as large as the original one.
 #' See \code{\link{levelSceptical}} for details about recalibration types.
 #' @return The project power.
 #' @details \code{PPpSceptical} is the vectorized version of \code{.PPpSceptical_}.
@@ -149,7 +162,7 @@
 #' ## compare project power for different levels of replication success
 #' levels <- c("nominal" = levelSceptical(level = 0.025, type = "nominal"),
 #'             "liberal" = levelSceptical(level = 0.025, type = "liberal"),
-#'             "controlled" = levelSceptical(level = 0.025, type = "controlled"),
+#'             "controlled" = levelSceptical(level = 0.025, type = "controlled", c = 1),
 #'             "golden" = levelSceptical(level = 0.025, type = "golden"))
 #' c <- seq(0.4, 5, by = 0.01)
 #' alpha <- 0.025

@@ -27,15 +27,17 @@
     
     alphas <- levelSceptical(level = level, 
                              alternative = alternative, 
-                             type = type)
+                             type = type, 
+                             c = c)
     zalphas <- p2z(p = alphas, alternative = alternative)
     K <- zo^2 / zalphas^2
     
-    if (zalphas > zo) {
+    if (zalphas > abs(zo)) {
       warning(paste("Replication success is not achievable at this level as |zo| =",
                     abs(round(zo, 2)), " < ", round(p2z(levelSceptical(level = level,
                                                         alternative = alternative,
-                                                        type = type), alternative = alternative), 3)))
+                                                        type = type, 
+                                                        c = c), alternative = alternative), 3)))
       d <- NA
     } else {
         d <- if(c < Inf) sqrt(1 + c/(K - 1))/(sqrt(K * c)) else 1/sqrt(K * (K - 1))
@@ -60,6 +62,11 @@
 #' @param type Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
 #' "liberal", or "controlled". "golden" ensures that for an original study just significant at
 #' the specified \code{level}, replication success is only possible for replication effect estimates larger than the original one.
+#' "controlled" ensures exact Type-I error control at level \code{level}^2
+#' for \code{alternative} is "two.sided" or "one.sided" if the direction 
+#' was pre-specified in advance. For \code{alternative} is "one.sided" 
+#' and no pre-specified direction, the Type-I error rate is controlled at 
+#' level 2*\code{level}^2.
 #' See \code{\link{levelSceptical}} for details about recalibration types.
 #' @return The minimum relative effect size to achieve replication success.
 #' @details \code{effectSizeReplicationSuccess} is the vectorized version of \code{.effectSizeReplicationSuccess_}.

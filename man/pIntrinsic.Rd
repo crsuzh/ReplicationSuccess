@@ -7,7 +7,7 @@
 pIntrinsic(
   p = z2p(z, alternative = alternative),
   z = NULL,
-  alternative = c("two.sided", "one.sided"),
+  alternative = c("two.sided", "one.sided", "less", "greater"),
   type = c("Held", "Matthews")
 )
 }

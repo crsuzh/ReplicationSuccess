@@ -49,7 +49,8 @@
     zoabs <- abs(zo)
 
     ## if zoas < zalphaS, power is zero
-    alphaS <- levelSceptical(level = level, alternative = alternative, type = type)
+    alphaS <- levelSceptical(level = level, alternative = alternative, type = type, 
+                             c = c)
     zalphaS <- p2z(p = alphaS, alternative = alternative)
     if (zoabs < zalphaS) {
         power <- 0
@@ -119,7 +120,13 @@
 #'     (no recalibration), "liberal", or "controlled". \code{type} = "golden"
 #'     ensures that for an original study just significant at the specified
 #'     \code{level}, replication success is only possible if the replication
-#'     effect estimate is larger than the original one. See
+#'     effect estimate is larger than the original one.
+#'     "controlled" ensures exact Type-I error control at level \code{level}^2
+#'     for \code{alternative} is "two.sided" or "one.sided" if the direction 
+#'     was pre-specified in advance. For \code{alternative} is "one.sided" 
+#'     and no pre-specified direction, the Type-I error rate is controlled at 
+#'     level 2*\code{level}^2.
+#'      See
 #'     \code{\link{levelSceptical}} for details about recalibration types.
 #' @param shrinkage Numeric vector with values in [0,1). Defaults to 0.
 #'     Specifies the shrinkage of the original effect estimate towards zero,

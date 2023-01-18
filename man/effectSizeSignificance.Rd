@@ -20,7 +20,9 @@ size of the original study.}
 
 \item{level}{Significance level. Default is 0.025.}
 
-\item{alternative}{Specifies if the significance level is "one.sided" (default) or "two.sided".}
+\item{alternative}{Specifies if the significance level is "one.sided" (default) or "two.sided".
+If the significance level is one-sided, then effect size calculations are based on a one-sided assessment of
+significance in the direction of the original effect estimate.}
 }
 \value{
 The minimum relative effect size to achieve significance in the replication study.

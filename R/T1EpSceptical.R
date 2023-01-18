@@ -20,12 +20,27 @@
     type <- match.arg(type)
         
     ## compute normal quantile corresponding to level and type
-    alphas <- levelSceptical(level = level, 
-                             alternative = alternative, 
-                             type = type)
-    zas <- p2z(alphas, alternative = alternative)
-    
     if (alternative == "two.sided") {
+      alphas <- levelSceptical(level = level, 
+                               alternative = "two.sided", 
+                               type = type, 
+                               c = c)
+      zas <- p2z(alphas, alternative = "two.sided")
+      
+    }
+    
+    if (alternative != "two.sided") {
+      alphas <- levelSceptical(level = level, 
+                               alternative = "one.sided", 
+                               type = type, 
+                               c = c)
+      zas <- p2z(alphas, alternative = alternative)
+      
+    }
+  
+    # quick fix for alternative problems
+
+    if(alternative == "two.sided") {
         ## if c = 1 compute analytically
         if (c == 1) {
             t1err <- 2*(1 - stats::pnorm(q = 2*zas))
@@ -121,20 +136,19 @@
 #' effect estimates. This is usually the ratio of the sample
 #' size of the replication study to the sample size of the
 #' original study.
-#' @param alternative Either "one.sided" (one.sided), "two.sided", "greater", or "less".
-#' If "one.sided", the type-I error rate is computed based on a one-sided assessment of
-#' replication success in the direction of the original effect estimate.
+#' @param alternative Specifies if \code{level} 
+#' is "two.sided" or one.sided ("one.sided", "greater", or "less").
+#' If "one.sided", the type-I error rate is computed based on a one-sided assessment 
+#' of replication success in the direction of the original effect estimate.
 #' If "two.sided", the type-I error rate is computed based
 #' on a two-sided assessment of replication success regardless of the direction
 #' of the original and replication effect estimate.
 #' If "greater" or "less",  the type-I error rate is
 #' computed based on a one-sided assessment of replication success
 #' in the pre-specified direction of the original and replication effect estimate.
-#' @param type Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
-#' "liberal", or "controlled". "golden" ensures that
-#' for an original study just significant at the specified \code{level},
-#' replication success is only possible if the replication effect estimate is at
-#' least as large as the original one. See \code{\link{levelSceptical}} for details
+#' @param type Type of recalibration. Recalibration type can be either "golden" 
+#' (default), "nominal" (no recalibration), "liberal", or "controlled".
+#' See \code{\link{levelSceptical}} for details
 #' about recalibration types.
 #' @return The type-I error rate.
 #' @details \code{T1EpSceptical} is the vectorized version of \code{.T1EpSceptical_}.
@@ -154,7 +168,7 @@
 #' ## compare type-I error rate for different levels of replication success
 #' levels <- c("nominal" = levelSceptical(level = 0.025, type = "nominal"),
 #'             "liberal" = levelSceptical(level = 0.025, type = "liberal"),
-#'             "controlled" = levelSceptical(level = 0.025, type = "controlled"),
+#'             "controlled" = levelSceptical(level = 0.025, type = "controlled", c = 1),
 #'             "golden" = levelSceptical(level = 0.025, type = "golden"))
 #' c <- seq(0.2, 5, by = 0.05)
 #' t1 <- sapply(X = levels, FUN = function(l) {
@@ -167,7 +181,8 @@
 #' ## check that one.sided controlled level controls type-I error rate for c = 1 
 #' ## at alpha = 0.05*0.025 = 0.00125
 #' T1EpSceptical(level = levelSceptical(level = 0.025, alternative = "one.sided", 
-#'                                      type = "controlled"), 
+#'                                      type = "controlled", c = 1), 
 #'               c = 1, alternative = "one.sided",  type = "nominal")
 #' @export
 T1EpSceptical <- Vectorize(.T1EpSceptical_)
+
