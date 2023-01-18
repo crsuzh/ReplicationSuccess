@@ -55,28 +55,28 @@ FZ <- function(z, c) {
   
   z <- zSceptical(zo = zo, zr = zr, c = c)
   
-  if(type == "nominal") {
+  if (type == "nominal") {
     result <- z
     res <- z2p(z = result, alternative = "two.sided")
   }    
   
-  if(type == "liberal") {
+  if (type == "liberal") {
     result <- z * sqrt(2)
     res <- z2p(z = result, alternative = "two.sided")
   }
     
-  if(type == "golden"){
+  if (type == "golden") {
     phi <- (sqrt(5) + 1)/2  
     result <- z*sqrt(phi)
     res <- z2p(z = result, alternative = "two.sided") 
   }
   
-  if(type == "controlled"){
+  if (type == "controlled") {
   res2 <- (1 - FZ(z = z^2, c = c))
   res <- sqrt(res2)
   }
   
-  if(alternative == "one.sided") {
+  if (alternative == "one.sided") {
     res <- ifelse(sign(zo) == sign(zr), res/2, 1 - res/2)
   }
   
@@ -201,7 +201,7 @@ zSceptical <- function(zo,
     z2H <- harmMean(zo^2, zr^2)
     z2A <- aritMean(zo^2, zr^2)
 
-    if(length(c)==1){
+    if (length(c)==1) {
         z2 <- if(c == 1) z2H/2 else (sqrt(z2A*(z2A + (c - 1)*z2H)) - z2A)/(c - 1)
     } else {
         z2 <- ifelse(c == 1, 
