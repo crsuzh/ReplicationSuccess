@@ -2,7 +2,7 @@
 #' @export
 .PPpSceptical_ <- function(level, c, alpha, power,
                            alternative = c("one.sided", "two.sided", "greater", "less"),
-                           type = c("golden", "nominal", "liberal", "controlled")) {  
+                           type = c("golden", "nominal", "liberal", "controlled")) {
 
     stopifnot(is.numeric(level),
               length(level) == 1,
@@ -29,18 +29,18 @@
 
     stopifnot(!is.null(type))
     type <- match.arg(type)
-    
+
     ## compute normal quantile corresponding to level and type
-    alphas <- levelSceptical(level = level, 
-                             alternative = alternative, 
+    alphas <- levelSceptical(level = level,
+                             alternative = alternative,
                              type = type)
     ## abs(.) is needed to deal with alternative="less"
     zas <- abs(p2z(p = alphas, alternative = alternative))
-    
+
     ## compute mean based on alpha and power
     ## abs(.) is needed to deal with alternative="less"
     mu <- abs(p2z(p = alpha, alternative = alternative)) + stats::qnorm(p = power)
-    
+
     ## compute project power with numerical integration
     if (alternative == "two.sided") {
         ## define function to integrate over zo
@@ -48,35 +48,35 @@
             ## compute minimal zr to achieve replication success given zo and level
             K <- zo^2/zas^2
             zrmin <- zas*sqrt(1 + c/(K - 1))
-            
+
             ## compute integrand
             ifelse(sign(zo) == 1,
                    ## on positive side of plane (zo, zr > 0): P(|zr| >= zrmin)*dnorm(zo)
             (stats::pnorm(q = zrmin, mean = sqrt(c)*mu, lower.tail = FALSE) +
              stats::pnorm(q = -zrmin, mean = sqrt(c)*mu, lower.tail = TRUE))*
             stats::dnorm(x = zo, mean = mu),
-            
+
             ## on negative side of plane (zo, zr < 0): P(zr <= -zrmin)*dnorm(zo)
             (stats::pnorm(q = zrmin, mean = sqrt(c)*mu, lower.tail = FALSE) +
              stats::pnorm(q = -zrmin, mean = sqrt(c)*mu, lower.tail = TRUE))*
             stats::dnorm(x = zo, mean = mu)
             )
-        } 
+        }
     }
-    
+
     if (alternative %in% c("one.sided", "greater", "less")) {
                                         # define function to integrate over zo
         intFun <- function(zo) {
             ## compute minimal zr to achieve replication success given zo and level
             K <- zo^2/zas^2
             zrmin <- zas*sqrt(1 + c/(K - 1))
-            
+
             ## compute integrand
             ifelse(sign(zo) == 1,
                    ## on positive side of plane (zo, zr > 0): P(zr >= zrmin)*dnorm(zo)
                    stats::pnorm(q = zrmin, mean = sqrt(c)*mu, lower.tail = FALSE)*
                    stats::dnorm(x = zo, mean = mu),
-                   
+
                    ## on negative side of plane (zo, zr < 0): P(zr <= -zrmin)*dnorm(zo)
                    ## (will be very small for large mu)
                    stats::pnorm(q = -zrmin, mean = sqrt(c)*mu, lower.tail = TRUE)*
@@ -84,7 +84,7 @@
                    )
         }
     }
-    
+
     if (alternative %in% c("one.sided", "two.sided")) {
         ## integrate zo, zr over region where replication succcess possible
         pp <- stats::integrate(f = intFun, lower = zas, upper = Inf)$value +
@@ -94,7 +94,7 @@
         ## integrate zo, zr over region where replication succcess possible
         pp <- stats::integrate(f = intFun, lower = zas, upper = Inf)$value
     }
-    
+
     return(pp)
 }
 
@@ -170,7 +170,7 @@
 #' lines(x = c, y = pp2TR*100, col = length(levels) + 1, lwd = 2)
 #' abline(v = 1, lty = 2)
 #' abline(h = 90, lty = 2, col = "lightgrey")
-#' legend("bottomright", legend = c(names(levels), "2TR"), lty = 1, lwd = 2, 
+#' legend("bottomright", legend = c(names(levels), "2TR"), lty = 1, lwd = 2,
 #'        col = seq(1, length(levels) + 1))
 #' @export
 PPpSceptical <- Vectorize(.PPpSceptical_)
