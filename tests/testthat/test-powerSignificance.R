@@ -1,20 +1,15 @@
-## library(testthat)
-## sapply(list.files("../../R", pattern='\\.R$', full.names = TRUE), source)
-
-context("powerSignificance")
-
 test_that("numeric test for powerSignificance(): 1", {
-    expect_equal(object = powerSignificance(zo = qnorm(p = 1 - 0.05/2),
+    expect_equal(object = powerSignificance(zo = qnorm(p = 1 - 0.05 / 2),
                                             c = 1, level = 0.05,
                                             alternative = "two.sided"),
                  expected = 0.5,
                  tol = 0.0001)
-    expect_equal(object = powerSignificance(zo = qnorm(p = 1 - 0.0056/2),
+    expect_equal(object = powerSignificance(zo = qnorm(p = 1 - 0.0056 / 2),
                                             c = 1, level = 0.05,
                                             alternative = "two.sided"),
                  expected = 0.791,
                  tol = 0.001)
-    
+
 })
 
 
@@ -26,7 +21,7 @@ test_that("numeric test for powerSignificance(): 2", {
                               alt = c("two.sided", "one.sided"),
                               shrinkage = c(0, 0.5),
                               stringsAsFactors = FALSE)
-    out <- lapply(X=seq_len(nrow(apply_grid)), FUN=function(i){
+    out <- lapply(X = seq_len(nrow(apply_grid)), FUN = function(i) {
         powerSignificance(zo = zo,
                           c = apply_grid$c[i],
                           level = 0.05,

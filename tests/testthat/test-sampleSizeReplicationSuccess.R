@@ -1,16 +1,14 @@
-## library(testthat)
-## sapply(list.files("../../R", pattern='\\.R$', full.names = TRUE), source)
-
-context("sampleSizeReplicationSuccess")
-
-
 test_that("numeric test for sampleSizeReplicationSuccess(): 1", {
-    za <- qnorm(p = 0.001/2, lower.tail = FALSE)
-    expect_equal(object = sampleSizeReplicationSuccess(zo = za, designPrior = "conditional",
-                                                       power = 0.8, level = 0.05,
-                                                       alternative = "two.sided",
-                                                       type = "nominal"),
-                 expected = 1, tol = 0.01)
+    za <- qnorm(p = 0.001 / 2, lower.tail = FALSE)
+    expect_equal(
+        object = sampleSizeReplicationSuccess(
+            zo = za, designPrior = "conditional",
+            power = 0.8, level = 0.05,
+            alternative = "two.sided",
+            type = "nominal"
+        ),
+        expected = 1, tol = 0.01
+    )
 })
 
 
@@ -19,7 +17,7 @@ test_that("numeric test for sampleSizeReplicationSuccess(): 2", {
     apply_grid <- expand.grid(priors = c("conditional", "predictive"),
                               alt = c("one.sided", "two.sided"),
                               stringsAsFactors = FALSE)
-    out <- lapply(X=seq_len(nrow(apply_grid)), FUN=function(i){
+    out <- lapply(X = seq_len(nrow(apply_grid)), FUN = function(i) {
         suppressWarnings({
             sampleSizeReplicationSuccess(zo = zo,
                                          power = 0.8,
@@ -64,48 +62,50 @@ test_that("sampleSizeReplicationSuccess(): recomputing the power", {
                              stringsAsFactors = FALSE)
     ## test all configurations separately
     f_num <- ReplicationSuccess:::sampleSizeReplicationSuccessNum
-    suppressWarnings( {
+    suppressWarnings({
         for (i in seq_len(nrow(pars_grid))){
-            cnew <- try(do.call("sampleSizeReplicationSuccess", args = pars_grid[i,1:9]),
+            cnew <- try(do.call("sampleSizeReplicationSuccess", args = pars_grid[i, 1:9]),
                         silent = TRUE)
-            if (inherits(cnew, "try-error")){
-                pars_grid[i,"new"] <- NA
+            if (inherits(cnew, "try-error")) {
+                pars_grid[i, "new"] <- NA
             } else {
-                pars_grid[i,"new"] <- cnew
+                pars_grid[i, "new"] <- cnew
                 if (!is.na(cnew)) {
-                    pownew <-  try(powerReplicationSuccess(zo = pars_grid[i,"zo"],
-                                                           c = cnew,
-                                                           level = pars_grid[i,"level"],
-                                                           designPrior = pars_grid[i,"designPrior"],
-                                                           alternative = pars_grid[i,"alternative"],
-                                                           type = pars_grid[i,"type"],
-                                                           shrinkage = pars_grid[i,"shrinkage"]),
-                                   silent = TRUE)
+                    pownew <-  try(powerReplicationSuccess(
+                        zo = pars_grid[i, "zo"],
+                        c = cnew,
+                        level = pars_grid[i, "level"],
+                        designPrior = pars_grid[i, "designPrior"],
+                        alternative = pars_grid[i, "alternative"],
+                        type = pars_grid[i, "type"],
+                        shrinkage = pars_grid[i, "shrinkage"]
+                    ), silent = TRUE)
                     if (class(pownew) == "try-error") {
-                        pars_grid[i,"pownew"] <- NA
+                        pars_grid[i, "pownew"] <- NA
                     } else {
-                        pars_grid[i,"pownew"] <- pownew
+                        pars_grid[i, "pownew"] <- pownew
                     }
                 }
             }
-            clegacy <- try(do.call("f_num", args = pars_grid[i,1:8]), silent = TRUE)
-            if (inherits(clegacy, "try-error")){
+            clegacy <- try(do.call("f_num", args = pars_grid[i, 1:8]), silent = TRUE)
+            if (inherits(clegacy, "try-error")) {
                 pars_grid[i,"legacy"] <- NA
             } else {
                 pars_grid[i,"legacy"] <- clegacy
                 if (!is.na(clegacy)) {
-                    powlegacy <-  try(powerReplicationSuccess(zo = pars_grid[i,"zo"],
-                                                              c = clegacy,
-                                                              level = pars_grid[i,"level"],
-                                                              designPrior = pars_grid[i,"designPrior"],
-                                                              alternative = pars_grid[i,"alternative"],
-                                                              type = pars_grid[i,"type"],
-                                                              shrinkage = pars_grid[i,"shrinkage"]),
-                                      silent = TRUE)
+                    powlegacy <-  try(powerReplicationSuccess(
+                        zo = pars_grid[i, "zo"],
+                        c = clegacy,
+                        level = pars_grid[i, "level"],
+                        designPrior = pars_grid[i, "designPrior"],
+                        alternative = pars_grid[i, "alternative"],
+                        type = pars_grid[i, "type"],
+                        shrinkage = pars_grid[i, "shrinkage"]
+                    ), silent = TRUE)
                     if (class(powlegacy) == "try-error") {
-                        pars_grid[i,"powlegacy"] <- NA
+                        pars_grid[i, "powlegacy"] <- NA
                     } else {
-                        pars_grid[i,"powlegacy"] <- powlegacy
+                        pars_grid[i, "powlegacy"] <- powlegacy
                     }
                 }
             }

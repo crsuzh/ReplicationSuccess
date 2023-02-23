@@ -1,9 +1,3 @@
-## library(testthat)
-## sapply(list.files("../../R", pattern='\\.R$', full.names = TRUE), source)
-
-context("powerReplicationSuccess")
-
-
 test_that("numeric test for powerReplicationSuccess(): 1", {
     expect_equal(object = powerReplicationSuccess(zo = qnorm(p = 1 - 0.05/2),
                                                   c = 1, level = 0.05,
@@ -16,7 +10,6 @@ test_that("numeric test for powerReplicationSuccess(): 1", {
                                                   type = "nominal"),
                  expected = 0.5,
                  tol = 0.01)
-    
 })
 
 

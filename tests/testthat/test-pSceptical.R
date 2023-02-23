@@ -1,13 +1,10 @@
-## library(testthat)
-## sapply(list.files("../../R", pattern='\\.R$', full.names = TRUE), source)
-
-context("pSceptical")
-
 test_that("numeric test for pSceptical(): 1", {
     expect_equal(object = pSceptical(zo = sqrt(12.19), zr = sqrt(3.99), c = 1,
-                                     alternative = "two.sided", type = "nominal"),
+                                     alternative = "two.sided",
+                                     type = "nominal"),
                  expected = 0.083, tol = 0.01)
-    expect_equal(object = pSceptical(zo = 2.33, zr = 2.33, c = 1, alternative = "one.sided",
+    expect_equal(object = pSceptical(zo = 2.33, zr = 2.33, c = 1,
+                                     alternative = "one.sided",
                                      type = "nominal"),
                  expected = 0.05, tol = 0.01)
 })
@@ -19,15 +16,16 @@ test_that("numeric test for pSceptical(): 2", {
                               c = c(0.5, 2),
                               alt = c("one.sided", "two.sided"),
                               stringsAsFactors = FALSE)
-    out <- lapply(X=seq_len(nrow(apply_grid)), FUN=function(i){
-        pSceptical(zo = zo, 
-                  zr = apply_grid$zr[i], 
+    out <- lapply(X = seq_len(nrow(apply_grid)), FUN = function(i) {
+        pSceptical(zo = zo,
+                  zr = apply_grid$zr[i],
                   c = 0.05,
                   alternative = apply_grid$alt[i],
                   type = "nominal")
     })
     expect_equal(out,
-                     list(c(0.000149544079762546, 0.0236343314115514, 0.5, 0.976365668588449, 
+                     list(c(0.000149544079762546, 0.0236343314115514,
+                            0.5, 0.976365668588449,
                             0.999850455920237),
                           c(0.0236343314115514, 0.0352998069509419, 0.5,
                             0.964700193049058, 0.976365668588449),
@@ -59,7 +57,8 @@ test_that("numeric test for pSceptical(): 2", {
                           c(0.0472686628231029, 0.0705996139018838, 1,
                             0.0705996139018838, 0.0472686628231029),
                           c(1, 1, 1, 1, 1),
-                          c(0.0472686628231029, 0.0705996139018838, 1, 0.0705996139018838,
+                          c(0.0472686628231029, 0.0705996139018838, 1,
+                            0.0705996139018838,
                             0.0472686628231029),
                           c(0.000299088159525091, 0.0472686628231029, 1,
                             0.0472686628231029, 0.000299088159525091)))
