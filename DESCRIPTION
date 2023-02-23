@@ -37,7 +37,7 @@ Description: Provides utilities for the design and analysis of replication studi
     and intrinsic credibility; Held, L. (2019) <doi:10.1098/rsos.181534>.
     Contains datasets from four large-scale replication projects.
 URL: https://crsuzh.github.io/ReplicationSuccess/
-BugReports: https://github.com/SamCH93/ReplicationSuccess/issues/
+BugReports: https://github.com/crsuzh/ReplicationSuccess/issues/
 Depends:
 VignetteBuilder: knitr
 Suggests: knitr, roxygen2, testthat
