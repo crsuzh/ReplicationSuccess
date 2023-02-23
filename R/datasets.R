@@ -102,6 +102,10 @@
 #' from original study}
 #' \item{\code{pr}}{Two-sided p-value from significance test of effect estimate
 #' from replication study}
+#'  \item{\code{po1}}{One-sided p-value from significance test of effect estimate
+#' from original study (in the direction of the original effect estimate)}
+#' \item{\code{pr1}}{One-sided p-value from significance test of effect estimate
+#' from replication study (in the direction of the original effect estimate)}
 #' \item{\code{pm_belief}}{Peer belief about whether replication effect estimate
 #' will achieve statistical significance elicited through prediction market (only
 #' available for EERP and SSRP)}
@@ -112,7 +116,7 @@
 #' @details Two-sided p-values were calculated assuming normality of Fisher-z
 #'     transformed effect estimates. From the RPP only the \emph{meta-analytic
 #'     subset} is included, which consists of 73 out of 100 study pairs for
-#'     which the standard error of the z-transformed correlation coeffient can
+#'     which the standard error of the z-transformed correlation coefficient can
 #'     be computed. For the RPP sample sizes were recalculated from the reported
 #'     standard errors of Fisher z-transformed correlation coefficients. From
 #'     the EPRP only 31 out of 40 study pairs are included where effective

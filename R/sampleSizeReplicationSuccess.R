@@ -1,3 +1,132 @@
+## numerical implementation
+targetSS <- function(zo, c, power, level, designPrior, alternative, type = type,
+                     shrinkage){
+  term <- powerReplicationSuccess(zo = zo, 
+                                  c = c, 
+                                  level = level,
+                                  designPrior = designPrior,
+                                  alternative = alternative,
+                                  type = type,
+                                  shrinkage = shrinkage)
+  return(term - power)
+}
+
+
+.sampleSizeReplicationSuccessNum_ <- function(zo,
+                                              power = NA,
+                                              d = NA,
+                                              level = 0.025,
+                                              alternative = c("one.sided", "two.sided"),
+                                              type = c("golden", "nominal", "liberal", "controlled"),
+                                              designPrior = c("conditional", "predictive", "EB"),
+                                              shrinkage = 0){
+  stopifnot(is.numeric(zo),
+            length(zo) == 1,
+            is.finite(zo))
+  
+  stopifnot(length(power) == 1,
+            length(d) == 1)
+  if (is.na(d) && is.na(power))  stop("either 'power' or 'd' has to be specified")
+  if (!is.na(d) && !is.na(power))  stop("only one of 'power' or 'd' has to be specified")
+  if (!is.na(d)) {
+    stopifnot(is.numeric(d),
+              is.finite(d))
+  } else { #!is.na(power)
+    stopifnot(is.numeric(power),
+              0 < power, power < 1)
+  }
+  
+  stopifnot(is.numeric(level),
+            length(level) == 1,
+            is.finite(level),
+            0 < level, level < 1,
+            
+            !is.null(alternative))
+  alternative <- match.arg(alternative)
+  
+  stopifnot(!is.null(type))
+  type <- match.arg(type)
+  
+  stopifnot(!is.null(designPrior))
+  designPrior <- match.arg(designPrior)
+  
+  stopifnot(is.numeric(shrinkage),
+            length(shrinkage) == 1,
+            is.finite(shrinkage),
+            0 <= shrinkage, shrinkage < 1)
+  
+  eps = 10e-6
+  mylower <- eps
+  myupper <- 1000
+  
+  ## sample size calculation based on power
+  if (is.na(d)){
+    target.l <- targetSS(c = mylower,
+                         zo = zo,
+                         power = power,
+                         level = level,
+                         designPrior = designPrior,
+                         alternative = alternative,
+                         type = type,
+                         shrinkage = shrinkage)
+    target.u <- targetSS(c = myupper,
+                         zo = zo,
+                         power = power,
+                         level = level,
+                         designPrior = designPrior,
+                         alternative = alternative,
+                         type = type,
+                         shrinkage = shrinkage)
+    if (sign(target.l) == sign(target.u)) {
+      if(sign(target.u) > 0)
+        c <- Inf
+      else 
+        c <- NA
+    }
+    else {
+      c <- uniroot(f = targetSS, 
+                   lower = mylower, 
+                   upper = myupper, 
+                   zo = zo, 
+                   power = power, 
+                   level = level,
+                   designPrior = designPrior,
+                   alternative = alternative,
+                   type = type,
+                   shrinkage = shrinkage)$root
+    }
+    
+  }
+  # based on d : not done for controlled yet
+  # } else { # sample size calculation based on relative effect size
+  #   alphas <- levelSceptical(level = level, 
+  #                            alternative = alternative, 
+  #                            type = type)
+  #   zalphas <- p2z(alphas, alternative = alternative)
+  #   K <- zo^2/zalphas^2
+  #   denom <- d^2*K - 1/(K-1)
+  #   if (zalphas > zo){
+  #     warning(paste("Replication success is not achievable at this level as", 
+  #                   zo, " < ", round(p2z(levelSceptical(level = level,
+  #                                                       alternative = alternative,
+  #                                                       type = type)),
+  #                                    3)))
+  #     c <- NA
+  #   } else { 
+  #     c <- ifelse(denom > 0, 1/denom, NA) 
+  #   }
+  # }
+  return(c)
+}
+
+
+sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
+
+
+
+
+
+
 #' @export
 .sampleSizeReplicationSuccess_ <- function(zo,
                                            power = NA,
@@ -48,6 +177,7 @@
               is.finite(h),
               0 <= h)
 
+    if(type != "controlled") {
     ## computing some quantities
     zoabs <- abs(zo)
     alphaS <- levelSceptical(level = level, alternative = alternative,
@@ -142,6 +272,18 @@
             }
         }
     }
+    }
+    
+    if (type == "controlled") {
+      # here put the numerical integration
+      stopifnot(level < power)
+      c <-  sampleSizeReplicationSuccessNum(zo = zo, power = power, d = d, 
+                                            level = level, 
+                                            alternative = alternative,
+                                            type = "controlled", 
+                                            designPrior = designPrior,
+                                            shrinkage = shrinkage)
+    }
     return(c)
 }
 
@@ -162,11 +304,21 @@
 #'     0.025.
 #' @param alternative Either "one.sided" (default) or "two.sided". Specifies if
 #'     the replication success level is one-sided or two-sided.
-#' @param type Type of recalibration. Can be either "golden" (default),
-#'     "nominal" (no recalibration), "liberal", "controlled". "golden" ensures
-#'     that for an original study just significant at the specified
+#'     If the
+#'     replication success level is one-sided, then sample size calculations are based
+#'     on a one-sided assessment of replication success in the direction of the
+#'     original effect estimates.
+#' @param type Recalibration type can be either "golden" (default), "nominal"
+#'     (no recalibration), "liberal", or "controlled". \code{type} = "golden"
+#'     ensures that for an original study just significant at the specified
 #'     \code{level}, replication success is only possible if the replication
-#'     effect estimate is at least as large as the original one. See
+#'     effect estimate is larger than the original one.
+#'     "controlled" ensures exact Type-I error control at level \code{level}^2
+#'     for \code{alternative} is "two.sided" or "one.sided" if the direction 
+#'     was pre-specified in advance. For \code{alternative} is "one.sided" 
+#'     and no pre-specified direction, the Type-I error rate is controlled at 
+#'     level 2*\code{level}^2.
+#'      See
 #'     \code{\link{levelSceptical}} for details about recalibration types.
 #' @param designPrior Is only taken into account when \code{power} is specified.
 #'     Either "conditional" (default), "predictive", or "EB". If "EB", the power
@@ -216,118 +368,3 @@
 sampleSizeReplicationSuccess <- Vectorize(.sampleSizeReplicationSuccess_)
 
 
-## numerical implementation
-sampleSizeReplicationSuccessTarget <- function(zo, c, p, level, designPrior, alternative, type = type,
-                   shrinkage){
-    zr2 <- zr2quantile(zo = zo, c = c, p = p, designPrior = designPrior, 
-                       shrinkage = shrinkage)
-    pC <- pSceptical(zo = zo, zr = sqrt(zr2), c = c, 
-                     alternative = alternative, type = type)
-    return(pC - level)
-}
-
-.sampleSizeReplicationSuccessNum_ <- function(zo,
-                                              power = NA,
-                                              d = NA,
-                                              level = 0.025,
-                                              alternative = c("one.sided", "two.sided"),
-                                              type = c("golden", "nominal", "liberal", "controlled"),
-                                              designPrior = c("conditional", "predictive", "EB"),
-                                              shrinkage = 0){
-
-    stopifnot(is.numeric(zo),
-              length(zo) == 1,
-              is.finite(zo))
-
-    stopifnot(length(power) == 1,
-              length(d) == 1)
-    if (is.na(d) && is.na(power))  stop("either 'power' or 'd' has to be specified")
-    if (!is.na(d) && !is.na(power))  stop("only one of 'power' or 'd' has to be specified")
-    if (!is.na(d)) {
-        stopifnot(is.numeric(d),
-                  is.finite(d))
-    } else { #!is.na(power)
-        stopifnot(is.numeric(power),
-                  0 < power, power < 1)
-    }
-
-    stopifnot(is.numeric(level),
-              length(level) == 1,
-              is.finite(level),
-              0 < level, level < 1,
-
-              !is.null(alternative))
-    alternative <- match.arg(alternative)
-    
-    stopifnot(!is.null(type))
-    type <- match.arg(type)
-    
-    stopifnot(!is.null(designPrior))
-    designPrior <- match.arg(designPrior)
-    
-    stopifnot(is.numeric(shrinkage),
-              length(shrinkage) == 1,
-              is.finite(shrinkage),
-              0 <= shrinkage, shrinkage < 1)
-
-    mylower <- 0
-    myupper <- 1000
-    
-    ## sample size calculation based on power
-    if (is.na(d)){
-        target.l <- sampleSizeReplicationSuccessTarget(c = mylower, 
-                                                       zo = zo,
-                                                       p = 1 - power,
-                                                       level = level,
-                                                       designPrior = designPrior,
-                                                       alternative = alternative,
-                                                       type = type,
-                                                       shrinkage = shrinkage)
-        target.u <- sampleSizeReplicationSuccessTarget(c = myupper, 
-                                                       zo = zo,
-                                                       p = 1 - power,
-                                                       level = level,
-                                                       designPrior = designPrior,
-                                                       alternative = alternative,
-                                                       type = type,
-                                                       shrinkage = shrinkage)
-        if (sign(target.l) == sign(target.u)) {
-            if(sign(target.u) > 0)
-                c <- Inf
-            else 
-                c <- NA
-        }
-        else {
-            c <- uniroot(f = sampleSizeReplicationSuccessTarget, 
-                         lower = mylower, 
-                         upper = myupper, 
-                         zo = zo, 
-                         p = 1 - power, 
-                         level = level,
-                         designPrior = designPrior,
-                         alternative = alternative,
-                         type = type,
-                         shrinkage = shrinkage)$root
-        }
-    } else { # sample size calculation based on relative effect size
-        alphas <- levelSceptical(level = level, 
-                                 alternative = alternative, 
-                                 type = type)
-        zalphas <- p2z(alphas, alternative = alternative)
-        K <- zo^2/zalphas^2
-        denom <- d^2*K - 1/(K-1)
-        if (zalphas > zo){
-            warning(paste("Replication success is not achievable at this level as", 
-                          zo, " < ", round(p2z(levelSceptical(level = level,
-                                                              alternative = alternative,
-                                                              type = type)),
-                                           3)))
-            c <- NA
-        } else { 
-            c <- ifelse(denom > 0, 1/denom, NA) 
-        }
-    }
-    return(c)
-}
-
-sampleSizeReplicationSuccessNum <- Vectorize(.sampleSizeReplicationSuccessNum_)

@@ -27,20 +27,19 @@ the original study.}
 \item{power}{Power to detect the assumed effect with a standard significance test
 in the original study.}
 
-\item{alternative}{Either "one.sided" (default), "two.sided", "greater", or "less".
-If "one.sided", the type-I error rate is computed based on a one-sided
-assessment of replication success in the direction of the original effect estimate.
-If "two.sided", the type-I error rate is computed based on a two-sided assessment
-of replication success regardless of the direction of the original and replication
-effect estimate. If "greater" or "less", the type-I error rate is computed based on
-a one-sided assessment of replication success in the pre-specified direction of the
-original and replication effect estimate.}
+\item{alternative}{Specifies if \code{level} and 
+\code{alpha} are "two.sided" or one.sided ("one.sided", "greater", or "less").
+If "one.sided", the project power is computed based on a one-sided assessment of
+replication success in the direction of the original effect estimate.
+If "two.sided", the project power is computed based
+on a two-sided assessment of replication success regardless of the direction
+of the original and replication effect estimate.
+If "greater" or "less",  project power is
+computed based on a one-sided assessment of replication success
+in the pre-specified direction of the original and replication effect estimate.}
 
 \item{type}{Type of recalibration. Can be either "golden" (default),
 "nominal" (no recalibration), "liberal", or "controlled".
-"golden" ensures that for an original study just significant
-at the specified \code{level}, replication success is only possible if the
-replication effect estimate is at least as large as the original one.
 See \code{\link{levelSceptical}} for details about recalibration types.}
 }
 \value{
@@ -60,7 +59,7 @@ the original study, and the alternative hypothesis.
 ## compare project power for different levels of replication success
 levels <- c("nominal" = levelSceptical(level = 0.025, type = "nominal"),
             "liberal" = levelSceptical(level = 0.025, type = "liberal"),
-            "controlled" = levelSceptical(level = 0.025, type = "controlled"),
+            "controlled" = levelSceptical(level = 0.025, type = "controlled", c = 1),
             "golden" = levelSceptical(level = 0.025, type = "golden"))
 c <- seq(0.4, 5, by = 0.01)
 alpha <- 0.025

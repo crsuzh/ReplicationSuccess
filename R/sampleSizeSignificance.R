@@ -109,9 +109,11 @@
 #' @param d The minimum relative effect size (ratio of the effect estimate from
 #'     the replication study to the effect estimate from the original study).
 #' @param level Significance level. Default is 0.025.
-#' @param alternative Either "one.sided" (default) or "two.sided". Specifies
-#'     direction of the alternative. "one.sided" assumes an effect in the same
-#'     direction as the original estimate.
+#' @param alternative Either "one.sided" (default) or "two.sided".
+#' Specifies if the significance level is one-sided or two-sided.
+#' If the significance level is one-sided, then sample size calculations are based on a
+#' one-sided assessment of significance in the direction of the
+#' original effect estimate.
 #' @param designPrior Is only taken into account when \code{power} is specified.
 #'     Either "conditional" (default), "predictive", or "EB". If "EB", the power
 #'     is computed under a predictive distribution where the contribution of the
