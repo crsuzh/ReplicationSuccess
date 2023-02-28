@@ -23,12 +23,12 @@ then a one-sided level for the sceptical p-value is computed.}
 \item{type}{The calibration type can be either "golden" (default), "nominal", "liberal", or "controlled".
 \code{type} = "golden" ensures that for an original study just significant at the specified \code{level},
 replication success is only possible if the replication effect estimate is larger than the original one.
-"controlled" ensures exact Type-I error control at level \code{level}^2
+"controlled" ensures exact overall Type-I error control at level \code{level}^2
 for \code{alternative} is "two.sided" or "one.sided" if the direction 
 was pre-specified in advance. For \code{alternative} is "one.sided" 
-and no pre-specified direction, the Type-I error rate is controlled at 
+and no pre-specified direction, the overall Type-I error rate is controlled at 
 level 2*\code{level}^2.
-The type \code{"nominal"} ensures that the type-I error rate is always smaller
+The type \code{"nominal"} ensures that the overall type-I error rate is always smaller
 than \code{level}^2 (or 2\code{level}^2 for \code{alternative =} "one.sided" 
 and no pre-specified direction). Significance of both the original and replication study
 at \code{level} is then a necessary but not sufficient requirement for replication success.
@@ -62,7 +62,7 @@ success based on relative effect size.
 \emph{The Annals of Applied Statistics}, \bold{16}, 706-720.
 \doi{10.1214/21-AOAS1502}
 
-Micheloud, C., Balabdaoui, F., Held, L. (2022).  
+Micheloud, C., Balabdaoui, F., Held, L. (2023).  
 Beyond the two-trials rule: Type-I error control and sample size planning 
 with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
 }

@@ -122,10 +122,10 @@ FZ <- function(z, c) {
 #' for an original study just significant at the specified \code{level},
 #' replication success is only possible if the replication effect estimate is at
 #' least as large as the original one. 
-#' "controlled" ensures exact Type-I error control at level \code{level}^2
+#' "controlled" ensures exact overall Type-I error control at level \code{level}^2
 #'     for \code{alternative} is "two.sided" or "one.sided" if the direction 
 #'     was pre-specified in advance. For \code{alternative} is "one.sided" 
-#'     and no pre-specified direction, the Type-I error rate is controlled at 
+#'     and no pre-specified direction, the overall Type-I error rate is controlled at 
 #'     level 2*\code{level}^2.
 #' See \code{\link{levelSceptical}} for details about recalibration types. 
 #' @return \code{pSceptical} returns the sceptical p-value.
@@ -137,13 +137,14 @@ FZ <- function(z, c) {
 #' Series A (Statistics in Society)}, \bold{183}, 431-448.
 #' \doi{10.1111/rssa.12493}
 #'
-#' Micheloud, C., Balabdaoui, F., Held, L. (2022).  
-#' Beyond the two-trials rule: Type-I error control and sample size planning 
-#' with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
 #' 
 #' Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
 #'     success based on relative effect size. The Annals of Applied Statistics.
 #'     16:706-720. \doi{10.1214/21-AOAS1502}
+#'     
+#' Micheloud, C., Balabdaoui, F., Held, L. (2023).  
+#' Beyond the two-trials rule: Type-I error control and sample size planning 
+#' with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
 #'
 #' @author Leonhard Held
 #' @seealso \code{\link{sampleSizeReplicationSuccess}}, \code{\link{powerReplicationSuccess}}, \code{\link{levelSceptical}}
