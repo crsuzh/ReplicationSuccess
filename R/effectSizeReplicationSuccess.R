@@ -62,10 +62,10 @@
 #' @param type Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
 #' "liberal", or "controlled". "golden" ensures that for an original study just significant at
 #' the specified \code{level}, replication success is only possible for replication effect estimates larger than the original one.
-#' "controlled" ensures exact Type-I error control at level \code{level}^2
+#' "controlled" ensures exact overall Type-I error control at level \code{level}^2
 #' for \code{alternative} is "two.sided" or "one.sided" if the direction 
 #' was pre-specified in advance. For \code{alternative} is "one.sided" 
-#' and no pre-specified direction, the Type-I error rate is controlled at 
+#' and no pre-specified direction, the overall Type-I error rate is controlled at 
 #' level 2*\code{level}^2.
 #' See \code{\link{levelSceptical}} for details about recalibration types.
 #' @return The minimum relative effect size to achieve replication success.
@@ -73,6 +73,10 @@
 #' @references Held, L., Micheloud, C., Pawel, S. (2022). The assessment of
 #'     replication success based on relative effect size. The Annals of Applied
 #'     Statistics. 16:706-720. \doi{10.1214/21-AOAS1502}
+#'     
+#' Micheloud, C., Balabdaoui, F., Held, L. (2023).  
+#' Beyond the two-trials rule: Type-I error control and sample size planning 
+#' with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
 #' @author Leonhard Held, Charlotte Micheloud, Samuel Pawel, Florian Gerber
 #' @seealso \code{\link{sampleSizeReplicationSuccess}}, \code{\link{levelSceptical}}
 #' @examples
@@ -84,7 +88,8 @@
 #'                              
 #' effectSizeReplicationSuccess(zo = zo, c = 10, level = 0.025,
 #'                              alternative = "one.sided", type = "golden")
-#'                              
+#' effectSizeReplicationSuccess(zo = zo, c = 10, level = 0.025,
+#'                              alternative = "one.sided", type = "controlled")                              
 #' effectSizeReplicationSuccess(zo = zo, c= 2, level = 0.025,
 #'                              alternative = "one.sided", type = "nominal")
 #'                              
