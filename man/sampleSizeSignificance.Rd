@@ -3,12 +3,11 @@
 \name{sampleSizeSignificance}
 \alias{sampleSizeSignificance}
 \title{Computes the required relative sample size to achieve significance
-based on power or on the minimum relative effect size}
+based on power}
 \usage{
 sampleSizeSignificance(
   zo,
   power = NA,
-  d = NA,
   level = 0.025,
   alternative = c("one.sided", "two.sided"),
   designPrior = c("conditional", "predictive", "EB"),
@@ -20,9 +19,6 @@ sampleSizeSignificance(
 \item{zo}{A vector of z-values from original studies.}
 
 \item{power}{The power to achieve replication success.}
-
-\item{d}{The minimum relative effect size (ratio of the effect estimate from
-the replication study to the effect estimate from the original study).}
 
 \item{level}{Significance level. Default is 0.025.}
 
@@ -58,9 +54,7 @@ The relative sample size to achieve significance in the specified
 \description{
 The relative sample size to achieve significance of the replication study is
 computed based on the z-value of the original study, the significance level
-and either the power or the minimum relative effect size. When the approach
-based on power is used, the arguments design prior, shrinkage, and relative
-heterogeneity also have to be specified.
+and the power.
 }
 \details{
 \code{sampleSizeSignificance} is the vectorized version of
@@ -89,13 +83,6 @@ lines(z2p(zo), sampleSizeSignificance(zo = zo, designPrior = "EB", power = 0.8),
 legend("topleft", legend = c("conditional", "predictive", "EB"),
        title = "Design prior", lty = c(1, 2, 3), lwd = 1.5, bty = "n")
 
-sampleSizeSignificance(zo = p2z(0.005), d = 1)
-sampleSizeSignificance(zo = p2z(0.005), d = 0.5)
-# sample size based on minimum relative effect size of 0.8
-zo <- p2z(seq(0.0001, 0.05, 0.0001))
-plot(z2p(zo), sampleSizeSignificance(zo = zo, d = 0.8, level = 0.025),
-     type = "l", ylim = c(0.5, 10), log = "y", lwd = 1.5, ylab = "Relative sample size",
-    xlab = expression(italic(p)[o]), las = 1)
 par(oldPar)
 }
 \references{

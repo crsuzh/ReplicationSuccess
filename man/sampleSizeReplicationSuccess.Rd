@@ -3,12 +3,11 @@
 \name{sampleSizeReplicationSuccess}
 \alias{sampleSizeReplicationSuccess}
 \title{Computes the required relative sample size to achieve replication success
-based on power or on the minimum relative effect size}
+based on power}
 \usage{
 sampleSizeReplicationSuccess(
   zo,
   power = NA,
-  d = NA,
   level = 0.025,
   alternative = c("one.sided", "two.sided"),
   type = c("golden", "nominal", "liberal", "controlled"),
@@ -21,10 +20,6 @@ sampleSizeReplicationSuccess(
 \item{zo}{Numeric vector of z-values from original studies.}
 
 \item{power}{The power to achieve replication success.}
-
-\item{d}{The minimum relative effect size (ratio of the effect estimate from
-the replication study to the effect estimate from the original study) to
-achieve replication success.}
 
 \item{level}{Numeric vector of replication success levels. The default is
 0.025.}
@@ -74,9 +69,7 @@ The relative sample size for replication success. If impossible to
 \description{
 The relative sample size to achieve replication success is computed based on
 the z-value of the original study, the replication success level, the type of
-recalibration and either the power or the minimum relative effect size. When
-the approach based on power is used, the design prior also has to be
-specified.
+recalibration the power and the design prior.
 }
 \details{
 \code{sampleSizeReplicationSuccess} is the vectorized version of
@@ -89,12 +82,6 @@ sampleSizeReplicationSuccess(zo = p2z(0.0025), power = 0.8, level = 0.025,
                              type = "golden")
 sampleSizeReplicationSuccess(zo = p2z(0.0025), power = 0.8, level = 0.025,
                              type = "golden", designPrior = "predictive")
-
-## based on minimum relative effect size
-sampleSizeReplicationSuccess(zo = p2z(0.0025), d = 0.9, level = 0.025,
-                             type = "nominal")
-sampleSizeReplicationSuccess(zo = p2z(0.0025), d = 0.9, level = 0.025,
-                             type = "golden")
 }
 \references{
 Held, L. (2020). A new standard for the analysis and design of replication

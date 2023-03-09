@@ -14,7 +14,7 @@ targetSS <- function(zo, c, power, level, designPrior, alternative, type = type,
 
 .sampleSizeReplicationSuccessNum_ <- function(zo,
                                               power = NA,
-                                              d = NA,
+                                              # d = NA,
                                               level = 0.025,
                                               alternative = c("one.sided", "two.sided"),
                                               type = c("golden", "nominal", "liberal", "controlled"),
@@ -24,17 +24,18 @@ targetSS <- function(zo, c, power, level, designPrior, alternative, type = type,
             length(zo) == 1,
             is.finite(zo))
   
-  stopifnot(length(power) == 1,
-            length(d) == 1)
-  if (is.na(d) && is.na(power))  stop("either 'power' or 'd' has to be specified")
-  if (!is.na(d) && !is.na(power))  stop("only one of 'power' or 'd' has to be specified")
-  if (!is.na(d)) {
-    stopifnot(is.numeric(d),
-              is.finite(d))
-  } else { #!is.na(power)
+  stopifnot(length(power) == 1
+            # length(d) == 1
+            )
+  # if (is.na(d) && is.na(power))  stop("either 'power' or 'd' has to be specified")
+  # if (!is.na(d) && !is.na(power))  stop("only one of 'power' or 'd' has to be specified")
+  # if (!is.na(d)) {
+  #   stopifnot(is.numeric(d),
+  #             is.finite(d))
+  # } else { #!is.na(power)
     stopifnot(is.numeric(power),
               0 < power, power < 1)
-  }
+  # }
   
   stopifnot(is.numeric(level),
             length(level) == 1,
@@ -60,7 +61,7 @@ targetSS <- function(zo, c, power, level, designPrior, alternative, type = type,
   myupper <- 1000
   
   ## sample size calculation based on power
-  if (is.na(d)){
+  # if (is.na(d)){
     target.l <- targetSS(c = mylower,
                          zo = zo,
                          power = power,
@@ -96,7 +97,7 @@ targetSS <- function(zo, c, power, level, designPrior, alternative, type = type,
                    shrinkage = shrinkage)$root
     }
     
-  }
+  # }
   # based on d : not done for controlled yet
   # } else { # sample size calculation based on relative effect size
   #   alphas <- levelSceptical(level = level, 
@@ -130,7 +131,7 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
 #' @export
 .sampleSizeReplicationSuccess_ <- function(zo,
                                            power = NA,
-                                           d = NA,
+                                           # d = NA,
                                            level = 0.025,
                                            alternative = c("one.sided", "two.sided"),
                                            type = c("golden", "nominal", "liberal", "controlled"),
@@ -142,17 +143,18 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
               length(zo) == 1,
               is.finite(zo))
 
-    stopifnot(length(power) == 1,
-              length(d) == 1)
-    if (is.na(d) && is.na(power))  stop("either 'power' or 'd' has to be specified")
-    if (!is.na(d) && !is.na(power))  stop("only one of 'power' or 'd' has to be specified")
-    if (!is.na(d)) {
-        stopifnot(is.numeric(d),
-                  is.finite(d))
-    } else { #!is.na(power)
+    stopifnot(length(power) == 1
+              # length(d) == 1
+              )
+    # if (is.na(d) && is.na(power))  stop("either 'power' or 'd' has to be specified")
+    # if (!is.na(d) && !is.na(power))  stop("only one of 'power' or 'd' has to be specified")
+    # if (!is.na(d)) {
+    #     stopifnot(is.numeric(d),
+    #               is.finite(d))
+    # } else { #!is.na(power)
         stopifnot(is.numeric(power),
                   0 < power, power < 1)
-    }
+    # }
 
     stopifnot(is.numeric(level),
               length(level) == 1,
@@ -175,7 +177,9 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
 
               is.numeric(h),
               is.finite(h),
-              0 <= h)
+              0 <= h, 
+              
+              level < power)
 
     if(type != "controlled") {
     ## computing some quantities
@@ -193,8 +197,7 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
     } else {
 
         ## sample size calculation based on power
-        if (is.na(d)) {
-            stopifnot(level < power)
+        # if (is.na(d)) {
 
             ## computing power quantile
             u <- qnorm(p = power)
@@ -263,21 +266,21 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
                 }
             }
 
-        } else {  ## sample size calculation based on relative effect size
-            denom <- d^2*k - 1/(k - 1)
-            if (denom > 0) {
-                c <- 1/denom
-            } else {
-                c <- NaN
-            }
-        }
+        # } else {  ## sample size calculation based on relative effect size
+        #     denom <- d^2*k - 1/(k - 1)
+        #     if (denom > 0) {
+        #         c <- 1/denom
+        #     } else {
+        #         c <- NaN
+        #     }
+        # }
     }
     }
     
     if (type == "controlled") {
       # here put the numerical integration
       stopifnot(level < power)
-      c <-  sampleSizeReplicationSuccessNum(zo = zo, power = power, d = d, 
+      c <-  sampleSizeReplicationSuccessNum(zo = zo, power = power, 
                                             level = level, 
                                             alternative = alternative,
                                             type = "controlled", 
@@ -288,18 +291,13 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
 }
 
 #' Computes the required relative sample size to achieve replication success
-#' based on power or on the minimum relative effect size
+#' based on power
 #'
 #' The relative sample size to achieve replication success is computed based on
 #' the z-value of the original study, the replication success level, the type of
-#' recalibration and either the power or the minimum relative effect size. When
-#' the approach based on power is used, the design prior also has to be
-#' specified.
+#' recalibration the power and the design prior. 
 #' @param zo Numeric vector of z-values from original studies.
 #' @param power The power to achieve replication success.
-#' @param d The minimum relative effect size (ratio of the effect estimate from
-#'     the replication study to the effect estimate from the original study) to
-#'     achieve replication success.
 #' @param level Numeric vector of replication success levels. The default is
 #'     0.025.
 #' @param alternative Either "one.sided" (default) or "two.sided". Specifies if
@@ -362,12 +360,6 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
 #'                              type = "golden")
 #' sampleSizeReplicationSuccess(zo = p2z(0.0025), power = 0.8, level = 0.025,
 #'                              type = "golden", designPrior = "predictive")
-#'
-#' ## based on minimum relative effect size
-#' sampleSizeReplicationSuccess(zo = p2z(0.0025), d = 0.9, level = 0.025,
-#'                              type = "nominal")
-#' sampleSizeReplicationSuccess(zo = p2z(0.0025), d = 0.9, level = 0.025,
-#'                              type = "golden")
 #' @export
 sampleSizeReplicationSuccess <- Vectorize(.sampleSizeReplicationSuccess_)
 
