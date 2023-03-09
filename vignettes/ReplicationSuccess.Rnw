@@ -39,7 +39,7 @@
 
 % title, author, date, etc.
 \title{\textbf{Design and Analysis of Replication Studies with \texttt{ReplicationSuccess}}}
-\author{\textbf{Leonhard Held, Charlotte Micheloud, Samuel Pawel, Florian Gerber} \\
+\author{\textbf{Leonhard Held, Charlotte Micheloud, Samuel Pawel, Felix Hofmann, Florian Gerber} \\
 Epidemiology, Biostatistics and Prevention Institute (EBPI) \\
 Center for Reproducible Science (CRS) \\
 University of Zurich, Switzerland}
@@ -124,8 +124,8 @@ the sceptical $p$-value and related power and sample size calculations
 credibility \citep{Held2019a}, the harmonic mean $\chi^2$-test \citep{Held2020b},
 forecasting of replication studies \citep{Pawel2020}, and interim analyses of
 replication studies \citep{MicheloudHeld2021} were added subsequently. Recently, substantial
-changes to many of the existing functions were made due to a recalibration of
-the sceptical $p$-value approach \citep{Held_etal2022}.
+changes to many of the existing functions were made due to two recalibrations of
+the sceptical $p$-value approach \citep{Held_etal2022, Held_etal2022-Fram}.
 Use \texttt{news(package = "ReplicationSuccess")} to see a history of the
 changes. The development version of \texttt{ReplicationSuccess} is available on
 GitHub (\url{https://github.com/crsuzh/ReplicationSuccess/}, the stable version
@@ -156,9 +156,10 @@ Computation of these quantities from real data will be illustrated below.
 
 
 \section{Data sets}
-\texttt{ReplicationSuccess} includes data from four replication projects, all with 
-a ``one-to-one'' design (\ie one replication for one original study).
-They come from the following projects:
+\texttt{ReplicationSuccess} includes data from four replication projects with 
+a ``one-to-one'' design (\ie one replication for one original study), and from 
+one replication project with several replications for one original study. 
+The four replication projects with a one-to-one design are:
 
 \begin{itemize}
 \item \textbf{Reproducibility Project: Psychology:}
@@ -205,7 +206,7 @@ estimates on correlation scale as well as effective sample size for both
 the original and replication were available are included in the package.
 \end{itemize}
 
-In all data sets, effect estimates are provided as correlation coefficients
+In these data sets, effect estimates are provided as correlation coefficients
 ($r$), as well as Fisher $z$-transformed correlation coefficients
 ($\hat{\theta} = \text{tanh}^{-1}(r)$). In the descriptive analysis of data from
 replication projects it has become common practice to transform effect sizes to
@@ -225,9 +226,9 @@ An extended version of the Social Sciences Replication Project including the
 details of stages one and two can be loaded with \texttt{data("SSRP")}.
 It is a good idea to first compute the unitless quantities $z_o$, $z_r$ and
 $c$, since most functions of the package use them as input. 
-We also use the function \texttt{z2p} to compute the one-sided 
-$p$-values for original and replication study. As all original estimates are
-positive, we specify the argument \texttt{alternative} to \texttt{"greater"}.
+% We also use the function \texttt{z2p} to compute the one-sided 
+% $p$-values for original and replication study. As all original estimates are
+% positive, we specify the argument \texttt{alternative} to \texttt{"greater"}.
 
 << "data-loading" >>=
 library(ReplicationSuccess)
@@ -238,10 +239,6 @@ str(RProjects)
 RProjects$zo <- with(RProjects, fiso/se_fiso)
 RProjects$zr <- with(RProjects, fisr/se_fisr)
 RProjects$c <- with(RProjects, se_fiso^2/se_fisr^2)
-
-## computing one-sided p-values for alternative = "greater"
-RProjects$po1 <- z2p(z = RProjects$zo, alternative = "greater")
-RProjects$pr1 <- z2p(z = RProjects$zr, alternative = "greater")
 @
 
 Note that each variable ending with an \texttt{o} is associated with the original,
@@ -269,6 +266,56 @@ In most cases the replication estimate is smaller than the corresponding
 original estimate. Furthermore, a substantial number of the replication estimates
 do not achieve statistical significance at one-sided 2.5\% level, while almost all original
 estimates did. 
+
+The fifth data set comes from the following project: 
+\begin{itemize}
+\item \textbf{Protzko et al. (2020)}: 
+This data set originates from a prospective replication project involving four 
+laboratories \citep{Protzko2020}.
+Each of them conducted four original studies and for each original
+study a replication study was carried out within the same lab (self-replication)
+and by the other three labs (external-replication). Most studies used simple
+between-subject designs with two groups and a continuous outcome so that for 
+each study, an estimate of the standardized mean difference (SMD) could be 
+computed from the group means, group standard deviations, and group sample 
+sizes. For studies with covariate adjustment and/or binary outcomes, effect 
+size transformations as described in the supplementary material of \citet{Protzko2020}) 
+were used to obtain effect estimates and standard errors on SMD scale.
+\end{itemize}
+
+The forest plots of the effect estimates for the first four experiments looks as 
+follows. 
+
+<<forestPlots, fig.height = 5>>=
+data("protzko2020", package = "ReplicationSuccess")
+
+## forestplots of effect estimates
+parOld <- par(mar = c(5, 8, 4, 2), mfrow = c(2, 2))
+experiments <- unique(protzko2020$experiment)[1:4]
+for (ex in experiments) {
+  ## compute CIs
+  dat <- subset(protzko2020, experiment == ex)
+  za <- qnorm(p = 0.975)
+  plotDF <- data.frame(lower = dat$smd - za*dat$se,
+                       est = dat$smd,
+                       upper = dat$smd + za*dat$se)
+colpalette <- c("#000000", "#1B9E77", "#D95F02")
+cols <- colpalette[dat$type]
+yseq <- seq(1, nrow(dat))
+
+## forestplot
+plot(x = plotDF$est, y = yseq, xlim = c(-0.15, 0.8),
+     ylim = c(0.8*min(yseq), 1.05*max(yseq)), type = "n",
+     yaxt = "n", xlab = "Effect estimate (SMD)", ylab = "")
+abline(v = 0, col = "#0000004D")
+arrows(x0 = plotDF$lower, x1 = plotDF$upper, y0 = yseq, angle = 90,
+       code = 3, length = 0.05, col = cols)
+points(y = yseq, x = plotDF$est, pch = 20, lwd = 2, col = cols)
+axis(side = 2, at = yseq, las = 1, labels = dat$type, cex.axis = 0.85)
+title(main = ex)
+}
+@
+
 
 \section{Design and analysis of replication studies}
 Although a replication study needs to be planned and conducted before the results
@@ -710,6 +757,7 @@ Type-I error rate is controlled at level $2\alpha^2$
 independent experiments with
 two-sided testing at level $2\alpha$ in the first and one-sided
 testing at level $\alpha$ in the second).
+The controlled level depends on the variance ratio $c$.
   \item \textit{nominal}: Ensures that the type-I error is always smaller than 
   $\alpha^2$. Significance of both the original and replication study at level 
   $\alpha$ is then a necessary but not sufficient requirement for replication
@@ -720,12 +768,12 @@ testing at level $\alpha$ in the second).
 \end{itemize}
 
 <<>>=
-levCont_c1 <- levelSceptical(level = 0.025, 
+(levCont_c1 <- levelSceptical(level = 0.025, 
                              c = 1, alternative = "one.sided", 
-                             type = "controlled")
-levCont_c2 <- levelSceptical(level = 0.025, 
+                             type = "controlled"))
+(levCont_c2 <- levelSceptical(level = 0.025, 
                              c = 2, alternative = "one.sided", 
-                             type = "controlled")
+                             type = "controlled"))
 
 @
 
@@ -744,8 +792,8 @@ level turns out to be $\Sexpr{round(thresh_gol, 3)}$.  In the
 $p_\text{S} = \Sexpr{ps1} < \Sexpr{round(thresh_gol, 3)}$, so the
 replication is successful at the golden level. The golden level 
 controls the  type-I error rate for $c \geq 1$, so does not provide
-exact Type-I error control for any $c$
-. \citet{Held_etal2022-Fram} recently proposed 
+exact Type-I error control for any $c$.
+\citet{Held_etal2022-Fram} recently proposed 
 the controlled level, which ensures exact Type-I error control for 
 any value of $c$. The controlled level is adaptive and depends on $c$. 
 It is for example $\Sexpr{round(levCont_c1, 3)}$ for $c = 1$ and 
@@ -948,14 +996,14 @@ turns out to be $\dmin = \Sexpr{round(dminrs, 2)}$. Since the observed relative
 effect size  is $d = \Sexpr{round(d, 2)} > \Sexpr{round(dminrs, 2)}$,
 the replication is successful.
 
-\paragraph{Design}
-The methodology described above can be inverted such that the relative sample
-size is computed based on the specification of the minimum relative effect size.
-Using the functions \texttt{sampleSizeSignificance} and
-\texttt{sampleSizeReplicationSuccess}, it is straightforward to plan the 
-sample size of the replication study with the approaches described above. The
-only thing that changes is that we need to supply the minimum relative effect 
-size $\dmin$ to achieve replication success (instead of the power).
+% \paragraph{Design}
+% The methodology described above can be inverted such that the relative sample
+% size is computed based on the specification of the minimum relative effect size.
+% Using the functions \texttt{sampleSizeSignificance} and
+% \texttt{sampleSizeReplicationSuccess}, it is straightforward to plan the 
+% sample size of the replication study with the approaches described above. The
+% only thing that changes is that we need to supply the minimum relative effect 
+% size $\dmin$ to achieve replication success (instead of the power).
 
 \section{Special topics}
 
