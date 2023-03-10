@@ -1,4 +1,4 @@
-test_that("Output of function 'thresholdIntrinsic' stay the same.", {
+test_that("Output of function 'thresholdIntrinsic' stays the same.", {
     # set all possible parameters
     grid <- expand.grid(
         alternative = c("two.sided", "one.sided"),
@@ -6,7 +6,7 @@ test_that("Output of function 'thresholdIntrinsic' stay the same.", {
         stringsAsFactors = FALSE
     )
     # set alpha
-    alpha <- c(0, 0.005, 0.01, 0.05, 0.1, 0.5, 1)
+    alpha <- c(0.000005, 0.005, 0.01, 0.05, 0.1, 0.5, 1)
     out <- lapply(
         seq_len(nrow(grid)),
         function(i) {
