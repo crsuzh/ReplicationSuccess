@@ -12,6 +12,11 @@
  \usepackage[round]{natbib}
 \bibliographystyle{apalikedoiurl}
 \usepackage{doi}
+\usepackage{color}
+\usepackage{ulem}
+\newcommand{\hl}{\textcolor{red}}
+\newcommand{\soutr}[1]{\textcolor{red}{\xout {\textcolor{black}{#1}}}}
+\usepackage{todonotes} 
 
 %% do not reload the xcolor package, otherwise the colors defined by knitr
 %% are purged
@@ -679,7 +684,7 @@ box()
 @
 \caption{Example of assessment of replication success. The original study from
 \citet{Morewedge2010} lead to the effect estimate 
-$\hat{\theta}_o = \Sexpr{round(df$theta[1], 2)}$ on Fisher's $z$-scale
+$\hat{\theta}_o = \Sexpr{round(df$theta[1], 2)}$ on Fisher`s $z$-scale
 (95\% CI from \Sexpr{round(df$lower[1], 2)} to \Sexpr{round(df$upper[1], 2)})
 and one-sided $p$-value $p_o = \Sexpr{round(morewedge$po1, 4)}$.
 The left part of the Figure illustrates the reverse-Bayes derivation of the 
@@ -711,42 +716,60 @@ a reasonable level. It also takes into account the size of
 the effect estimates, \ie it becomes larger if the replication estimate is 
 smaller than the original estimate, which guarantees that shrinkage of the
 replication effect estimate is penalized.
-
-The sceptical $p$-value can be easily computed with the function
-\texttt{pSceptical}. It is recommended
+It is recommended
 to report the one-sided sceptical $p$-value because it guarantees that replication
 success is only possible if the directions of original and replication effect 
 estimates are the same. For the replication study of \citet{Morewedge2010}
 in Figure \ref{fig:examplerevBayes}, the one-sided sceptical $p$-value turns out
 to be $p_\text{S} = \Sexpr{ps1}$.
 
-{\flushleft\textit{Interpretation}} \\
-Interpretation of the sceptical $p$-value as a continuous
-measure of replication success is recommended. However, if an answer to 
-``did it replicate?'' is needed, several types of levels to threshold 
-the sceptical $p$-value are available and can be computed with the function 
-\texttt{levelSceptical}. 
+\hl{The sceptical $p$-value in its original formulation (\hl{`nominal'}) can be easily computed with the function
+\texttt{pSceptical} and \texttt{type = "nominal"}.}
 
-<< "threshold-p-sceptical" >>=
-## computing nominal, controlled, liberal, and golden thresholds for one-sided 
-## sceptical p-value and significance level 0.025
-(thresh_gol <- levelSceptical(level = 0.025, alternative = "one.sided", 
-                              type = "golden"))
-(thresh_contr <- levelSceptical(level = 0.025, alternative = "one.sided", 
-                                type = "controlled", c = 1))
-(thresh_nom <- levelSceptical(level = 0.025, alternative = "one.sided", 
-                              type = "nominal"))
-(thresh_lib <- levelSceptical(level = 0.025, alternative = "one.sided", 
-                              type = "liberal"))
+<<echo = FALSE>>=
+ps_gold <- signif(pSceptical(zo = zo, zr = zr, c = c,  alternative = "one.sided", type = "golden"), 2)
+ps_contr <- signif(pSceptical(zo = zo, zr = zr, c = c,  alternative = "one.sided", type = "controlled"), 2)
 @
 
-The four types can be summarized as follows:
-\begin{itemize}
-  \item \textit{golden}: Ensures that for original studies, which are just 
-  significant at the specified significance level $\alpha$, replication success 
-  is only possible if the replication effect estimate is larger than the original 
-  one (\ie if  there is no shrinkage). This is our recommended default level.
-\item \textit{controlled}: Ensures exact Type-I error control at level $\alpha^2$ 
+
+{\flushleft\textit{\hl{Interpretation and recalibration}}} \\
+\hl{Interpretation of the sceptical $p$-value as a continuous
+measure of replication success is recommended. However, if an answer to 
+``did it replicate?'' is needed, \hl{a threshold is required}.
+The sceptical $p$-value can be thresholded at $\alpha$ as an ordinary 
+$p$-value.}
+
+\hl{\citet{Held2020} calculated the nominal sceptical $p$-values of a number 
+of case studies and a relatively low rates of replication success 
+was found. In addition, 
+\citet{Held_etal2022} further studied properties of the \hl{nominal
+sceptical $p$-value} and concluded that it may be too stringent for
+most realistic scenarios. Two recalibrations
+were subsequently proposed: the golden and the controlled sceptical $p$-values. 
+They can be computed using the \texttt{pSceptical} function with 
+\texttt{type = "golden"} or \texttt{type = "controlled"}, respectively, 
+and should also be thresholded at $\alpha$.}
+
+\hl{The two recalibration types can be summarized as follows:}
+  \begin{itemize}
+    \item \hl{The \emph{golden} sceptical $p$-value $p_{S(g)}$ \citep{Held_etal2022} provides an attractive
+    balance between significance testing and effect size comparison. It
+    ensures that for original 
+    studies, which are just significant at the specified significance level
+    $\alpha$, replication success is only possible if the replication effect 
+    estimate is larger than the original one (\ie if  there is no shrinkage).
+    The golden sceptical 
+    $p$-value controls the overall Type-I error rate for $c \geq 1$, 
+    so does not provide exact overall Type-I error control for any $c$.
+     This is our recommended default type of recalibration.
+    In the \citet{Morewedge2010} replication example, we have
+    $p_{S(g)} = \Sexpr{ps_gold} < \Sexpr{alpha/2}$, so the replication is 
+    successful with the golden sceptical $p$-value.}
+    %
+    \item \hl{The \emph{controlled} sceptical $p$-value $p_{S(c)}$ \citep{Held_etal2022-Fram}
+    ensures exact overall Type-I error control 
+    for any value of the variance ratio $c$. The overall T1E rate is controlled
+    at level $\alpha^2$ 
 for \texttt{alternative = "two.sided"} (where $\alpha$ is two-sided)
 or \texttt{"one.sided"} (where $\alpha$ is one-sided)
 if the direction was pre-specified 
@@ -757,69 +780,35 @@ Type-I error rate is controlled at level $2\alpha^2$
 independent experiments with
 two-sided testing at level $2\alpha$ in the first and one-sided
 testing at level $\alpha$ in the second).
-The controlled level depends on the variance ratio $c$.
-  \item \textit{nominal}: Ensures that the type-I error is always smaller than 
-  $\alpha^2$. Significance of both the original and replication study at level 
-  $\alpha$ is then a necessary but not sufficient requirement for replication
-  success.
-  \item \textit{liberal}: Ensures that significance of both studies at level 
-  $\alpha$ is a  sufficient requirement for replication success if original 
-  and replication effect estimate have the same variance ($c=1$).
-\end{itemize}
+  In the \citet{Morewedge2010} replication example, we have
+    $p_{S(c)} = \Sexpr{ps_contr} < \Sexpr{alpha/2}$, so the replication is also 
+    successful with the controlled sceptical $p$-value.}
+  \end{itemize}
 
-<<>>=
-(levCont_c1 <- levelSceptical(level = 0.025, 
-                             c = 1, alternative = "one.sided", 
-                             type = "controlled"))
-(levCont_c2 <- levelSceptical(level = 0.025, 
-                             c = 2, alternative = "one.sided", 
-                             type = "controlled"))
+\todo[inline]{CM: Should we maybe remove liberal from package?}
 
+\hl{The three types of sceptical $p$-value for the \citet{Morewedge2010} example are calculated 
+as follows:}
+
+<<echo = TRUE>>=
+(pS_nominal <- pSceptical(zo = zo, zr = zr, c = c,  alternative = "one.sided", 
+                          type = "nominal"))
+(pS_golden <- pSceptical(zo = zo, zr = zr, c = c,  alternative = "one.sided", 
+                         type = "golden"))
+(pS_controlled <- pSceptical(zo = zo, zr = zr, c = c,  alternative = "one.sided", 
+                             type = "controlled"))
 @
 
-\citet{Held2020} only used the nominal level and it led to relatively
-low rates of replication success in the case studies considered.
-\citet{Held_etal2022} further studied properties of the different
-levels and concluded that the nominal level may be too stringent for
-most realistic scenarios, instead the golden level was recommended as
-default choice to assess replication success. It provides an attractive
-balance between significance testing and effect size comparison: If a
-replication study is not significant, it can still achieve replication
-success, provided the replication effect estimate does not shrink.
-For the one-sided sceptical $p$-value and $\alpha = 0.025$, the golden
-level turns out to be $\Sexpr{round(thresh_gol, 3)}$.  In the
-\citet{Morewedge2010} replication example, we have
-$p_\text{S} = \Sexpr{ps1} < \Sexpr{round(thresh_gol, 3)}$, so the
-replication is successful at the golden level. The golden level 
-controls the  type-I error rate for $c \geq 1$, so does not provide
-exact Type-I error control for any $c$.
-\citet{Held_etal2022-Fram} recently proposed 
-the controlled level, which ensures exact Type-I error control for 
-any value of $c$. The controlled level is adaptive and depends on $c$. 
-It is for example $\Sexpr{round(levCont_c1, 3)}$ for $c = 1$ and 
-$\Sexpr{round(levCont_c2, 3)}$ for $c = 2$.
 
-{\flushleft\textit{Recalibration}} \\
-In practice it is easier to compute a recalibrated sceptical $p$-value
-$\tilde{p}_S$ and compare it to the significance level
-(\eg $\tilde{p}_\text{S} < 0.025$) instead of comparing the uncalibrated $p_S$
-to a level computed by the \texttt{levelSceptical} function
-(\eg $p_\text{S} < \Sexpr{round(thresh_gol, 3)}$). This can be accomplished 
-with the argument \texttt{type} in \texttt{pSceptical}, for instance with
-\texttt{type = "golden"}. For the \citet{Morewedge2010} example, the
-sceptical $p$-value recalibrated at the golden level turns out to be
-$\tilde{p}_\text{S} = \Sexpr{ps1r} < 0.025$, from which we can also see that the 
-replication is successful at the golden level.
 
-The one-sided recalibrated sceptical $p$-values at the golden
-level are computed for the four projects as follows:
+The one-sided  \hl{golden} sceptical $p$-values are computed for the four projects as follows:
 << "plot-pSceptical-projects", fig.height = 4 >>=
 ## computing one-sided sceptical p-value for replication projects
 RProjects$ps <- with(RProjects, 
                      pSceptical(zo = zo, zr = zr, c = c, 
                                 alternative = "one.sided", type = "golden"))
 boxplot(ps ~ project, data = RProjects, las = 1, cex.axis = 0.7, ylim = c(0, 1),
-        xlab = "Project", ylab = expression(italic(tilde(p))[S]), outline = FALSE,
+        xlab = "Project", ylab = expression(italic(p)[S(g)]), outline = FALSE,
         col = "#0000000D")
 abline(h = 0.025, lty = 2)
 axis(side = 4, at = 0.025, las = 1, cex.axis = 0.5)
@@ -845,9 +834,10 @@ for (p in unique(RProjects$project)) {
   cat("\n \n")
 }
 @
-For most studies, the two approaches agree and replication success is declared
+For most studies, the two approaches (significance and golden sceptical $p$-value)
+agree and replication success is declared
 both based on significance and on the sceptical $p$-value. However, six
-replications show discrepant results. The sceptical $p$-value may not indicate
+replications show discrepant results. The golden sceptical $p$-value may not indicate
 replication success when there is substantial shrinkage of the replication
 effect estimate relative to the original one, even if both estimates are
 significant (this is the case for one study in the psychology project, two
@@ -856,6 +846,55 @@ the other hand, provided there is not much shrinkage, it may still indicate
 replication success for non-significant original or replication studies (this is
 the case for two studies in the psychology project).
 
+  
+  << "threshold-p-sceptical2", echo = FALSE >>=
+## computing nominal, controlled, liberal, and golden replication success levels 
+## for one-sided uncalibrated sceptical p-value
+thresh_gol <- levelSceptical(level = 0.025, alternative = "one.sided", 
+                              type = "golden")
+thresh_contr <- levelSceptical(level = 0.025, alternative = "one.sided",
+                                type = "controlled", c = c(1, 2, 3))
+thresh_nom <- levelSceptical(level = 0.025, alternative = "one.sided", 
+                              type = "nominal")
+thresh_lib <- levelSceptical(level = 0.025, alternative = "one.sided", 
+                              type = "liberal")
+@
+
+
+
+
+
+{\flushleft\textit{\hl{Replication success level}}} \\
+
+\hl{Instead of recalibrating the sceptical $p$-value and thresholding 
+it at $\alpha$, it is equivalent to use the uncalibrated (nominal)
+sceptical $p$-value and threshold it at $\gamma$, the replication success 
+level. The replication success level is computed using \texttt{levelSceptical}
+and the recalibration \texttt{type} (\texttt{"golden" or "controlled}).
+The controlled replication success level is adaptive and depends on the variance $c$.
+It is for example $\Sexpr{round(thresh_contr[1], 3)}$ for $c = 1$ and 
+$\Sexpr{round(thresh_contr[2], 3)}$ for $c = 2$.}
+Using \texttt{type = "nominal"} simply returns $\alpha$.
+
+<< "threshold-p-sceptical" >>=
+## computing nominal, golden and controlled replication success levels 
+## for one-sided uncalibrated sceptical p-value
+
+(thresh_nom <- levelSceptical(level = 0.025, alternative = "one.sided", 
+                              type = "nominal"))
+(thresh_gol <- levelSceptical(level = 0.025, alternative = "one.sided", 
+                              type = "golden"))
+(thresh_contr <- levelSceptical(level = 0.025, alternative = "one.sided",
+                                type = "controlled", c = c(1, 2, 3)))
+
+@
+
+
+\hl{The replication success level $\gamma$ is also the bound 
+on the partial Type-I error rate of the sceptical $p$-value. 
+For more details, see \citet[Section 3.1]{Held_etal2022-Fram}.}
+
+
 
 
 \paragraph{Design}
@@ -863,7 +902,7 @@ Sample size calculations work in a similar manner as when they are based
 on statistical significance: 
 % Design works similarly as for the statistical significance analysis strategy;
 Using the function \texttt{sampleSizeReplicationSuccess}, we need to choose a design 
-prior, a replication success level, recalibration type, and the desired power
+prior, \hl{a threshold $\alpha$ for the sceptical $p$-value,} recalibration type, and the desired power
 to obtain the required relative sample size $c = n_r/n_o$.
 The following code shows two examples. 
 
@@ -880,7 +919,7 @@ sampleSizeReplicationSuccess(zo = 2.5, power = 0.8, level = 0.025,
 @
 
 Figure \ref{fig:powerReplicationSuccess} shows the power to achieve replication
-success at the golden level 
+success \hl{with the golden sceptical $p$-value} 
 % a one-sided sceptical $p$-value smaller or equal 0.062 
 as a function of the one-sided $p$-value (or 
 $z$-value) of the original study, assuming equal sample sizes in original and 
@@ -915,13 +954,13 @@ legend("topright", legend = c("conditional", "predictive"),
        title = "Design prior", lty = c(1, 2), lwd = 1.5, bty = "n")
 # abline(h = 50, lty = 3)
 @
-\caption{Power to achieve replication success (at the golden level with 
+\caption{Power to achieve replication success (with the golden sceptical $p$-value and 
 $\alpha = 0.025$) as a function of the one-sided $p$-value or $z$-value of 
 the original study.}
 \label{fig:powerReplicationSuccess}
 \end{figure}
 Figure \ref{fig:sampleSizeReplicationSuccess} shows the required sample size to 
-achieve replication success at the golden level 
+achieve replication success \hl{with the golden sceptical $p$-value}
 % a one-sided sceptical $p$-value of $0.062$ 
 with 80\% power. The relative sample sizes consequently increase with 
 increasing original $p$-value, with a dramatic increase for $p$-value 
@@ -962,8 +1001,8 @@ suppressWarnings({
 legend("topleft", legend = c("conditional", "predictive"), 
        title = "Design prior", lty = c(1, 2), lwd = 1.5, bty = "n")
 @
-\caption{Relative sample size to achieve replication success (at the golden
-level with $\alpha = 0.025$) with 80\% power as a function of the (one-sided)
+\caption{Relative sample size to achieve replication success (with the golden sceptical $p$-value
+$\alpha = 0.025$) with 80\% power as a function of the (one-sided)
 $p$-value or $z$-value of the original study.}
 \label{fig:sampleSizeReplicationSuccess}
 \end{figure}
