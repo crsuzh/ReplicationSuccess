@@ -870,21 +870,21 @@ thresh_lib <- levelSceptical(level = 0.025, alternative = "one.sided",
 it at $\alpha$, it is equivalent to use the uncalibrated (nominal)
 sceptical $p$-value and threshold it at $\gamma$, the replication success 
 level. The replication success level is computed using \texttt{levelSceptical}
-and the recalibration \texttt{type} (\texttt{"golden" or "controlled}).
+and the recalibration \texttt{type} (\texttt{"golden" or "controlled"}).
 The controlled replication success level is adaptive and depends on the variance $c$.
 It is for example $\Sexpr{round(thresh_contr[1], 3)}$ for $c = 1$ and 
 $\Sexpr{round(thresh_contr[2], 3)}$ for $c = 2$.}
-Using \texttt{type = "nominal"} simply returns $\alpha$.
+\hl{Using \texttt{type = "nominal"} simply returns $\alpha$.}
 
 << "threshold-p-sceptical" >>=
 ## computing nominal, golden and controlled replication success levels 
 ## for one-sided uncalibrated sceptical p-value
 
-(thresh_nom <- levelSceptical(level = 0.025, alternative = "one.sided", 
+(rs_level_nom <- levelSceptical(level = 0.025, alternative = "one.sided", 
                               type = "nominal"))
-(thresh_gol <- levelSceptical(level = 0.025, alternative = "one.sided", 
+(rs_level_gol <- levelSceptical(level = 0.025, alternative = "one.sided", 
                               type = "golden"))
-(thresh_contr <- levelSceptical(level = 0.025, alternative = "one.sided",
+(rs_level_contr <- levelSceptical(level = 0.025, alternative = "one.sided",
                                 type = "controlled", c = c(1, 2, 3)))
 
 @
