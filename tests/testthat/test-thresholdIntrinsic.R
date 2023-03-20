@@ -12,18 +12,25 @@ test_that("Output of function 'thresholdIntrinsic' stays the same.", {
         function(i) {
             type <- grid[i, "type"]
             alternative <- grid[i, "alternative"]
-            thresholdIntrinsic(
-                alpha = alpha,
-                alternative = alternative,
-                type = type
+            tryCatch({
+                thresholdIntrinsic(
+                    alpha = alpha,
+                    alternative = alternative,
+                    type = type
+                )
+            },
+            warning = function(w) "warning!",
+            error = function(e) "error!"
             )
         }
     )
     res <- list(
-        c(7.19495236320815e-05, 0.000269716956631484, 0.00557459668078442),
-        c(0.000134858478315742, 0.000501021101850841, 0.010004626858059),
-        c(0.000356161575901172, 0.00105100270170506, 0.0126628646365154),
-        c(0.000525501350852532, 0.00154239342690154, 0.0182064636662782)
+        c(1.07801853562574e-10, 7.19495236320815e-05, 0.000269716956631484,
+          0.00557459668078442, 0.020009253716118, 0.340148158600666, 1),
+          "error!",
+        c(6.37923911569433e-09, 0.000356161575901172, 0.00105100270170506,
+          0.0126628646365154, 0.0364129273325564, 0.390912223290277, 1),
+        "error!"
     )
     expect_equal(out, res)
 })
