@@ -80,7 +80,7 @@ matplot(x = c, y = pp*100, type = "l", lty = 1, lwd = 2, las = 1, log = "x",
 lines(x = c, y = pp2TR*100, col = length(levels) + 1, lwd = 2)
 abline(v = 1, lty = 2)
 abline(h = 90, lty = 2, col = "lightgrey")
-legend("bottomright", legend = c(names(levels), "2TR"), lty = 1, lwd = 2, 
+legend("bottomright", legend = c(names(levels), "2TR"), lty = 1, lwd = 2,
        col = seq(1, length(levels) + 1))
 }
 \references{
