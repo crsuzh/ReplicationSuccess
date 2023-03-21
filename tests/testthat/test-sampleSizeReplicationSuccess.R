@@ -1,7 +1,7 @@
 test_that("Output of function 'sampleSizeReplicationSuccess' stays the same.", {
     zo <- seq(-4, 4, 2)
     apply_grid <- expand.grid(
-        priors = c("conditional", "predictive"),
+        priors = c("conditional", "predictive", "EB"),
         alt = c("one.sided", "two.sided"),
         stringsAsFactors = FALSE
     )
@@ -21,12 +21,12 @@ test_that("Output of function 'sampleSizeReplicationSuccess' stays the same.", {
         })
     expect_equal(
         out,
-        list(
-            c(0.407463446750989, NaN, NaN, NaN, 0.407463446750989),
-            c(0.469946779033606, NaN, NaN, NaN, 0.469946779033606),
-            c(0.549411550469594, NaN, NaN, NaN, 0.549411550469594),
-            c(0.654287906282666, NaN, NaN, NaN, 0.654287906282666)
-        )
+        list(c(0.407463446750989, NaN, NaN, NaN, 0.407463446750989),
+             c(0.469946779033606, NaN, NaN, NaN, 0.469946779033606),
+             c(0.544898620253259, NaN, NaN, NaN, 0.544898620253259),
+             c(0.549411550469594, NaN, NaN, NaN, 0.549411550469594),
+             c(0.654287906282666, NaN, NaN, NaN, 0.654287906282666),
+             c(0.769469720673271, NaN, NaN, NaN, 0.769469720673271))
     )
 })
 
