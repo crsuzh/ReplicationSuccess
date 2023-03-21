@@ -1,27 +1,26 @@
-test_that("numeric test for predictionInterval(): 1", {
-    za <- qnorm(p = 0.025, lower.tail = FALSE)
-    expect_equal(object = predictionInterval(thetao = za, seo = 1, ser = 1,
-                                             designPrior = "conditional"),
-                 expected = data.frame(lower = 0, mean = za, upper = 2 * za),
-                 tol = 0.0001)
-})
-
-
-test_that("numeric test for predictionInterval(): 2", {
+test_that("Output of function 'pReplicate' stays the same.", {
     thetao <- seq(-2, 2, 2)
-    apply_grid <- expand.grid(priors = c("conditional", "predictive", "EB"),
-                              tau = c(0, 0.5),
-                              seo = 1,
-                              ser = c(0.5, 2),
-                              stringsAsFactors = FALSE)
-    out <- lapply(X = seq_len(nrow(apply_grid)), FUN = function(i) {
-        predictionInterval(thetao = thetao,
-                            seo = apply_grid$seo[i],
-                            ser = apply_grid$ser[i],
-                            tau = apply_grid$tau[i],
-                            designPrior = apply_grid$priors[i])
-    })
-    expect_equal(out,
+    grid <- expand.grid(
+        priors = c("conditional", "predictive", "EB"),
+        tau = c(0, 0.5),
+        seo = 1,
+        ser = c(0.5, 2),
+        stringsAsFactors = FALSE
+    )
+    out <- lapply(
+        seq_len(nrow(grid)),
+        function(i) {
+            predictionInterval(
+                thetao = thetao,
+                seo = grid[i, "seo"],
+                ser = grid[i, "ser"],
+                tau = grid[i, "tau"],
+                designPrior = grid[i, "priors"]
+            )
+        }
+    )
+    expect_equal(
+        out,
                      list(structure(list(lower = c(-2.97998199227003, -0.979981992270027,
 1.02001800772997), mean = c(-2, 0, 2), upper = c(-1.02001800772997,
 0.979981992270027, 2.97998199227003)), class = "data.frame", row.names = c(NA,
@@ -59,4 +58,13 @@ test_that("numeric test for predictionInterval(): 2", {
 -3.05528821432467), mean = c(-1.375, 0, 1.375), upper = c(3.05528821432467,
 4.04056926533255, 5.80528821432467)), class = "data.frame", row.names = c(NA,
 -3L))))
+})
+
+
+test_that("numeric test for predictionInterval(): 1", {
+    za <- qnorm(p = 0.025, lower.tail = FALSE)
+    expect_equal(object = predictionInterval(thetao = za, seo = 1, ser = 1,
+                                             designPrior = "conditional"),
+                 expected = data.frame(lower = 0, mean = za, upper = 2 * za),
+                 tol = 0.0001)
 })
