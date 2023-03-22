@@ -155,7 +155,7 @@
 #' Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
 #'     success based on relative effect size. The Annals of Applied Statistics.
 #'     16:706-720. \doi{10.1214/21-AOAS1502}
-
+#'
 #' Micheloud, C., Balabdaoui, F., Held, L. (2023).  
 #' Beyond the two-trials rule: Type-I error control and sample size planning 
 #' with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
