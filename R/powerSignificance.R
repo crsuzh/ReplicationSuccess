@@ -81,7 +81,7 @@
 #' @param c Numeric vector of variance ratios of the original and replication
 #' effect estimates. This is usually the ratio of the sample
 #' size of the replication study to the sample size of the original study.
-#' @param level Numeric vector of significance levels. The default is 0.025.
+#' @param level Significance level. Default is 0.025.
 #' @param designPrior Either "conditional" (default), "predictive", or "EB".
 #' If "EB", the power is computed under a predictive distribution, where
 #' the contribution of the original study is shrunken towards zero based

@@ -22,7 +22,7 @@ powerSignificance(
 effect estimates. This is usually the ratio of the sample
 size of the replication study to the sample size of the original study.}
 
-\item{level}{Numeric vector of significance levels. The default is 0.025.}
+\item{level}{Significance level. Default is 0.025.}
 
 \item{designPrior}{Either "conditional" (default), "predictive", or "EB".
 If "EB", the power is computed under a predictive distribution, where
