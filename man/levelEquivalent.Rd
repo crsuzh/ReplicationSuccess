@@ -11,13 +11,12 @@ levelEquivalent(dinf, level = 0.025, alternative = c("one.sided", "two.sided"))
 deemed to be impossible for borderline significant original studies
 with p-values equal to \code{level}.}
 
-\item{level}{Threshold for the calibrated sceptical $p$-value.
+\item{level}{Threshold for the calibrated sceptical p-value.
 Default is 0.025.}
 
-\item{alternative}{Either "one.sided" (default) or "two.sided".
-Specifies if the replication success level is one-sided or two-sided.
-If the replication success level is one-sided,
-then a one-sided level for the sceptical p-value is computed.}
+\item{alternative}{Specifies if \code{level} is "one.sided" (default) or
+ "two.sided". If "one-sided",
+then a one-sided equivalent threshold for the sceptical p-value is computed.}
 }
 \value{
 Equivalent thresholds for the sceptical p-value corresponding to \code{dmin}=1.

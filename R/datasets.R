@@ -126,7 +126,7 @@
 #' @name RProjects
 #' @docType data
 #' @usage data(RProjects)
-#' @format A data frame with 143 rows and 13 variables
+#' @format A data frame with 143 rows and 15 variables
 #' @source RPP: The source files were downloaded from
 #'     \url{https://github.com/CenterForOpenScience/rpp/}. The "masterscript.R"
 #'     file was executed and the relevant variables were extracted from the

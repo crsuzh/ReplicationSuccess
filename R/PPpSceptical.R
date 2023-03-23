@@ -116,10 +116,10 @@
 #' Compute project power of the sceptical p-value
 #'
 #' The project power of the sceptical p-value is computed for a
-#' specified level of replication success, the relative variance,
+#' specified level, the relative variance,
 #' significance level and power for a standard significance test of
 #' the original study, and the alternative hypothesis.
-#' @param level Threshold for the calibrated sceptical $p$-value (for all recalibration types).
+#' @param level Threshold for the calibrated sceptical p-value (for all recalibration types).
 #'  Default is 0.025.
 #' @param c Numeric vector of variance ratios of the original and replication
 #' effect estimates. This is usually the ratio of the sample
@@ -146,7 +146,7 @@
 #' "controlled" ensures exact overall Type-I error control at level \code{level}^2
 #' for \code{alternative} is "two.sided" or "one.sided" if the direction
 #' was pre-specified in advance.
-#' @return The project power.
+#' @return The project power of the sceptical p-value
 #' @details \code{PPpSceptical} is the vectorized version of \code{.PPpSceptical_}.
 #' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @references
@@ -165,16 +165,14 @@
 #' @seealso \code{\link{pSceptical}}, \code{\link{levelSceptical}}, \code{\link{T1EpSceptical}}
 #' @author Samuel Pawel, Leonhard Held
 #' @examples
-#' ## compare project power for different levels of replication success
-#' levels <- c("nominal" = levelSceptical(level = 0.025, type = "nominal"),
-#'             "controlled" = levelSceptical(level = 0.025, type = "controlled", c = 1),
-#'             "golden" = levelSceptical(level = 0.025, type = "golden"))
+#' ## compare project power for different recalibration types
+#' types <- c("nominal", "golden", "controlled")
 #' c <- seq(0.4, 5, by = 0.01)
 #' alpha <- 0.025
 #' power <- 0.9
-#' pp <- sapply(X = levels, FUN = function(l) {
-#'   PPpSceptical(level = l, c = c, alpha, power, alternative = "one.sided",
-#'                type = "nominal")
+#' pp <- sapply(X = types, FUN = function(t) {
+#'   PPpSceptical(type = t, c = c, alpha, power, alternative = "greater",
+#'                level = 0.025)
 #' })
 #'
 #' ## compute project power of 2 trials rule
@@ -185,10 +183,10 @@
 #' matplot(x = c, y = pp*100, type = "l", lty = 1, lwd = 2, las = 1, log = "x",
 #'         xlab = bquote(italic(c)), ylab = "Project power (%)", xlim = c(0.4, 5),
 #'         ylim = c(0, 100))
-#' lines(x = c, y = pp2TR*100, col = length(levels) + 1, lwd = 2)
+#' lines(x = c, y = pp2TR*100, col = length(types) + 1, lwd = 2)
 #' abline(v = 1, lty = 2)
 #' abline(h = 90, lty = 2, col = "lightgrey")
-#' legend("bottomright", legend = c(names(levels), "2TR"), lty = 1, lwd = 2,
+#' legend("bottomright", legend = c(types, "2TR"), lty = 1, lwd = 2,
 #'        col = seq(1, length(levels) + 1))
 #' @export
 PPpSceptical <- Vectorize(.PPpSceptical_)

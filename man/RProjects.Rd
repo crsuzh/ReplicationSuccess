@@ -5,7 +5,7 @@
 \alias{RProjects}
 \title{Data from four large-scale replication projects}
 \format{
-A data frame with 143 rows and 13 variables
+A data frame with 143 rows and 15 variables
 }
 \source{
 RPP: The source files were downloaded from

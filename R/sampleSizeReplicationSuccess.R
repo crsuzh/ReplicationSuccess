@@ -291,19 +291,17 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
 }
 
 #' Computes the required relative sample size to achieve replication success
-#' based on power
+#' with the sceptical p-value
 #'
 #' The relative sample size to achieve replication success is computed based on
-#' the z-value of the original study, the replication success level, the type of
-#' recalibration the power and the design prior.
+#' the z-value of the original study,  the type of
+#' recalibration, the power and the design prior. 
 #' @param zo Numeric vector of z-values from original studies.
 #' @param power The power to achieve replication success.
-#' @param level Threshold for the calibrated sceptical $p$-value (for all recalibration types).
+#' @param level Threshold for the calibrated sceptical p-value (for all recalibration types).
 #'  Default is 0.025.
-#' @param alternative Either "one.sided" (default) or "two.sided". Specifies if
-#'     the replication success level is one-sided or two-sided.
-#'     If the
-#'     replication success level is one-sided, then sample size calculations are based
+#' @param alternative Specifies if \code{level} is "one.sided" (default) or "two.sided".
+#'     If the "one.sided" then sample size calculations are based
 #'     on a one-sided assessment of replication success in the direction of the
 #'     original effect estimates.
 #' @param type Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),

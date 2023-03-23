@@ -14,8 +14,9 @@ target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
 #' @export
 .levelSceptical_ <- function(level,
                            c = NA,
-                           alternative = c("one.sided", "two.sided"),
+                           alternative = c("one.sided", "two.sided"), 
                            type = c("golden", "nominal", "controlled")){
+
 
   stopifnot(is.numeric(level),
             length(level) >= 1,
@@ -50,19 +51,20 @@ target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
   }
   return(res)
 }
-#' Computes the replication sucess level
+#' Computes the replication success level
 #'
 #' The replication success level is computed based on the specified
-#' alternative and calibration type.
-#' @param level Threshold for the calibrated sceptical $p$-value (for all recalibration types).
+#' alternative and recalibration type.
+#' @param level Threshold for the calibrated sceptical p-value (for all recalibration types).
 #'  Default is 0.025.
 #' @param c The variance ratio. Only required when \code{type = } "controlled".
-#' @param alternative Either "one.sided" (default) or "two.sided".
-#' Specifies if the replication success level is one-sided or two-sided. If the replication success level is one-sided,
-#' then a one-sided level for the sceptical p-value is computed.
-#' @param type The calibration type can be either "golden" (default), "nominal",  or "controlled".
-#' \code{type} = "golden" ensures that for an original study just significant at the specified \code{level},
-#' replication success is only possible if the replication effect estimate is larger than the original one.
+#' @param alternative Specifies if \code{level} is "one.sided" (default) or
+#'  "two.sided". If "one-sided",
+#' then a one-sided replication success level is computed.
+#' @param type Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
+#'  or "controlled". "golden" ensures that for an original study just significant at
+#' the specified \code{level}, replication success is only possible for 
+#' replication effect estimates larger than the original one.
 #' "controlled" ensures exact overall Type-I error control at level \code{level}^2
 #' for \code{alternative} is "two.sided" or "one.sided" if the direction
 #' was pre-specified in advance.

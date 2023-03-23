@@ -98,7 +98,7 @@ FZ <- function(z, c) {
 #'
 #' Computes sceptical p-values and z-values based on the z-values of the
 #' original and the replication study and the corresponding variance ratio.
-#' If specified, the p-values are recalibrated.
+#' If specified, the sceptical p-values are recalibrated.
 #' @rdname pSceptical
 #' @param zo Numeric vector of z-values from original studies.
 #' @param zr Numeric vector of z-values from replication studies.

@@ -3,7 +3,7 @@
 \name{sampleSizeReplicationSuccess}
 \alias{sampleSizeReplicationSuccess}
 \title{Computes the required relative sample size to achieve replication success
-based on power}
+with the sceptical p-value}
 \usage{
 sampleSizeReplicationSuccess(
   zo,
@@ -21,13 +21,11 @@ sampleSizeReplicationSuccess(
 
 \item{power}{The power to achieve replication success.}
 
-\item{level}{Threshold for the calibrated sceptical $p$-value (for all recalibration types).
+\item{level}{Threshold for the calibrated sceptical p-value (for all recalibration types).
 Default is 0.025.}
 
-\item{alternative}{Either "one.sided" (default) or "two.sided". Specifies if
-the replication success level is one-sided or two-sided.
-If the
-replication success level is one-sided, then sample size calculations are based
+\item{alternative}{Specifies if \code{level} is "one.sided" (default) or "two.sided".
+If the "one.sided" then sample size calculations are based
 on a one-sided assessment of replication success in the direction of the
 original effect estimates.}
 
@@ -63,8 +61,8 @@ The relative sample size for replication success. If impossible to
 }
 \description{
 The relative sample size to achieve replication success is computed based on
-the z-value of the original study, the replication success level, the type of
-recalibration the power and the design prior.
+the z-value of the original study,  the type of
+recalibration, the power and the design prior.
 }
 \details{
 \code{sampleSizeReplicationSuccess} is the vectorized version of

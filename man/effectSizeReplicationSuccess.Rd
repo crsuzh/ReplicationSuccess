@@ -2,7 +2,8 @@
 % Please edit documentation in R/effectSizeReplicationSuccess.R
 \name{effectSizeReplicationSuccess}
 \alias{effectSizeReplicationSuccess}
-\title{Computes the minimum relative effect size to achieve replication success}
+\title{Computes the minimum relative effect size to achieve replication success
+with the sceptical p-value}
 \usage{
 effectSizeReplicationSuccess(
   zo,
@@ -19,11 +20,11 @@ effectSizeReplicationSuccess(
 This is usually the ratio of the sample size of the replication study to the sample
 size of the original study.}
 
-\item{level}{Threshold for the calibrated sceptical $p$-value (for all recalibration types).
+\item{level}{Threshold for the calibrated sceptical p-value (for all recalibration types).
 Default is 0.025.}
 
-\item{alternative}{Specifies if the replication success level is "one.sided" (default) or "two.sided".
-If the replication success level is one-sided, then effect size calculations are based on a one-sided assessment of
+\item{alternative}{Specifies if \code{level} is "one.sided" (default) or "two.sided".
+If "one.sided", then effect size calculations are based on a one-sided assessment of
 replication success in the direction of the original effect estimate.}
 
 \item{type}{Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
@@ -35,10 +36,12 @@ for \code{alternative} is "two.sided" or "one.sided" if the direction
 was pre-specified in advance.}
 }
 \value{
-The minimum relative effect size to achieve replication success.
+The minimum relative effect size to achieve replication success
+with the sceptical p-value.
 }
 \description{
 The minimum relative effect size (replication to original) to achieve replication success
+with the sceptical p-value
 is computed based on the result of the original study and the corresponding variance ratio.
 }
 \details{

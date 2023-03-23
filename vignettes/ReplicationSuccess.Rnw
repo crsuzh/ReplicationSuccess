@@ -938,7 +938,7 @@ box()
 
 
   << "threshold-p-sceptical2", echo = FALSE >>=
-## computing nominal, controlled, liberal, and golden replication success levels
+## computing nominal, controlled, and golden replication success levels 
 ## for one-sided uncalibrated sceptical p-value
 thresh_gol <- levelSceptical(level = 0.025, alternative = "one.sided",
                               type = "golden")
@@ -946,8 +946,6 @@ thresh_contr <- levelSceptical(level = 0.025, alternative = "one.sided",
                                 type = "controlled", c = c(1, 2))
 thresh_nom <- levelSceptical(level = 0.025, alternative = "one.sided",
                               type = "nominal")
-thresh_lib <- levelSceptical(level = 0.025, alternative = "one.sided",
-                              type = "liberal")
 @
 
 
