@@ -22,9 +22,15 @@
 # RStudio files
 .Rproj.user/
 
-# produced vignettes
+# produced vignettes and auxiliary files from the compilation
 vignettes/*.html
 vignettes/*.pdf
+vignettes/*.log
+vignettes/*.aux
+vignettes/figure/*
+
+# do not track the intermediate .tex file for ReplicationSuccess.Rnw
+vignettes/ReplicationSuccess.tex
 
 # OAuth2 token, see https://github.com/hadley/httr/releases/tag/v0.3
 .httr-oauth
