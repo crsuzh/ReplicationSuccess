@@ -2,7 +2,7 @@
 % Please edit documentation in R/levelSceptical.R
 \name{levelSceptical}
 \alias{levelSceptical}
-\title{Computes the level for the sceptical p-value}
+\title{Computes the replication sucess level}
 \usage{
 levelSceptical(
   level,
@@ -12,7 +12,8 @@ levelSceptical(
 )
 }
 \arguments{
-\item{level}{Numeric vector of required replication success levels.}
+\item{level}{Threshold for the calibrated sceptical $p$-value (for all recalibration types).
+Default is 0.025.}
 
 \item{c}{The variance ratio. Only required when \code{type = } "controlled".}
 
@@ -20,26 +21,18 @@ levelSceptical(
 Specifies if the replication success level is one-sided or two-sided. If the replication success level is one-sided,
 then a one-sided level for the sceptical p-value is computed.}
 
-\item{type}{The calibration type can be either "golden" (default), "nominal", "liberal", or "controlled".
+\item{type}{The calibration type can be either "golden" (default), "nominal",  or "controlled".
 \code{type} = "golden" ensures that for an original study just significant at the specified \code{level},
 replication success is only possible if the replication effect estimate is larger than the original one.
 "controlled" ensures exact overall Type-I error control at level \code{level}^2
 for \code{alternative} is "two.sided" or "one.sided" if the direction 
-was pre-specified in advance. For \code{alternative} is "one.sided" 
-and no pre-specified direction, the overall Type-I error rate is controlled at 
-level 2*\code{level}^2.
-The type \code{"nominal"} ensures that the overall type-I error rate is always smaller
-than \code{level}^2 (or 2\code{level}^2 for \code{alternative =} "one.sided" 
-and no pre-specified direction). Significance of both the original and replication study
-at \code{level} is then a necessary but not sufficient requirement for replication success.
-If \code{type} is "liberal" then significance of both studies is a
-sufficient requirement for replication success if the variance ratio is equal to 1.}
+was pre-specified in advance.}
 }
 \value{
-Levels for the sceptical p-value.
+Replication success levels
 }
 \description{
-The level for the sceptical p-value is computed based on the specified
+The replication success level is computed based on the specified
 alternative and calibration type.
 }
 \examples{

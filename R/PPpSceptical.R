@@ -119,13 +119,14 @@
 #' specified level of replication success, the relative variance,
 #' significance level and power for a standard significance test of
 #' the original study, and the alternative hypothesis.
-#' @param level Numeric vector of levels of replication success.
+#' @param level Threshold for the calibrated sceptical $p$-value (for all recalibration types).
+#'  Default is 0.025.
 #' @param c Numeric vector of variance ratios of the original and replication
 #' effect estimates. This is usually the ratio of the sample
 #' size of the replication study to the sample size of the
 #' original study.
 #' @param alpha Significance level for a standard significance test in
-#' the original study.
+#' the original study. Default is 0.025.
 #' @param power Power to detect the assumed effect with a standard significance test
 #' in the original study.
 #' @param alternative Specifies if \code{level} and 
@@ -138,9 +139,13 @@
 #' If "greater" or "less",  project power is
 #' computed based on a one-sided assessment of replication success
 #' in the pre-specified direction of the original and replication effect estimate.
-#' @param type Type of recalibration. Can be either "golden" (default),
-#' "nominal" (no recalibration), "liberal", or "controlled".
-#' See \code{\link{levelSceptical}} for details about recalibration types.
+#' @param type Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
+#'  or "controlled". "golden" ensures that for an original study just significant at
+#' the specified \code{level}, replication success is only possible for 
+#' replication effect estimates larger than the original one.
+#' "controlled" ensures exact overall Type-I error control at level \code{level}^2
+#' for \code{alternative} is "two.sided" or "one.sided" if the direction 
+#' was pre-specified in advance.
 #' @return The project power.
 #' @details \code{PPpSceptical} is the vectorized version of \code{.PPpSceptical_}.
 #' \code{\link[base]{Vectorize}} is used to vectorize the function.

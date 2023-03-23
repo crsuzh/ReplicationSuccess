@@ -19,21 +19,20 @@ effectSizeReplicationSuccess(
 This is usually the ratio of the sample size of the replication study to the sample
 size of the original study.}
 
-\item{level}{Replication success level. Default is 0.025.}
+\item{level}{Threshold for the calibrated sceptical $p$-value (for all recalibration types).
+Default is 0.025.}
 
 \item{alternative}{Specifies if the replication success level is "one.sided" (default) or "two.sided".
 If the replication success level is one-sided, then effect size calculations are based on a one-sided assessment of
 replication success in the direction of the original effect estimate.}
 
 \item{type}{Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
-"liberal", or "controlled". "golden" ensures that for an original study just significant at
-the specified \code{level}, replication success is only possible for replication effect estimates larger than the original one.
+ or "controlled". "golden" ensures that for an original study just significant at
+the specified \code{level}, replication success is only possible for 
+replication effect estimates larger than the original one.
 "controlled" ensures exact overall Type-I error control at level \code{level}^2
 for \code{alternative} is "two.sided" or "one.sided" if the direction 
-was pre-specified in advance. For \code{alternative} is "one.sided" 
-and no pre-specified direction, the overall Type-I error rate is controlled at 
-level 2*\code{level}^2.
-See \code{\link{levelSceptical}} for details about recalibration types.}
+was pre-specified in advance.}
 }
 \value{
 The minimum relative effect size to achieve replication success.

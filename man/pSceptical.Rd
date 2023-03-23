@@ -33,9 +33,9 @@ assessment of replication success regardless of the direction of the
 original and replication effect estimate.}
 
 \item{type}{Type of recalibration. Can be either "golden" (default), "nominal",
-"liberal", or "controlled". Setting \code{type} to "nominal" corresponds to no
+or "controlled". Setting \code{type} to "nominal" corresponds to no
 recalibration as in Held et al. (2020). A recalibration is applied if
-\code{type} is "liberal", "controlled", or "golden", and the sceptical p-value
+\code{type} is  "controlled", or "golden", and the sceptical p-value
 can then be interpreted on the same scale as an ordinary p-value (e.g., a one-sided
 sceptical p-value can be thresholded at the conventional 0.025 level).
 "golden" ensures that
@@ -44,10 +44,7 @@ replication success is only possible if the replication effect estimate is at
 least as large as the original one. 
 "controlled" ensures exact overall Type-I error control at level \code{level}^2
     for \code{alternative} is "two.sided" or "one.sided" if the direction 
-    was pre-specified in advance. For \code{alternative} is "one.sided" 
-    and no pre-specified direction, the overall Type-I error rate is controlled at 
-    level 2*\code{level}^2.
-See \code{\link{levelSceptical}} for details about recalibration types.}
+    was pre-specified in advance.}
 }
 \value{
 \code{pSceptical} returns the sceptical p-value.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/T1EpSceptical.R
 \name{T1EpSceptical}
 \alias{T1EpSceptical}
-\title{Compute type-I error rate of the sceptical p-value}
+\title{Compute overall type-I error rate of the sceptical p-value}
 \usage{
 T1EpSceptical(
   level,
@@ -12,7 +12,8 @@ T1EpSceptical(
 )
 }
 \arguments{
-\item{level}{Numeric vector of levels of replication success.}
+\item{level}{Threshold for the calibrated sceptical $p$-value (for all recalibration types).
+Default is 0.025.}
 
 \item{c}{Numeric vector of variance ratios of the original and replication
 effect estimates. This is usually the ratio of the sample
@@ -31,16 +32,14 @@ computed based on a one-sided assessment of replication success
 in the pre-specified direction of the original and replication effect estimate.}
 
 \item{type}{Type of recalibration. Recalibration type can be either "golden" 
-(default), "nominal" (no recalibration), "liberal", or "controlled".
-See \code{\link{levelSceptical}} for details
-about recalibration types.}
+(default), "nominal" (no recalibration), or "controlled".}
 }
 \value{
-The type-I error rate.
+The overall type-I error rate.
 }
 \description{
-The type-I error rate of the sceptical p-value is computed for a
-specified level of replication success, the relative variance,
+The overall type-I error rate of the sceptical p-value is computed for a
+specified level, the relative variance,
 and the alternative hypothesis.
 }
 \details{

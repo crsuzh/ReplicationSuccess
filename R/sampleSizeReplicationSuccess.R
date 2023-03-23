@@ -298,26 +298,21 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
 #' recalibration the power and the design prior. 
 #' @param zo Numeric vector of z-values from original studies.
 #' @param power The power to achieve replication success.
-#' @param level Numeric vector of replication success levels. The default is
-#'     0.025.
+#' @param level Threshold for the calibrated sceptical $p$-value (for all recalibration types).
+#'  Default is 0.025.
 #' @param alternative Either "one.sided" (default) or "two.sided". Specifies if
 #'     the replication success level is one-sided or two-sided.
 #'     If the
 #'     replication success level is one-sided, then sample size calculations are based
 #'     on a one-sided assessment of replication success in the direction of the
 #'     original effect estimates.
-#' @param type Recalibration type can be either "golden" (default), "nominal"
-#'     (no recalibration), "liberal", or "controlled". \code{type} = "golden"
-#'     ensures that for an original study just significant at the specified
-#'     \code{level}, replication success is only possible if the replication
-#'     effect estimate is larger than the original one.
-#'     "controlled" ensures exact overall Type-I error control at level \code{level}^2
-#'     for \code{alternative} is "two.sided" or "one.sided" if the direction 
-#'     was pre-specified in advance. For \code{alternative} is "one.sided" 
-#'     and no pre-specified direction, the overall Type-I error rate is controlled at 
-#'     level 2*\code{level}^2.
-#'      See
-#'     \code{\link{levelSceptical}} for details about recalibration types.
+#' @param type Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
+#'  or "controlled". "golden" ensures that for an original study just significant at
+#' the specified \code{level}, replication success is only possible for 
+#' replication effect estimates larger than the original one.
+#' "controlled" ensures exact overall Type-I error control at level \code{level}^2
+#' for \code{alternative} is "two.sided" or "one.sided" if the direction 
+#' was pre-specified in advance.
 #' @param designPrior Is only taken into account when \code{power} is specified.
 #'     Either "conditional" (default), "predictive", or "EB". If "EB", the power
 #'     is computed under a predictive distribution where the contribution of the

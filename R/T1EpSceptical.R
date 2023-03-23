@@ -126,12 +126,13 @@
 }
 
 
-#' Compute type-I error rate of the sceptical p-value
+#' Compute overall type-I error rate of the sceptical p-value
 #'
-#' The type-I error rate of the sceptical p-value is computed for a
-#' specified level of replication success, the relative variance,
+#' The overall type-I error rate of the sceptical p-value is computed for a
+#' specified level, the relative variance,
 #' and the alternative hypothesis.
-#' @param level Numeric vector of levels of replication success.
+#' @param level Threshold for the calibrated sceptical $p$-value (for all recalibration types).
+#'  Default is 0.025.
 #' @param c Numeric vector of variance ratios of the original and replication
 #' effect estimates. This is usually the ratio of the sample
 #' size of the replication study to the sample size of the
@@ -147,10 +148,8 @@
 #' computed based on a one-sided assessment of replication success
 #' in the pre-specified direction of the original and replication effect estimate.
 #' @param type Type of recalibration. Recalibration type can be either "golden" 
-#' (default), "nominal" (no recalibration), "liberal", or "controlled".
-#' See \code{\link{levelSceptical}} for details
-#' about recalibration types.
-#' @return The type-I error rate.
+#' (default), "nominal" (no recalibration), or "controlled".
+#' @return The overall type-I error rate.
 #' @details \code{T1EpSceptical} is the vectorized version of \code{.T1EpSceptical_}.
 #' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @references

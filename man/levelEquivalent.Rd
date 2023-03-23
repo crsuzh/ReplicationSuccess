@@ -2,7 +2,7 @@
 % Please edit documentation in R/levelEquivalent.R
 \name{levelEquivalent}
 \alias{levelEquivalent}
-\title{Computes the level for the sceptical p-value}
+\title{Computes the equivalent threshold for the sceptical p-value}
 \usage{
 levelEquivalent(dinf, level = 0.025, alternative = c("one.sided", "two.sided"))
 }
@@ -11,7 +11,8 @@ levelEquivalent(dinf, level = 0.025, alternative = c("one.sided", "two.sided"))
 deemed to be impossible for borderline significant original studies
 with p-values equal to \code{level}.}
 
-\item{level}{Numeric vector of required replication success levels. Defaults to 0.025.}
+\item{level}{Threshold for the calibrated sceptical $p$-value.
+Default is 0.025.}
 
 \item{alternative}{Either "one.sided" (default) or "two.sided".
 Specifies if the replication success level is one-sided or two-sided.
@@ -19,13 +20,13 @@ If the replication success level is one-sided,
 then a one-sided level for the sceptical p-value is computed.}
 }
 \value{
-Equivalent levels for the sceptical p-value corresponding to \code{dmin}=1.
-Thus, at the equivalent level, replication success is impossible for borderline significant original
+Equivalent thresholds for the sceptical p-value corresponding to \code{dmin}=1.
+Thus, at the equivalent threshold, replication success is impossible for borderline significant original
 studies and shrinkage of the replication effect estimate.
 }
 \description{
-The equivalent level for the sceptical p-value is computed based on
-the specified limiting relative effect size, the replication success level, and
+The equivalent threshold for the sceptical p-value is computed based on
+the specified limiting relative effect size, the level, and
 the alternative.
 }
 \examples{
