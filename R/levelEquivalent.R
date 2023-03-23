@@ -6,12 +6,11 @@
 #' @param dinf The limiting relative effect size bound below which replication success is
 #' deemed to be impossible for borderline significant original studies
 #' with p-values equal to \code{level}.
-#' @param level Threshold for the calibrated sceptical $p$-value.
+#' @param level Threshold for the calibrated sceptical p-value.
 #'  Default is 0.025.
-#' @param alternative Either "one.sided" (default) or "two.sided".
-#' Specifies if the replication success level is one-sided or two-sided.
-#' If the replication success level is one-sided,
-#' then a one-sided level for the sceptical p-value is computed.
+#' @param alternative Specifies if \code{level} is "one.sided" (default) or
+#'  "two.sided". If "one-sided",
+#' then a one-sided equivalent threshold for the sceptical p-value is computed.
 #' @return Equivalent thresholds for the sceptical p-value corresponding to \code{dmin}=1.
 #' Thus, at the equivalent threshold, replication success is impossible for borderline significant original
 #' studies and shrinkage of the replication effect estimate. 

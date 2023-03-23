@@ -1,7 +1,7 @@
 #' @export
 .T1EpSceptical_ <- function(level, c,
                             alternative = c("one.sided", "two.sided", "greater", "less"),
-                            type = c("golden", "nominal", "liberal", "controlled")) {  
+                            type = c("golden", "nominal", "controlled")) {  
     
     stopifnot(is.numeric(level),
               length(level) == 1,
@@ -131,7 +131,7 @@
 #' The overall type-I error rate of the sceptical p-value is computed for a
 #' specified level, the relative variance,
 #' and the alternative hypothesis.
-#' @param level Threshold for the calibrated sceptical $p$-value (for all recalibration types).
+#' @param level Threshold for the calibrated sceptical p-value (for all recalibration types).
 #'  Default is 0.025.
 #' @param c Numeric vector of variance ratios of the original and replication
 #' effect estimates. This is usually the ratio of the sample
@@ -168,24 +168,17 @@
 #' @author Samuel Pawel, Leonhard Held
 #' @seealso \code{\link{pSceptical}}, \code{\link{levelSceptical}}, \code{\link{PPpSceptical}}
 #' @examples
-#' ## compare type-I error rate for different levels of replication success
-#' levels <- c("nominal" = levelSceptical(level = 0.025, type = "nominal"),
-#'             "liberal" = levelSceptical(level = 0.025, type = "liberal"),
-#'             "controlled" = levelSceptical(level = 0.025, type = "controlled", c = 1),
-#'             "golden" = levelSceptical(level = 0.025, type = "golden"))
+#' ## compare type-I error rate for different recalibration types
+#' types <- c("nominal", "golden", "controlled")
 #' c <- seq(0.2, 5, by = 0.05)
-#' t1 <- sapply(X = levels, FUN = function(l) {
-#'   T1EpSceptical(level = l, c = c, alternative = "one.sided", type = "nominal")
+#' t1 <- sapply(X = types, FUN = function(t) {
+#'   T1EpSceptical(type = t, c = c, alternative = "greater", level = 0.025)
 #' })
 #' matplot(x = c, y = t1*100, type = "l", lty = 1, lwd = 2, las = 1, log = "x",
 #'         xlab = bquote(italic(c)), ylab = "Type-I error (%)", xlim = c(0.2, 5))
-#' legend("topright", legend = names(levels), lty = 1, lwd = 2, col = seq_along(levels))
+#' legend("topright", legend = types, lty = 1, lwd = 2, col = seq_along(types))
 #' 
-#' ## check that one.sided controlled level controls type-I error rate for c = 1 
-#' ## at alpha = 0.05*0.025 = 0.00125
-#' T1EpSceptical(level = levelSceptical(level = 0.025, alternative = "one.sided", 
-#'                                      type = "controlled", c = 1), 
-#'               c = 1, alternative = "one.sided",  type = "nominal")
+
 #' @export
 T1EpSceptical <- Vectorize(.T1EpSceptical_)
 

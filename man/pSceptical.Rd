@@ -10,7 +10,7 @@ pSceptical(
   zr,
   c,
   alternative = c("one.sided", "two.sided"),
-  type = c("golden", "nominal", "liberal", "controlled")
+  type = c("golden", "nominal", "controlled")
 )
 
 zSceptical(zo, zr, c)
@@ -54,7 +54,7 @@ least as large as the original one.
 \description{
 Computes sceptical p-values and z-values based on the z-values of the
 original and the replication study and the corresponding variance ratio.
-If specified, the p-values are recalibrated.
+If specified, the sceptical p-values are recalibrated.
 }
 \details{
 \code{pSceptical} is the vectorized version of \code{.pSceptical_}.

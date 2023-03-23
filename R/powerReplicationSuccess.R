@@ -4,7 +4,7 @@
                                       level = 0.025,
                                       designPrior = c("conditional", "predictive", "EB"),
                                       alternative = c("one.sided", "two.sided"),
-                                      type = c("golden", "nominal", "liberal", "controlled"),
+                                      type = c("golden", "nominal", "controlled"),
                                       shrinkage = 0,
                                       h = 0,
                                       strict = FALSE){
@@ -96,24 +96,24 @@
 }
 
 
-#' Computes the power for replication success
+#' Computes the power for replication success with the sceptical p-value
 #'
-#' Computes the power for replication success based on the result of the
+#' Computes the power for replication success with the sceptical 
+#' p-value  based on the result of the
 #' original study, the corresponding variance ratio, and the design prior.
 #' @param zo Numeric vector of z-values from original studies.
 #' @param c Numeric vector of variance ratios of the original and replication
 #'     effect estimates. This is usually the ratio of the sample size of the
 #'     replication study to the sample size of the original study.
-#' @param level Threshold for the calibrated sceptical $p$-value (for all recalibration types).
+#' @param level Threshold for the calibrated sceptical p-value (for all recalibration types).
 #'  Default is 0.025.
 #' @param designPrior Either "conditional" (default), "predictive", or "EB". If
 #'     "EB", the power is computed under a predictive distribution, where
 #'     the contribution of the original study is shrunken towards zero based on
 #'     the evidence in the original study (with an empirical Bayes shrinkage
 #'     estimator).
-#' @param alternative Either "one.sided" (default) or "two.sided". Specifies if
-#'     the replication success level is one-sided or two-sided. If the
-#'     replication success level is one-sided, then power calculations are based
+#' @param alternative Specifies if \code{level} is "one.sided" (default) or "two.sided".
+#'     If the "one.sided" then power calculations are based
 #'     on a one-sided assessment of replication success in the direction of the
 #'     original effect estimates.
 #' @param type Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
@@ -136,7 +136,7 @@
 #'     replication success in the opposite direction of the original effect
 #'     estimate should also be taken into account. Default is \code{FALSE}.
 #'     Only taken into account when \code{alternative} = "two.sided".
-#' @return The power for replication success.
+#' @return The power for replication success with the sceptical p-value
 #' @author Leonhard Held, Charlotte Micheloud, Samuel Pawel
 #' @details \code{powerReplicationSuccess} is the vectorized version of
 #'     \code{.powerReplicationSuccess_}. \code{\link[base]{Vectorize}} is used
