@@ -20,9 +20,9 @@ effect estimates. This is usually the ratio of the sample
 size of the replication study to the sample size of the
 original study.}
 
-\item{alternative}{Specifies if \code{level} 
+\item{alternative}{Specifies if \code{level}
 is "two.sided" or one.sided ("one.sided", "greater", or "less").
-If "one.sided", the type-I error rate is computed based on a one-sided assessment 
+If "one.sided", the type-I error rate is computed based on a one-sided assessment
 of replication success in the direction of the original effect estimate.
 If "two.sided", the type-I error rate is computed based
 on a two-sided assessment of replication success regardless of the direction
@@ -31,7 +31,7 @@ If "greater" or "less",  the type-I error rate is
 computed based on a one-sided assessment of replication success
 in the pre-specified direction of the original and replication effect estimate.}
 
-\item{type}{Type of recalibration. Recalibration type can be either "golden" 
+\item{type}{Type of recalibration. Recalibration type can be either "golden"
 (default), "nominal" (no recalibration), or "controlled".}
 }
 \value{
@@ -66,9 +66,9 @@ scientific findings. \emph{Journal of the Royal Statistical Society: Series C
 Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
     success based on relative effect size. The Annals of Applied Statistics.
     16:706-720. \doi{10.1214/21-AOAS1502}
-    
-Micheloud, C., Balabdaoui, F., Held, L. (2023).  
-Beyond the two-trials rule: Type-I error control and sample size planning 
+
+Micheloud, C., Balabdaoui, F., Held, L. (2023).
+Beyond the two-trials rule: Type-I error control and sample size planning
 with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
 }
 \seealso{

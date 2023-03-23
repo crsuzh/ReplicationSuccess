@@ -49,7 +49,7 @@
     zoabs <- abs(zo)
 
     ## if zoas < zalphaS, power is zero
-    alphaS <- levelSceptical(level = level, alternative = alternative, type = type, 
+    alphaS <- levelSceptical(level = level, alternative = alternative, type = type,
                              c = c)
     zalphaS <- p2z(p = alphaS, alternative = alternative)
     if (zoabs < zalphaS) {
@@ -118,10 +118,10 @@
 #'     original effect estimates.
 #' @param type Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
 #'  or "controlled". "golden" ensures that for an original study just significant at
-#' the specified \code{level}, replication success is only possible for 
+#' the specified \code{level}, replication success is only possible for
 #' replication effect estimates larger than the original one.
 #' "controlled" ensures exact overall Type-I error control at level \code{level}^2
-#' for \code{alternative} is "two.sided" or "one.sided" if the direction 
+#' for \code{alternative} is "two.sided" or "one.sided" if the direction
 #' was pre-specified in advance.
 #' @param shrinkage Numeric vector with values in [0,1). Defaults to 0.
 #'     Specifies the shrinkage of the original effect estimate towards zero,
@@ -151,8 +151,8 @@
 #'     success based on relative effect size. The Annals of Applied Statistics.
 #'     16:706-720. \doi{10.1214/21-AOAS1502}
 #'
-#' Micheloud, C., Balabdaoui, F., Held, L. (2023).  
-#' Beyond the two-trials rule: Type-I error control and sample size planning 
+#' Micheloud, C., Balabdaoui, F., Held, L. (2023).
+#' Beyond the two-trials rule: Type-I error control and sample size planning
 #' with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
 #' @seealso \code{\link{sampleSizeReplicationSuccess}}, \code{\link{pSceptical}},
 #' \code{\link{levelSceptical}}
@@ -164,12 +164,12 @@
 #' ## smaller sample size in replication (c < 1)
 #' powerReplicationSuccess(zo = p2z(0.005), c = 1/2, level = 0.025, designPrior = "conditional")
 #' powerReplicationSuccess(zo = p2z(0.005), c = 1/2, level = 0.025, designPrior = "predictive")
-#' 
-#' powerReplicationSuccess(zo = p2z(0.00005), c = 2, level = 0.05, 
+#'
+#' powerReplicationSuccess(zo = p2z(0.00005), c = 2, level = 0.05,
 #'                         alternative = "two.sided",  strict = TRUE, shrinkage = 0.9)
-#' powerReplicationSuccess(zo = p2z(0.00005), c = 2, level = 0.05, 
+#' powerReplicationSuccess(zo = p2z(0.00005), c = 2, level = 0.05,
 #'                         alternative = "two.sided", strict = FALSE, shrinkage = 0.9)
-#' 
+#'
 #' @export
 powerReplicationSuccess <- Vectorize(.powerReplicationSuccess_)
 
@@ -211,12 +211,12 @@ zr2quantile <- function(zo,
 
 powerReplicationSuccessTargetPower <- function(power, zo, c, level, designPrior, alternative, type,
                         shrinkage){
-    zr2 <- zr2quantile(zo = zo, c = c, p = 1 - power, 
+    zr2 <- zr2quantile(zo = zo, c = c, p = 1 - power,
                        designPrior = designPrior, shrinkage = shrinkage)
     pC <- pSceptical(zo = zo, zr = sqrt(zr2), c = c,
                      alternative = alternative, type = type)
     return(pC - level)
-                                        # pC <- pSceptical(zo = zo, zr = sqrt(zr2), c = c, 
+                                        # pC <- pSceptical(zo = zo, zr = sqrt(zr2), c = c,
                                         #                  alternative = alternative)
                                         # return(pC - levelSceptical(level = level, alternative = alternative,
                                         #                                type = type))
@@ -227,18 +227,18 @@ powerReplicationSuccessTargetPower <- function(power, zo, c, level, designPrior,
                                          level = 0.025,
                                          designPrior = c("conditional", "predictive", "EB"),
                                          alternative = c("one.sided", "two.sided"),
-                                         type = c("golden", "nominal", "liberal", "controlled"),
+                                         type = c("golden", "nominal", "controlled"),
                                          shrinkage = 0){
 
     stopifnot(is.numeric(zo),
               length(zo) == 1,
               is.finite(zo),
-              
+
               is.numeric(c),
               length(c) == 1,
               is.finite(c),
               0 <= c,
-              
+
               is.numeric(level),
               length(level) == 1,
               is.finite(level),
@@ -265,22 +265,22 @@ powerReplicationSuccessTargetPower <- function(power, zo, c, level, designPrior,
     eps <- 1e-5
     mylower <- eps
     myupper <- 1 - eps
-    
-    if (p > levelSceptical(level = level, alternative = alternative, 
+
+    if (p > levelSceptical(level = level, alternative = alternative,
                            type = type))
         res <- 0
     else {
-        targetLower <- powerReplicationSuccessTargetPower(power = mylower, 
-                                                        zo = zo, 
-                                                        c = c, 
+        targetLower <- powerReplicationSuccessTargetPower(power = mylower,
+                                                        zo = zo,
+                                                        c = c,
                                                         level = level,
                                                         designPrior = designPrior,
                                                         alternative = alternative,
                                                         type = type,
                                                         shrinkage = shrinkage)
-        targetUpper <- powerReplicationSuccessTargetPower(power = myupper, 
-                                                        zo = zo, 
-                                                        c = c, 
+        targetUpper <- powerReplicationSuccessTargetPower(power = myupper,
+                                                        zo = zo,
+                                                        c = c,
                                                         level = level,
                                                         designPrior = designPrior,
                                                         alternative = alternative,
@@ -293,11 +293,11 @@ powerReplicationSuccessTargetPower <- function(power, zo, c, level, designPrior,
                 res <- 1
         }
         else {
-            res <- uniroot(f = powerReplicationSuccessTargetPower, 
-                           lower = mylower, 
+            res <- uniroot(f = powerReplicationSuccessTargetPower,
+                           lower = mylower,
                            upper = myupper,
-                           zo = zo, 
-                           c = c, 
+                           zo = zo,
+                           c = c,
                            level = level,
                            designPrior = designPrior,
                            alternative = alternative,

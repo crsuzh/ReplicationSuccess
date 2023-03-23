@@ -26,7 +26,7 @@ then a one-sided replication success level is computed.}
 the specified \code{level}, replication success is only possible for 
 replication effect estimates larger than the original one.
 "controlled" ensures exact overall Type-I error control at level \code{level}^2
-for \code{alternative} is "two.sided" or "one.sided" if the direction 
+for \code{alternative} is "two.sided" or "one.sided" if the direction
 was pre-specified in advance.}
 }
 \value{
@@ -55,8 +55,8 @@ success based on relative effect size.
 \emph{The Annals of Applied Statistics}, \bold{16}, 706-720.
 \doi{10.1214/21-AOAS1502}
 
-Micheloud, C., Balabdaoui, F., Held, L. (2023).  
-Beyond the two-trials rule: Type-I error control and sample size planning 
+Micheloud, C., Balabdaoui, F., Held, L. (2023).
+Beyond the two-trials rule: Type-I error control and sample size planning
 with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
 }
 \author{

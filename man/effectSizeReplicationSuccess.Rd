@@ -29,10 +29,10 @@ replication success in the direction of the original effect estimate.}
 
 \item{type}{Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
  or "controlled". "golden" ensures that for an original study just significant at
-the specified \code{level}, replication success is only possible for 
+the specified \code{level}, replication success is only possible for
 replication effect estimates larger than the original one.
 "controlled" ensures exact overall Type-I error control at level \code{level}^2
-for \code{alternative} is "two.sided" or "one.sided" if the direction 
+for \code{alternative} is "two.sided" or "one.sided" if the direction
 was pre-specified in advance.}
 }
 \value{
@@ -53,14 +53,14 @@ zo <- p2z(po, alternative = "one.sided")
 
 effectSizeReplicationSuccess(zo = zo, c = 1, level = 0.025,
                              alternative = "one.sided", type = "golden")
-                             
+
 effectSizeReplicationSuccess(zo = zo, c = 10, level = 0.025,
                              alternative = "one.sided", type = "golden")
 effectSizeReplicationSuccess(zo = zo, c = 10, level = 0.025,
-                             alternative = "one.sided", type = "controlled")                              
+                             alternative = "one.sided", type = "controlled")
 effectSizeReplicationSuccess(zo = zo, c= 2, level = 0.025,
                              alternative = "one.sided", type = "nominal")
-                             
+
 effectSizeReplicationSuccess(zo = zo, c = 2, level = 0.05,
                              alternative = "two.sided", type = "nominal")
 }
@@ -68,9 +68,9 @@ effectSizeReplicationSuccess(zo = zo, c = 2, level = 0.05,
 Held, L., Micheloud, C., Pawel, S. (2022). The assessment of
     replication success based on relative effect size. The Annals of Applied
     Statistics. 16:706-720. \doi{10.1214/21-AOAS1502}
-    
-Micheloud, C., Balabdaoui, F., Held, L. (2023).  
-Beyond the two-trials rule: Type-I error control and sample size planning 
+
+Micheloud, C., Balabdaoui, F., Held, L. (2023).
+Beyond the two-trials rule: Type-I error control and sample size planning
 with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
 }
 \seealso{

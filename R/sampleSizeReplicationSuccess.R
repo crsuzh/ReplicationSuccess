@@ -1,8 +1,8 @@
 ## numerical implementation
 targetSS <- function(zo, c, power, level, designPrior, alternative, type = type,
                      shrinkage){
-  term <- powerReplicationSuccess(zo = zo, 
-                                  c = c, 
+  term <- powerReplicationSuccess(zo = zo,
+                                  c = c,
                                   level = level,
                                   designPrior = designPrior,
                                   alternative = alternative,
@@ -17,13 +17,13 @@ targetSS <- function(zo, c, power, level, designPrior, alternative, type = type,
                                               # d = NA,
                                               level = 0.025,
                                               alternative = c("one.sided", "two.sided"),
-                                              type = c("golden", "nominal", "liberal", "controlled"),
+                                              type = c("golden", "nominal", "controlled"),
                                               designPrior = c("conditional", "predictive", "EB"),
                                               shrinkage = 0){
   stopifnot(is.numeric(zo),
             length(zo) == 1,
             is.finite(zo))
-  
+
   stopifnot(length(power) == 1
             # length(d) == 1
             )
@@ -36,30 +36,30 @@ targetSS <- function(zo, c, power, level, designPrior, alternative, type = type,
     stopifnot(is.numeric(power),
               0 < power, power < 1)
   # }
-  
+
   stopifnot(is.numeric(level),
             length(level) == 1,
             is.finite(level),
             0 < level, level < 1,
-            
+
             !is.null(alternative))
   alternative <- match.arg(alternative)
-  
+
   stopifnot(!is.null(type))
   type <- match.arg(type)
-  
+
   stopifnot(!is.null(designPrior))
   designPrior <- match.arg(designPrior)
-  
+
   stopifnot(is.numeric(shrinkage),
             length(shrinkage) == 1,
             is.finite(shrinkage),
             0 <= shrinkage, shrinkage < 1)
-  
+
   eps = 10e-6
   mylower <- eps
   myupper <- 1000
-  
+
   ## sample size calculation based on power
   # if (is.na(d)){
     target.l <- targetSS(c = mylower,
@@ -81,40 +81,40 @@ targetSS <- function(zo, c, power, level, designPrior, alternative, type = type,
     if (sign(target.l) == sign(target.u)) {
       if(sign(target.u) > 0)
         c <- Inf
-      else 
+      else
         c <- NA
     }
     else {
-      c <- uniroot(f = targetSS, 
-                   lower = mylower, 
-                   upper = myupper, 
-                   zo = zo, 
-                   power = power, 
+      c <- uniroot(f = targetSS,
+                   lower = mylower,
+                   upper = myupper,
+                   zo = zo,
+                   power = power,
                    level = level,
                    designPrior = designPrior,
                    alternative = alternative,
                    type = type,
                    shrinkage = shrinkage)$root
     }
-    
+
   # }
   # based on d : not done for controlled yet
   # } else { # sample size calculation based on relative effect size
-  #   alphas <- levelSceptical(level = level, 
-  #                            alternative = alternative, 
+  #   alphas <- levelSceptical(level = level,
+  #                            alternative = alternative,
   #                            type = type)
   #   zalphas <- p2z(alphas, alternative = alternative)
   #   K <- zo^2/zalphas^2
   #   denom <- d^2*K - 1/(K-1)
   #   if (zalphas > zo){
-  #     warning(paste("Replication success is not achievable at this level as", 
+  #     warning(paste("Replication success is not achievable at this level as",
   #                   zo, " < ", round(p2z(levelSceptical(level = level,
   #                                                       alternative = alternative,
   #                                                       type = type)),
   #                                    3)))
   #     c <- NA
-  #   } else { 
-  #     c <- ifelse(denom > 0, 1/denom, NA) 
+  #   } else {
+  #     c <- ifelse(denom > 0, 1/denom, NA)
   #   }
   # }
   return(c)
@@ -177,8 +177,8 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
 
               is.numeric(h),
               is.finite(h),
-              0 <= h, 
-              
+              0 <= h,
+
               level < power)
 
     if(type != "controlled") {
@@ -276,14 +276,14 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
         # }
     }
     }
-    
+
     if (type == "controlled") {
       # here put the numerical integration
       stopifnot(level < power)
-      c <-  sampleSizeReplicationSuccessNum(zo = zo, power = power, 
-                                            level = level, 
+      c <-  sampleSizeReplicationSuccessNum(zo = zo, power = power,
+                                            level = level,
                                             alternative = alternative,
-                                            type = "controlled", 
+                                            type = "controlled",
                                             designPrior = designPrior,
                                             shrinkage = shrinkage)
     }
@@ -306,10 +306,10 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
 #'     original effect estimates.
 #' @param type Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
 #'  or "controlled". "golden" ensures that for an original study just significant at
-#' the specified \code{level}, replication success is only possible for 
+#' the specified \code{level}, replication success is only possible for
 #' replication effect estimates larger than the original one.
 #' "controlled" ensures exact overall Type-I error control at level \code{level}^2
-#' for \code{alternative} is "two.sided" or "one.sided" if the direction 
+#' for \code{alternative} is "two.sided" or "one.sided" if the direction
 #' was pre-specified in advance.
 #' @param designPrior Is only taken into account when \code{power} is specified.
 #'     Either "conditional" (default), "predictive", or "EB". If "EB", the power
@@ -340,9 +340,9 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
 #' Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
 #'     success based on relative effect size. The Annals of Applied Statistics.
 #'     16:706-720. \doi{10.1214/21-AOAS1502}
-#'     
-#' Micheloud, C., Balabdaoui, F., Held, L. (2023).  
-#' Beyond the two-trials rule: Type-I error control and sample size planning 
+#'
+#' Micheloud, C., Balabdaoui, F., Held, L. (2023).
+#' Beyond the two-trials rule: Type-I error control and sample size planning
 #' with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
 #'
 #' @author Leonhard Held, Charlotte Micheloud, Samuel Pawel, Florian Gerber
