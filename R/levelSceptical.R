@@ -1,39 +1,39 @@
-# target calculates the T1E rate for a certain alternative, level and 
-# variance ratio and substracts the target T1E rate. 
-# Used in levelSceptical to calculate the controlled level for 
-# replication success 
+# target calculates the T1E rate for a certain alternative, level and
+# variance ratio and substracts the target T1E rate.
+# Used in levelSceptical to calculate the controlled level for
+# replication success
 
 
 target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
-  myT1E <- T1EpSceptical(alternative = alternative, level = alphalevel, c = c, 
+  myT1E <- T1EpSceptical(alternative = alternative, level = alphalevel, c = c,
                          type = "nominal")
   myT1E <- ifelse(alternative == "one.sided", myT1E/2, myT1E)
   ## trick: divide by two to 1-1 scenario
   result <- myT1E - targetT1E
 }
 #' @export
-.levelSceptical_ <- function(level, 
+.levelSceptical_ <- function(level,
                            c = NA,
-                           alternative = c("one.sided", "two.sided"), 
-                           type = c("golden", "nominal", "liberal", "controlled")){
-  
+                           alternative = c("one.sided", "two.sided"),
+                           type = c("golden", "nominal", "controlled")){
+
   stopifnot(is.numeric(level),
             length(level) >= 1,
             is.finite(level),
             0 < level, level < 1,
-            
+
             !is.null(alternative))
-  
+
   targetT1E <- level^2 # because we only consider one and two sided
   alternative <- match.arg(alternative)
-  
+
   stopifnot(!is.null(type))
   type <- match.arg(type)
-  
+
   if (type == "nominal") {
     res <- level
-  } else if (type == "liberal") {
-    res <- pIntrinsic(p = level, alternative = alternative, type = "Held")
+  # } else if (type == "liberal") {
+  #   res <- pIntrinsic(p = level, alternative = alternative, type = "Held")
   } else if (type == "controlled") {
     mylower <- sqrt(targetT1E)
     if (alternative=="one.sided") {
@@ -64,7 +64,7 @@ target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
 #' \code{type} = "golden" ensures that for an original study just significant at the specified \code{level},
 #' replication success is only possible if the replication effect estimate is larger than the original one.
 #' "controlled" ensures exact overall Type-I error control at level \code{level}^2
-#' for \code{alternative} is "two.sided" or "one.sided" if the direction 
+#' for \code{alternative} is "two.sided" or "one.sided" if the direction
 #' was pre-specified in advance.
 #' @return Replication success levels
 #' @references Held, L. (2020). A new standard for the analysis and design of replication studies (with discussion).
@@ -79,16 +79,15 @@ target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
 #' success based on relative effect size.
 #' \emph{The Annals of Applied Statistics}, \bold{16}, 706-720.
 #' \doi{10.1214/21-AOAS1502}
-#' 
-#' Micheloud, C., Balabdaoui, F., Held, L. (2023).  
-#' Beyond the two-trials rule: Type-I error control and sample size planning 
+#'
+#' Micheloud, C., Balabdaoui, F., Held, L. (2023).
+#' Beyond the two-trials rule: Type-I error control and sample size planning
 #' with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
-#' 
+#'
 
 #' @author Leonhard Held
 #' @examples
 #' levelSceptical(level = 0.025, alternative = "one.sided", type = "nominal")
-#' levelSceptical(level = 0.025, alternative = "one.sided", type = "liberal")
 #' levelSceptical(level = 0.025, alternative = "one.sided", type = "controlled", c = 1)
 #' levelSceptical(level = 0.025, alternative = "one.sided", type = "golden")
 #' @export
