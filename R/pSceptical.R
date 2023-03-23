@@ -30,62 +30,62 @@ FZ <- function(z, c) {
 #' @export
 .pSceptical_ <- function(zo,
                          zr,
-                         c, 
+                         c,
                          alternative = c("one.sided", "two.sided"),
-                         type = c("golden", "nominal", "liberal", "controlled")) {
-  
+                         type = c("golden", "nominal", "controlled")) {
+
   stopifnot(is.numeric(zo),
             length(zo) == 1,
             is.finite(zo),
-            
+
             is.numeric(zr),
             length(zr) == 1,
             is.finite(zr),
-            
+
             is.numeric(c),
             length(c) == 1,
             is.finite(c),
             0 <= c,
-            
+
             !is.null(alternative))
   alternative <- match.arg(alternative)
-  
+
   stopifnot(!is.null(type))
   type <- match.arg(type)
-  
+
   z <- zSceptical(zo = zo, zr = zr, c = c)
-  
+
   if (type == "nominal") {
     result <- z
     res <- z2p(z = result, alternative = "two.sided")
-  }    
-  
-  if (type == "liberal") {
-    result <- z * sqrt(2)
+  }
+
+  # if (type == "liberal") {
+  #   result <- z * sqrt(2)
+  #   res <- z2p(z = result, alternative = "two.sided")
+  # }
+
+  if (type == "golden") {
+    phi <- (sqrt(5) + 1)/2
+    result <- z*sqrt(phi)
     res <- z2p(z = result, alternative = "two.sided")
   }
-    
-  if (type == "golden") {
-    phi <- (sqrt(5) + 1)/2  
-    result <- z*sqrt(phi)
-    res <- z2p(z = result, alternative = "two.sided") 
-  }
-  
+
   if (type == "controlled") {
   res2 <- (1 - FZ(z = z^2, c = c))
   res <- sqrt(res2)
   }
-  
+
   if (alternative == "one.sided") {
     res <- ifelse(sign(zo) == sign(zr), res/2, 1 - res/2)
   }
-  
+
   # if(alternative == "greater"){
   #   if(zo < 0) res <- NaN
   #   if(zo > 0 && zr > 0) res <- res/2
   #   if(zo > 0 && zr < 0) res <- 1 - res/2
   # }
-  #   
+  #
   #   if(alternative == "less"){
   #     if(zo > 0) res <- NaN
   #     if(zo < 0 && zr < 0) res <- res/2
@@ -121,9 +121,9 @@ FZ <- function(z, c) {
 #' "golden" ensures that
 #' for an original study just significant at the specified \code{level},
 #' replication success is only possible if the replication effect estimate is at
-#' least as large as the original one. 
+#' least as large as the original one.
 #' "controlled" ensures exact overall Type-I error control at level \code{level}^2
-#'     for \code{alternative} is "two.sided" or "one.sided" if the direction 
+#'     for \code{alternative} is "two.sided" or "one.sided" if the direction
 #'     was pre-specified in advance.
 #' @return \code{pSceptical} returns the sceptical p-value.
 #' @details \code{pSceptical} is the vectorized version of \code{.pSceptical_}.
@@ -134,13 +134,13 @@ FZ <- function(z, c) {
 #' Series A (Statistics in Society)}, \bold{183}, 431-448.
 #' \doi{10.1111/rssa.12493}
 #'
-#' 
+#'
 #' Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
 #'     success based on relative effect size. The Annals of Applied Statistics.
 #'     16:706-720. \doi{10.1214/21-AOAS1502}
-#'     
-#' Micheloud, C., Balabdaoui, F., Held, L. (2023).  
-#' Beyond the two-trials rule: Type-I error control and sample size planning 
+#'
+#' Micheloud, C., Balabdaoui, F., Held, L. (2023).
+#' Beyond the two-trials rule: Type-I error control and sample size planning
 #' with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
 #'
 #' @author Leonhard Held
@@ -172,17 +172,17 @@ pSceptical <- Vectorize(.pSceptical_)
 #' zSceptical(zo = 2, zr = 3, c = 2)
 #' zSceptical(zo = 3, zr = 2, c = 2)
 #' @export
-zSceptical <- function(zo, 
-                       zr, 
+zSceptical <- function(zo,
+                       zr,
                        c){
     stopifnot(is.numeric(zo),
               length(zo) > 0,
               is.finite(zo),
-              
+
               is.numeric(zr),
               length(zr) > 0,
               is.finite(zr),
-              
+
               is.numeric(c),
               length(c) > 0,
               is.finite(c),
@@ -202,10 +202,10 @@ zSceptical <- function(zo,
     if (length(c)==1) {
         z2 <- if(c == 1) z2H/2 else (sqrt(z2A*(z2A + (c - 1)*z2H)) - z2A)/(c - 1)
     } else {
-        z2 <- ifelse(c == 1, 
+        z2 <- ifelse(c == 1,
                      z2H/2,
                      (sqrt(z2A*(z2A + (c - 1)*z2H)) - z2A)/(c - 1))
     }
-     
+
     return(sqrt(z2))
 }
