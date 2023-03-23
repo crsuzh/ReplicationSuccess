@@ -10,7 +10,7 @@ PPpSceptical(
   alpha,
   power,
   alternative = c("one.sided", "two.sided", "greater", "less"),
-  type = c("golden", "nominal", "liberal", "controlled")
+  type = c("golden", "nominal", "controlled")
 )
 }
 \arguments{
@@ -28,7 +28,7 @@ the original study. Default is 0.025.}
 \item{power}{Power to detect the assumed effect with a standard significance test
 in the original study.}
 
-\item{alternative}{Specifies if \code{level} and 
+\item{alternative}{Specifies if \code{level} and
 \code{alpha} are "two.sided" or one.sided ("one.sided", "greater", or "less").
 If "one.sided", the project power is computed based on a one-sided assessment of
 replication success in the direction of the original effect estimate.
@@ -41,10 +41,10 @@ in the pre-specified direction of the original and replication effect estimate.}
 
 \item{type}{Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
  or "controlled". "golden" ensures that for an original study just significant at
-the specified \code{level}, replication success is only possible for 
+the specified \code{level}, replication success is only possible for
 replication effect estimates larger than the original one.
 "controlled" ensures exact overall Type-I error control at level \code{level}^2
-for \code{alternative} is "two.sided" or "one.sided" if the direction 
+for \code{alternative} is "two.sided" or "one.sided" if the direction
 was pre-specified in advance.}
 }
 \value{
@@ -63,7 +63,6 @@ the original study, and the alternative hypothesis.
 \examples{
 ## compare project power for different levels of replication success
 levels <- c("nominal" = levelSceptical(level = 0.025, type = "nominal"),
-            "liberal" = levelSceptical(level = 0.025, type = "liberal"),
             "controlled" = levelSceptical(level = 0.025, type = "controlled", c = 1),
             "golden" = levelSceptical(level = 0.025, type = "golden"))
 c <- seq(0.4, 5, by = 0.01)

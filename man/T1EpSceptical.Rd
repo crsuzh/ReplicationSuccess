@@ -8,7 +8,7 @@ T1EpSceptical(
   level,
   c,
   alternative = c("one.sided", "two.sided", "greater", "less"),
-  type = c("golden", "nominal", "liberal", "controlled")
+  type = c("golden", "nominal", "controlled")
 )
 }
 \arguments{
@@ -20,9 +20,9 @@ effect estimates. This is usually the ratio of the sample
 size of the replication study to the sample size of the
 original study.}
 
-\item{alternative}{Specifies if \code{level} 
+\item{alternative}{Specifies if \code{level}
 is "two.sided" or one.sided ("one.sided", "greater", or "less").
-If "one.sided", the type-I error rate is computed based on a one-sided assessment 
+If "one.sided", the type-I error rate is computed based on a one-sided assessment
 of replication success in the direction of the original effect estimate.
 If "two.sided", the type-I error rate is computed based
 on a two-sided assessment of replication success regardless of the direction
@@ -31,7 +31,7 @@ If "greater" or "less",  the type-I error rate is
 computed based on a one-sided assessment of replication success
 in the pre-specified direction of the original and replication effect estimate.}
 
-\item{type}{Type of recalibration. Recalibration type can be either "golden" 
+\item{type}{Type of recalibration. Recalibration type can be either "golden"
 (default), "nominal" (no recalibration), or "controlled".}
 }
 \value{
@@ -49,7 +49,6 @@ and the alternative hypothesis.
 \examples{
 ## compare type-I error rate for different levels of replication success
 levels <- c("nominal" = levelSceptical(level = 0.025, type = "nominal"),
-            "liberal" = levelSceptical(level = 0.025, type = "liberal"),
             "controlled" = levelSceptical(level = 0.025, type = "controlled", c = 1),
             "golden" = levelSceptical(level = 0.025, type = "golden"))
 c <- seq(0.2, 5, by = 0.05)
@@ -60,10 +59,10 @@ matplot(x = c, y = t1*100, type = "l", lty = 1, lwd = 2, las = 1, log = "x",
         xlab = bquote(italic(c)), ylab = "Type-I error (\%)", xlim = c(0.2, 5))
 legend("topright", legend = names(levels), lty = 1, lwd = 2, col = seq_along(levels))
 
-## check that one.sided controlled level controls type-I error rate for c = 1 
+## check that one.sided controlled level controls type-I error rate for c = 1
 ## at alpha = 0.05*0.025 = 0.00125
-T1EpSceptical(level = levelSceptical(level = 0.025, alternative = "one.sided", 
-                                     type = "controlled", c = 1), 
+T1EpSceptical(level = levelSceptical(level = 0.025, alternative = "one.sided",
+                                     type = "controlled", c = 1),
               c = 1, alternative = "one.sided",  type = "nominal")
 }
 \references{
@@ -74,9 +73,9 @@ scientific findings. \emph{Journal of the Royal Statistical Society: Series C
 Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
     success based on relative effect size. The Annals of Applied Statistics.
     16:706-720. \doi{10.1214/21-AOAS1502}
-    
-Micheloud, C., Balabdaoui, F., Held, L. (2023).  
-Beyond the two-trials rule: Type-I error control and sample size planning 
+
+Micheloud, C., Balabdaoui, F., Held, L. (2023).
+Beyond the two-trials rule: Type-I error control and sample size planning
 with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
 }
 \seealso{

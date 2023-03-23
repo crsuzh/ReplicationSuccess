@@ -10,7 +10,7 @@ pSceptical(
   zr,
   c,
   alternative = c("one.sided", "two.sided"),
-  type = c("golden", "nominal", "liberal", "controlled")
+  type = c("golden", "nominal", "controlled")
 )
 
 zSceptical(zo, zr, c)
@@ -41,9 +41,9 @@ sceptical p-value can be thresholded at the conventional 0.025 level).
 "golden" ensures that
 for an original study just significant at the specified \code{level},
 replication success is only possible if the replication effect estimate is at
-least as large as the original one. 
+least as large as the original one.
 "controlled" ensures exact overall Type-I error control at level \code{level}^2
-    for \code{alternative} is "two.sided" or "one.sided" if the direction 
+    for \code{alternative} is "two.sided" or "one.sided" if the direction
     was pre-specified in advance.}
 }
 \value{
@@ -89,9 +89,9 @@ Series A (Statistics in Society)}, \bold{183}, 431-448.
 Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
     success based on relative effect size. The Annals of Applied Statistics.
     16:706-720. \doi{10.1214/21-AOAS1502}
-    
-Micheloud, C., Balabdaoui, F., Held, L. (2023).  
-Beyond the two-trials rule: Type-I error control and sample size planning 
+
+Micheloud, C., Balabdaoui, F., Held, L. (2023).
+Beyond the two-trials rule: Type-I error control and sample size planning
 with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
 }
 \seealso{

@@ -1,6 +1,6 @@
 include Makefile.defs
 
-PACKAGE = ReplicationSuccess
+PACKAGE = biostatUZH
 VERSION = 1.3
 TAR = $(PACKAGE)_$(VERSION).tar.gz
 
@@ -22,21 +22,23 @@ lib: update-src
 test-package:
 	$(RSCRIPT) -e "devtools::test('.')"
 
-$(TAR): update-src
-	$(R) CMD build . --compact-vignettes="both"
+tarball: update-src
+	$(RSCRIPT) -e "devtools::build(path = '.', args = '--compact-vignettes=both')"
 
-check-cran: $(TAR)
-	$(R) CMD check --as-cran $(TAR) 
+check-cran: tarball
+	$(RSCRIPT) -e "devtools::check_built(path = './$(TAR)', cran = TRUE)"
 
-check: $(TAR)
-	$(R) CMD check $(TAR) 
+check: tarball
+	$(RSCRIPT) -e "devtools::check_built(path = './$(TAR)', cran = FALSE)"
+
+install: tarball
+	$(RSCRIPT) -e "install.packages('$(TAR)', repos = NULL, type = 'source')"
 
 covr: 
 	$(RSCRIPT) -e "covr::package_coverage()"
 
 manual: update-src
 	$(R) -e 'devtools::build_manual(pkg = ".", path = ".")'
-
 
 winbuild: update-src
 	$(RSCRIPT) -e "devtools::check_win_release()"
@@ -48,5 +50,4 @@ webpage: update-src
 	$(RSCRIPT) -e 'pkgdown::build_site()'
 
 clean:
-	rm -rf lib ReplicationSuccess.Rcheck *.tar.gz
-
+	rm -rf lib $(PACKAGE).Rcheck *.tar.gz

@@ -10,7 +10,7 @@ sampleSizeReplicationSuccess(
   power = NA,
   level = 0.025,
   alternative = c("one.sided", "two.sided"),
-  type = c("golden", "nominal", "liberal", "controlled"),
+  type = c("golden", "nominal", "controlled"),
   designPrior = c("conditional", "predictive", "EB"),
   shrinkage = 0,
   h = 0
@@ -33,10 +33,10 @@ original effect estimates.}
 
 \item{type}{Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
  or "controlled". "golden" ensures that for an original study just significant at
-the specified \code{level}, replication success is only possible for 
+the specified \code{level}, replication success is only possible for
 replication effect estimates larger than the original one.
 "controlled" ensures exact overall Type-I error control at level \code{level}^2
-for \code{alternative} is "two.sided" or "one.sided" if the direction 
+for \code{alternative} is "two.sided" or "one.sided" if the direction
 was pre-specified in advance.}
 
 \item{designPrior}{Is only taken into account when \code{power} is specified.
@@ -87,9 +87,9 @@ Series A (Statistics in Society)}, \bold{183}, 431-448.
 Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
     success based on relative effect size. The Annals of Applied Statistics.
     16:706-720. \doi{10.1214/21-AOAS1502}
-    
-Micheloud, C., Balabdaoui, F., Held, L. (2023).  
-Beyond the two-trials rule: Type-I error control and sample size planning 
+
+Micheloud, C., Balabdaoui, F., Held, L. (2023).
+Beyond the two-trials rule: Type-I error control and sample size planning
 with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
 }
 \seealso{
