@@ -29,9 +29,11 @@ vignettes/*.log
 vignettes/*.aux
 vignettes/figure/*
 vignettes/cache/*
-
-# do not track the intermediate .tex file for ReplicationSuccess.Rnw
+# do not track the intermediate .tex file
 vignettes/ReplicationSuccess.tex
+
+# Manual
+ReplicationSuccess_*.pdf
 
 # OAuth2 token, see https://github.com/hadley/httr/releases/tag/v0.3
 .httr-oauth
