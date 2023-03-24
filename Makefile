@@ -13,32 +13,34 @@ TAR = $(PACKAGE)_$(VERSION).tar.gz
 update-src:
 	sed -i -r -- 's/^Version:.*/Version: '$(VERSION)'/g' DESCRIPTION ;      
 	sed -i -r -- 's/^Date:.*/Date: '`date +'%F'`'/g' DESCRIPTION ;
-	$(RSCRIPT) -e "roxygen2::roxygenize(\".\")"
-
-lib: update-src
-	mkdir -p lib
-	$(R) CMD INSTALL -l lib . --no-lock
+	$(RSCRIPT) -e "roxygen2::roxygenize('.')"
 
 test-package:
 	$(RSCRIPT) -e "devtools::test('.')"
 
-tarball: update-src
-	$(RSCRIPT) -e "devtools::build(path = '.', args = '--compact-vignettes=both')"
+tar: update-src
+	mkdir -p lib
+	$(RSCRIPT) -e "devtools::build(path = 'lib', args = '--compact-vignettes=both')"
 
-check-cran: tarball
-	$(RSCRIPT) -e "devtools::check_built(path = './$(TAR)', cran = TRUE)"
+bin: update-src
+	mkdir -p lib
+	$(RSCRIPT) -e "devtools::build(path = 'lib', binary = TRUE, args = '--compact-vignettes=both')"
 
-check: tarball
-	$(RSCRIPT) -e "devtools::check_built(path = './$(TAR)', cran = FALSE)"
+check-cran: tar
+	$(RSCRIPT) -e "devtools::check_built(path = './lib/$(TAR)', cran = TRUE)"
 
-install: tarball
+check: tar
+	$(RSCRIPT) -e "devtools::check_built(path = './lib/$(TAR)', cran = FALSE)"
+
+install: tar
 	$(RSCRIPT) -e "install.packages('$(TAR)', repos = NULL, type = 'source')"
 
 covr: 
 	$(RSCRIPT) -e "covr::package_coverage()"
 
 manual: update-src
-	$(R) -e 'devtools::build_manual(pkg = ".", path = ".")'
+	mkdir -p manual
+	$(RSCRIPT) -e "devtools::build_manual(pkg = '.', path = 'manual')"
 
 winbuild: update-src
 	$(RSCRIPT) -e "devtools::check_win_release()"
@@ -47,9 +49,9 @@ winbuild-devel: update-src
 	$(RSCRIPT) -e "devtools::check_win_devel()"
 
 webpage: update-src
-	$(RSCRIPT) -e 'pkgdown::build_site()'
+	$(RSCRIPT) -e "pkgdown::build_site()"
 
 clean:
-	rm -rf lib $(PACKAGE).Rcheck *.tar.gz vignettes/cache/ vignettes/figure/ \
+	rm -rf lib $(PACKAGE).Rcheck vignettes/cache/ vignettes/figure/ \
 		vignettes/*.log vignettes/*.tex vignettes/*.aux \
-		$(PACKAGE)_$(VERSION).pdf
+		manual
