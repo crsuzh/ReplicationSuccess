@@ -1,6 +1,6 @@
 include Makefile.defs
 
-PACKAGE = biostatUZH
+PACKAGE = ReplicationSuccess
 VERSION = 1.3
 TAR = $(PACKAGE)_$(VERSION).tar.gz
 
