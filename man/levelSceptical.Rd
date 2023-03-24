@@ -25,9 +25,7 @@ then a one-sided replication success level is computed.}
  or "controlled". "golden" ensures that for an original study just significant at
 the specified \code{level}, replication success is only possible for 
 replication effect estimates larger than the original one.
-"controlled" ensures exact overall Type-I error control at level \code{level}^2
-for \code{alternative} is "two.sided" or "one.sided" if the direction
-was pre-specified in advance.}
+"controlled" ensures exact overall Type-I error control at level \code{level}^2.}
 }
 \value{
 Replication success levels
@@ -35,6 +33,11 @@ Replication success levels
 \description{
 The replication success level is computed based on the specified
 alternative and recalibration type.
+}
+\details{
+With \code{type = "controlled"}, the overall Type-I error rate 
+is controlled at level \code{level}^2 for \code{alternative} is
+"one.sided" if the direction was pre-specified in advance.
 }
 \examples{
 levelSceptical(level = 0.025, alternative = "one.sided", type = "nominal")

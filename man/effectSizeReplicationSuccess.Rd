@@ -31,9 +31,7 @@ replication success in the direction of the original effect estimate.}
  or "controlled". "golden" ensures that for an original study just significant at
 the specified \code{level}, replication success is only possible for
 replication effect estimates larger than the original one.
-"controlled" ensures exact overall Type-I error control at level \code{level}^2
-for \code{alternative} is "two.sided" or "one.sided" if the direction
-was pre-specified in advance.}
+"controlled" ensures exact overall Type-I error control at level \code{level}^2.}
 }
 \value{
 The minimum relative effect size to achieve replication success
@@ -45,7 +43,9 @@ with the sceptical p-value
 is computed based on the result of the original study and the corresponding variance ratio.
 }
 \details{
-\code{effectSizeReplicationSuccess} is the vectorized version of \code{.effectSizeReplicationSuccess_}.
+With \code{type = "controlled"}, the overall Type-I error rate 
+is controlled at level \code{level}^2 for \code{alternative} is
+"one.sided" if the direction was pre-specified in advance.
 }
 \examples{
 po <- c(0.001, 0.002, 0.01, 0.02, 0.025)

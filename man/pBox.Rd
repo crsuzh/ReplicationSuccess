@@ -34,6 +34,13 @@ Specifies whether two-sided or one-sided Box's tail probabilities are computed.}
 original and the replication study, the corresponding variance ratio,
 and the significance level.
 }
+\details{
+\code{pBox} quantifies the conflict between the sceptical prior 
+that would render the original study non-significant and the result 
+from the replication study. If the original study was not significant 
+at level \code{level}, the sceptical prior does not exist and \code{pBox}
+cannot be calculated.
+}
 \examples{
 pBox(zo = p2z(0.01), zr = p2z(0.02), c = 2)
 pBox(zo = p2z(0.02), zr = p2z(0.01), c = 1/2)
