@@ -51,4 +51,5 @@ webpage: update-src
 
 clean:
 	rm -rf lib $(PACKAGE).Rcheck *.tar.gz vignettes/cache/ vignettes/figure/ \
-		vignettes/*.log vignettes/*.tex vignettes/*.aux
+		vignettes/*.log vignettes/*.tex vignettes/*.aux \
+		$(PACKAGE)_$(VERSION).pdf
