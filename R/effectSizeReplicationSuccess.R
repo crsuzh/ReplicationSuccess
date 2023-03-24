@@ -57,7 +57,7 @@
 #' @param c Numeric vector of variance ratios of the original and replication effect estimates.
 #' This is usually the ratio of the sample size of the replication study to the sample
 #' size of the original study.
-#' @param level Threshold for the calibrated sceptical p-value (for all recalibration types).
+#' @param level Threshold for the calibrated sceptical p-value.
 #'  Default is 0.025.
 #' @param alternative Specifies if \code{level} is "one.sided" (default) or "two.sided".
 #' If "one.sided", then effect size calculations are based on a one-sided assessment of

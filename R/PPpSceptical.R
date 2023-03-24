@@ -119,7 +119,7 @@
 #' specified level, the relative variance,
 #' significance level and power for a standard significance test of
 #' the original study, and the alternative hypothesis.
-#' @param level Threshold for the calibrated sceptical p-value (for all recalibration types).
+#' @param level Threshold for the calibrated sceptical p-value.
 #'  Default is 0.025.
 #' @param c Numeric vector of variance ratios of the original and replication
 #' effect estimates. This is usually the ratio of the sample

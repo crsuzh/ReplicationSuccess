@@ -55,7 +55,7 @@ target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
 #'
 #' The replication success level is computed based on the specified
 #' alternative and recalibration type.
-#' @param level Threshold for the calibrated sceptical p-value (for all recalibration types).
+#' @param level Threshold for the calibrated sceptical p-value.
 #'  Default is 0.025.
 #' @param c The variance ratio. Only required when \code{type = } "controlled".
 #' @param alternative Specifies if \code{level} is "one.sided" (default) or

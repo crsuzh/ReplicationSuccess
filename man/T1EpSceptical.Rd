@@ -12,7 +12,7 @@ T1EpSceptical(
 )
 }
 \arguments{
-\item{level}{Threshold for the calibrated sceptical p-value (for all recalibration types).
+\item{level}{Threshold for the calibrated sceptical p-value.
 Default is 0.025.}
 
 \item{c}{Numeric vector of variance ratios of the original and replication

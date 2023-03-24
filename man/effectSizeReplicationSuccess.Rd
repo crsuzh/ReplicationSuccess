@@ -20,7 +20,7 @@ effectSizeReplicationSuccess(
 This is usually the ratio of the sample size of the replication study to the sample
 size of the original study.}
 
-\item{level}{Threshold for the calibrated sceptical p-value (for all recalibration types).
+\item{level}{Threshold for the calibrated sceptical p-value.
 Default is 0.025.}
 
 \item{alternative}{Specifies if \code{level} is "one.sided" (default) or "two.sided".
