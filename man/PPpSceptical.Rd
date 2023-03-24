@@ -102,5 +102,5 @@ of the two-trials paradigm. \emph{Journal of Biopharmaceutical Statistics}, \bol
 \code{\link{pSceptical}}, \code{\link{levelSceptical}}, \code{\link{T1EpSceptical}}
 }
 \author{
-Samuel Pawel, Leonhard Held
+Leonhard Held, Samuel Pawel
 }

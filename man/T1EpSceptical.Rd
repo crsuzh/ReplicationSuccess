@@ -75,5 +75,5 @@ with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
 \code{\link{pSceptical}}, \code{\link{levelSceptical}}, \code{\link{PPpSceptical}}
 }
 \author{
-Samuel Pawel, Leonhard Held
+Leonhard Held, Samuel Pawel
 }

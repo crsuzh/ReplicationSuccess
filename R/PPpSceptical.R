@@ -163,7 +163,7 @@
 #' 107-119. \doi{10.1081/bip-120006450}
 #'
 #' @seealso \code{\link{pSceptical}}, \code{\link{levelSceptical}}, \code{\link{T1EpSceptical}}
-#' @author Samuel Pawel, Leonhard Held
+#' @author Leonhard Held, Samuel Pawel
 #' @examples
 #' ## compare project power for different recalibration types
 #' types <- c("nominal", "golden", "controlled")
