@@ -40,12 +40,7 @@ computed based on a one-sided assessment of replication success
 in the pre-specified direction of the original and replication effect estimate.}
 
 \item{type}{Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
- or "controlled". "golden" ensures that for an original study just significant at
-the specified \code{level}, replication success is only possible for
-replication effect estimates larger than the original one.
-"controlled" ensures exact overall Type-I error control at level \code{level}^2
-for \code{alternative} is "two.sided" or "one.sided" if the direction
-was pre-specified in advance.}
+or "controlled".}
 }
 \value{
 The project power of the sceptical p-value
