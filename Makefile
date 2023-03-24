@@ -50,4 +50,5 @@ webpage: update-src
 	$(RSCRIPT) -e 'pkgdown::build_site()'
 
 clean:
-	rm -rf lib $(PACKAGE).Rcheck *.tar.gz
+	rm -rf lib $(PACKAGE).Rcheck *.tar.gz vignettes/cache/ vignettes/figure/ \
+		vignettes/*.log vignettes/*.tex vignettes/*.aux
