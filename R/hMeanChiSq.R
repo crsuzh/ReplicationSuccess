@@ -170,7 +170,7 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
 }
 
 #' @rdname hMeanChiSq
-#' @param level Numeric vector specifying the level of the confidence interval. Defaults to 0.95.
+#' @param conf.level Numeric vector specifying the conf.level of the confidence interval. Defaults to 0.95.
 #' summarize the gamma values, i.e.,
 #' the local minima of the p-value function between the thetahats. Defaults is a vector of 1s.
 #' @return \code{hMeanChiSqCI}: returns a list containing confidence interval(s)
@@ -186,12 +186,12 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
 #' CI1 <- hMeanChiSqCI(thetahat = thetahat, se = se, w = 1 / se^2,
 #'                     alternative = "two.sided")
 #' CI2 <- hMeanChiSqCI(thetahat = thetahat, se = se, w = 1 / se^2,
-#'                     alternative = "two.sided", level = 0.99875)
+#'                     alternative = "two.sided", conf.level = 0.99875)
 #' ## one-sided
 #' CI1b <- hMeanChiSqCI(thetahat = thetahat, se = se, w = 1 / se^2,
-#'                      alternative = "less", level = 0.975)
+#'                      alternative = "less", conf.level = 0.975)
 #' CI2b <- hMeanChiSqCI(thetahat = thetahat, se = se, w = 1 / se^2,
-#'                      alternative = "less", level = 1 - 0.025^2)
+#'                      alternative = "less", conf.level = 1 - 0.025^2)
 #'
 #' ## confidence intervals on hazard ratio scale
 #' print(exp(CI1$CI), digits = 2)
@@ -203,7 +203,7 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
 #' ## example with confidence region consisting of disjunct intervals
 #' thetahat2 <- c(-3.7, 2.1, 2.5)
 #' se2 <- c(1.5, 2.2, 3.1)
-#' level <- 0.95; alpha <- 1 - level
+#' conf.level <- 0.95; alpha <- 1 - conf.level
 #' muSeq <- seq(-7, 6, length.out = 1000)
 #' pValueSeq <- hMeanChiSqMu(thetahat = thetahat2, se = se2,
 #'                           alternative = "none", mu = muSeq)
@@ -221,7 +221,7 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
 hMeanChiSqCI <- function(
     thetahat, se, w = rep(1, length(thetahat)),
     alternative = c("two.sided", "greater", "less", "none"),
-    level = 0.95) {
+    conf.level = 0.95) {
 
     stopifnot(is.numeric(thetahat),
               length(thetahat) > 0,
@@ -239,10 +239,10 @@ hMeanChiSqCI <- function(
               !is.null(alternative))
     alternative <- match.arg(alternative)
 
-    stopifnot(is.numeric(level),
-              length(level) == 1,
-              is.finite(level),
-              0 < level, level < 1,
+    stopifnot(is.numeric(conf.level),
+              length(conf.level) == 1,
+              is.finite(conf.level),
+              0 < conf.level, conf.level < 1,
 
               is.finite(w),
               min(w) > 0)
@@ -269,7 +269,7 @@ hMeanChiSqCI <- function(
     maxt <- thetahat[maxi]
     minse <- se[mini]
     maxse <- se[maxi]
-    alpha <- 1 - level
+    alpha <- 1 - conf.level
     z1 <- max(-qnorm(alpha), 1)
     eps <- 1e-6
     factor <- 5

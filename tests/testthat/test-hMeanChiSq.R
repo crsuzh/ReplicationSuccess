@@ -88,7 +88,7 @@ test_that("Output of function 'hMeanChiSqCI' stays the same.", {
     w <- c(w, 1 - sum(w))
     grid <- expand.grid(
         alternative = c("greater", "less", "two.sided", "none"),
-        level = seq(1e-4, 0.99999, length.out = 5L),
+        conf.level = seq(1e-4, 0.99999, length.out = 5L),
         stringsAsFactors = FALSE
     )
     out <- lapply(
@@ -99,7 +99,7 @@ test_that("Output of function 'hMeanChiSqCI' stays the same.", {
                     thetahat = thetahat,
                     se = se,
                     w = w,
-                    level = grid[i, "level"],
+                    conf.level = grid[i, "conf.level"],
                     alternative = grid[i, "alternative"]
                 )
             },
