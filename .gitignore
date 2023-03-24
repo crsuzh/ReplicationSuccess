@@ -28,6 +28,7 @@ vignettes/*.pdf
 vignettes/*.log
 vignettes/*.aux
 vignettes/figure/*
+vignettes/cache/*
 
 # do not track the intermediate .tex file for ReplicationSuccess.Rnw
 vignettes/ReplicationSuccess.tex
