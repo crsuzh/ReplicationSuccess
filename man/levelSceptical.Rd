@@ -12,7 +12,7 @@ levelSceptical(
 )
 }
 \arguments{
-\item{level}{Threshold for the calibrated sceptical p-value (for all recalibration types).
+\item{level}{Threshold for the calibrated sceptical p-value.
 Default is 0.025.}
 
 \item{c}{The variance ratio. Only required when \code{type = } "controlled".}

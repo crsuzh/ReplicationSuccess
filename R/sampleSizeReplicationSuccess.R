@@ -298,7 +298,7 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
 #' recalibration, the power and the design prior. 
 #' @param zo Numeric vector of z-values from original studies.
 #' @param power The power to achieve replication success.
-#' @param level Threshold for the calibrated sceptical p-value (for all recalibration types).
+#' @param level Threshold for the calibrated sceptical p-value.
 #'  Default is 0.025.
 #' @param alternative Specifies if \code{level} is "one.sided" (default) or "two.sided".
 #'     If the "one.sided" then sample size calculations are based

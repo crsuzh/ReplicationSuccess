@@ -21,7 +21,7 @@ sampleSizeReplicationSuccess(
 
 \item{power}{The power to achieve replication success.}
 
-\item{level}{Threshold for the calibrated sceptical p-value (for all recalibration types).
+\item{level}{Threshold for the calibrated sceptical p-value.
 Default is 0.025.}
 
 \item{alternative}{Specifies if \code{level} is "one.sided" (default) or "two.sided".
