@@ -69,7 +69,7 @@ University of Zurich, Switzerland}
 
 << "knitr-options", echo = FALSE >>=
 library(knitr)
-#library(scales)
+library(scales)
 opts_chunk$set(size = "small",
                fig.height = 4,
                fig.align = "center",
