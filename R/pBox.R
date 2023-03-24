@@ -14,6 +14,11 @@
 #' @param alternative Either "two.sided" (default) or "one.sided".
 #' Specifies whether two-sided or one-sided Box's tail probabilities are computed.
 #' @return \code{pBox} returns Box's tail probabilities. 
+#' @details \code{pBox} quantifies the conflict between the sceptical prior 
+#' that would render the original study non-significant and the result 
+#' from the replication study. If the original study was not significant 
+#' at level \code{level}, the sceptical prior does not exist and \code{pBox}
+#' cannot be calculated.
 #' @references Box, G.E.P. (1980). Sampling and Bayes' inference in scientific
 #' modelling and robustness (with discussion). \emph{Journal of the Royal Statistical
 #' Society, Series A}, \bold{143}, 383-430.

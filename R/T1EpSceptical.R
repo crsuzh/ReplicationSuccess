@@ -165,7 +165,7 @@
 #' Beyond the two-trials rule: Type-I error control and sample size planning
 #' with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
 #'
-#' @author Samuel Pawel, Leonhard Held
+#' @author Leonhard Held, Samuel Pawel
 #' @seealso \code{\link{pSceptical}}, \code{\link{levelSceptical}}, \code{\link{PPpSceptical}}
 #' @examples
 #' ## compare type-I error rate for different recalibration types

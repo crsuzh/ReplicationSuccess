@@ -1,4 +1,4 @@
-#' Probability of replicating an effect of Killeen (2005)
+#' Probability of replicating an effect by Killeen (2005)
 #'
 #' Computes the probability that a replication study yields an effect
 #' estimate in the same direction as in the original study. 

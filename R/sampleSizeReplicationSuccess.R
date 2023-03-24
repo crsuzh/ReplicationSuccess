@@ -308,9 +308,7 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
 #'  or "controlled". "golden" ensures that for an original study just significant at
 #' the specified \code{level}, replication success is only possible for
 #' replication effect estimates larger than the original one.
-#' "controlled" ensures exact overall Type-I error control at level \code{level}^2
-#' for \code{alternative} is "two.sided" or "one.sided" if the direction
-#' was pre-specified in advance.
+#' "controlled" ensures exact overall Type-I error control at level \code{level}^2.
 #' @param designPrior Is only taken into account when \code{power} is specified.
 #'     Either "conditional" (default), "predictive", or "EB". If "EB", the power
 #'     is computed under a predictive distribution where the contribution of the
@@ -328,9 +326,9 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
 #'     heterogeneity).
 #' @return The relative sample size for replication success. If impossible to
 #'     achieve the desired power for specified inputs \code{NaN} is returned.
-#' @details \code{sampleSizeReplicationSuccess} is the vectorized version of
-#'     \code{.sampleSizeReplicationSuccess_}. \code{\link[base]{Vectorize}} is
-#'     used to vectorize the function.
+#' @details With \code{type = "controlled"}, the overall Type-I error rate 
+#' is controlled at level \code{level}^2 for \code{alternative} is
+#' "one.sided" if the direction was pre-specified in advance. 
 #' @references
 #' Held, L. (2020). A new standard for the analysis and design of replication
 #' studies (with discussion). \emph{Journal of the Royal Statistical Society:

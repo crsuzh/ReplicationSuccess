@@ -39,11 +39,9 @@ original effect estimates.}
 
 \item{type}{Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
  or "controlled". "golden" ensures that for an original study just significant at
-the specified \code{level}, replication success is only possible for
+the specified \code{level}, replication success is only possible for 
 replication effect estimates larger than the original one.
-"controlled" ensures exact overall Type-I error control at level \code{level}^2
-for \code{alternative} is "two.sided" or "one.sided" if the direction
-was pre-specified in advance.}
+"controlled" ensures exact overall Type-I error control at level \code{level}^2.}
 
 \item{shrinkage}{Numeric vector with values in [0,1). Defaults to 0.
 Specifies the shrinkage of the original effect estimate towards zero,
@@ -51,7 +49,7 @@ e.g., the effect is shrunken by a factor of 25\% for
 \code{shrinkage = 0.25}. Is only taken into account if the
 \code{designPrior} is "conditional" or "predictive".}
 
-\item{h}{Numeric vector of relative heterogeneity variances i.e., the ratio
+\item{h}{Numeric vector of relative heterogeneity variances i.e., the ratios
 of the heterogeneity variance to the variance of the original effect
 estimate. Default is 0 (no heterogeneity). Is only taken into account
 when \code{designPrior} = "predictive" or \code{designPrior} = "EB".}
@@ -70,9 +68,9 @@ p-value  based on the result of the
 original study, the corresponding variance ratio, and the design prior.
 }
 \details{
-\code{powerReplicationSuccess} is the vectorized version of
-    \code{.powerReplicationSuccess_}. \code{\link[base]{Vectorize}} is used
-    to vectorize the function.
+With \code{type = "controlled"}, the overall Type-I error rate 
+is controlled at level \code{level}^2 for \code{alternative} is
+"one.sided" if the direction was pre-specified in advance.
 }
 \examples{
 ## larger sample size in replication (c > 1)

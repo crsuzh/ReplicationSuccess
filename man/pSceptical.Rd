@@ -42,9 +42,7 @@ sceptical p-value can be thresholded at the conventional 0.025 level).
 for an original study just significant at the specified \code{level},
 replication success is only possible if the replication effect estimate is at
 least as large as the original one.
-"controlled" ensures exact overall Type-I error control at level \code{level}^2
-    for \code{alternative} is "two.sided" or "one.sided" if the direction
-    was pre-specified in advance.}
+"controlled" ensures exact overall Type-I error control at level \code{level}^2.}
 }
 \value{
 \code{pSceptical} returns the sceptical p-value.
@@ -53,11 +51,13 @@ least as large as the original one.
 }
 \description{
 Computes sceptical p-values and z-values based on the z-values of the
-original and the replication study and the corresponding variance ratio.
+original and the replication study and the corresponding variance ratios.
 If specified, the sceptical p-values are recalibrated.
 }
 \details{
-\code{pSceptical} is the vectorized version of \code{.pSceptical_}.
+With \code{type = "controlled"}, the overall Type-I error rate 
+is controlled at level \code{level}^2 for \code{alternative} is
+"one.sided" if the direction was pre-specified in advance. 
 \code{\link[base]{Vectorize}} is used to vectorize the function.
 }
 \examples{

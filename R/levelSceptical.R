@@ -65,10 +65,11 @@ target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
 #'  or "controlled". "golden" ensures that for an original study just significant at
 #' the specified \code{level}, replication success is only possible for 
 #' replication effect estimates larger than the original one.
-#' "controlled" ensures exact overall Type-I error control at level \code{level}^2
-#' for \code{alternative} is "two.sided" or "one.sided" if the direction
-#' was pre-specified in advance.
+#' "controlled" ensures exact overall Type-I error control at level \code{level}^2.
 #' @return Replication success levels
+#' @details With \code{type = "controlled"}, the overall Type-I error rate 
+#' is controlled at level \code{level}^2 for \code{alternative} is
+#' "one.sided" if the direction was pre-specified in advance. 
 #' @references Held, L. (2020). A new standard for the analysis and design of replication studies (with discussion).
 #' \emph{Journal of the Royal Statistical Society: Series A (Statistics in Society)}, \bold{183}, 431-448.
 #' \doi{10.1111/rssa.12493}

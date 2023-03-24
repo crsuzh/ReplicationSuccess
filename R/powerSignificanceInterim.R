@@ -92,8 +92,9 @@
 #'
 #' @param zo Numeric vector of z-values from original studies.
 #' @param zi Numeric vector of z-values from interim analyses of replication studies.
-#' @param c Ratio of the sample size of the replication study to the sample size of the original study.
-#' Default is 1. 
+#' @param c Numeric vector of variance ratios of the original and replication effect estimates.
+#' This is usually the ratio of the sample size of the replication study to the sample
+#' size of the original study. Default is 1.
 #' @param f Fraction of the replication study already completed. Default is 0.5.
 #' @param level Significance level. Default is 0.025.
 #' @param designPrior Either "conditional" (default), "informed predictive", or "predictive".

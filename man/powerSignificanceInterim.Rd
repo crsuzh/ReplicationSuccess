@@ -21,8 +21,9 @@ powerSignificanceInterim(
 
 \item{zi}{Numeric vector of z-values from interim analyses of replication studies.}
 
-\item{c}{Ratio of the sample size of the replication study to the sample size of the original study.
-Default is 1.}
+\item{c}{Numeric vector of variance ratios of the original and replication effect estimates.
+This is usually the ratio of the sample size of the replication study to the sample
+size of the original study. Default is 1.}
 
 \item{f}{Fraction of the replication study already completed. Default is 0.5.}
 
