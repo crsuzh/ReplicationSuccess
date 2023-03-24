@@ -78,7 +78,7 @@ lines(x = c, y = pp2TR*100, col = length(types) + 1, lwd = 2)
 abline(v = 1, lty = 2)
 abline(h = 90, lty = 2, col = "lightgrey")
 legend("bottomright", legend = c(types, "2TR"), lty = 1, lwd = 2,
-       col = seq(1, length(levels) + 1))
+       col = seq(1, length(types) + 1))
 }
 \references{
 Held, L. (2020). The harmonic mean chi-squared test to substantiate
