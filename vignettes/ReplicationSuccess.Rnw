@@ -15,7 +15,7 @@
 \usepackage{color}
 \newcommand{\hl}{\textcolor{black}}
 \newcommand{\soutr}[1]{\textcolor{red}{\xout {\textcolor{black}{#1}}}}
-\usepackage{todonotes}
+%\usepackage{todonotes}
 
 %% do not reload the xcolor package, otherwise the colors defined by knitr
 %% are purged
@@ -69,7 +69,6 @@ University of Zurich, Switzerland}
 
 << "knitr-options", echo = FALSE >>=
 library(knitr)
-library(scales)
 opts_chunk$set(size = "small",
                fig.height = 4,
                fig.align = "center",
@@ -920,7 +919,7 @@ for (p in unique(RProjects$project)) {
        xlim = c(10e-5, 1), main = p, xlab = expression(paste("controlled ", p[S])),
        ylab = expression(paste("golden ", p[S])),
        pch = 19,
-       col = alpha("black", 0.6),
+       col = "#00000099",
        cex = 1.3,
        axes = F,
        log = "xy")
@@ -1025,7 +1024,7 @@ replication studies ($c = 1$).
 % which is reached for an original $p$-value of around 0.015.
 
 \begin{figure}[!h]
-<< "plot-powerReplicationSuccess", echo = FALSE, fig.height = 4 >>=
+<<"plot-powerReplicationSuccess", echo = FALSE, fig.height = 4>>=
 ## plot power
 po <- seq(0.001, 0.05, length.out = 100)/2
 plot(po, powerReplicationSuccess(zo = p2z(po, alternative  = "one.sided"),
