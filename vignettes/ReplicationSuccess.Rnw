@@ -1091,7 +1091,7 @@ sample size calculations, which also allows sample size calculation
 for non-significant original studies.
 
 \begin{figure}[!h]
-<< "plot-sampleSizeReplicationSuccess", echo = FALSE, fig.height = 4, cache = TRUE>>=
+<< "plot-sampleSizeReplicationSuccess", echo = FALSE, fig.height = 4>>=
 # po <- seq(0.0001, 0.05, 0.0001)
 po <- seq(0.001, 0.05, length.out = 100)/2
 
