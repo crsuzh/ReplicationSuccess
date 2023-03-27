@@ -20,7 +20,6 @@
 #' @author Samuel Pawel
 #' @examples
 #' Qtest(thetao = 2, thetar = 0.5, seo = 1, ser = 0.5)
-#' @import stats
 #' @export
 Qtest <- function(thetao, thetar, seo, ser) {
     stopifnot(is.numeric(thetao),
