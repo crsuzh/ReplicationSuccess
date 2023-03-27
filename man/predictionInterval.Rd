@@ -51,23 +51,23 @@ and Pawel and Held (2020) for details.
 }
 \examples{
 predictionInterval(thetao = c(1.5, 2, 5), seo = 1, ser = 0.5, designPrior = "EB")
-       
+
 # compute prediction intervals for replication projects
 data("RProjects", package = "ReplicationSuccess")
 parOld <- par(mfrow = c(2, 2))
 for (p in unique(RProjects$project)) {
   data_project <- subset(RProjects, project == p)
-  PI <- predictionInterval(thetao = data_project$fiso, seo = data_project$se_fiso, 
+  PI <- predictionInterval(thetao = data_project$fiso, seo = data_project$se_fiso,
                            ser = data_project$se_fisr)
   PI <- tanh(PI) # transforming back to correlation scale
   within <- (data_project$rr < PI$upper) & (data_project$rr > PI$lower)
   coverage <- mean(within)
   color <- ifelse(within == TRUE, "#333333B3", "#8B0000B3")
   study <- seq(1, nrow(data_project))
-  plot(data_project$rr, study, col = color, pch = 20, 
-       xlim = c(-0.5, 1), xlab = expression(italic(r)[r]), 
+  plot(data_project$rr, study, col = color, pch = 20,
+       xlim = c(-0.5, 1), xlab = expression(italic(r)[r]),
        main = paste0(p, ": ", round(coverage*100, 1), "\% coverage"))
-  arrows(PI$lower, study, PI$upper, study, length = 0.02, angle = 90, 
+  arrows(PI$lower, study, PI$upper, study, length = 0.02, angle = 90,
          code = 3, col = color)
   abline(v = 0, lty = 3)
 }

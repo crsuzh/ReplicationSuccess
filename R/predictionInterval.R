@@ -13,17 +13,17 @@
               is.numeric(seo),
               length(seo) == 1,
               is.finite(seo),
-              0 < seo,  
+              0 < seo,
 
               is.numeric(ser),
               length(ser) == 1,
               is.finite(ser),
-              0 < ser,  
+              0 < ser,
 
               is.numeric(tau),
               length(tau) == 1,
               is.finite(tau),
-              0 <= tau,  
+              0 <= tau,
 
               is.numeric(conf.level),
               length(conf.level) == 1,
@@ -34,21 +34,21 @@
     designPrior <- match.arg(designPrior)
 
     ## determine parameters of predictive distribution of yr
-    if(designPrior == "conditional"){
+    if (designPrior == "conditional") {
         mu <- thetao
         sigma <- ser
-    } else if(designPrior == "predictive"){
+    } else if (designPrior == "predictive") {
         mu <- thetao
-        sigma <- sqrt(seo^2 + ser^2 + 2*tau^2)
-    } else{ ## designPrior == "EB"
-        s <- pmax(1 - (seo^2 + tau^2)/thetao^2, 0)
-        mu <- s*thetao
-        sigma <- sqrt(s*(seo^2 + tau^2) + ser^2 + tau^2)
+        sigma <- sqrt(seo^2 + ser^2 + 2 * tau^2)
+    } else { ## designPrior == "EB"
+        s <- pmax(1 - (seo^2 + tau^2) / thetao^2, 0)
+        mu <- s * thetao
+        sigma <- sqrt(s * (seo^2 + tau^2) + ser^2 + tau^2)
     }
-    
+
     ## compute prediction interval
-    lower <- qnorm(p = (1 - conf.level)/2, mean = mu, sd = sigma)
-    upper <- qnorm(p = (1 + conf.level)/2, mean = mu, sd = sigma)
+    lower <- stats::qnorm(p = (1 - conf.level) / 2, mean = mu, sd = sigma)
+    upper <- stats::qnorm(p = (1 + conf.level) / 2, mean = mu, sd = sigma)
     result <- cbind(lower = lower, mean = mu, upper = upper)
     return(result)
 }
@@ -88,23 +88,23 @@
 #' @author Samuel Pawel
 #' @examples
 #' predictionInterval(thetao = c(1.5, 2, 5), seo = 1, ser = 0.5, designPrior = "EB")
-#'        
+#'
 #' # compute prediction intervals for replication projects
 #' data("RProjects", package = "ReplicationSuccess")
 #' parOld <- par(mfrow = c(2, 2))
 #' for (p in unique(RProjects$project)) {
 #'   data_project <- subset(RProjects, project == p)
-#'   PI <- predictionInterval(thetao = data_project$fiso, seo = data_project$se_fiso, 
+#'   PI <- predictionInterval(thetao = data_project$fiso, seo = data_project$se_fiso,
 #'                            ser = data_project$se_fisr)
 #'   PI <- tanh(PI) # transforming back to correlation scale
 #'   within <- (data_project$rr < PI$upper) & (data_project$rr > PI$lower)
 #'   coverage <- mean(within)
 #'   color <- ifelse(within == TRUE, "#333333B3", "#8B0000B3")
 #'   study <- seq(1, nrow(data_project))
-#'   plot(data_project$rr, study, col = color, pch = 20, 
-#'        xlim = c(-0.5, 1), xlab = expression(italic(r)[r]), 
+#'   plot(data_project$rr, study, col = color, pch = 20,
+#'        xlim = c(-0.5, 1), xlab = expression(italic(r)[r]),
 #'        main = paste0(p, ": ", round(coverage*100, 1), "% coverage"))
-#'   arrows(PI$lower, study, PI$upper, study, length = 0.02, angle = 90, 
+#'   arrows(PI$lower, study, PI$upper, study, length = 0.02, angle = 90,
 #'          code = 3, col = color)
 #'   abline(v = 0, lty = 3)
 #' }
@@ -116,9 +116,9 @@ predictionInterval <- function(thetao,
                                tau = 0,
                                conf.level = 0.95,
                                designPrior = "predictive") {
-    res <- .predictionInterval__(thetao=thetao, seo=seo, ser=ser, tau=tau,
-                                 conf.level=conf.level, designPrior=designPrior)
-    res <- matrix(res, ncol=3, byrow=TRUE)
+    res <- .predictionInterval__(thetao = thetao, seo = seo, ser = ser, tau = tau,
+                                 conf.level = conf.level, designPrior = designPrior)
+    res <- matrix(res, ncol = 3, byrow = TRUE)
     res <- data.frame(res)
     colnames(res) <- c("lower", "mean", "upper")
     res
