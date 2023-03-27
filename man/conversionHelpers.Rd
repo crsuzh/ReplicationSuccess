@@ -41,7 +41,7 @@ of the log ratio is computed. Defaults to \code{FALSE}.}
 \item{antilog}{Indicates whether the estimate is reported on the ratio scale.
 Only applies if \code{ratio = TRUE}. Defaults to \code{FALSE}.}
 
-\item{alternative}{Direction of the alternative of the p-value. 
+\item{alternative}{Direction of the alternative of the p-value.
 Either "two.sided" (default), "one.sided", "less", or "greater".
 If "one.sided" or "two.sided" is specified, the z-value is assumed to be positive.}
 
