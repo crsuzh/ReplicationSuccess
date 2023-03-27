@@ -4,23 +4,23 @@ FZ <- function(z, c) {
   if (z <= 0) {
     return(0)
   } else if (c == 0) {
-    return(1 - 4*(1 - pnorm(sqrt(z)))^2)
+    return(1 - 4 * (1 - stats::pnorm(sqrt(z)))^2)
   } else if (c == 1) {
-    return(pgamma(z, 1/2, 2))
+    return(stats::pgamma(z, 1 / 2, 2))
   } else {
     f <- function(t, c, z) {
-      t1 <- exp(-(c - 1)*z/(sqrt(1 + (c - 1)*t) - 1))
-      t2 <- 1 / sqrt(t*(1 - t))
-      return(t1*t2)
+      t1 <- exp(-(c - 1) * z / (sqrt(1 + (c - 1) * t) - 1))
+      t2 <- 1 / sqrt(t * (1 - t))
+      return(t1 * t2)
     }
-    myint <- integrate(
+    myint <- stats::integrate(
       f,
       lower = 0,
       upper = 1,
       z = z,
       c = c
     )$value
-    result <- 1 - myint/pi
+    result <- 1 - myint / pi
     return(result)
   }
 }
@@ -66,8 +66,8 @@ FZ <- function(z, c) {
   # }
 
   if (type == "golden") {
-    phi <- (sqrt(5) + 1)/2
-    result <- z*sqrt(phi)
+    phi <- (sqrt(5) + 1) / 2
+    result <- z * sqrt(phi)
     res <- z2p(z = result, alternative = "two.sided")
   }
 
@@ -77,19 +77,19 @@ FZ <- function(z, c) {
   }
 
   if (alternative == "one.sided") {
-    res <- ifelse(sign(zo) == sign(zr), res/2, 1 - res/2)
+    res <- ifelse(sign(zo) == sign(zr), res / 2, 1 - res / 2)
   }
 
-  # if(alternative == "greater"){
-  #   if(zo < 0) res <- NaN
-  #   if(zo > 0 && zr > 0) res <- res/2
-  #   if(zo > 0 && zr < 0) res <- 1 - res/2
+  # if (alternative == "greater") {
+  #   if (zo < 0) res <- NaN
+  #   if (zo > 0 && zr > 0) res <- res / 2
+  #   if (zo > 0 && zr < 0) res <- 1 - res / 2
   # }
   #
   #   if(alternative == "less"){
-  #     if(zo > 0) res <- NaN
-  #     if(zo < 0 && zr < 0) res <- res/2
-  #     if(zo < 0 && zr > 0) res <- 1 - res/2
+  #     if (zo > 0) res <- NaN
+  #     if (zo < 0 && zr < 0) res <- res / 2
+  #     if (zo < 0 && zr > 0) res <- 1 - res / 2
   #   }
   return(res)
 }
@@ -124,9 +124,9 @@ FZ <- function(z, c) {
 #' least as large as the original one.
 #' "controlled" ensures exact overall Type-I error control at level \code{level}^2.
 #' @return \code{pSceptical} returns the sceptical p-value.
-#' @details With \code{type = "controlled"}, the overall Type-I error rate 
+#' @details With \code{type = "controlled"}, the overall Type-I error rate
 #' is controlled at level \code{level}^2 for \code{alternative} is
-#' "one.sided" if the direction was pre-specified in advance. 
+#' "one.sided" if the direction was pre-specified in advance.
 #' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @references
 #' Held, L. (2020). A new standard for the analysis and design of replication
@@ -174,7 +174,7 @@ pSceptical <- Vectorize(.pSceptical_)
 #' @export
 zSceptical <- function(zo,
                        zr,
-                       c){
+                       c) {
     stopifnot(is.numeric(zo),
               length(zo) > 0,
               is.finite(zo),
@@ -189,22 +189,26 @@ zSceptical <- function(zo,
               0 <= c)
 
     ## arithmetic mean
-    aritMean <- function(x, y)
-        return((x + y)/2)
+    aritMean <- function(x, y) (x + y) / 2
     ## harmonic mean
-    harmMean <- function(x, y)
-        return(2/(1/x + 1/y))
+    harmMean <- function(x, y) 2 / (1 / x + 1 / y)
 
     ## vectorize function in all arguments
     z2H <- harmMean(zo^2, zr^2)
     z2A <- aritMean(zo^2, zr^2)
 
-    if (length(c)==1) {
-        z2 <- if(c == 1) z2H/2 else (sqrt(z2A*(z2A + (c - 1)*z2H)) - z2A)/(c - 1)
+    if (length(c) == 1) {
+        z2 <- if (c == 1) {
+            z2H / 2
+        } else {
+            (sqrt(z2A * (z2A + (c - 1) * z2H)) - z2A) / (c - 1)
+        }
     } else {
-        z2 <- ifelse(c == 1,
-                     z2H/2,
-                     (sqrt(z2A*(z2A + (c - 1)*z2H)) - z2A)/(c - 1))
+        z2 <- ifelse(
+            c == 1,
+            z2H / 2,
+            (sqrt(z2A * (z2A + (c - 1) * z2H)) - z2A) / (c - 1)
+        )
     }
 
     return(sqrt(z2))
