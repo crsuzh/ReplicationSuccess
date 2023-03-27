@@ -39,7 +39,7 @@ original effect estimates.}
 
 \item{type}{Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
  or "controlled". "golden" ensures that for an original study just significant at
-the specified \code{level}, replication success is only possible for 
+the specified \code{level}, replication success is only possible for
 replication effect estimates larger than the original one.
 "controlled" ensures exact overall Type-I error control at level \code{level}^2.}
 
@@ -63,12 +63,12 @@ Only taken into account when \code{alternative} = "two.sided".}
 The power for replication success with the sceptical p-value
 }
 \description{
-Computes the power for replication success with the sceptical 
+Computes the power for replication success with the sceptical
 p-value  based on the result of the
 original study, the corresponding variance ratio, and the design prior.
 }
 \details{
-With \code{type = "controlled"}, the overall Type-I error rate 
+With \code{type = "controlled"}, the overall Type-I error rate
 is controlled at level \code{level}^2 for \code{alternative} is
 "one.sided" if the direction was pre-specified in advance.
 }

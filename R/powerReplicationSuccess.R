@@ -1,13 +1,14 @@
 #' @export
-.powerReplicationSuccess_ <- function(zo,
-                                      c = 1,
-                                      level = 0.025,
-                                      designPrior = c("conditional", "predictive", "EB"),
-                                      alternative = c("one.sided", "two.sided"),
-                                      type = c("golden", "nominal", "controlled"),
-                                      shrinkage = 0,
-                                      h = 0,
-                                      strict = FALSE){
+.powerReplicationSuccess_ <- function(
+    zo,
+    c = 1,
+    level = 0.025,
+    designPrior = c("conditional", "predictive", "EB"),
+    alternative = c("one.sided", "two.sided"),
+    type = c("golden", "nominal", "controlled"),
+    shrinkage = 0,
+    h = 0,
+    strict = FALSE) {
 
     stopifnot(is.numeric(zo),
               length(zo) == 1,
@@ -24,6 +25,7 @@
               0 < level, level < 1,
 
               !is.null(designPrior))
+
     designPrior <- match.arg(designPrior)
 
     stopifnot(!is.null(alternative))
@@ -58,36 +60,57 @@
         ## computing minimum zr to achieve replication success
         dmin <- effectSizeReplicationSuccess(zo = zoabs, c = c, level = level,
                                              alternative = alternative, type = type)
-        zrmin <- dmin*zoabs*sqrt(c)
+        zrmin <- dmin * zoabs * sqrt(c)
 
         if (designPrior == "conditional") {
-            power <- pnorm(q = zrmin, mean = zoabs*(1 - shrinkage)*sqrt(c), sd = 1,
-                           lower.tail = FALSE)
+            power <- stats::pnorm(
+                q = zrmin,
+                mean = zoabs * (1 - shrinkage) * sqrt(c),
+                sd = 1,
+                lower.tail = FALSE
+            )
 
             if (strict && alternative == "two.sided") {
-                power2 <- pnorm(q = -zrmin, mean = zoabs*(1 - shrinkage)*sqrt(c), sd = 1,
-                                lower.tail = TRUE)
+                power2 <- stats::pnorm(
+                    q = -zrmin,
+                    mean = zoabs * (1 - shrinkage) * sqrt(c),
+                    sd = 1,
+                    lower.tail = TRUE
+                )
                 power <- power + power2
             }
         } else if (designPrior == "predictive") {
-            power <- pnorm(q = zrmin, mean = zoabs*(1 - shrinkage)*sqrt(c),
-                           sd = sqrt(c*(1 + 2*h) + 1), lower.tail = FALSE)
+            power <- stats::pnorm(
+                q = zrmin,
+                mean = zoabs * (1 - shrinkage) * sqrt(c),
+                sd = sqrt(c * (1 + 2 * h) + 1),
+                lower.tail = FALSE
+            )
 
             if (strict && alternative == "two.sided") {
-                power2 <- pnorm(q = -zrmin, mean = zoabs*(1 - shrinkage)*sqrt(c),
-                                sd = sqrt(c*(1 + 2*h) + 1), lower.tail = TRUE)
+                power2 <- stats::pnorm(
+                    q = -zrmin,
+                    mean = zoabs * (1 - shrinkage) * sqrt(c),
+                    sd = sqrt(c * (1 + 2 * h) + 1), lower.tail = TRUE
+                )
                 power <- power + power2
             }
         } else { ## designPrior == "EB"
-            EBshrinkage <- pmin((1 + h)/zoabs^2, 1)
-            power <- pnorm(q = zrmin, mean = zoabs*(1 - EBshrinkage)*sqrt(c),
-                           sd = sqrt((1 - EBshrinkage)*c*(1 + h) + 1 + c*h),
-                           lower.tail = FALSE)
+            EBshrinkage <- pmin((1 + h) / zoabs^2, 1)
+            power <- stats::pnorm(
+                q = zrmin,
+                mean = zoabs * (1 - EBshrinkage) * sqrt(c),
+                sd = sqrt((1 - EBshrinkage) * c * (1 + h) + 1 + c * h),
+                lower.tail = FALSE
+            )
 
             if (strict && alternative == "two.sided") {
-                power2 <- pnorm(q = -zrmin, mean = zoabs*(1 - EBshrinkage)*sqrt(c),
-                                sd = sqrt((1 - EBshrinkage)*c*(1 + h) + 1 + c*h),
-                                lower.tail = TRUE)
+                power2 <- stats::pnorm(
+                    q = -zrmin,
+                    mean = zoabs * (1 - EBshrinkage) * sqrt(c),
+                    sd = sqrt((1 - EBshrinkage) * c * (1 + h) + 1 + c * h),
+                    lower.tail = TRUE
+                )
                 power <- power + power2
             }
         }
@@ -98,7 +121,7 @@
 
 #' Computes the power for replication success with the sceptical p-value
 #'
-#' Computes the power for replication success with the sceptical 
+#' Computes the power for replication success with the sceptical
 #' p-value  based on the result of the
 #' original study, the corresponding variance ratio, and the design prior.
 #' @param zo Numeric vector of z-values from original studies.
@@ -118,7 +141,7 @@
 #'     original effect estimates.
 #' @param type Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
 #'  or "controlled". "golden" ensures that for an original study just significant at
-#' the specified \code{level}, replication success is only possible for 
+#' the specified \code{level}, replication success is only possible for
 #' replication effect estimates larger than the original one.
 #' "controlled" ensures exact overall Type-I error control at level \code{level}^2.
 #' @param shrinkage Numeric vector with values in [0,1). Defaults to 0.
@@ -136,9 +159,9 @@
 #'     Only taken into account when \code{alternative} = "two.sided".
 #' @return The power for replication success with the sceptical p-value
 #' @author Leonhard Held, Charlotte Micheloud, Samuel Pawel
-#' @details With \code{type = "controlled"}, the overall Type-I error rate 
+#' @details With \code{type = "controlled"}, the overall Type-I error rate
 #' is controlled at level \code{level}^2 for \code{alternative} is
-#' "one.sided" if the direction was pre-specified in advance. 
+#' "one.sided" if the direction was pre-specified in advance.
 #' @references
 #' Held, L. (2020). A new standard for the analysis and design of replication
 #' studies (with discussion). \emph{Journal of the Royal Statistical Society:
@@ -177,56 +200,65 @@ zr2quantile <- function(zo,
                         c,
                         p,
                         designPrior,
-                        shrinkage){
+                        shrinkage) {
 
-    if (designPrior == "predictive"){
-        lambda <- (1 - shrinkage)^2*zo^2/(1 + 1/c)
+    if (designPrior == "predictive") {
+        lambda <- (1 - shrinkage)^2 * zo^2 / (1 + 1 / c)
         factor <- c + 1
         # h <- 0 # relative heterogeneity h, implement later
         # lambda <- (1 - shrinkage)^2*zo^2/(1/c + 1 + 2*h)
         # factor <- 1 + c + 2*h*c
     }
-    if (designPrior == "conditional"){
-        lambda <- (1 - shrinkage)^2*c*zo^2
+    if (designPrior == "conditional") {
+        lambda <- (1 - shrinkage)^2 * c * zo^2
         factor <- 1
     }
     if (designPrior == "EB") {
-        s <- pmax(1 - 1/zo^2, 0)
-        lambda <- zo^2*s^2/(s + 1/c)
-        factor <- s*c + 1
+        s <- pmax(1 - 1 / zo^2, 0)
+        lambda <- zo^2 * s^2 / (s + 1 / c)
+        factor <- s * c + 1
         # h <- 0 # relative heterogeneity h, implement later
         # s <- pmax(1 - (1 + h)/zo^2, 0)
         # lambda <- zo^2*s^2/(s*(1 + h) + 1/c + h)
         # factor <- s*c*(1 + h) + 1 + h*c
     }
     if (lambda < 100)
-        res <- qchisq(p = p, df = 1, ncp = lambda)
+        res <- stats::qchisq(p = p, df = 1, ncp = lambda)
     else
-        res <- qnorm(p = p, mean = sqrt(lambda), sd = 1)^2
-    return(factor*res)
+        res <- stats::qnorm(p = p, mean = sqrt(lambda), sd = 1)^2
+    return(factor * res)
 }
 
 
-powerReplicationSuccessTargetPower <- function(power, zo, c, level, designPrior, alternative, type,
-                        shrinkage){
+powerReplicationSuccessTargetPower <- function(
+    power,
+    zo,
+    c,
+    level,
+    designPrior,
+    alternative,
+    type,
+    shrinkage) {
+
     zr2 <- zr2quantile(zo = zo, c = c, p = 1 - power,
                        designPrior = designPrior, shrinkage = shrinkage)
     pC <- pSceptical(zo = zo, zr = sqrt(zr2), c = c,
                      alternative = alternative, type = type)
     return(pC - level)
-                                        # pC <- pSceptical(zo = zo, zr = sqrt(zr2), c = c,
-                                        #                  alternative = alternative)
-                                        # return(pC - levelSceptical(level = level, alternative = alternative,
-                                        #                                type = type))
+    # pC <- pSceptical(zo = zo, zr = sqrt(zr2), c = c,
+    #                  alternative = alternative)
+    # return(pC - levelSceptical(level = level, alternative = alternative,
+    #                            type = type))
 }
 
-.powerReplicationSuccessNum_ <- function(zo,
-                                         c = 1,
-                                         level = 0.025,
-                                         designPrior = c("conditional", "predictive", "EB"),
-                                         alternative = c("one.sided", "two.sided"),
-                                         type = c("golden", "nominal", "controlled"),
-                                         shrinkage = 0){
+.powerReplicationSuccessNum_ <- function(
+    zo,
+    c = 1,
+    level = 0.025,
+    designPrior = c("conditional", "predictive", "EB"),
+    alternative = c("one.sided", "two.sided"),
+    type = c("golden", "nominal", "controlled"),
+    shrinkage = 0) {
 
     stopifnot(is.numeric(zo),
               length(zo) == 1,
@@ -243,6 +275,7 @@ powerReplicationSuccessTargetPower <- function(power, zo, c, level, designPrior,
               0 < level, level < 1,
 
               !is.null(designPrior))
+
     designPrior <- match.arg(designPrior)
 
     stopifnot(!is.null(alternative))
@@ -265,42 +298,48 @@ powerReplicationSuccessTargetPower <- function(power, zo, c, level, designPrior,
     myupper <- 1 - eps
 
     if (p > levelSceptical(level = level, alternative = alternative,
-                           type = type))
+                           type = type)) {
         res <- 0
-    else {
-        targetLower <- powerReplicationSuccessTargetPower(power = mylower,
-                                                        zo = zo,
-                                                        c = c,
-                                                        level = level,
-                                                        designPrior = designPrior,
-                                                        alternative = alternative,
-                                                        type = type,
-                                                        shrinkage = shrinkage)
-        targetUpper <- powerReplicationSuccessTargetPower(power = myupper,
-                                                        zo = zo,
-                                                        c = c,
-                                                        level = level,
-                                                        designPrior = designPrior,
-                                                        alternative = alternative,
-                                                        type = type,
-                                                        shrinkage = shrinkage)
+    } else {
+        targetLower <- powerReplicationSuccessTargetPower(
+            power = mylower,
+            zo = zo,
+            c = c,
+            level = level,
+            designPrior = designPrior,
+            alternative = alternative,
+            type = type,
+            shrinkage = shrinkage
+        )
+        targetUpper <- powerReplicationSuccessTargetPower(
+            power = myupper,
+            zo = zo,
+            c = c,
+            level = level,
+            designPrior = designPrior,
+            alternative = alternative,
+            type = type,
+            shrinkage = shrinkage
+        )
+
         if (sign(targetLower) == sign(targetUpper)) {
-            if ((sign(targetLower) >= 0) & (sign(targetUpper) >= 0))
+            if ((sign(targetLower) >= 0) && (sign(targetUpper) >= 0))
                 res <- 0
-            if ((sign(targetLower) < 0) & (sign(targetUpper) < 0))
+            if ((sign(targetLower) < 0) && (sign(targetUpper) < 0))
                 res <- 1
-        }
-        else {
-            res <- uniroot(f = powerReplicationSuccessTargetPower,
-                           lower = mylower,
-                           upper = myupper,
-                           zo = zo,
-                           c = c,
-                           level = level,
-                           designPrior = designPrior,
-                           alternative = alternative,
-                           type = type,
-                           shrinkage = shrinkage)$root
+        } else {
+            res <- stats::uniroot(
+                f = powerReplicationSuccessTargetPower,
+                lower = mylower,
+                upper = myupper,
+                zo = zo,
+                c = c,
+                level = level,
+                designPrior = designPrior,
+                alternative = alternative,
+                type = type,
+                shrinkage = shrinkage
+            )$root
         }
     }
     return(res)
