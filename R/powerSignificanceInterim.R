@@ -1,18 +1,18 @@
-.powerSignificanceInterim_ <- function(zo, 
-                                      zi, 
-                                      c = 1, 
-                                      f = 1/2,
-                                      level = 0.025,
-                                      designPrior = c("conditional", "informed predictive", "predictive"),
-                                      analysisPrior = c("flat", "original"),
-                                      alternative = c("one.sided", "two.sided"),
-                                      shrinkage = 0) 
-{
+.powerSignificanceInterim_ <- function(
+  zo,
+  zi,
+  c = 1,
+  f = 1/2,
+  level = 0.025,
+  designPrior = c("conditional", "informed predictive", "predictive"),
+  analysisPrior = c("flat", "original"),
+  alternative = c("one.sided", "two.sided"),
+  shrinkage = 0) {
 
     stopifnot(is.numeric(zo),
               length(zo) > 0,
               is.finite(zo),
-              
+
               is.numeric(zi),
               length(zi) > 0,
               is.finite(zi),
@@ -33,6 +33,7 @@
               0 < level, level < 1,
 
               !is.null(designPrior))
+
     designPrior <- match.arg(designPrior)
 
     stopifnot(!is.null(analysisPrior))
@@ -40,46 +41,47 @@
 
     stopifnot(!is.null(alternative))
     alternative <- match.arg(alternative)
-              
+
     stopifnot(is.numeric(shrinkage),
               length(shrinkage) > 0,
               is.finite(shrinkage),
               0 <= shrinkage, shrinkage < 1)
-              
+
   s <- 1 - shrinkage
-  
+
   v <- p2z(p = level, alternative = alternative)
-  if(sign(zo) == -1) zi = (-1)*zi # revert the signs when zo is neg
-  
+  if (sign(zo) == -1) zi <- (-1) * zi # revert the signs when zo is neg
+
   zos <- s * abs(zo)
-  
-  if (designPrior == "conditional")
-    if (analysisPrior == "flat"){
-      pSig <- pnorm(zos * sqrt(c * (1 - f) ) + zi*sqrt(f) / (sqrt(1-f)) - 
+
+  if (designPrior == "conditional") {
+    if (analysisPrior == "flat") {
+      pSig <- stats::pnorm(zos * sqrt(c * (1 - f)) + zi * sqrt(f) / (sqrt(1 - f)) -
                       sqrt(1 / (1 - f)) * v)
     } else if (analysisPrior == "original") {
       return(NA) ## For now, we are not interested in the case where the design prior is conditional and the analysis prior normal.
     }
-  
+  }
+
   if (designPrior == "informed predictive") {
     if (analysisPrior == "flat") {
-      term1 <- sqrt(((1 - f) * c) / ((c*f + 1) * (1 + c))) * zos
-      term2 <- sqrt(f*(1 + c) / ((1 - f) * (c*f + 1))) * zi
-      term3 <- sqrt((c*f + 1) / ((1 + c) * (1 - f))) * v
-      pSig <- pnorm(term1 + term2 - term3)
-    }
-    else if (analysisPrior == "original") {
-      term1 <- sqrt(1 + (c*(1-f)/(c*f + 1))) * sqrt(1/(c*(1-f)))*zos
-      term2 <- sqrt(1 + (c*(1-f)/(c*f + 1))) * sqrt(f/(1-f)) * zi
-      term3 <- sqrt((c*f + 1)/(c*(1-f))) * v
-      pSig <- pnorm(term1 + term2 - term3)
+      term1 <- sqrt(((1 - f) * c) / ((c * f + 1) * (1 + c))) * zos
+      term2 <- sqrt(f * (1 + c) / ((1 - f) * (c * f + 1))) * zi
+      term3 <- sqrt((c * f + 1) / ((1 + c) * (1 - f))) * v
+      pSig <- stats::pnorm(term1 + term2 - term3)
+    } else if (analysisPrior == "original") {
+      term1 <- sqrt(1 + (c * (1 - f) / (c * f + 1))) *
+        sqrt(1 / (c * (1 - f))) * zos
+      term2 <- sqrt(1 + (c * (1 - f) / (c * f + 1))) * sqrt(f / (1 - f))  *  zi
+      term3 <- sqrt((c * f + 1) / (c * (1 - f))) * v
+      pSig <- stats::pnorm(term1 + term2 - term3)
     }
   }
-  
-  if (designPrior == "predictive"){
+
+  if (designPrior == "predictive") {
     if (analysisPrior == "flat") {
-      pSig <- pnorm((zi - sqrt(f) * v) / sqrt(1 - f))
-    } else if (analysisPrior == "original"){
+      pSig <- stats::pnorm((zi - sqrt(f) * v) / sqrt(1 - f))
+    } else if (analysisPrior == "original") {
       return(NA)
     }
   }
@@ -108,11 +110,11 @@
 #' @param shrinkage Numeric vector with values in [0,1). Defaults to 0.
 #' Specifies the shrinkage of the original effect estimate towards zero, e.g.,
 #' the effect is shrunken by a factor of 25\% for \code{shrinkage=0.25}.
-#' @details \code{powerSignificanceInterim} is the vectorized version of 
+#' @details \code{powerSignificanceInterim} is the vectorized version of
 #'  \code{.powerSignificanceInterim_}.
 #' \code{\link[base]{Vectorize}} is used to vectorize the function.
-#' @return The probability of statistical significance in the specified direction 
-#' at the end of the replication study given the data collected so far 
+#' @return The probability of statistical significance in the specified direction
+#' at the end of the replication study given the data collected so far
 #' in the replication study.
 #' @seealso \code{\link{sampleSizeSignificance}}, \code{\link{powerSignificance}}
 #' @references Spiegelhalter, D. J., Abrams, K. R., and Myles, J. P. (2004).
@@ -120,8 +122,8 @@
 #' Evaluation, volume 13. John Wiley & Sons
 #'
 #' Micheloud, C., Held, L. (2022). Power Calculations for Replication Studies.
-#' \emph{Statistical Science}, \bold{37}, 369-379. 
-#' \doi{10.1214/21-STS828} 
+#' \emph{Statistical Science}, \bold{37}, 369-379.
+#' \doi{10.1214/21-STS828}
 #' @author Charlotte Micheloud
 #' @examples
 #' powerSignificanceInterim(zo = 2, zi = 2, c = 1, f = 1/2,
