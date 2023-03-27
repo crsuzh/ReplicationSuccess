@@ -1,4 +1,3 @@
-#' @import stats
 #' @export
 .PPpSceptical_ <- function(level, c, alpha, power,
                            alternative = c("one.sided", "two.sided", "greater", "less"),
