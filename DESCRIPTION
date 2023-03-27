@@ -1,8 +1,8 @@
 Package: ReplicationSuccess
-Type: Package
 Title: Design and Analysis of Replication Studies
 Version: 1.3
-Date: 2023-03-24
+Type: Package
+Date: 2023-03-27
 Authors@R: 
     c(person(given = "Leonhard",
              family = "Held",
@@ -14,7 +14,7 @@ Authors@R:
 	     email = "samuel.pawel@uzh.ch",
              role = c("aut"),
              comment = c(ORCID = "0000-0003-2779-320X")),
-     person(given = "Charlotte",
+      person(given = "Charlotte",
              family = "Micheloud",
 	     email = "charlotte.micheloud@uzh.ch",
              role = c("aut"),
@@ -29,7 +29,7 @@ Authors@R:
              role = c("cre"),
              email = "felix.hofmann2@uzh.ch",
              comment = c(ORCID = "0000-0002-3891-6239"))
-      )
+     )
 Description: Provides utilities for the design and analysis of replication studies.
     Features both traditional methods based on statistical significance and
     more recent methods such as the sceptical p-value; Held L. (2020) <doi:10.1111/rssa.12493>, 
@@ -39,11 +39,12 @@ Description: Provides utilities for the design and analysis of replication studi
     Contains datasets from five large-scale replication projects.
 URL: https://crsuzh.github.io/ReplicationSuccess/
 BugReports: https://github.com/crsuzh/ReplicationSuccess/issues/
-Depends:
+License: GPL (>=2)
+Encoding: UTF-8
+RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 Suggests: knitr, roxygen2, testthat
-License: GPL (>=2)
 LazyData: true
 NeedsCompilation: no
-RoxygenNote: 7.2.3
-Encoding: UTF-8
+Imports: 
+    stats

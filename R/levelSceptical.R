@@ -9,7 +9,7 @@ target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
                          type = "nominal")
   myT1E <- ifelse(alternative == "one.sided", myT1E/2, myT1E)
   ## trick: divide by two to 1-1 scenario
-  result <- myT1E - targetT1E
+  myT1E - targetT1E
 }
 #' @export
 .levelSceptical_ <- function(level,
@@ -42,7 +42,7 @@ target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
     } else if (alternative=="two.sided") {
       myupper <- 1-.Machine$double.eps^0.25
   }
-    result <- uniroot(target, lower = mylower, upper = myupper,
+    result <- stats::uniroot(target, lower = mylower, upper = myupper,
                       alternative = alternative, c = c,
                       targetT1E = targetT1E)
     res <- result$root

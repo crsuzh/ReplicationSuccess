@@ -63,7 +63,7 @@ the z-value of the original study,  the type of
 recalibration, the power and the design prior.
 }
 \details{
-With \code{type = "controlled"}, the overall Type-I error rate 
+With \code{type = "controlled"}, the overall Type-I error rate
 is controlled at level \code{level}^2 for \code{alternative} is
 "one.sided" if the direction was pre-specified in advance.
 }

@@ -37,7 +37,8 @@
 #' hMeanChiSq(z = p2z(p = pvalues, alternative = "less"),
 #'            w = 1 / se^2, alternative = "none")
 #' @export
-hMeanChiSq <- function(z, w = rep(1, length(z)),
+hMeanChiSq <- function(z,
+                       w = rep(1, length(z)),
                        alternative = c("greater", "less", "two.sided", "none"),
                        bound = FALSE) {
     stopifnot(is.numeric(z),
@@ -58,7 +59,7 @@ hMeanChiSq <- function(z, w = rep(1, length(z)),
 
     n <- length(z)
     zH2 <- sum(sqrt(w))^2 / sum(w / z^2)
-    res <- pchisq(zH2, df = 1, lower.tail = FALSE)
+    res <- stats::pchisq(zH2, df = 1, lower.tail = FALSE)
     check_greater <- min(z) >= 0
     check_less <- max(z) <= 0
     break_p <- 1 / (2^n)
@@ -77,7 +78,7 @@ hMeanChiSq <- function(z, w = rep(1, length(z)),
     if (alternative == "two.sided") {
         if (bound)
             res <- if (check_greater || check_less) res / (2^(n - 1)) else
-                        paste(">", format(2*break_p, scientific = FALSE))
+                        paste(">", format(2 * break_p, scientific = FALSE))
         else
             res <- if (check_greater || check_less) res / (2^(n - 1)) else NaN
     }
@@ -101,9 +102,10 @@ hMeanChiSq <- function(z, w = rep(1, length(z)),
 #' hMeanChiSqMu(thetahat = thetahat, se = se, alternative = "two.sided",
 #'              mu = -0.1)
 #' @export
-hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
-                         alternative = c("greater", "less", "two.sided", "none"),
-                         bound = FALSE) {
+hMeanChiSqMu <- function(
+    thetahat, se, w = rep(1, length(thetahat)), mu = 0,
+    alternative = c("greater", "less", "two.sided", "none"),
+    bound = FALSE) {
     stopifnot(is.numeric(thetahat),
               length(thetahat) > 0,
               is.finite(thetahat),
@@ -133,7 +135,7 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
     if (alternative != "none") {
         z <- (thetahat - mu) / se
         zH2 <- sum(sqrt(w))^2 / sum(w / z^2)
-        res <- pchisq(zH2, df = 1, lower.tail = FALSE)
+        res <- stats::pchisq(zH2, df = 1, lower.tail = FALSE)
         check_greater <- min(z) >= 0
         check_less <- max(z) <= 0
         break_p <- 1 / (2^n)
@@ -164,7 +166,7 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
             z <- (thetahat - mu[i]) / se
             zH2[i] <-  sw / sum(w / z^2)
         }
-        res <- pchisq(q = zH2, df = 1, lower.tail = FALSE)
+        res <- stats::pchisq(q = zH2, df = 1, lower.tail = FALSE)
     }
     return(res)
 }
@@ -217,7 +219,6 @@ hMeanChiSqMu <- function(thetahat, se, w = rep(1, length(thetahat)), mu = 0,
 #' points(hm$gamma, col = "red", pch = 19, cex = 2)
 #'
 #' @export
-#' @import stats
 hMeanChiSqCI <- function(
     thetahat, se, w = rep(1, length(thetahat)),
     alternative = c("two.sided", "greater", "less", "none"),
@@ -270,18 +271,19 @@ hMeanChiSqCI <- function(
     minse <- se[mini]
     maxse <- se[maxi]
     alpha <- 1 - conf.level
-    z1 <- max(-qnorm(alpha), 1)
+    z1 <- max(-stats::qnorm(alpha), 1)
     eps <- 1e-6
     factor <- 5
     if (alternative == "none") {
         ## ----------------------------
         ## find lower bound such that: lower < thetahat[1] AND target(lower) < 0
         lower <- mint - z1 * minse
-        while (target(lower) > 0)
-            lower <- lower - minse
+        while (target(lower) > 0) lower <- lower - minse
 
         ## find root between 'lower' and 'thetahat[1]'
-        CIlower <- uniroot(f = target, lower = lower, upper = thetahat[1])$root
+        CIlower <- stats::uniroot(
+            f = target, lower = lower, upper = thetahat[1]
+        )$root
 
         ## -------------------------
         ## check between thetahats whether 'target' goes below 'alpha'
@@ -290,15 +292,21 @@ hMeanChiSqCI <- function(
         gam <- matrix(NA, nrow = nThetahatUnique - 1, ncol = 2)
         colnames(gam) <- c("minimum", "pvalue_fun/gamma")
         for (i in 1:(nThetahatUnique - 1)) {
-            opt <- optimize(f = target, lower = thetahatUnique[i],
-                            upper = thetahatUnique[i + 1])
-                gam[i, ] <- c(opt$minimum, opt$objective + alpha)
-                if (opt$objective <= 0) {
-                    CImiddle[1, i] <- uniroot(f = target, lower = thetahatUnique[i],
-                                              upper = opt$minimum)$root
-                    CImiddle[2, i] <- uniroot(f = target, lower = opt$minimum,
-                                              upper = thetahatUnique[i + 1])$root
-                }
+            opt <- stats::optimize(
+                f = target, lower = thetahatUnique[i],
+                upper = thetahatUnique[i + 1]
+            )
+            gam[i, ] <- c(opt$minimum, opt$objective + alpha)
+            if (opt$objective <= 0) {
+                CImiddle[1, i] <- stats::uniroot(
+                    f = target, lower = thetahatUnique[i],
+                    upper = opt$minimum
+                )$root
+                CImiddle[2, i] <- stats::uniroot(
+                    f = target, lower = opt$minimum,
+                    upper = thetahatUnique[i + 1]
+                )$root
+            }
         }
         CImiddle <- CImiddle[!is.na(CImiddle)]
 
@@ -306,28 +314,27 @@ hMeanChiSqCI <- function(
         ## find upper bound such that:
         ## upper > thetahat[length(thetahat)] AND target(upper) < 0
         upper <- maxt + maxse
-        while (target(upper) > 0)
-            upper <- upper + z1 * maxse
+        while (target(upper) > 0) upper <- upper + z1 * maxse
 
         ## find root between 'lower' and 'thetahat[1]'
-        CIupper <- uniroot(f = target, lower = thetahat[length(thetahat)],
-                           upper = upper)$root
+        CIupper <- stats::uniroot(
+            f = target, lower = thetahat[length(thetahat)],
+            upper = upper
+        )$root
         CI <- matrix(c(CIlower, CImiddle, CIupper), ncol = 2, byrow = TRUE)
         colnames(CI) <- c("lower", "upper")
-        return(list(CI = CI,
-                    gamma = gam
-        ))
+        return(list(CI = CI, gamma = gam))
     }
     if (alternative == "two.sided") {
-        lower <- uniroot(f = target,
+        lower <- stats::uniroot(f = target,
                          lower = mint - factor * z1 * minse,
                          upper = mint - eps * minse)$root
-        upper <- uniroot(f = target, lower = maxt + eps * maxse,
+        upper <- stats::uniroot(f = target, lower = maxt + eps * maxse,
                          upper = maxt + factor * z1 * maxse)$root
         return(list(CI = cbind(lower, upper)))
     }
     if (alternative == "greater") {
-        lower <- uniroot(f = target,
+        lower <- stats::uniroot(f = target,
                          lower = mint - factor * z1 * minse,
                          upper = mint - eps * minse)$root
         upper <- Inf
@@ -335,7 +342,7 @@ hMeanChiSqCI <- function(
     }
     if (alternative == "less") {
         lower <- -Inf
-        upper <- uniroot(f = target,
+        upper <- stats::uniroot(f = target,
                          lower = maxt + eps * maxse,
                          upper = maxt + factor * z1 * maxse)$root
         return(list(CI = cbind(lower, upper)))
@@ -364,34 +371,38 @@ hMeanChiSqCI <- function(
 #' package version 1.8.2.2.
 #' @author Florian Gerber
 #' @noRd
-#' @import stats
 #' @seealso \code{\link[base]{Vectorize}}
 #' @examples
 #' f <- function (x) cos(2*x)^3
 #' (roots <- unirootAll(f = f, interval = c(0, 10)))
 #' f(roots)
-unirootAll <- function(f, interval, lower = min(interval), upper = max(interval),
-                       n = 1000,
-                       tol = .Machine$double.eps^0.2,
-                       maxiter = 1000, trace = 0,
-                       ...) {
+unirootAll <- function(
+    f, interval, lower = min(interval), upper = max(interval),
+    n = 1000,
+    tol = .Machine$double.eps^0.2,
+    maxiter = 1000, trace = 0,
+    ...) {
+
     stopifnot(is.function(f), length(formals(f)) >= 1,
               is.numeric(lower), length(lower) == 1, is.finite(lower),
               is.numeric(upper), length(upper) == 1, is.finite(upper),
               lower < upper,
               is.numeric(n), length(n) == 1, is.finite(n), n >= 2)
-    n <- round(n)
     ## 'tol', 'maxiter', 'trace' are checked in uniroot()
+
+    n <- round(n)
     xseq <- seq(lower, upper, length.out = n + 1)
     mod <- f(xseq, ...)
     index <- which(mod[1:n] * mod[2:(n + 1)] < 0)
     rootsOffGrid <- numeric(length = length(index))
-    for (i in seq_along(index))
-        rootsOffGrid[i] <- uniroot(f = f, lower = xseq[index[i]],
-                                   upper = xseq[index[i] + 1], maxiter = maxiter,
-                                   tol = tol, trace = trace, ...)$root
+    for (i in seq_along(index)) {
+        rootsOffGrid[i] <- stats::uniroot(
+            f = f, lower = xseq[index[i]],
+            upper = xseq[index[i] + 1], maxiter = maxiter,
+            tol = tol, trace = trace, ...
+        )$root
+    }
     rootsGrid <- xseq[which(mod == 0)]
-    if (length(rootsGrid) > 0)
-        return(sort(c(rootsGrid, rootsOffGrid)))
+    if (length(rootsGrid) > 0) return(sort(c(rootsGrid, rootsOffGrid)))
     rootsOffGrid
 }
