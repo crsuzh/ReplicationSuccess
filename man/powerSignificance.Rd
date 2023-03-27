@@ -47,8 +47,8 @@ the effect is shrunken by a factor of 25\% for \code{shrinkage = 0.25}.
 Is only taken into account if the \code{designPrior} is "conditional" or "predictive".}
 
 \item{strict}{Logical vector indicating whether the probability for significance
-in the opposite direction of the original effect estimate should also be 
-taken into account. Default is \code{FALSE}. 
+in the opposite direction of the original effect estimate should also be
+taken into account. Default is \code{FALSE}.
 Only taken into account when \code{alternative} = "two.sided".}
 }
 \value{
@@ -79,26 +79,26 @@ powerSignificance(zo = p2z(0.005), c = 1/2, designPrior = "predictive",
                   alternative = "one.sided", h = 0.5, shrinkage = 0.5)
 powerSignificance(zo = p2z(0.005), c = 1/2, designPrior = "EB",
                   alternative = "two.sided", h = 0.5)
-                  
+
 # power as function of original p-value
 po <- seq(0.0001, 0.06, 0.0001)
 plot(po, powerSignificance(zo = p2z(po), designPrior = "conditional"),
-     type = "l", ylim = c(0, 1), lwd = 1.5, las = 1, ylab = "Power", 
+     type = "l", ylim = c(0, 1), lwd = 1.5, las = 1, ylab = "Power",
      xlab = expression(italic(p)[o]))
 lines(po, powerSignificance(zo = p2z(po), designPrior = "predictive"),
       lwd = 2, lty = 2)
 lines(po, powerSignificance(zo = p2z(po), designPrior = "EB"),
       lwd = 1.5, lty = 3)
-legend("topright", legend = c("conditional", "predictive", "EB"), 
+legend("topright", legend = c("conditional", "predictive", "EB"),
        title = "Design prior", lty = c(1, 2, 3), lwd = 1.5, bty = "n")
 }
 \references{
-Goodman, S. N. (1992). A comment on replication, p-values and evidence, 
-\emph{Statistics in Medicine}, \bold{11}, 875--879. 
+Goodman, S. N. (1992). A comment on replication, p-values and evidence,
+\emph{Statistics in Medicine}, \bold{11}, 875--879.
 \doi{10.1002/sim.4780110705}
-     
-Senn, S. (2002). Letter to the Editor, \emph{Statistics in Medicine}, 
-\bold{21}, 2437--2444. 
+
+Senn, S. (2002). Letter to the Editor, \emph{Statistics in Medicine},
+\bold{21}, 2437--2444.
 
 Held, L. (2020). A new standard for the analysis and design of replication
 studies (with discussion). \emph{Journal of the Royal Statistical Society:
