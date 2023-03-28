@@ -70,8 +70,8 @@
 #' @return The minimum relative effect size to achieve replication success
 #' with the sceptical p-value.
 #' @details With \code{type = "controlled"}, the overall Type-I error rate 
-#' is controlled at level \code{level}^2 for \code{alternative} is
-#' "one.sided" if the direction was pre-specified in advance. 
+#' is controlled at level \code{level}^2 if \code{alternative} is
+#' "one.sided" and the direction was pre-specified in advance. 
 #' @references Held, L., Micheloud, C., Pawel, S. (2022). The assessment of
 #'     replication success based on relative effect size. The Annals of Applied
 #'     Statistics. 16:706-720. \doi{10.1214/21-AOAS1502}

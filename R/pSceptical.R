@@ -124,10 +124,9 @@ FZ <- function(z, c) {
 #' least as large as the original one.
 #' "controlled" ensures exact overall Type-I error control at level \code{level}^2.
 #' @return \code{pSceptical} returns the sceptical p-value.
-#' @details With \code{type = "controlled"}, the overall Type-I error rate
-#' is controlled at level \code{level}^2 for \code{alternative} is
-#' "one.sided" if the direction was pre-specified in advance.
-#' \code{\link[base]{Vectorize}} is used to vectorize the function.
+#' @details With \code{type = "controlled"}, the overall Type-I error rate 
+#' is controlled at level \code{level}^2 if \code{alternative} is
+#' "one.sided" and the direction was pre-specified in advance.
 #' @references
 #' Held, L. (2020). A new standard for the analysis and design of replication
 #' studies (with discussion). \emph{Journal of the Royal Statistical Society:

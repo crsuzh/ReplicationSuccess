@@ -33,7 +33,7 @@ the evidence in the original study (with an empirical Bayes shrinkage
 estimator).}
 
 \item{alternative}{Specifies if \code{level} is "one.sided" (default) or "two.sided".
-If the "one.sided" then power calculations are based
+If "one.sided" then power calculations are based
 on a one-sided assessment of replication success in the direction of the
 original effect estimates.}
 
@@ -68,9 +68,9 @@ p-value  based on the result of the
 original study, the corresponding variance ratio, and the design prior.
 }
 \details{
-With \code{type = "controlled"}, the overall Type-I error rate
-is controlled at level \code{level}^2 for \code{alternative} is
-"one.sided" if the direction was pre-specified in advance.
+With \code{type = "controlled"}, the overall Type-I error rate 
+is controlled at level \code{level}^2 if \code{alternative} is
+"one.sided" and the direction was pre-specified in advance.
 }
 \examples{
 ## larger sample size in replication (c > 1)

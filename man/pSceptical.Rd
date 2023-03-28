@@ -55,10 +55,9 @@ original and the replication study and the corresponding variance ratios.
 If specified, the sceptical p-values are recalibrated.
 }
 \details{
-With \code{type = "controlled"}, the overall Type-I error rate
-is controlled at level \code{level}^2 for \code{alternative} is
-"one.sided" if the direction was pre-specified in advance.
-\code{\link[base]{Vectorize}} is used to vectorize the function.
+With \code{type = "controlled"}, the overall Type-I error rate 
+is controlled at level \code{level}^2 if \code{alternative} is
+"one.sided" and the direction was pre-specified in advance.
 }
 \examples{
 ## no recalibration (type = "nominal") as in Held (2020)

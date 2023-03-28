@@ -136,7 +136,7 @@
 #'     the evidence in the original study (with an empirical Bayes shrinkage
 #'     estimator).
 #' @param alternative Specifies if \code{level} is "one.sided" (default) or "two.sided".
-#'     If the "one.sided" then power calculations are based
+#'     If "one.sided" then power calculations are based
 #'     on a one-sided assessment of replication success in the direction of the
 #'     original effect estimates.
 #' @param type Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
@@ -159,9 +159,9 @@
 #'     Only taken into account when \code{alternative} = "two.sided".
 #' @return The power for replication success with the sceptical p-value
 #' @author Leonhard Held, Charlotte Micheloud, Samuel Pawel
-#' @details With \code{type = "controlled"}, the overall Type-I error rate
-#' is controlled at level \code{level}^2 for \code{alternative} is
-#' "one.sided" if the direction was pre-specified in advance.
+#' @details With \code{type = "controlled"}, the overall Type-I error rate 
+#' is controlled at level \code{level}^2 if \code{alternative} is
+#' "one.sided" and the direction was pre-specified in advance.
 #' @references
 #' Held, L. (2020). A new standard for the analysis and design of replication
 #' studies (with discussion). \emph{Journal of the Royal Statistical Society:

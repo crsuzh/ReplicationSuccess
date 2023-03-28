@@ -44,8 +44,8 @@ is computed based on the result of the original study and the corresponding vari
 }
 \details{
 With \code{type = "controlled"}, the overall Type-I error rate 
-is controlled at level \code{level}^2 for \code{alternative} is
-"one.sided" if the direction was pre-specified in advance.
+is controlled at level \code{level}^2 if \code{alternative} is
+"one.sided" and the direction was pre-specified in advance.
 }
 \examples{
 po <- c(0.001, 0.002, 0.01, 0.02, 0.025)

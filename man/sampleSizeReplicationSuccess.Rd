@@ -25,7 +25,7 @@ sampleSizeReplicationSuccess(
 Default is 0.025.}
 
 \item{alternative}{Specifies if \code{level} is "one.sided" (default) or "two.sided".
-If the "one.sided" then sample size calculations are based
+If "one.sided" then sample size calculations are based
 on a one-sided assessment of replication success in the direction of the
 original effect estimates.}
 
@@ -63,9 +63,9 @@ the z-value of the original study,  the type of
 recalibration, the power and the design prior.
 }
 \details{
-With \code{type = "controlled"}, the overall Type-I error rate
-is controlled at level \code{level}^2 for \code{alternative} is
-"one.sided" if the direction was pre-specified in advance.
+With \code{type = "controlled"}, the overall Type-I error rate 
+is controlled at level \code{level}^2 if \code{alternative} is
+"one.sided" and the direction was pre-specified in advance.
 }
 \examples{
 ## based on power

@@ -331,7 +331,7 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
 #' @param level Threshold for the calibrated sceptical p-value.
 #'  Default is 0.025.
 #' @param alternative Specifies if \code{level} is "one.sided" (default) or "two.sided".
-#'     If the "one.sided" then sample size calculations are based
+#'     If "one.sided" then sample size calculations are based
 #'     on a one-sided assessment of replication success in the direction of the
 #'     original effect estimates.
 #' @param type Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
@@ -356,9 +356,9 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
 #'     heterogeneity).
 #' @return The relative sample size for replication success. If impossible to
 #'     achieve the desired power for specified inputs \code{NaN} is returned.
-#' @details With \code{type = "controlled"}, the overall Type-I error rate
-#' is controlled at level \code{level}^2 for \code{alternative} is
-#' "one.sided" if the direction was pre-specified in advance.
+#' @details With \code{type = "controlled"}, the overall Type-I error rate 
+#' is controlled at level \code{level}^2 if \code{alternative} is
+#' "one.sided" and the direction was pre-specified in advance.
 #' @references
 #' Held, L. (2020). A new standard for the analysis and design of replication
 #' studies (with discussion). \emph{Journal of the Royal Statistical Society:
