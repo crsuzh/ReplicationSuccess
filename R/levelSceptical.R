@@ -69,7 +69,7 @@ target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
 #' @return Replication success levels
 #' @details With \code{type = "controlled"}, the overall Type-I error rate 
 #' is controlled at level \code{level}^2 if \code{alternative} is
-#' "one.sided" and the direction was pre-specified in advance.
+#' \code{"one.sided"} and the direction was pre-specified in advance.
 #' @references Held, L. (2020). A new standard for the analysis and design of replication studies (with discussion).
 #' \emph{Journal of the Royal Statistical Society: Series A (Statistics in Society)}, \bold{183}, 431-448.
 #' \doi{10.1111/rssa.12493}

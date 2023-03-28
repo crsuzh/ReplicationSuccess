@@ -70,7 +70,7 @@ original study, the corresponding variance ratio, and the design prior.
 \details{
 With \code{type = "controlled"}, the overall Type-I error rate 
 is controlled at level \code{level}^2 if \code{alternative} is
-"one.sided" and the direction was pre-specified in advance.
+\code{"one.sided"} and the direction was pre-specified in advance.
 }
 \examples{
 ## larger sample size in replication (c > 1)

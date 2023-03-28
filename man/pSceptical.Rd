@@ -57,7 +57,7 @@ If specified, the sceptical p-values are recalibrated.
 \details{
 With \code{type = "controlled"}, the overall Type-I error rate 
 is controlled at level \code{level}^2 if \code{alternative} is
-"one.sided" and the direction was pre-specified in advance.
+\code{"one.sided"} and the direction was pre-specified in advance.
 }
 \examples{
 ## no recalibration (type = "nominal") as in Held (2020)
