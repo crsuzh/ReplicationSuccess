@@ -1,6 +1,6 @@
 #' @export
 .PPpSceptical_ <- function(level, c, alpha, power,
-                           alternative = c("one.sided", "two.sided", "greater", "less"),
+                           alternative = c("one.sided", "two.sided"),
                            type = c("golden", "nominal", "controlled")) {
 
     stopifnot(is.numeric(level),
@@ -99,13 +99,13 @@
         }
     }
 
-    if (alternative %in% c("one.sided", "two.sided")) {
-        ## integrate zo, zr over region where replication succcess possible
+    if (alternative == "two.sided") {
+        ## integrate zo, zr over region where replication success possible
         pp <- stats::integrate(f = intFun, lower = zas, upper = Inf)$value +
                                                                    stats::integrate(f = intFun, lower = -Inf, upper = -zas)$value
     }
-    if (alternative %in% c("greater", "less")) {
-        ## integrate zo, zr over region where replication succcess possible
+    if (alternative == "one.sided") {
+        ## integrate zo, zr over region where replication success possible
         pp <- stats::integrate(f = intFun, lower = zas, upper = Inf)$value
     }
 
@@ -129,15 +129,7 @@
 #' @param power Power to detect the assumed effect with a standard significance test
 #' in the original study.
 #' @param alternative Specifies if \code{level} and
-#' \code{alpha} are "two.sided" or one.sided ("one.sided", "greater", or "less").
-#' If "one.sided", the project power is computed based on a one-sided assessment of
-#' replication success in the direction of the original effect estimate.
-#' If "two.sided", the project power is computed based
-#' on a two-sided assessment of replication success regardless of the direction
-#' of the original and replication effect estimate.
-#' If "greater" or "less",  project power is
-#' computed based on a one-sided assessment of replication success
-#' in the pre-specified direction of the original and replication effect estimate.
+#' \code{alpha} are "two.sided" or "one.sided".
 #' @param type Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
 #'  or "controlled".
 #' @return The project power of the sceptical p-value

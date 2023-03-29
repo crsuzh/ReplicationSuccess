@@ -7,7 +7,7 @@
 T1EpSceptical(
   level,
   c,
-  alternative = c("one.sided", "two.sided", "greater", "less"),
+  alternative = c("one.sided", "two.sided"),
   type = c("golden", "nominal", "controlled")
 )
 }
@@ -21,15 +21,7 @@ size of the replication study to the sample size of the
 original study.}
 
 \item{alternative}{Specifies if \code{level}
-is "two.sided" or one.sided ("one.sided", "greater", or "less").
-If "one.sided", the type-I error rate is computed based on a one-sided assessment
-of replication success in the direction of the original effect estimate.
-If "two.sided", the type-I error rate is computed based
-on a two-sided assessment of replication success regardless of the direction
-of the original and replication effect estimate.
-If "greater" or "less",  the type-I error rate is
-computed based on a one-sided assessment of replication success
-in the pre-specified direction of the original and replication effect estimate.}
+is "two.sided" or "one.sided".}
 
 \item{type}{Type of recalibration. Recalibration type can be either "golden"
 (default), "nominal" (no recalibration), or "controlled".}
@@ -51,7 +43,7 @@ and the alternative hypothesis.
 types <- c("nominal", "golden", "controlled")
 c <- seq(0.2, 5, by = 0.05)
 t1 <- sapply(X = types, FUN = function(t) {
-  T1EpSceptical(type = t, c = c, alternative = "greater", level = 0.025)
+  T1EpSceptical(type = t, c = c, alternative = "one.sided", level = 0.025)
 })
 matplot(x = c, y = t1*100, type = "l", lty = 1, lwd = 2, las = 1, log = "x",
         xlab = bquote(italic(c)), ylab = "Type-I error (\%)", xlim = c(0.2, 5))
