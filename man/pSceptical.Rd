@@ -54,11 +54,6 @@ Computes sceptical p-values and z-values based on the z-values of the
 original and the replication study and the corresponding variance ratios.
 If specified, the sceptical p-values are recalibrated.
 }
-\details{
-With \code{type = "controlled"}, the overall Type-I error rate 
-is controlled at level \code{level}^2 if \code{alternative} is
-\code{"one.sided"} and the direction was pre-specified in advance.
-}
 \examples{
 ## no recalibration (type = "nominal") as in Held (2020)
 pSceptical(zo = p2z(0.01), zr = p2z(0.02), c = 2, alternative = "one.sided",

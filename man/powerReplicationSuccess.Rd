@@ -67,11 +67,6 @@ Computes the power for replication success with the sceptical
 p-value  based on the result of the
 original study, the corresponding variance ratio, and the design prior.
 }
-\details{
-With \code{type = "controlled"}, the overall Type-I error rate 
-is controlled at level \code{level}^2 if \code{alternative} is
-\code{"one.sided"} and the direction was pre-specified in advance.
-}
 \examples{
 ## larger sample size in replication (c > 1)
 powerReplicationSuccess(zo = p2z(0.005), c = 2, level = 0.025, designPrior = "conditional")

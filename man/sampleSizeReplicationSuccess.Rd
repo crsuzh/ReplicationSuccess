@@ -62,11 +62,6 @@ The relative sample size to achieve replication success is computed based on
 the z-value of the original study,  the type of
 recalibration, the power and the design prior.
 }
-\details{
-With \code{type = "controlled"}, the overall Type-I error rate 
-is controlled at level \code{level}^2 if \code{alternative} is
-\code{"one.sided"} and the direction was pre-specified in advance.
-}
 \examples{
 ## based on power
 sampleSizeReplicationSuccess(zo = p2z(0.0025), power = 0.8, level = 0.025,
