@@ -10,6 +10,7 @@
 `PPpSceptical` were removed. 
 Alternative `"one.sided"` now returns the T1E rate (respectively project power) 
 assuming both alternatives are one-sided in the same direction. 
+- Argument `type = "liberal"` was removed in all functions that had this option.
 - `levelEquivalent` and `unirootAll` were removed.
 - Added systematic tests to all functions in the package.
 
