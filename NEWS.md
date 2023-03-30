@@ -1,16 +1,17 @@
 
 # ReplicationSuccess 1.3
 
-- Change of maintainer
-- Transfer ownership of development repository to CRS
-- Update links throughout the entire repository following maintainer and ownership change
-- Implemented `"controlled"` level 
-- Added one-sided p-values in `RProjects'
-- Alternatives `"greater"` and `"less"` in functions  `"T1EpSceptical"` and 
-`"PPpSceptical"` were removed. 
+- Change of maintainer.
+- Transfer ownership of development repository to CRS.
+- Update links throughout the entire repository following maintainer and ownership change.
+- Implemented `"controlled"` level.
+- Added one-sided p-values in `RProjects'.
+- Alternatives `"greater"` and `"less"` in functions  `T1EpSceptical` and 
+`PPpSceptical` were removed. 
 Alternative `"one.sided"` now returns the T1E rate (respectively project power) 
 assuming both alternatives are one-sided in the same direction. 
-- `"levelEquivalent"` and `"unirootAll"` were removed
+- `levelEquivalent` and `unirootAll` were removed.
+- Added systematic tests to all functions in the package.
 
 
 # ReplicationSuccess 1.2
