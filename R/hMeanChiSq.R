@@ -162,7 +162,7 @@ hMeanChiSqMu <- function(
     if (alternative == "none") {
         zH2 <- numeric(m)
         sw <- sum(sqrt(w))^2
-        for (i in 1:m) {
+        for (i in seq_along(m)) {
             z <- (thetahat - mu[i]) / se
             zH2[i] <-  sw / sum(w / z^2)
         }
