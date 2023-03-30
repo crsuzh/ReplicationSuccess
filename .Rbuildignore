@@ -1,6 +1,7 @@
 .travis.yml
 
 lib/*
+manual/*
 scratch/*
 Makefile
 Makefile.defs

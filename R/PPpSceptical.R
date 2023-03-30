@@ -157,19 +157,19 @@
 #' alpha <- 0.025
 #' power <- 0.9
 #' pp <- sapply(X = types, FUN = function(t) {
-#'   PPpSceptical(type = t, c = c, alpha, power, alternative = "greater",
+#'   PPpSceptical(type = t, c = c, alpha, power, alternative = "one.sided",
 #'                level = 0.025)
 #' })
 #'
 #' ## compute project power of 2 trials rule
 #' za <- qnorm(p = 1 - alpha)
 #' mu <- za + qnorm(p = power)
-#' pp2TR <- power*pnorm(q = za, mean = sqrt(c)*mu, lower.tail = FALSE)
+#' pp2TR <- power * pnorm(q = za, mean = sqrt(c) * mu, lower.tail = FALSE)
 #'
-#' matplot(x = c, y = pp*100, type = "l", lty = 1, lwd = 2, las = 1, log = "x",
+#' matplot(x = c, y = pp * 100, type = "l", lty = 1, lwd = 2, las = 1, log = "x",
 #'         xlab = bquote(italic(c)), ylab = "Project power (%)", xlim = c(0.4, 5),
 #'         ylim = c(0, 100))
-#' lines(x = c, y = pp2TR*100, col = length(types) + 1, lwd = 2)
+#' lines(x = c, y = pp2TR * 100, col = length(types) + 1, lwd = 2)
 #' abline(v = 1, lty = 2)
 #' abline(h = 90, lty = 2, col = "lightgrey")
 #' legend("bottomright", legend = c(types, "2TR"), lty = 1, lwd = 2,
