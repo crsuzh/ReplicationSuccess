@@ -33,7 +33,7 @@ check: tar
 	$(RSCRIPT) -e "devtools::check_built(path = './lib/$(TAR)', cran = FALSE)"
 
 install: tar
-	$(RSCRIPT) -e "install.packages('$(TAR)', repos = NULL, type = 'source')"
+	$(RSCRIPT) -e "install.packages('./lib/$(TAR)', repos = NULL, type = 'source')"
 
 covr: 
 	$(RSCRIPT) -e "covr::package_coverage()"
