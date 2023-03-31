@@ -43,10 +43,10 @@ manual: update-src
 	$(RSCRIPT) -e "devtools::build_manual(pkg = '.', path = 'manual')"
 
 winbuild: update-src
-	$(RSCRIPT) -e "devtools::check_win_release()"
+	$(RSCRIPT) -e "devtools::check_win_release(args = '--compact-vignettes=both')"
 
 winbuild-devel: update-src
-	$(RSCRIPT) -e "devtools::check_win_devel()"
+	$(RSCRIPT) -e "devtools::check_win_devel(args = '--compact-vignettes=both')"
 
 webpage: update-src
 	$(RSCRIPT) -e "pkgdown::build_site()"
