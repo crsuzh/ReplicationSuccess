@@ -11,3 +11,4 @@ Makefile.defs
 ^pkgdown$
 ^doc$
 ^Meta$
+vignettes/figure
