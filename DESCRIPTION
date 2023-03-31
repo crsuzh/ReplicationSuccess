@@ -2,8 +2,7 @@ Type: Package
 Package: ReplicationSuccess
 Title: Design and Analysis of Replication Studies
 Version: 1.3
-
-Date: 2023-03-30
+Date: 2023-03-31
 Authors@R: c(
     person("Leonhard", "Held", email = "leonhard.held@uzh.ch", role = "aut",
            comment = c(ORCID = "0000-0002-8686-5325")),
@@ -26,7 +25,6 @@ Description: Provides utilities for the design and analysis of replication
     credibility; Held, L. (2019) <doi:10.1098/rsos.181534>.  Contains
     datasets from five large-scale replication projects.
 License: GPL (>=2)
-
 URL: https://crsuzh.github.io/ReplicationSuccess/
 BugReports: https://github.com/crsuzh/ReplicationSuccess/issues/
 Imports: 
@@ -41,3 +39,4 @@ Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
 RoxygenNote: 7.2.3
+
