@@ -51,7 +51,11 @@ winbuild-devel: update-src
 webpage: update-src
 	$(RSCRIPT) -e "pkgdown::build_site()"
 
+vignette: update-src
+	$(RSCRIPT) -e "devtools::build_vignettes(pkg = '.')"
+
 clean:
 	rm -rf lib $(PACKAGE).Rcheck vignettes/cache/ vignettes/figure/ \
 		vignettes/*.log vignettes/*.tex vignettes/*.aux \
+		vignettes/*.synctex.gz \
 		manual
