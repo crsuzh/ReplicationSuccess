@@ -3,15 +3,14 @@
 \name{sampleSizeReplicationSuccess}
 \alias{sampleSizeReplicationSuccess}
 \title{Computes the required relative sample size to achieve replication success
-based on power or on the minimum relative effect size}
+with the sceptical p-value}
 \usage{
 sampleSizeReplicationSuccess(
   zo,
   power = NA,
-  d = NA,
   level = 0.025,
   alternative = c("one.sided", "two.sided"),
-  type = c("golden", "nominal", "liberal", "controlled"),
+  type = c("golden", "nominal", "controlled"),
   designPrior = c("conditional", "predictive", "EB"),
   shrinkage = 0,
   h = 0
@@ -22,32 +21,19 @@ sampleSizeReplicationSuccess(
 
 \item{power}{The power to achieve replication success.}
 
-\item{d}{The minimum relative effect size (ratio of the effect estimate from
-the replication study to the effect estimate from the original study) to
-achieve replication success.}
+\item{level}{Threshold for the calibrated sceptical p-value.
+Default is 0.025.}
 
-\item{level}{Numeric vector of replication success levels. The default is
-0.025.}
-
-\item{alternative}{Either "one.sided" (default) or "two.sided". Specifies if
-the replication success level is one-sided or two-sided.
-If the
-replication success level is one-sided, then sample size calculations are based
+\item{alternative}{Specifies if \code{level} is "one.sided" (default) or "two.sided".
+If "one.sided" then sample size calculations are based
 on a one-sided assessment of replication success in the direction of the
 original effect estimates.}
 
-\item{type}{Recalibration type can be either "golden" (default), "nominal"
-(no recalibration), "liberal", or "controlled". \code{type} = "golden"
-ensures that for an original study just significant at the specified
-\code{level}, replication success is only possible if the replication
-effect estimate is larger than the original one.
-"controlled" ensures exact overall Type-I error control at level \code{level}^2
-for \code{alternative} is "two.sided" or "one.sided" if the direction 
-was pre-specified in advance. For \code{alternative} is "one.sided" 
-and no pre-specified direction, the overall Type-I error rate is controlled at 
-level 2*\code{level}^2.
- See
-\code{\link{levelSceptical}} for details about recalibration types.}
+\item{type}{Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
+ or "controlled". "golden" ensures that for an original study just significant at
+the specified \code{level}, replication success is only possible for
+replication effect estimates larger than the original one.
+"controlled" ensures exact overall Type-I error control at level \code{level}^2.}
 
 \item{designPrior}{Is only taken into account when \code{power} is specified.
 Either "conditional" (default), "predictive", or "EB". If "EB", the power
@@ -73,15 +59,8 @@ The relative sample size for replication success. If impossible to
 }
 \description{
 The relative sample size to achieve replication success is computed based on
-the z-value of the original study, the replication success level, the type of
-recalibration and either the power or the minimum relative effect size. When
-the approach based on power is used, the design prior also has to be
-specified.
-}
-\details{
-\code{sampleSizeReplicationSuccess} is the vectorized version of
-    \code{.sampleSizeReplicationSuccess_}. \code{\link[base]{Vectorize}} is
-    used to vectorize the function.
+the z-value of the original study,  the type of
+recalibration, the power and the design prior.
 }
 \examples{
 ## based on power
@@ -89,12 +68,6 @@ sampleSizeReplicationSuccess(zo = p2z(0.0025), power = 0.8, level = 0.025,
                              type = "golden")
 sampleSizeReplicationSuccess(zo = p2z(0.0025), power = 0.8, level = 0.025,
                              type = "golden", designPrior = "predictive")
-
-## based on minimum relative effect size
-sampleSizeReplicationSuccess(zo = p2z(0.0025), d = 0.9, level = 0.025,
-                             type = "nominal")
-sampleSizeReplicationSuccess(zo = p2z(0.0025), d = 0.9, level = 0.025,
-                             type = "golden")
 }
 \references{
 Held, L. (2020). A new standard for the analysis and design of replication
@@ -105,9 +78,9 @@ Series A (Statistics in Society)}, \bold{183}, 431-448.
 Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
     success based on relative effect size. The Annals of Applied Statistics.
     16:706-720. \doi{10.1214/21-AOAS1502}
-    
-Micheloud, C., Balabdaoui, F., Held, L. (2023).  
-Beyond the two-trials rule: Type-I error control and sample size planning 
+
+Micheloud, C., Balabdaoui, F., Held, L. (2023).
+Beyond the two-trials rule: Type-I error control and sample size planning
 with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
 }
 \seealso{

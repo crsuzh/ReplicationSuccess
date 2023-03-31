@@ -1,11 +1,11 @@
-#' Probability of replicating an effect of Killeen (2005)
+#' Probability of replicating an effect by Killeen (2005)
 #'
 #' Computes the probability that a replication study yields an effect
-#' estimate in the same direction as in the original study. 
+#' estimate in the same direction as in the original study.
 #'
 #' @param po Numeric vector of p-values from the original study, default is \code{NULL}.
 #' @param zo Numeric vector of z-values from the original study.
-#' Is calculated from \code{po}, if necessary. 
+#' Is calculated from \code{po}, if necessary.
 #' @param c The ratio of the variances of the original and replication effect estimates.
 #' This is usually the ratio of the sample size of the replication study to the sample
 #' size of the original study.
@@ -31,22 +31,21 @@
 #' pReplicate(po = c(0.05, 0.01, 0.001), c = 2, alternative = "one.sided")
 #' pReplicate(zo = c(2, 3, 4), c = 1)
 #' @export
-pReplicate <- function(po = NULL, 
+pReplicate <- function(po = NULL,
                        zo = p2z(p = po, alternative = alternative),
                        c,
-                       alternative = "two.sided"){
+                       alternative = "two.sided") {
     ## 'po' and 'alternative' are checked in p2z()
 
     stopifnot(is.numeric(zo),
               length(zo) > 0,
               is.finite(zo),
-              
+
               is.numeric(c),
               length(c) > 0,
               is.finite(c),
               0 <= c)
-    
-    pRep <- pnorm(q = zo / sqrt(1 + 1/c))
+
+    pRep <- stats::pnorm(q = zo / sqrt(1 + 1 / c))
     return(pRep)
 }
-

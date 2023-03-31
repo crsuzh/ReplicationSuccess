@@ -2,7 +2,7 @@
 % Please edit documentation in R/pReplicate.R
 \name{pReplicate}
 \alias{pReplicate}
-\title{Probability of replicating an effect of Killeen (2005)}
+\title{Probability of replicating an effect by Killeen (2005)}
 \usage{
 pReplicate(
   po = NULL,

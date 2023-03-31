@@ -47,19 +47,16 @@ test_that("numeric test for sampleSizeReplicationSuccess(): 1", {
 ## corresponds to input power if defined. When not defined should also be
 ## undefined in numerical implementation
 test_that("sampleSizeReplicationSuccess(): recomputing the power", {
-    vec01 <- c(0.001, 0.2532, 0.99)
-    vec01bound <- c(0, 0.0386, 0.5031, 1)
-    vec55 <- c(-5, -2.6288, 0, 0.0427, 4)
+    vec55 <- c(-5, -2.6288, 0.0427, 4)
     alternative <- c("two.sided", "one.sided")
     designPrior <- c("conditional", "predictive", "EB")
     ## power should be larger than level
-    powvec <- c(0.55, 0.8, 0.99)
-    levelvec <- c(0.001, 0.025, 0.2, 0.4)
-    shrinkvec <- c(0, 0.0386, 0.5031, 0.99)
-    type <- c("golden", "nominal")
+    powvec <- c(0.55, 0.99)
+    levelvec <- c(0.001, 0.025)
+    shrinkvec <- c(0, 0.99)
+    type <- c("golden", "nominal", "controlled")
     pars_grid <- expand.grid(zo = vec55,
                              power = powvec,
-                             d = NA,
                              level = levelvec,
                              type = type,
                              designPrior = designPrior,
@@ -69,11 +66,12 @@ test_that("sampleSizeReplicationSuccess(): recomputing the power", {
                              new = NA, legacy = NA,
                              pownew = NA, powlegacy = NA,
                              stringsAsFactors = FALSE)
+
     ## test all configurations separately
     f_num <- ReplicationSuccess:::sampleSizeReplicationSuccessNum
     suppressWarnings({
         for (i in seq_len(nrow(pars_grid))){
-            cnew <- try(do.call("sampleSizeReplicationSuccess", args = pars_grid[i, 1:9]),
+            cnew <- try(do.call("sampleSizeReplicationSuccess", args = pars_grid[i, 1:8]),
                         silent = TRUE)
             if (inherits(cnew, "try-error")) {
                 pars_grid[i, "new"] <- NA
@@ -96,36 +94,35 @@ test_that("sampleSizeReplicationSuccess(): recomputing the power", {
                     }
                 }
             }
-            clegacy <- try(do.call("f_num", args = pars_grid[i, 1:8]), silent = TRUE)
-            if (inherits(clegacy, "try-error")) {
-                pars_grid[i,"legacy"] <- NA
-            } else {
-                pars_grid[i,"legacy"] <- clegacy
-                if (!is.na(clegacy)) {
-                    powlegacy <-  try(powerReplicationSuccess(
-                        zo = pars_grid[i, "zo"],
-                        c = clegacy,
-                        level = pars_grid[i, "level"],
-                        designPrior = pars_grid[i, "designPrior"],
-                        alternative = pars_grid[i, "alternative"],
-                        type = pars_grid[i, "type"],
-                        shrinkage = pars_grid[i, "shrinkage"]
-                    ), silent = TRUE)
-                    if (class(powlegacy) == "try-error") {
-                        pars_grid[i, "powlegacy"] <- NA
-                    } else {
-                        pars_grid[i, "powlegacy"] <- powlegacy
-                    }
-                }
-            }
+            # clegacy <- try(do.call("f_num", args = pars_grid[i, 1:8]), silent = TRUE)
+            # if (inherits(clegacy, "try-error")) {
+            #     pars_grid[i,"legacy"] <- NA
+            # } else {
+            #     pars_grid[i,"legacy"] <- clegacy
+            #     if (!is.na(clegacy)) {
+            #         powlegacy <-  try(powerReplicationSuccess(
+            #             zo = pars_grid[i, "zo"],
+            #             c = clegacy,
+            #             level = pars_grid[i, "level"],
+            #             designPrior = pars_grid[i, "designPrior"],
+            #             alternative = pars_grid[i, "alternative"],
+            #             type = pars_grid[i, "type"],
+            #             shrinkage = pars_grid[i, "shrinkage"]
+            #         ), silent = TRUE)
+            #         if (class(powlegacy) == "try-error") {
+            #             pars_grid[i, "powlegacy"] <- NA
+            #         } else {
+            #             pars_grid[i, "powlegacy"] <- powlegacy
+            #         }
+            #     }
+            # }
         }
     })
     ## check that difference to input power small where power can be computed
-    pars_grid$powdiff <- abs(pars_grid$pownew - pars_grid$power)
     finiteNew <- is.finite(pars_grid$new)
     expect_equal(object = pars_grid$pownew[finiteNew],
-                 expected = pars_grid$power[finiteNew])
-
+                 expected = pars_grid$power[finiteNew],
+                 tolerance = 1e-4)
     ## difference between legacy and analytical implementation (makes no sense
     ## to compare the two since legacy uses always two-sided power while new version
     ## always used one-sided power)

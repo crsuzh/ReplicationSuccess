@@ -2,7 +2,7 @@
 % Please edit documentation in R/powerReplicationSuccess.R
 \name{powerReplicationSuccess}
 \alias{powerReplicationSuccess}
-\title{Computes the power for replication success}
+\title{Computes the power for replication success with the sceptical p-value}
 \usage{
 powerReplicationSuccess(
   zo,
@@ -10,7 +10,7 @@ powerReplicationSuccess(
   level = 0.025,
   designPrior = c("conditional", "predictive", "EB"),
   alternative = c("one.sided", "two.sided"),
-  type = c("golden", "nominal", "liberal", "controlled"),
+  type = c("golden", "nominal", "controlled"),
   shrinkage = 0,
   h = 0,
   strict = FALSE
@@ -23,8 +23,8 @@ powerReplicationSuccess(
 effect estimates. This is usually the ratio of the sample size of the
 replication study to the sample size of the original study.}
 
-\item{level}{Numeric vector of replication success levels. The default is
-0.025.}
+\item{level}{Threshold for the calibrated sceptical p-value.
+Default is 0.025.}
 
 \item{designPrior}{Either "conditional" (default), "predictive", or "EB". If
 "EB", the power is computed under a predictive distribution, where
@@ -32,24 +32,16 @@ the contribution of the original study is shrunken towards zero based on
 the evidence in the original study (with an empirical Bayes shrinkage
 estimator).}
 
-\item{alternative}{Either "one.sided" (default) or "two.sided". Specifies if
-the replication success level is one-sided or two-sided. If the
-replication success level is one-sided, then power calculations are based
+\item{alternative}{Specifies if \code{level} is "one.sided" (default) or "two.sided".
+If "one.sided" then power calculations are based
 on a one-sided assessment of replication success in the direction of the
 original effect estimates.}
 
-\item{type}{Recalibration type can be either "golden" (default), "nominal"
-(no recalibration), "liberal", or "controlled". \code{type} = "golden"
-ensures that for an original study just significant at the specified
-\code{level}, replication success is only possible if the replication
-effect estimate is larger than the original one.
-"controlled" ensures exact overall Type-I error control at level \code{level}^2
-for \code{alternative} is "two.sided" or "one.sided" if the direction 
-was pre-specified in advance. For \code{alternative} is "one.sided" 
-and no pre-specified direction, the overall Type-I error rate is controlled at 
-level 2*\code{level}^2.
- See
-\code{\link{levelSceptical}} for details about recalibration types.}
+\item{type}{Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
+ or "controlled". "golden" ensures that for an original study just significant at
+the specified \code{level}, replication success is only possible for
+replication effect estimates larger than the original one.
+"controlled" ensures exact overall Type-I error control at level \code{level}^2.}
 
 \item{shrinkage}{Numeric vector with values in [0,1). Defaults to 0.
 Specifies the shrinkage of the original effect estimate towards zero,
@@ -57,7 +49,7 @@ e.g., the effect is shrunken by a factor of 25\% for
 \code{shrinkage = 0.25}. Is only taken into account if the
 \code{designPrior} is "conditional" or "predictive".}
 
-\item{h}{Numeric vector of relative heterogeneity variances i.e., the ratio
+\item{h}{Numeric vector of relative heterogeneity variances i.e., the ratios
 of the heterogeneity variance to the variance of the original effect
 estimate. Default is 0 (no heterogeneity). Is only taken into account
 when \code{designPrior} = "predictive" or \code{designPrior} = "EB".}
@@ -68,16 +60,12 @@ estimate should also be taken into account. Default is \code{FALSE}.
 Only taken into account when \code{alternative} = "two.sided".}
 }
 \value{
-The power for replication success.
+The power for replication success with the sceptical p-value
 }
 \description{
-Computes the power for replication success based on the result of the
+Computes the power for replication success with the sceptical
+p-value  based on the result of the
 original study, the corresponding variance ratio, and the design prior.
-}
-\details{
-\code{powerReplicationSuccess} is the vectorized version of
-    \code{.powerReplicationSuccess_}. \code{\link[base]{Vectorize}} is used
-    to vectorize the function.
 }
 \examples{
 ## larger sample size in replication (c > 1)
@@ -88,9 +76,9 @@ powerReplicationSuccess(zo = p2z(0.005), c = 2, level = 0.025, designPrior = "pr
 powerReplicationSuccess(zo = p2z(0.005), c = 1/2, level = 0.025, designPrior = "conditional")
 powerReplicationSuccess(zo = p2z(0.005), c = 1/2, level = 0.025, designPrior = "predictive")
 
-powerReplicationSuccess(zo = p2z(0.00005), c = 2, level = 0.05, 
+powerReplicationSuccess(zo = p2z(0.00005), c = 2, level = 0.05,
                         alternative = "two.sided",  strict = TRUE, shrinkage = 0.9)
-powerReplicationSuccess(zo = p2z(0.00005), c = 2, level = 0.05, 
+powerReplicationSuccess(zo = p2z(0.00005), c = 2, level = 0.05,
                         alternative = "two.sided", strict = FALSE, shrinkage = 0.9)
 
 }
@@ -104,8 +92,8 @@ Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
     success based on relative effect size. The Annals of Applied Statistics.
     16:706-720. \doi{10.1214/21-AOAS1502}
 
-Micheloud, C., Balabdaoui, F., Held, L. (2023).  
-Beyond the two-trials rule: Type-I error control and sample size planning 
+Micheloud, C., Balabdaoui, F., Held, L. (2023).
+Beyond the two-trials rule: Type-I error control and sample size planning
 with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
 }
 \seealso{

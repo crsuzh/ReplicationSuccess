@@ -69,7 +69,6 @@ test_that("numeric test for sampleSizeSignificance(): 1", {
 
 
 test_that("sampleSizeSignificance() vs sampleSizeSignificanceNum", {
-    vec01 <- c(0.001, 0.2532, 0.99)
     vec01bound <- c(0, 0.0386, 0.5031, 0.99)
     vec55 <- c(-5, -2.6288, 0, 4)
     alternative <- c("two.sided", "one.sided")
@@ -80,7 +79,6 @@ test_that("sampleSizeSignificance() vs sampleSizeSignificanceNum", {
     pars_grid_power <- expand.grid(
         zo = vec55,
         power = powvec,
-        d = NA,
         level = levelvec,
         alternative = alternative,
         designPrior = designPrior,
@@ -88,22 +86,12 @@ test_that("sampleSizeSignificance() vs sampleSizeSignificanceNum", {
         shrinkage = vec01bound,
         stringsAsFactors = FALSE
     )
-    pars_grid_d <- expand.grid(
-        zo = vec55,
-        power = NA,
-        d = vec01,
-        level = .025,
-        alternative = "one.sided",
-        designPrior = "conditional",
-        h = 0,
-        shrinkage = 0, stringsAsFactors = FALSE
-    )
     ## test all configurations separately
-    pars_grid <- cbind(rbind(pars_grid_power, pars_grid_d), new = NA, legacy = NA)
+    pars_grid <- cbind(pars_grid_power, new = NA, legacy = NA)
     sampleSizeSignificanceNum <- ReplicationSuccess:::sampleSizeSignificanceNum
     for (i in seq_len(nrow(pars_grid))) {
-        pars_grid[i, 9] <- do.call("sampleSizeSignificance", args = pars_grid[i, 1:8])
-        pars_grid[i, 10] <- do.call("sampleSizeSignificanceNum", args = pars_grid[i, 1:8])
+        pars_grid[i, 9] <- do.call("sampleSizeSignificance", args = pars_grid[i, 1:7])
+        pars_grid[i, 10] <- do.call("sampleSizeSignificanceNum", args = pars_grid[i, 1:7])
     }
 
     ## exclude cases with large values

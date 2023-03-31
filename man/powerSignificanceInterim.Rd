@@ -21,8 +21,9 @@ powerSignificanceInterim(
 
 \item{zi}{Numeric vector of z-values from interim analyses of replication studies.}
 
-\item{c}{Ratio of the sample size of the replication study to the sample size of the original study.
-Default is 1.}
+\item{c}{Numeric vector of variance ratios of the original and replication effect estimates.
+This is usually the ratio of the sample size of the replication study to the sample
+size of the original study. Default is 1.}
 
 \item{f}{Fraction of the replication study already completed. Default is 0.5.}
 
@@ -42,8 +43,8 @@ Specifies the shrinkage of the original effect estimate towards zero, e.g.,
 the effect is shrunken by a factor of 25\% for \code{shrinkage=0.25}.}
 }
 \value{
-The probability of statistical significance in the specified direction 
-at the end of the replication study given the data collected so far 
+The probability of statistical significance in the specified direction
+at the end of the replication study given the data collected so far
 in the replication study.
 }
 \description{
@@ -53,7 +54,7 @@ Computes the power of a replication study taking into account data from an inter
 This is an extension of \code{powerSignificance()} and adapts the `interim power'
 from section 6.6.3 of Spiegelhalter et al. (2004) to the setting of replication studies.
 
-\code{powerSignificanceInterim} is the vectorized version of 
+\code{powerSignificanceInterim} is the vectorized version of
  \code{.powerSignificanceInterim_}.
 \code{\link[base]{Vectorize}} is used to vectorize the function.
 }
@@ -85,7 +86,7 @@ Bayesian Approaches to Clinical Trials and Health-Care
 Evaluation, volume 13. John Wiley & Sons
 
 Micheloud, C., Held, L. (2022). Power Calculations for Replication Studies.
-\emph{Statistical Science}, \bold{37}, 369-379. 
+\emph{Statistical Science}, \bold{37}, 369-379.
 \doi{10.1214/21-STS828}
 }
 \seealso{

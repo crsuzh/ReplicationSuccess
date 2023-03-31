@@ -1,6 +1,7 @@
 .travis.yml
 
 lib/*
+manual/*
 scratch/*
 Makefile
 Makefile.defs
@@ -8,3 +9,5 @@ Makefile.defs
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^doc$
+^Meta$
