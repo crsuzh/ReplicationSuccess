@@ -28,6 +28,7 @@ vignettes/*.html
 vignettes/*.pdf
 vignettes/*.log
 vignettes/*.aux
+vignettes/*.bbl
 vignettes/figure/*
 vignettes/cache/*
 # do not track the intermediate .tex file
