@@ -2,14 +2,19 @@
 # ReplicationSuccess 1.3
 
 - Change of maintainer.
-- Transfer ownership of development repository to CRS.
-- Update links throughout the entire repository following maintainer and ownership change.
-- Implemented `"controlled"` level.
-- Added one-sided p-values in `RProjects'.
+- Transfer ownership of development repository to CRS
+- Update links throughout the entire repository following maintainer and ownership change
+- Implemented `"controlled"` level
+- Added one-sided p-values in `RProjects'
 - Removed alternatives `"greater"` and `"less"` in functions  `T1EpSceptical` and 
 `PPpSceptical`.
 Alternative `"one.sided"` now returns the T1E rate (respectively project power) 
 assuming both alternatives are one-sided in the same direction. 
+- Changed arguments and output of function `hMeanChiSqCI`:
+  - Renamed argument `level` to `conf.level` in the new version
+  - Removed argument `wGamma` entirely
+  - When called with `alternative = "none"`, the returned list does not contain
+  elements `gammaMean` and `gammaHMean` anymore.
 - Removed argument `type = "liberal"` in all functions that had this option
 - Removed functions `levelEquivalent` and `unirootAll`
 - Added systematic tests to all functions in the package
