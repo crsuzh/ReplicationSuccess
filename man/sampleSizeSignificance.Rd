@@ -24,7 +24,8 @@ sampleSizeSignificance(
 
 \item{alternative}{Either "one.sided" (default) or "two.sided".
 Specifies if the significance level is one-sided or two-sided.
-If the significance level is one-sided, then sample size calculations are based on a
+If the significance level is one-sided, then sample size calculations are
+based on a
 one-sided assessment of significance in the direction of the
 original effect estimate.}
 
@@ -41,7 +42,8 @@ variance of the original effect estimate. Default is 0 (no
 heterogeneity).}
 
 \item{shrinkage}{Is only taken into account when \code{power} is specified. A
-number in [0,1) with default 0. Specifies the shrinkage of the original effect
+number in [0,1) with default 0. Specifies the shrinkage of the
+original effect
 towards zero (e.g., \code{shrinkage = 0.25} implies shrinkage by a
 factor of 25\%). Is only taken into account when \code{designPrior} is
 "conditional" or "predictive".}
@@ -63,8 +65,15 @@ and the power.
 }
 \examples{
 sampleSizeSignificance(zo = p2z(0.005), power = 0.8)
-sampleSizeSignificance(zo = p2z(0.005, alternative = "two.sided"), power = 0.8)
-sampleSizeSignificance(zo = p2z(0.005), power = 0.8, designPrior = "predictive")
+sampleSizeSignificance(
+  zo = p2z(0.005, alternative = "two.sided"),
+  power = 0.8
+)
+sampleSizeSignificance(
+  zo = p2z(0.005),
+  power = 0.8,
+  designPrior = "predictive"
+)
 
 sampleSizeSignificance(zo = 3, power = 0.8, designPrior = "predictive",
                        shrinkage = 0.5, h = 0.25)
@@ -73,15 +82,27 @@ sampleSizeSignificance(zo = 3, power = 0.8, designPrior = "EB",  h = 0.5)
 # sample size to achieve  0.8 power as function of original p-value
 zo <- p2z(seq(0.0001, 0.05, 0.0001))
 oldPar <- par(mfrow = c(1,2))
-plot(z2p(zo), sampleSizeSignificance(zo = zo, designPrior = "conditional", power = 0.8),
-     type = "l", ylim = c(0.5, 10), log = "y", lwd = 1.5, ylab = "Relative sample size",
-     xlab = expression(italic(p)[o]), las = 1)
-lines(z2p(zo), sampleSizeSignificance(zo = zo, designPrior = "predictive", power = 0.8),
-      lwd = 2, lty = 2)
-lines(z2p(zo), sampleSizeSignificance(zo = zo, designPrior = "EB", power = 0.8),
-      lwd = 1.5, lty = 3)
-legend("topleft", legend = c("conditional", "predictive", "EB"),
-       title = "Design prior", lty = c(1, 2, 3), lwd = 1.5, bty = "n")
+plot(
+  z2p(zo),
+  sampleSizeSignificance(zo = zo, designPrior = "conditional", power = 0.8),
+  type = "l", ylim = c(0.5, 10), log = "y", lwd = 1.5,
+  ylab = "Relative sample size",
+  xlab = expression(italic(p)[o]), las = 1
+)
+lines(
+  z2p(zo),
+  sampleSizeSignificance(zo = zo, designPrior = "predictive", power = 0.8),
+  lwd = 2, lty = 2
+)
+lines(
+  z2p(zo),
+  sampleSizeSignificance(zo = zo, designPrior = "EB", power = 0.8),
+  lwd = 1.5, lty = 3
+)
+legend(
+  "topleft", legend = c("conditional", "predictive", "EB"),
+  title = "Design prior", lty = c(1, 2, 3), lwd = 1.5, bty = "n"
+)
 
 par(oldPar)
 }

@@ -39,15 +39,21 @@ targetSS <- function(
     stopifnot(length(power) == 1
               # length(d) == 1
              )
-  # if (is.na(d) && is.na(power))  stop("either 'power' or 'd' has to be specified")
-  # if (!is.na(d) && !is.na(power))  stop("only one of 'power' or 'd' has to be specified")
-  # if (!is.na(d)) {
-  #   stopifnot(is.numeric(d),
-  #             is.finite(d))
-  # } else { #!is.na(power)
     stopifnot(is.numeric(power),
               0 < power, power < 1)
-  # }
+    # if (is.na(d) && is.na(power)) {
+    #     stop("either 'power' or 'd' has to be specified")
+    # }
+    # if (!is.na(d) && !is.na(power)) {
+    #     stop("only one of 'power' or 'd' has to be specified")
+    # }
+    # if (!is.na(d)) {
+    #   stopifnot(is.numeric(d),
+    #             is.finite(d))
+    # } else { #!is.na(power)
+    #    stopifnot(is.numeric(power),
+    #              0 < power, power < 1)
+    # }
 
     stopifnot(is.numeric(level),
               length(level) == 1,
@@ -120,11 +126,22 @@ targetSS <- function(
   #   K <- zo^2/zalphas^2
   #   denom <- d^2*K - 1/(K-1)
   #   if (zalphas > zo) {
-  #     warning(paste("Replication success is not achievable at this level as",
-  #                   zo, " < ", round(p2z(levelSceptical(level = level,
-  #                                                       alternative = alternative,
-  #                                                       type = type)),
-  #                                    3)))
+  #     warning(
+  #       paste(
+  #         "Replication success is not achievable at this level as",
+  #         zo, " < ",
+  #         round(
+  #           p2z(
+  #             levelSceptical(
+  #               level = level,
+  #               alternative = alternative,
+  #               type = type
+  #             )
+  #           ),
+  #           3
+  #         )
+  #       )
+  #     )
   #     c <- NA
   #   } else {
   #     c <- ifelse(denom > 0, 1/denom, NA)
@@ -157,17 +174,23 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
               length(zo) == 1,
               is.finite(zo))
 
-    stopifnot(length(power) == 1
+    stopifnot(length(power) == 1,
+              is.numeric(power),
+              0 < power, power < 1
               # length(d) == 1
               )
-    # if (is.na(d) && is.na(power))  stop("either 'power' or 'd' has to be specified")
-    # if (!is.na(d) && !is.na(power))  stop("only one of 'power' or 'd' has to be specified")
+    # if (is.na(d) && is.na(power)) {
+    #     stop("either 'power' or 'd' has to be specified")
+    # }
+    # if (!is.na(d) && !is.na(power)) {
+    #     stop("only one of 'power' or 'd' has to be specified")
+    # }
     # if (!is.na(d)) {
     #     stopifnot(is.numeric(d),
     #               is.finite(d))
     # } else { #!is.na(power)
-        stopifnot(is.numeric(power),
-                  0 < power, power < 1)
+    #     stopifnot(is.numeric(power),
+    #               0 < power, power < 1)
     # }
 
     stopifnot(is.numeric(level),
@@ -218,7 +241,9 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
 
             ## determining parameters based on design prior
             if (designPrior == "conditional") {
-                s <- shrinkage # minor: in some functions (powerReplicationSuccess eg) we have s <- 1 - shrinkage
+                # minor: in some functions (powerReplicationSuccess eg)
+                # we have s <- 1 - shrinkage
+                s <- shrinkage
                 H <- 0
             } else if (designPrior == "predictive") {
                 s <- shrinkage
@@ -240,12 +265,14 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
                 zlim <- zalphaS / sqrt(k - 1)
                 if (zoabs * (1 - s) > zlim) {
                     powLim <- 1
-                } else if (isTRUE(all.equal(zoabs * (1 - s), zlim, tolerance = 1e-5))) {
+                } else if (isTRUE(all.equal(zoabs * (1 - s),
+                                            zlim, tolerance = 1e-5))) {
                     powLim <- 0.5
                 } else {
                     ## power-curve is non-monotone with a maximum...
                     cmax <- pmax(
-                        (k - 1) / (zalphaS^2 / (k - 1) / (1 - s)^2 / zoabs^2 - 1),
+                        (k - 1) /
+                            (zalphaS^2 / (k - 1) / (1 - s)^2 / zoabs^2 - 1),
                         0,
                         na.rm = TRUE
                     )
@@ -294,7 +321,7 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
             }
 
         # } else {  ## sample size calculation based on relative effect size
-        #     denom <- d^2*k - 1/(k - 1)
+        #     denom <- d^2 * k - 1 / (k - 1)
         #     if (denom > 0) {
         #         c <- 1/denom
         #     } else {
@@ -330,15 +357,19 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
 #' @param power The power to achieve replication success.
 #' @param level Threshold for the calibrated sceptical p-value.
 #'  Default is 0.025.
-#' @param alternative Specifies if \code{level} is "one.sided" (default) or "two.sided".
+#' @param alternative Specifies if \code{level} is "one.sided"
+#' (default) or "two.sided".
 #'     If "one.sided" then sample size calculations are based
 #'     on a one-sided assessment of replication success in the direction of the
 #'     original effect estimates.
-#' @param type Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
-#'  or "controlled". "golden" ensures that for an original study just significant at
+#' @param type Type of recalibration. Can be either "golden" (default),
+#' "nominal" (no recalibration),
+#'  or "controlled". "golden" ensures that for an original study just
+#' significant at
 #' the specified \code{level}, replication success is only possible for
 #' replication effect estimates larger than the original one.
-#' "controlled" ensures exact overall Type-I error control at level \code{level}^2.
+#' "controlled" ensures exact overall Type-I error control at level
+#' \code{level}^2.
 #' @param designPrior Is only taken into account when \code{power} is specified.
 #'     Either "conditional" (default), "predictive", or "EB". If "EB", the power
 #'     is computed under a predictive distribution where the contribution of the
@@ -371,7 +402,8 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
 #' with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
 #'
 #' @author Leonhard Held, Charlotte Micheloud, Samuel Pawel, Florian Gerber
-#' @seealso \code{\link{pSceptical}}, \code{\link{powerReplicationSuccess}}, \code{\link{levelSceptical}}
+#' @seealso \code{\link{pSceptical}}, \code{\link{powerReplicationSuccess}},
+#' \code{\link{levelSceptical}}
 #' @examples
 #' ## based on power
 #' sampleSizeReplicationSuccess(zo = p2z(0.0025), power = 0.8, level = 0.025,

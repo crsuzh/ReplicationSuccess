@@ -25,14 +25,16 @@ original study.}
 \item{alpha}{Significance level for a standard significance test in
 the original study. Default is 0.025.}
 
-\item{power}{Power to detect the assumed effect with a standard significance test
+\item{power}{Power to detect the assumed effect with a standard
+significance test
 in the original study.}
 
 \item{alternative}{Specifies if \code{level} and
 \code{alpha} are "two.sided" or "one.sided".}
 
-\item{type}{Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
-or "controlled".}
+\item{type}{Type of recalibration. Can be either "golden" (default),
+"nominal" (no recalibration),
+ or "controlled".}
 }
 \value{
 The project power of the sceptical p-value
@@ -44,7 +46,8 @@ significance level and power for a standard significance test of
 the original study, and the alternative hypothesis.
 }
 \details{
-\code{PPpSceptical} is the vectorized version of \code{.PPpSceptical_}.
+\code{PPpSceptical} is the vectorized version of
+\code{.PPpSceptical_}.
 \code{\link[base]{Vectorize}} is used to vectorize the function.
 }
 \examples{
@@ -63,9 +66,12 @@ za <- qnorm(p = 1 - alpha)
 mu <- za + qnorm(p = power)
 pp2TR <- power * pnorm(q = za, mean = sqrt(c) * mu, lower.tail = FALSE)
 
-matplot(x = c, y = pp * 100, type = "l", lty = 1, lwd = 2, las = 1, log = "x",
-        xlab = bquote(italic(c)), ylab = "Project power (\%)", xlim = c(0.4, 5),
-        ylim = c(0, 100))
+matplot(
+  x = c, y = pp * 100, type = "l", lty = 1,
+  lwd = 2, las = 1, log = "x",
+  xlab = bquote(italic(c)), ylab = "Project power (\%)", xlim = c(0.4, 5),
+  ylim = c(0, 100)
+)
 lines(x = c, y = pp2TR * 100, col = length(types) + 1, lwd = 2)
 abline(v = 1, lty = 2)
 abline(h = 90, lty = 2, col = "lightgrey")
@@ -81,12 +87,14 @@ Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
     success based on relative effect size. The Annals of Applied Statistics.
     16:706-720.\doi{10.1214/21-AOAS1502}
 
-Maca, J., Gallo, P., Branson, M., and Maurer, W. (2002).  Reconsidering some aspects
-of the two-trials paradigm. \emph{Journal of Biopharmaceutical Statistics}, \bold{12},
-107-119. \doi{10.1081/bip-120006450}
+Maca, J., Gallo, P., Branson, M., and Maurer, W. (2002). Reconsidering some
+aspects of the two-trials paradigm.
+\emph{Journal of Biopharmaceutical Statistics}, \bold{12}, 107-119.
+\doi{10.1081/bip-120006450}
 }
 \seealso{
-\code{\link{pSceptical}}, \code{\link{levelSceptical}}, \code{\link{T1EpSceptical}}
+\code{\link{pSceptical}}, \code{\link{levelSceptical}},
+\code{\link{T1EpSceptical}}
 }
 \author{
 Leonhard Held, Samuel Pawel

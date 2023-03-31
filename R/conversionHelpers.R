@@ -3,8 +3,10 @@
 #' @rdname conversionHelpers
 #' @param lower Numeric vector of lower confidence interval bounds.
 #' @param upper Numeric vector of upper confidence interval bounds.
-#' @param conf.level The confidence level of the confidence intervals. Default is 0.95.
-#' @param ratio Indicates whether the confidence interval is for a ratio, e.g. an
+#' @param conf.level The confidence level of the confidence intervals.
+#' Default is 0.95.
+#' @param ratio Indicates whether the confidence interval is for
+#' a ratio, e.g. an
 #' odds ratio, relative risk or hazard ratio. If \code{TRUE}, the standard error
 #' of the log ratio is computed. Defaults to \code{FALSE}.
 #' @return \code{ci2se} returns a numeric vector of standard errors.
@@ -139,7 +141,8 @@ ci2z <- function(lower,
 #' @rdname conversionHelpers
 #' @param alternative Direction of the alternative of the p-value.
 #' Either "two.sided" (default), "one.sided", "less", or "greater".
-#' If "one.sided" or "two.sided" is specified, the z-value is assumed to be positive.
+#' If "one.sided" or "two.sided" is specified, the z-value is assumed
+#' to be positive.
 #' @return \code{ci2p} returns a numeric vector of p-values.
 #' @examples
 #' ci2p(lower = 1, upper = 3)

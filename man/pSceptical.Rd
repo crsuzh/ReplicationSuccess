@@ -27,22 +27,26 @@ original study.}
 
 \item{alternative}{Either "one.sided" (default) or "two.sided".
 If "one.sided", the sceptical p-value is based on a one-sided
-assessment of replication success in the direction of the original effect estimate.
+assessment of replication success in the direction of the original
+effect estimate.
 If "two.sided", the sceptical p-value is based on a two-sided
 assessment of replication success regardless of the direction of the
 original and replication effect estimate.}
 
-\item{type}{Type of recalibration. Can be either "golden" (default), "nominal",
+\item{type}{Type of recalibration. Can be either "golden" (default),
+"nominal",
 or "controlled". Setting \code{type} to "nominal" corresponds to no
 recalibration as in Held et al. (2020). A recalibration is applied if
 \code{type} is  "controlled", or "golden", and the sceptical p-value
-can then be interpreted on the same scale as an ordinary p-value (e.g., a one-sided
+can then be interpreted on the same scale as an ordinary p-value
+(e.g., a one-sided
 sceptical p-value can be thresholded at the conventional 0.025 level).
 "golden" ensures that
 for an original study just significant at the specified \code{level},
 replication success is only possible if the replication effect estimate is at
 least as large as the original one.
-"controlled" ensures exact overall Type-I error control at level \code{level}^2.}
+"controlled" ensures exact overall Type-I error control at level
+\code{level}^2.}
 }
 \value{
 \code{pSceptical} returns the sceptical p-value.
@@ -66,7 +70,12 @@ pSceptical(zo = p2z(0.01), zr = p2z(0.02), c = 2, alternative = "one.sided",
 ## two-sided p-values 0.01 and 0.02, relative sample size 2
 pSceptical(zo = p2z(0.01), zr = p2z(0.02), c = 2, alternative = "one.sided")
 ## reverse the studies
-pSceptical(zo = p2z(0.02), zr = p2z(0.01), c = 1/2, alternative = "one.sided")
+pSceptical(
+  zo = p2z(0.02),
+  zr = p2z(0.01),
+  c = 1/2,
+  alternative = "one.sided"
+)
 ## both p-values 0.01, relative sample size 2
 pSceptical(zo = p2z(0.01), zr = p2z(0.01), c = 2, alternative = "two.sided")
 
@@ -89,7 +98,8 @@ Beyond the two-trials rule: Type-I error control and sample size planning
 with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
 }
 \seealso{
-\code{\link{sampleSizeReplicationSuccess}}, \code{\link{powerReplicationSuccess}}, \code{\link{levelSceptical}}
+\code{\link{sampleSizeReplicationSuccess}},
+\code{\link{powerReplicationSuccess}}, \code{\link{levelSceptical}}
 }
 \author{
 Leonhard Held

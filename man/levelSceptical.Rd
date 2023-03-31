@@ -21,11 +21,14 @@ Default is 0.025.}
  "two.sided". If "one-sided",
 then a one-sided replication success level is computed.}
 
-\item{type}{Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
- or "controlled". "golden" ensures that for an original study just significant at
-the specified \code{level}, replication success is only possible for 
+\item{type}{Type of recalibration. Can be either "golden" (default),
+"nominal" (no recalibration),
+ or "controlled". "golden" ensures that for an original study just
+significant at
+the specified \code{level}, replication success is only possible for
 replication effect estimates larger than the original one.
-"controlled" ensures exact overall Type-I error control at level \code{level}^2.}
+"controlled" ensures exact overall Type-I error control at level
+\code{level}^2.}
 }
 \value{
 Replication success levels
@@ -36,16 +39,21 @@ alternative and recalibration type.
 }
 \examples{
 levelSceptical(level = 0.025, alternative = "one.sided", type = "nominal")
-levelSceptical(level = 0.025, alternative = "one.sided", type = "controlled", c = 1)
+levelSceptical(level = 0.025, alternative = "one.sided",
+               type = "controlled", c = 1)
 levelSceptical(level = 0.025, alternative = "one.sided", type = "golden")
 }
 \references{
-Held, L. (2020). A new standard for the analysis and design of replication studies (with discussion).
-\emph{Journal of the Royal Statistical Society: Series A (Statistics in Society)}, \bold{183}, 431-448.
+Held, L. (2020). A new standard for the analysis and
+design of replication studies (with discussion).
+\emph{Journal of the Royal Statistical Society:
+Series A (Statistics in Society)}, \bold{183}, 431-448.
 \doi{10.1111/rssa.12493}
 
-Held, L. (2020). The harmonic mean chi-squared test to substantiate scientific findings.
-\emph{Journal of the Royal Statistical Society: Series C (Applied Statistics)}, \bold{69}, 697-708.
+Held, L. (2020). The harmonic mean chi-squared test to substantiate
+scientific findings.
+\emph{Journal of the Royal Statistical Society:
+Series C (Applied Statistics)}, \bold{69}, 697-708.
 \doi{10.1111/rssc.12410}
 
 Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication

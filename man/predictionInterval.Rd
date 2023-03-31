@@ -16,19 +16,24 @@ predictionInterval(
 \arguments{
 \item{thetao}{Numeric vector of effect estimates from original studies.}
 
-\item{seo}{Numeric vector of standard errors of the original effect estimates.}
+\item{seo}{Numeric vector of standard errors of the original
+effect estimates.}
 
-\item{ser}{Numeric vector of standard errors of the replication effect estimates.}
+\item{ser}{Numeric vector of standard errors of the replication
+effect estimates.}
 
 \item{tau}{Between-study heterogeneity standard error.
 Default is \code{0} (no heterogeneity).
 Is only taken into account when \code{designPrior} is "predictive" or "EB".}
 
-\item{conf.level}{The confidence level of the prediction intervals. Default is 0.95.}
+\item{conf.level}{The confidence level of the prediction intervals.
+Default is 0.95.}
 
 \item{designPrior}{Either "predictive" (default), "conditional", or "EB".
-If "EB", the contribution of the original study to the predictive distribution is
-shrunken towards zero based on the evidence in the original study (with empirical Bayes).}
+If "EB", the contribution of the original study to the
+predictive distribution is
+shrunken towards zero based on the evidence in the original
+study (with empirical Bayes).}
 }
 \value{
 A data frame with the following columns
@@ -37,28 +42,39 @@ A data frame with the following columns
 \item{upper}{Upper limit of prediction interval.}
 }
 \description{
-Computes a prediction interval for the effect estimate of the replication study.
+Computes a prediction interval for the effect estimate of
+the replication study.
 }
 \details{
-This function computes a prediction interval and a mean estimate under a
+This function computes a prediction interval and
+a mean estimate under a
 specified predictive distribution of the replication effect estimate. Setting
 \code{designPrior = "conditional"} is not recommended since this ignores the
 uncertainty of the original effect estimate. See Patil, Peng, and Leek (2016)
 and Pawel and Held (2020) for details.
 
-\code{predictionInterval} is the vectorized version of \code{.predictionInterval_}.
+\code{predictionInterval} is the vectorized version of
+\code{.predictionInterval_}.
 \code{\link[base]{Vectorize}} is used to vectorize the function.
 }
 \examples{
-predictionInterval(thetao = c(1.5, 2, 5), seo = 1, ser = 0.5, designPrior = "EB")
+predictionInterval(
+  thetao = c(1.5, 2, 5),
+  seo = 1,
+  ser = 0.5,
+  designPrior = "EB"
+)
 
 # compute prediction intervals for replication projects
 data("RProjects", package = "ReplicationSuccess")
 parOld <- par(mfrow = c(2, 2))
 for (p in unique(RProjects$project)) {
   data_project <- subset(RProjects, project == p)
-  PI <- predictionInterval(thetao = data_project$fiso, seo = data_project$se_fiso,
-                           ser = data_project$se_fisr)
+  PI <- predictionInterval(
+    thetao = data_project$fiso,
+    seo = data_project$se_fiso,
+    ser = data_project$se_fisr
+  )
   PI <- tanh(PI) # transforming back to correlation scale
   within <- (data_project$rr < PI$upper) & (data_project$rr > PI$lower)
   coverage <- mean(within)
@@ -75,8 +91,10 @@ par(parOld)
 }
 \references{
 Patil, P., Peng, R. D., Leek, J. T. (2016).
-What should researchers expect when they replicate studies? A statistical view of
-replicability in psychological science. \emph{Perspectives on Psychological Science},
+What should researchers expect when they replicate studies?
+A statistical view of
+replicability in psychological science.
+\emph{Perspectives on Psychological Science},
 \bold{11}, 539-544.  \doi{10.1177/1745691616646366}
 
 Pawel, S., Held, L. (2020). Probabilistic forecasting of replication studies.

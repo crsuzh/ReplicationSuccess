@@ -68,13 +68,14 @@ of replication study}
 from original study}
 \item{\code{pr}}{Two-sided p-value from significance test of effect estimate
 from replication study}
- \item{\code{po1}}{One-sided p-value from significance test of effect estimate
+ \item{\code{po1}}{One-sided p-value from significance test of effect
+estimate
 from original study (in the direction of the original effect estimate)}
 \item{\code{pr1}}{One-sided p-value from significance test of effect estimate
 from replication study (in the direction of the original effect estimate)}
 \item{\code{pm_belief}}{Peer belief about whether replication effect estimate
-will achieve statistical significance elicited through prediction market (only
-available for EERP and SSRP)}
+will achieve statistical significance elicited through prediction market
+(only available for EERP and SSRP)}
 \item{\code{no}}{Sample size in original study}
 \item{\code{nr}}{Sample size in replication study}
 }
@@ -123,7 +124,8 @@ parOld <- par(mfrow = c(1, 2))
 for (p in c("Experimental Economics", "Social Sciences")) {
   data_project <- subset(RProjects, project == p)
   boxplot(pm_belief ~ significant, data = data_project, ylim = c(0, 1),
-          main = p, xlab = "Replication effect significant", ylab = "Peer belief")
+          main = p, xlab = "Replication effect significant",
+          ylab = "Peer belief")
   stripchart(pm_belief ~ significant, data = data_project, vertical = TRUE,
              add = TRUE, pch = 1, method = "jitter")
 }
@@ -137,7 +139,8 @@ ps <- with(RProjects, pSceptical(zo = fiso/se_fiso,
 \references{
 Camerer, C. F., Dreber, A., Forsell, E., Ho, T.-H., Huber, J.,
     Johannesson, M., ... Hang, W. (2016). Evaluating replicability of
-    laboratory experiments in economics. \emph{Science}, \bold{351}, 1433-1436.
+    laboratory experiments in
+    economics. \emph{Science}, \bold{351}, 1433-1436.
     \doi{10.1126/science.aaf0918}
 
     Camerer, C. F., Dreber, A., Holzmeister, F., Ho, T.-H., Huber, J.,

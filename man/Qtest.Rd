@@ -2,7 +2,8 @@
 % Please edit documentation in R/Qtest.R
 \name{Qtest}
 \alias{Qtest}
-\title{Q-test to assess compatibility between original and replication effect estimate}
+\title{Q-test to assess compatibility between original and
+replication effect estimate}
 \usage{
 Qtest(thetao, thetar, seo, ser)
 }
@@ -11,9 +12,11 @@ Qtest(thetao, thetar, seo, ser)
 
 \item{thetar}{Numeric vector of effect estimates from replication studies.}
 
-\item{seo}{Numeric vector of standard errors of the original effect estimates.}
+\item{seo}{Numeric vector of standard errors of the original effect
+estimates.}
 
-\item{ser}{Numeric vector of standard errors of the replication effect estimates.}
+\item{ser}{Numeric vector of standard errors of the replication effect
+estimates.}
 }
 \value{
 p-value from Q-test.
@@ -23,10 +26,10 @@ Computes p-value from meta-analytic Q-test to assess compatibility between
 original and replication effect estimate.
 }
 \details{
-This function computes the p-value from a meta-analytic Q-test assessing
-compatibility between original and replication effect estimate. Rejecting
-compatibility when the p-value is smaller than alpha is equivalent with
-rejecting compatibility based on a (1 - alpha) prediction interval.
+This function computes the p-value from a meta-analytic Q-test
+assessing compatibility between original and replication effect estimate.
+Rejecting compatibility when the p-value is smaller than alpha is equivalent
+with rejecting compatibility based on a (1 - alpha) prediction interval.
 }
 \examples{
 Qtest(thetao = 2, thetar = 0.5, seo = 1, ser = 0.5)

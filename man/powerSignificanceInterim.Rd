@@ -19,18 +19,23 @@ powerSignificanceInterim(
 \arguments{
 \item{zo}{Numeric vector of z-values from original studies.}
 
-\item{zi}{Numeric vector of z-values from interim analyses of replication studies.}
+\item{zi}{Numeric vector of z-values from interim analyses of
+replication studies.}
 
-\item{c}{Numeric vector of variance ratios of the original and replication effect estimates.
-This is usually the ratio of the sample size of the replication study to the sample
+\item{c}{Numeric vector of variance ratios of the original and replication
+effect estimates.
+This is usually the ratio of the sample size of the replication study
+to the sample
 size of the original study. Default is 1.}
 
 \item{f}{Fraction of the replication study already completed. Default is 0.5.}
 
 \item{level}{Significance level. Default is 0.025.}
 
-\item{designPrior}{Either "conditional" (default), "informed predictive", or "predictive".
-"informed predictive" refers to an informative normal prior coming from the original study.
+\item{designPrior}{Either "conditional" (default), "informed predictive",
+or "predictive".
+"informed predictive" refers to an informative normal prior coming
+from the original study.
 "predictive" refers to a flat prior.}
 
 \item{analysisPrior}{Either "flat" (default) or "original".}
@@ -43,16 +48,20 @@ Specifies the shrinkage of the original effect estimate towards zero, e.g.,
 the effect is shrunken by a factor of 25\% for \code{shrinkage=0.25}.}
 }
 \value{
-The probability of statistical significance in the specified direction
+The probability of statistical significance in the specified
+direction
 at the end of the replication study given the data collected so far
 in the replication study.
 }
 \description{
-Computes the power of a replication study taking into account data from an interim analysis.
+Computes the power of a replication study taking into account data from
+an interim analysis.
 }
 \details{
-This is an extension of \code{powerSignificance()} and adapts the `interim power'
-from section 6.6.3 of Spiegelhalter et al. (2004) to the setting of replication studies.
+This is an extension of \code{powerSignificance()} and adapts
+the `interim power'
+from section 6.6.3 of Spiegelhalter et al. (2004) to the setting
+of replication studies.
 
 \code{powerSignificanceInterim} is the vectorized version of
  \code{.powerSignificanceInterim_}.
@@ -90,7 +99,8 @@ Micheloud, C., Held, L. (2022). Power Calculations for Replication Studies.
 \doi{10.1214/21-STS828}
 }
 \seealso{
-\code{\link{sampleSizeSignificance}}, \code{\link{powerSignificance}}
+\code{\link{sampleSizeSignificance}},
+\code{\link{powerSignificance}}
 }
 \author{
 Charlotte Micheloud

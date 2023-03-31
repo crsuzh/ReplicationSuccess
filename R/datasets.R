@@ -1,7 +1,8 @@
 #' Data from the Social Sciences Replication Project
 #'
 #' @description Data from the \emph{Social Sciences Replication Project} (SSRP)
-#'     including the details of the interim analysis. The variables are as follows:
+#'     including the details of the interim analysis. The variables are as
+#' follows:
 #' \describe{
 #' \item{\code{study}}{Study identifier, usually names of authors
 #' from original study}
@@ -31,12 +32,13 @@
 #' estimate from replication study at the interim analysis}
 #' \item{\code{pr}}{Two-sided p-value from significance test of effect estimate
 #' from replication study at the final analysis}
-#' \item{\code{n75}}{Sample size calculated to have 90\% power in replication study
+#' \item{\code{n75}}{Sample size calculated to have 90\% power in replication
+#' study
 #' to detect 75\% of the original effect size (expressed as the correlation
 #' coefficient r)}
 #' \item{\code{n50}}{Sample size calculated to have 90\% power in replication
-#' study to detect 50\% of the original effect size (expressed as the correlation
-#' coefficient r)}
+#' study to detect 50\% of the original effect size (expressed as the
+#' correlation coefficient r)}
 #' }
 #'
 #' @details Two-sided p-values were calculated assuming normality of Fisher-z
@@ -102,13 +104,14 @@
 #' from original study}
 #' \item{\code{pr}}{Two-sided p-value from significance test of effect estimate
 #' from replication study}
-#'  \item{\code{po1}}{One-sided p-value from significance test of effect estimate
+#'  \item{\code{po1}}{One-sided p-value from significance test of effect
+#' estimate
 #' from original study (in the direction of the original effect estimate)}
 #' \item{\code{pr1}}{One-sided p-value from significance test of effect estimate
 #' from replication study (in the direction of the original effect estimate)}
 #' \item{\code{pm_belief}}{Peer belief about whether replication effect estimate
-#' will achieve statistical significance elicited through prediction market (only
-#' available for EERP and SSRP)}
+#' will achieve statistical significance elicited through prediction market
+#' (only available for EERP and SSRP)}
 #' \item{\code{no}}{Sample size in original study}
 #' \item{\code{nr}}{Sample size in replication study}
 #' }
@@ -163,7 +166,8 @@
 #'
 #' @references Camerer, C. F., Dreber, A., Forsell, E., Ho, T.-H., Huber, J.,
 #'     Johannesson, M., ... Hang, W. (2016). Evaluating replicability of
-#'     laboratory experiments in economics. \emph{Science}, \bold{351}, 1433-1436.
+#'     laboratory experiments in
+#'     economics. \emph{Science}, \bold{351}, 1433-1436.
 #'     \doi{10.1126/science.aaf0918}
 #'
 #'     Camerer, C. F., Dreber, A., Holzmeister, F., Ho, T.-H., Huber, J.,
@@ -207,7 +211,7 @@
 #'   abline(a = 0, b = 1, col = "grey")
 #' }
 #' par(parOld)
-#' 
+#'
 #' ## Plots of peer beliefs
 #' RProjects$significant <- factor(RProjects$pr < 0.05,
 #'                                 levels = c(FALSE, TRUE),
@@ -216,7 +220,8 @@
 #' for (p in c("Experimental Economics", "Social Sciences")) {
 #'   data_project <- subset(RProjects, project == p)
 #'   boxplot(pm_belief ~ significant, data = data_project, ylim = c(0, 1),
-#'           main = p, xlab = "Replication effect significant", ylab = "Peer belief")
+#'           main = p, xlab = "Replication effect significant",
+#'           ylab = "Peer belief")
 #'   stripchart(pm_belief ~ significant, data = data_project, vertical = TRUE,
 #'              add = TRUE, pch = 1, method = "jitter")
 #' }
@@ -231,15 +236,17 @@
 
 #' Data from Protzko et al. (2020)
 #'
-#' @description Data from "High Replicability of Newly-Discovered Social-behavioral
-#' Findings is Achievable" by Protzko et al. (2020). The variables are as follows:
+#' @description Data from "High Replicability of Newly-Discovered
+#' Social-behavioral Findings is Achievable" by Protzko et al. (2020).
+#' The variables are as follows:
 #' \describe{
 #' \item{\code{experiment}}{Experiment name}
 #' \item{\code{type}}{Type of study, either "original", "self-replication", or
 #' "external-replication"}
 #' \item{\code{lab}}{The lab which conducted the study, either 1, 2, 3, or 4.}
 #' \item{\code{smd}}{Standardized mean difference effect estimate}
-#' \item{\code{se}}{Standard error of standardized mean difference effect estimate}
+#' \item{\code{se}}{Standard error of standardized mean difference effect
+#' estimate}
 #' \item{\code{n}}{Total sample size of the study}
 #' }
 #'

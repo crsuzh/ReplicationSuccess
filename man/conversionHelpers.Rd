@@ -32,9 +32,11 @@ p2z(p, alternative = c("two.sided", "one.sided", "less", "greater"))
 
 \item{upper}{Numeric vector of upper confidence interval bounds.}
 
-\item{conf.level}{The confidence level of the confidence intervals. Default is 0.95.}
+\item{conf.level}{The confidence level of the confidence intervals.
+Default is 0.95.}
 
-\item{ratio}{Indicates whether the confidence interval is for a ratio, e.g. an
+\item{ratio}{Indicates whether the confidence interval is for
+a ratio, e.g. an
 odds ratio, relative risk or hazard ratio. If \code{TRUE}, the standard error
 of the log ratio is computed. Defaults to \code{FALSE}.}
 
@@ -43,7 +45,8 @@ Only applies if \code{ratio = TRUE}. Defaults to \code{FALSE}.}
 
 \item{alternative}{Direction of the alternative of the p-value.
 Either "two.sided" (default), "one.sided", "less", or "greater".
-If "one.sided" or "two.sided" is specified, the z-value is assumed to be positive.}
+If "one.sided" or "two.sided" is specified, the z-value is assumed
+to be positive.}
 
 \item{z}{Numeric vector of z-values.}
 

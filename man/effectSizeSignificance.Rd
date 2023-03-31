@@ -2,7 +2,8 @@
 % Please edit documentation in R/effectSizeSignificance.R
 \name{effectSizeSignificance}
 \alias{effectSizeSignificance}
-\title{Computes the minimum relative effect size to achieve significance of the replication study}
+\title{Computes the minimum relative effect size to achieve significance of
+the replication study}
 \usage{
 effectSizeSignificance(
   zo,
@@ -14,26 +15,32 @@ effectSizeSignificance(
 \arguments{
 \item{zo}{Numeric vector of z-values from original studies.}
 
-\item{c}{Numeric vector of variance ratios of the original and replication effect estimates.
-This is usually the ratio of the sample size of the replication study to the sample
-size of the original study.}
+\item{c}{Numeric vector of variance ratios of the original and replication
+effect estimates.
+This is usually the ratio of the sample size of the replication study to
+the sample size of the original study.}
 
 \item{level}{Significance level. Default is 0.025.}
 
-\item{alternative}{Specifies if the significance level is "one.sided" (default) or "two.sided".
-If the significance level is one-sided, then effect size calculations are based on a one-sided assessment of
-significance in the direction of the original effect estimate.}
+\item{alternative}{Specifies if the significance level is "one.sided"
+(default) or "two.sided".
+If the significance level is one-sided, then effect size calculations are
+based on a one-sided assessment of significance in the direction of the
+original effect estimate.}
 }
 \value{
-The minimum relative effect size to achieve significance in the replication study.
+The minimum relative effect size to achieve significance in the
+replication study.
 }
 \description{
-The minimum relative effect size (replication to original) to achieve significance
-of the replication study is computed based on the result of the original study and
+The minimum relative effect size (replication to original) to achieve
+significance of the replication study is computed based on the result
+of the original study and
 the corresponding variance ratio.
 }
 \details{
-\code{effectSizeSignificance} is the vectorized version of \code{.effectSizeSignificance_}.
+\code{effectSizeSignificance} is the vectorized version of
+\code{.effectSizeSignificance_}.
 \code{\link[base]{Vectorize}} is used to vectorize the function.
 }
 \examples{

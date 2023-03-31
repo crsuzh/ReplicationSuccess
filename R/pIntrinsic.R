@@ -27,27 +27,33 @@
 #'
 #' pIntrinsic(z = 2)
 #' @export
-pIntrinsic <- function(p = z2p(z, alternative = alternative), z = NULL,
-                       alternative = c("two.sided", "one.sided", "less", "greater"),
-                       type = c("Held", "Matthews")){
+pIntrinsic <- function(
+    p = z2p(z, alternative = alternative),
+    z = NULL,
+    alternative = c("two.sided", "one.sided", "less", "greater"),
+    type = c("Held", "Matthews")
+    ) {
+
     stopifnot(is.numeric(p),
               length(p) > 0,
               is.finite(p),
               0 < p, p <= 1,
-              
-              is.null(z) || (is.numeric(p) && length(p) > 0 && all(is.finite(p))),
-              
+
+              is.null(z) || (is.numeric(p) &&
+                length(p) > 0 && all(is.finite(p))),
+
               !is.null(alternative))
+
     alternative <- match.arg(alternative)
-    
+
     stopifnot(!is.null(type))
     type <- match.arg(type)
-    
-    if(type == "Held"){
-        iz <- p2z(p, alternative = alternative)/sqrt(2)
+
+    if (type == "Held") {
+        iz <- p2z(p, alternative = alternative) / sqrt(2)
         iP <- z2p(z = iz, alternative = alternative)
-    } else{ ## type == "Matthews"
-        iz <- p2z(p, alternative = alternative)/sqrt(2)*sqrt(sqrt(5) - 1)
+    } else { ## type == "Matthews"
+        iz <- p2z(p, alternative = alternative) / sqrt(2) * sqrt(sqrt(5) - 1)
         iP <- z2p(z = iz, alternative = alternative)
     }
     return(iP)

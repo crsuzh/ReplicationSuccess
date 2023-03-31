@@ -24,16 +24,20 @@ sampleSizeReplicationSuccess(
 \item{level}{Threshold for the calibrated sceptical p-value.
 Default is 0.025.}
 
-\item{alternative}{Specifies if \code{level} is "one.sided" (default) or "two.sided".
-If "one.sided" then sample size calculations are based
-on a one-sided assessment of replication success in the direction of the
-original effect estimates.}
+\item{alternative}{Specifies if \code{level} is "one.sided"
+(default) or "two.sided".
+    If "one.sided" then sample size calculations are based
+    on a one-sided assessment of replication success in the direction of the
+    original effect estimates.}
 
-\item{type}{Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
- or "controlled". "golden" ensures that for an original study just significant at
+\item{type}{Type of recalibration. Can be either "golden" (default),
+"nominal" (no recalibration),
+ or "controlled". "golden" ensures that for an original study just
+significant at
 the specified \code{level}, replication success is only possible for
 replication effect estimates larger than the original one.
-"controlled" ensures exact overall Type-I error control at level \code{level}^2.}
+"controlled" ensures exact overall Type-I error control at level
+\code{level}^2.}
 
 \item{designPrior}{Is only taken into account when \code{power} is specified.
 Either "conditional" (default), "predictive", or "EB". If "EB", the power
@@ -84,7 +88,8 @@ Beyond the two-trials rule: Type-I error control and sample size planning
 with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
 }
 \seealso{
-\code{\link{pSceptical}}, \code{\link{powerReplicationSuccess}}, \code{\link{levelSceptical}}
+\code{\link{pSceptical}}, \code{\link{powerReplicationSuccess}},
+\code{\link{levelSceptical}}
 }
 \author{
 Leonhard Held, Charlotte Micheloud, Samuel Pawel, Florian Gerber

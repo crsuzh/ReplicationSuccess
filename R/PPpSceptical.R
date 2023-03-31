@@ -53,27 +53,51 @@
 
     ## compute mean based on alpha and power
     ## abs(.) is needed to deal with alternative="less"
-    mu <- abs(p2z(p = alpha, alternative = alternative)) + stats::qnorm(p = power)
+    mu <- abs(p2z(p = alpha, alternative = alternative)) +
+        stats::qnorm(p = power)
 
     ## compute project power with numerical integration
     if (alternative == "two.sided") {
         ## define function to integrate over zo
         intFun <- function(zo) {
-            ## compute minimal zr to achieve replication success given zo and level
-            K <- zo^2/zas^2
-            zrmin <- zas*sqrt(1 + c/(K - 1))
+            ## compute minimal zr to achieve replication success
+            ## given zo and level
+            K <- zo^2 / zas^2
+            zrmin <- zas * sqrt(1 + c / (K - 1))
 
             ## compute integrand
-            ifelse(sign(zo) == 1,
-                   ## on positive side of plane (zo, zr > 0): P(|zr| >= zrmin)*dnorm(zo)
-            (stats::pnorm(q = zrmin, mean = sqrt(c)*mu, lower.tail = FALSE) +
-             stats::pnorm(q = -zrmin, mean = sqrt(c)*mu, lower.tail = TRUE))*
-            stats::dnorm(x = zo, mean = mu),
-
-            ## on negative side of plane (zo, zr < 0): P(zr <= -zrmin)*dnorm(zo)
-            (stats::pnorm(q = zrmin, mean = sqrt(c)*mu, lower.tail = FALSE) +
-             stats::pnorm(q = -zrmin, mean = sqrt(c)*mu, lower.tail = TRUE))*
-            stats::dnorm(x = zo, mean = mu)
+            ifelse(
+                sign(zo) == 1,
+                ## on positive side of plane (zo, zr > 0):
+                ## P(|zr| >= zrmin) * dnorm(zo)
+                (
+                    stats::pnorm(
+                        q = zrmin,
+                        mean = sqrt(c) * mu,
+                        lower.tail = FALSE
+                    ) +
+                    stats::pnorm(
+                        q = -zrmin,
+                        mean = sqrt(c) * mu,
+                        lower.tail = TRUE
+                    )
+                ) *
+                    stats::dnorm(x = zo, mean = mu),
+                ## on negative side of plane (zo, zr < 0):
+                ## P(zr <= -zrmin) * dnorm(zo)
+                (
+                    stats::pnorm(
+                        q = zrmin,
+                        mean = sqrt(c) * mu,
+                        lower.tail = FALSE
+                    ) +
+                    stats::pnorm(
+                        q = -zrmin,
+                        mean = sqrt(c) * mu,
+                        lower.tail = TRUE
+                    )
+                ) *
+                    stats::dnorm(x = zo, mean = mu)
             )
         }
     }
@@ -81,28 +105,39 @@
     if (alternative != "two.sided") {
                                         # define function to integrate over zo
         intFun <- function(zo) {
-            ## compute minimal zr to achieve replication success given zo and level
-            K <- zo^2/zas^2
-            zrmin <- zas*sqrt(1 + c/(K - 1))
+            ## compute minimal zr to achieve replication success
+            ## given zo and level
+            K <- zo^2 / zas^2
+            zrmin <- zas * sqrt(1 + c / (K - 1))
 
             ## compute integrand
-            ifelse(sign(zo) == 1,
-                   ## on positive side of plane (zo, zr > 0): P(zr >= zrmin)*dnorm(zo)
-                   stats::pnorm(q = zrmin, mean = sqrt(c)*mu, lower.tail = FALSE)*
-                   stats::dnorm(x = zo, mean = mu),
-
-                   ## on negative side of plane (zo, zr < 0): P(zr <= -zrmin)*dnorm(zo)
-                   ## (will be very small for large mu)
-                   stats::pnorm(q = -zrmin, mean = sqrt(c)*mu, lower.tail = TRUE)*
-                   stats::dnorm(x = zo, mean = mu)
-                   )
+            ifelse(
+                sign(zo) == 1,
+                ## on positive side of plane (zo, zr > 0):
+                ## P(zr >= zrmin) * dnorm(zo)
+                stats::pnorm(
+                    q = zrmin,
+                    mean = sqrt(c) * mu,
+                    lower.tail = FALSE
+                ) *
+                    stats::dnorm(x = zo, mean = mu),
+                ## on negative side of plane (zo, zr < 0):
+                ## P(zr <= -zrmin) * dnorm(zo)
+                ## (will be very small for large mu)
+                stats::pnorm(
+                    q = -zrmin,
+                    mean = sqrt(c) * mu,
+                    lower.tail = TRUE
+                ) *
+                    stats::dnorm(x = zo, mean = mu)
+            )
         }
     }
 
     if (alternative == "two.sided") {
         ## integrate zo, zr over region where replication success possible
         pp <- stats::integrate(f = intFun, lower = zas, upper = Inf)$value +
-                                                                   stats::integrate(f = intFun, lower = -Inf, upper = -zas)$value
+            stats::integrate(f = intFun, lower = -Inf, upper = -zas)$value
     }
     if (alternative == "one.sided") {
         ## integrate zo, zr over region where replication success possible
@@ -126,14 +161,17 @@
 #' original study.
 #' @param alpha Significance level for a standard significance test in
 #' the original study. Default is 0.025.
-#' @param power Power to detect the assumed effect with a standard significance test
+#' @param power Power to detect the assumed effect with a standard
+#' significance test
 #' in the original study.
 #' @param alternative Specifies if \code{level} and
 #' \code{alpha} are "two.sided" or "one.sided".
-#' @param type Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
+#' @param type Type of recalibration. Can be either "golden" (default),
+#' "nominal" (no recalibration),
 #'  or "controlled".
 #' @return The project power of the sceptical p-value
-#' @details \code{PPpSceptical} is the vectorized version of \code{.PPpSceptical_}.
+#' @details \code{PPpSceptical} is the vectorized version of
+#' \code{.PPpSceptical_}.
 #' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @references
 #' Held, L. (2020). The harmonic mean chi-squared test to substantiate
@@ -144,11 +182,13 @@
 #'     success based on relative effect size. The Annals of Applied Statistics.
 #'     16:706-720.\doi{10.1214/21-AOAS1502}
 #'
-#' Maca, J., Gallo, P., Branson, M., and Maurer, W. (2002).  Reconsidering some aspects
-#' of the two-trials paradigm. \emph{Journal of Biopharmaceutical Statistics}, \bold{12},
-#' 107-119. \doi{10.1081/bip-120006450}
+#' Maca, J., Gallo, P., Branson, M., and Maurer, W. (2002). Reconsidering some
+#' aspects of the two-trials paradigm.
+#' \emph{Journal of Biopharmaceutical Statistics}, \bold{12}, 107-119.
+#' \doi{10.1081/bip-120006450}
 #'
-#' @seealso \code{\link{pSceptical}}, \code{\link{levelSceptical}}, \code{\link{T1EpSceptical}}
+#' @seealso \code{\link{pSceptical}}, \code{\link{levelSceptical}},
+#' \code{\link{T1EpSceptical}}
 #' @author Leonhard Held, Samuel Pawel
 #' @examples
 #' ## compare project power for different recalibration types
@@ -166,9 +206,12 @@
 #' mu <- za + qnorm(p = power)
 #' pp2TR <- power * pnorm(q = za, mean = sqrt(c) * mu, lower.tail = FALSE)
 #'
-#' matplot(x = c, y = pp * 100, type = "l", lty = 1, lwd = 2, las = 1, log = "x",
-#'         xlab = bquote(italic(c)), ylab = "Project power (%)", xlim = c(0.4, 5),
-#'         ylim = c(0, 100))
+#' matplot(
+#'   x = c, y = pp * 100, type = "l", lty = 1,
+#'   lwd = 2, las = 1, log = "x",
+#'   xlab = bquote(italic(c)), ylab = "Project power (%)", xlim = c(0.4, 5),
+#'   ylim = c(0, 100)
+#' )
 #' lines(x = c, y = pp2TR * 100, col = length(types) + 1, lwd = 2)
 #' abline(v = 1, lty = 2)
 #' abline(h = 90, lty = 2, col = "lightgrey")

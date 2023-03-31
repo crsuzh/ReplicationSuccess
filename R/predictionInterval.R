@@ -1,10 +1,11 @@
 #' @export
-.predictionInterval_ <- function(thetao,
-                                 seo,
-                                 ser,
-                                 tau = 0,
-                                 conf.level = 0.95,
-                                 designPrior = c("predictive", "conditional", "EB")) {
+.predictionInterval_ <- function(
+    thetao,
+    seo,
+    ser,
+    tau = 0,
+    conf.level = 0.95,
+    designPrior = c("predictive", "conditional", "EB")) {
 
     stopifnot(is.numeric(thetao),
               length(thetao) == 1,
@@ -55,18 +56,25 @@
 .predictionInterval__ <- Vectorize(.predictionInterval_)
 #' Prediction interval for effect estimate of replication study
 #'
-#' Computes a prediction interval for the effect estimate of the replication study.
+#' Computes a prediction interval for the effect estimate of
+#' the replication study.
 #' @param thetao Numeric vector of effect estimates from original studies.
-#' @param seo Numeric vector of standard errors of the original effect estimates.
-#' @param ser Numeric vector of standard errors of the replication effect estimates.
+#' @param seo Numeric vector of standard errors of the original
+#' effect estimates.
+#' @param ser Numeric vector of standard errors of the replication
+#' effect estimates.
 #' @param tau Between-study heterogeneity standard error.
 #' Default is \code{0} (no heterogeneity).
 #' Is only taken into account when \code{designPrior} is "predictive" or "EB".
-#' @param conf.level The confidence level of the prediction intervals. Default is 0.95.
+#' @param conf.level The confidence level of the prediction intervals.
+#' Default is 0.95.
 #' @param designPrior Either "predictive" (default), "conditional", or "EB".
-#' If "EB", the contribution of the original study to the predictive distribution is
-#' shrunken towards zero based on the evidence in the original study (with empirical Bayes).
-#' @details This function computes a prediction interval and a mean estimate under a
+#' If "EB", the contribution of the original study to the
+#' predictive distribution is
+#' shrunken towards zero based on the evidence in the original
+#' study (with empirical Bayes).
+#' @details This function computes a prediction interval and
+#' a mean estimate under a
 #' specified predictive distribution of the replication effect estimate. Setting
 #' \code{designPrior = "conditional"} is not recommended since this ignores the
 #' uncertainty of the original effect estimate. See Patil, Peng, and Leek (2016)
@@ -75,27 +83,38 @@
 #' \item{lower}{Lower limit of prediction interval,}
 #' \item{mean}{Mean of predictive distribution,}
 #' \item{upper}{Upper limit of prediction interval.}
-#' @details \code{predictionInterval} is the vectorized version of \code{.predictionInterval_}.
+#' @details \code{predictionInterval} is the vectorized version of
+#' \code{.predictionInterval_}.
 #' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @references
 #' Patil, P., Peng, R. D., Leek, J. T. (2016).
-#' What should researchers expect when they replicate studies? A statistical view of
-#' replicability in psychological science. \emph{Perspectives on Psychological Science},
+#' What should researchers expect when they replicate studies?
+#' A statistical view of
+#' replicability in psychological science.
+#' \emph{Perspectives on Psychological Science},
 #' \bold{11}, 539-544.  \doi{10.1177/1745691616646366}
 #'
 #' Pawel, S., Held, L. (2020). Probabilistic forecasting of replication studies.
 #' \emph{PLoS ONE}. \bold{15}, e0231416. \doi{10.1371/journal.pone.0231416}
 #' @author Samuel Pawel
 #' @examples
-#' predictionInterval(thetao = c(1.5, 2, 5), seo = 1, ser = 0.5, designPrior = "EB")
+#' predictionInterval(
+#'   thetao = c(1.5, 2, 5),
+#'   seo = 1,
+#'   ser = 0.5,
+#'   designPrior = "EB"
+#' )
 #'
 #' # compute prediction intervals for replication projects
 #' data("RProjects", package = "ReplicationSuccess")
 #' parOld <- par(mfrow = c(2, 2))
 #' for (p in unique(RProjects$project)) {
 #'   data_project <- subset(RProjects, project == p)
-#'   PI <- predictionInterval(thetao = data_project$fiso, seo = data_project$se_fiso,
-#'                            ser = data_project$se_fisr)
+#'   PI <- predictionInterval(
+#'     thetao = data_project$fiso,
+#'     seo = data_project$se_fiso,
+#'     ser = data_project$se_fisr
+#'   )
 #'   PI <- tanh(PI) # transforming back to correlation scale
 #'   within <- (data_project$rr < PI$upper) & (data_project$rr > PI$lower)
 #'   coverage <- mean(within)
@@ -116,8 +135,15 @@ predictionInterval <- function(thetao,
                                tau = 0,
                                conf.level = 0.95,
                                designPrior = "predictive") {
-    res <- .predictionInterval__(thetao = thetao, seo = seo, ser = ser, tau = tau,
-                                 conf.level = conf.level, designPrior = designPrior)
+
+    res <- .predictionInterval__(
+        thetao = thetao,
+        seo = seo,
+        ser = ser,
+        tau = tau,
+        conf.level = conf.level,
+        designPrior = designPrior
+    )
     res <- matrix(res, ncol = 3, byrow = TRUE)
     res <- data.frame(res)
     colnames(res) <- c("lower", "mean", "upper")

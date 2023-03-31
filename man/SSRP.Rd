@@ -15,7 +15,8 @@ data(SSRP)
 }
 \description{
 Data from the \emph{Social Sciences Replication Project} (SSRP)
-    including the details of the interim analysis. The variables are as follows:
+    including the details of the interim analysis. The variables are as
+follows:
 \describe{
 \item{\code{study}}{Study identifier, usually names of authors
 from original study}
@@ -45,12 +46,13 @@ from original study}
 estimate from replication study at the interim analysis}
 \item{\code{pr}}{Two-sided p-value from significance test of effect estimate
 from replication study at the final analysis}
-\item{\code{n75}}{Sample size calculated to have 90\% power in replication study
+\item{\code{n75}}{Sample size calculated to have 90\% power in replication
+study
 to detect 75\% of the original effect size (expressed as the correlation
 coefficient r)}
 \item{\code{n50}}{Sample size calculated to have 90\% power in replication
-study to detect 50\% of the original effect size (expressed as the correlation
-coefficient r)}
+study to detect 50\% of the original effect size (expressed as the
+correlation coefficient r)}
 }
 }
 \details{

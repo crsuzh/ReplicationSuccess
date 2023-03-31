@@ -2,19 +2,27 @@
 # variance ratio and substracts the target T1E rate.
 # Used in levelSceptical to calculate the controlled level for
 # replication success
+target <- function(
+  alphalevel,
+  alternative = alternative,
+  c = c,
+  targetT1E) {
 
-
-target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
-  myT1E <- T1EpSceptical(alternative = alternative, level = alphalevel, c = c,
-                         type = "nominal")
+  myT1E <- T1EpSceptical(
+    alternative = alternative,
+    level = alphalevel,
+    c = c,
+    type = "nominal"
+  )
   myT1E - targetT1E
 }
-#' @export
-.levelSceptical_ <- function(level,
-                           c = NA,
-                           alternative = c("one.sided", "two.sided"), 
-                           type = c("golden", "nominal", "controlled")){
 
+#' @export
+.levelSceptical_ <- function(
+  level,
+  c = NA,
+  alternative = c("one.sided", "two.sided"),
+  type = c("golden", "nominal", "controlled")) {
 
   stopifnot(is.numeric(level),
             length(level) >= 1,
@@ -35,15 +43,18 @@ target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
   #   res <- pIntrinsic(p = level, alternative = alternative, type = "Held")
   } else if (type == "controlled") {
     mylower <- sqrt(targetT1E)
-    if (alternative=="one.sided") {
+    if (alternative == "one.sided") {
       myupper <- 0.5
-    } else if (alternative=="two.sided") {
-      myupper <- 1-.Machine$double.eps^0.25
-  }
-    result <- stats::uniroot(target, lower = mylower, upper = myupper,
-                      alternative = alternative, c = c,
-                      targetT1E = targetT1E)
-    res <- result$root
+    } else if (alternative == "two.sided") {
+      myupper <- 1 - .Machine$double.eps^0.25
+    }
+    res <- stats::uniroot(
+      f = target,
+      lower = mylower,
+      upper = myupper,
+      alternative = alternative, c = c,
+      targetT1E = targetT1E
+    )$root
   } else if (type == "golden") {
     res <- pIntrinsic(p = level, alternative = alternative, type = "Matthews")
   }
@@ -59,18 +70,25 @@ target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
 #' @param alternative Specifies if \code{level} is "one.sided" (default) or
 #'  "two.sided". If "one-sided",
 #' then a one-sided replication success level is computed.
-#' @param type Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
-#'  or "controlled". "golden" ensures that for an original study just significant at
-#' the specified \code{level}, replication success is only possible for 
+#' @param type Type of recalibration. Can be either "golden" (default),
+#' "nominal" (no recalibration),
+#'  or "controlled". "golden" ensures that for an original study just
+#' significant at
+#' the specified \code{level}, replication success is only possible for
 #' replication effect estimates larger than the original one.
-#' "controlled" ensures exact overall Type-I error control at level \code{level}^2.
+#' "controlled" ensures exact overall Type-I error control at level
+#' \code{level}^2.
 #' @return Replication success levels
-#' @references Held, L. (2020). A new standard for the analysis and design of replication studies (with discussion).
-#' \emph{Journal of the Royal Statistical Society: Series A (Statistics in Society)}, \bold{183}, 431-448.
+#' @references Held, L. (2020). A new standard for the analysis and
+#' design of replication studies (with discussion).
+#' \emph{Journal of the Royal Statistical Society:
+#' Series A (Statistics in Society)}, \bold{183}, 431-448.
 #' \doi{10.1111/rssa.12493}
 #'
-#' Held, L. (2020). The harmonic mean chi-squared test to substantiate scientific findings.
-#' \emph{Journal of the Royal Statistical Society: Series C (Applied Statistics)}, \bold{69}, 697-708.
+#' Held, L. (2020). The harmonic mean chi-squared test to substantiate
+#' scientific findings.
+#' \emph{Journal of the Royal Statistical Society:
+#' Series C (Applied Statistics)}, \bold{69}, 697-708.
 #' \doi{10.1111/rssc.12410}
 #'
 #' Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
@@ -86,8 +104,8 @@ target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
 #' @author Leonhard Held
 #' @examples
 #' levelSceptical(level = 0.025, alternative = "one.sided", type = "nominal")
-#' levelSceptical(level = 0.025, alternative = "one.sided", type = "controlled", c = 1)
+#' levelSceptical(level = 0.025, alternative = "one.sided",
+#'                type = "controlled", c = 1)
 #' levelSceptical(level = 0.025, alternative = "one.sided", type = "golden")
 #' @export
 levelSceptical <- Vectorize(.levelSceptical_)
-

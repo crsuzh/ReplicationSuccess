@@ -4,14 +4,19 @@
 #' @rdname hMeanChiSq
 #' @param z Numeric vector of z-values.
 #' @param w Numeric vector of weights.
-#' @param alternative Either "greater" (default), "less", "two.sided", or "none".
+#' @param alternative Either "greater" (default), "less", "two.sided",
+#' or "none".
 #' Specifies the alternative to be considered in the computation of the p-value.
-#' @param bound If \code{FALSE} (default), p-values that cannot be computed are reported as \code{NaN}.
+#' @param bound If \code{FALSE} (default), p-values that cannot be computed
+#' are reported as \code{NaN}.
 #' If \code{TRUE}, they are reported as "> bound".
-#' @return \code{hMeanChiSq}: returns the p-values from the harmonic mean chi-squared test
+#' @return \code{hMeanChiSq}: returns the p-values from the harmonic mean
+#' chi-squared test
 #' based on the study-specific z-values.
-#' @references Held, L. (2020). The harmonic mean chi-squared test to substantiate scientific findings.
-#' \emph{Journal of the Royal Statistical Society: Series C (Applied Statistics)}, \bold{69}, 697-708.
+#' @references Held, L. (2020). The harmonic mean chi-squared test to
+#' substantiate scientific findings.
+#' \emph{Journal of the Royal Statistical Society:
+#' Series C (Applied Statistics)}, \bold{69}, 697-708.
 #' \doi{10.1111/rssc.12410}
 #' @author Leonhard Held, Florian Gerber
 #' @examples
@@ -37,10 +42,12 @@
 #' hMeanChiSq(z = p2z(p = pvalues, alternative = "less"),
 #'            w = 1 / se^2, alternative = "none")
 #' @export
-hMeanChiSq <- function(z,
-                       w = rep(1, length(z)),
-                       alternative = c("greater", "less", "two.sided", "none"),
-                       bound = FALSE) {
+hMeanChiSq <- function(
+    z,
+    w = rep(1, length(z)),
+    alternative = c("greater", "less", "two.sided", "none"),
+    bound = FALSE) {
+
     stopifnot(is.numeric(z),
               length(z) > 0,
               is.finite(z),
@@ -64,23 +71,41 @@ hMeanChiSq <- function(z,
     check_less <- max(z) <= 0
     break_p <- 1 / (2^n)
     if (alternative == "greater") {
-        if (bound)
-            res <- if (check_greater) res / (2^n) else paste(">", format(break_p, scientific = FALSE))
-        else
+        if (bound) {
+            res <- if (check_greater) {
+                res / (2^n)
+            } else {
+                paste(">", format(break_p, scientific = FALSE))
+            }
+        } else {
             res <- if (check_greater) res / (2^n) else NaN
+        }
     }
     if (alternative == "less") {
-        if (bound)
-            res <- if (check_less) res / (2^n) else paste(">", format(break_p, scientific = FALSE))
-        else
+        if (bound) {
+            res <- if (check_less) {
+                res / (2^n)
+            } else {
+                paste(">", format(break_p, scientific = FALSE))
+            }
+        } else {
             res <- if (check_less) res / (2^n) else NaN
+        }
     }
     if (alternative == "two.sided") {
-        if (bound)
-            res <- if (check_greater || check_less) res / (2^(n - 1)) else
-                        paste(">", format(2 * break_p, scientific = FALSE))
-        else
-            res <- if (check_greater || check_less) res / (2^(n - 1)) else NaN
+        if (bound) {
+            res <- if (check_greater || check_less) {
+                res / (2^(n - 1))
+            } else {
+                paste(">", format(2 * break_p, scientific = FALSE))
+            }
+        } else {
+            res <- if (check_greater || check_less) {
+                res / (2^(n - 1))
+            } else {
+                NaN
+            }
+        }
     }
     ## no chnage to res for alternative == "none"
     return(res)
@@ -90,7 +115,8 @@ hMeanChiSq <- function(z,
 #' @param thetahat Numeric vector of parameter estimates.
 #' @param se Numeric vector of standard errors.
 #' @param mu The null hypothesis value. Defaults to 0.
-#' @return \code{hMeanChiSqMu}: returns the p-value from the harmonic mean chi-squared test
+#' @return \code{hMeanChiSqMu}: returns the p-value from the harmonic
+#' mean chi-squared test
 #' based on study-specific estimates and standard errors.
 #' @examples
 #'
@@ -106,6 +132,7 @@ hMeanChiSqMu <- function(
     thetahat, se, w = rep(1, length(thetahat)), mu = 0,
     alternative = c("greater", "less", "two.sided", "none"),
     bound = FALSE) {
+
     stopifnot(is.numeric(thetahat),
               length(thetahat) > 0,
               is.finite(thetahat),
@@ -140,23 +167,49 @@ hMeanChiSqMu <- function(
         check_less <- max(z) <= 0
         break_p <- 1 / (2^n)
         if (alternative == "greater") {
-            if (bound)
-                res <- if (check_greater) res / (2^n) else paste(">", format(break_p, scientific = FALSE))
-            else
-                res <- if (check_greater || check_less) res/(2^n) else NaN
+            if (bound) {
+                res <- if (check_greater) {
+                    res / (2^n)
+                } else {
+                    paste(">", format(break_p, scientific = FALSE))
+                }
+            } else {
+                res <- if (check_greater || check_less) {
+                    res / (2^n)
+                } else {
+                    NaN
+                }
+            }
         }
         if (alternative == "less") {
-            if (bound)
-                res <- if (check_less) res / (2^n) else paste(">", format(break_p, scientific = FALSE))
-            else
-                res <- if (check_greater || check_less) res / (2^n) else NaN
+            if (bound) {
+                res <- if (check_less) {
+                    res / (2^n)
+                } else {
+                    paste(">", format(break_p, scientific = FALSE))
+                }
+            } else {
+                res <- if (check_greater || check_less) {
+                    res / (2^n)
+                } else {
+                    NaN
+                }
+            }
         }
         if (alternative == "two.sided") {
-            if (bound)
-                res <- if (check_greater || check_less) res / (2^(n - 1)) else
-                             paste(">", format(2*break_p, scientific = FALSE))
-            else
-                res <- if (check_greater || check_less) res / (2^(n - 1)) else NaN
+            if (bound) {
+                res <- if (check_greater || check_less) {
+                    res / (2^(n - 1))
+                } else {
+                    paste(">", format(2 * break_p, scientific = FALSE))
+                }
+            } else {
+                res <- if (check_greater || check_less) {
+                    res / (2^(n - 1))
+                } else {
+                    NaN
+                }
+            }
         }
     }
     if (alternative == "none") {
@@ -172,11 +225,14 @@ hMeanChiSqMu <- function(
 }
 
 #' @rdname hMeanChiSq
-#' @param conf.level Numeric vector specifying the conf.level of the confidence interval. Defaults to 0.95.
+#' @param conf.level Numeric vector specifying the conf.level of the confidence
+#' interval. Defaults to 0.95.
 #' summarize the gamma values, i.e.,
-#' the local minima of the p-value function between the thetahats. Defaults is a vector of 1s.
+#' the local minima of the p-value function between the thetahats.
+#' Defaults is a vector of 1s.
 #' @return \code{hMeanChiSqCI}: returns a list containing confidence interval(s)
-#' obtained by inverting the harmonic mean chi-squared test based on study-specific
+#' obtained by inverting the harmonic mean chi-squared test based on
+#' study-specific
 #' estimates and standard errors. The list contains:
 #' \item{CI}{Confidence interval(s).}\cr\cr
 #' If the \code{alternative} is "none", the list also contains:
@@ -358,7 +414,8 @@ hMeanChiSqCI <- function(
 #' \code{f} should be vectorized in the first argument.
 #' @param interval A vector containing the end-points of the interval to be
 #' searched for the root.
-#' @param n Number of subintervals on which \code{link[stats]{uniroot}} is called.
+#' @param n Number of subintervals on which \code{link[stats]{uniroot}}
+#' is called.
 #' Default is 1000.
 #' @param lower The lower end point of the interval to be searched.
 #' @param upper The upper end point of the interval to be searched.

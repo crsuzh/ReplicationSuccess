@@ -35,7 +35,8 @@ specified level, the relative variance,
 and the alternative hypothesis.
 }
 \details{
-\code{T1EpSceptical} is the vectorized version of \code{.T1EpSceptical_}.
+\code{T1EpSceptical} is the vectorized version of
+\code{.T1EpSceptical_}.
 \code{\link[base]{Vectorize}} is used to vectorize the function.
 }
 \examples{
@@ -45,8 +46,10 @@ c <- seq(0.2, 5, by = 0.05)
 t1 <- sapply(X = types, FUN = function(t) {
   T1EpSceptical(type = t, c = c, alternative = "one.sided", level = 0.025)
 })
-matplot(x = c, y = t1*100, type = "l", lty = 1, lwd = 2, las = 1, log = "x",
-        xlab = bquote(italic(c)), ylab = "Type-I error (\%)", xlim = c(0.2, 5))
+matplot(
+  x = c, y = t1*100, type = "l", lty = 1, lwd = 2, las = 1, log = "x",
+  xlab = bquote(italic(c)), ylab = "Type-I error (\%)", xlim = c(0.2, 5)
+)
 legend("topright", legend = types, lty = 1, lwd = 2, col = seq_along(types))
 
 }
@@ -64,7 +67,8 @@ Beyond the two-trials rule: Type-I error control and sample size planning
 with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
 }
 \seealso{
-\code{\link{pSceptical}}, \code{\link{levelSceptical}}, \code{\link{PPpSceptical}}
+\code{\link{pSceptical}}, \code{\link{levelSceptical}},
+\code{\link{PPpSceptical}}
 }
 \author{
 Leonhard Held, Samuel Pawel

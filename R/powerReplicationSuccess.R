@@ -51,15 +51,23 @@
     zoabs <- abs(zo)
 
     ## if zoas < zalphaS, power is zero
-    alphaS <- levelSceptical(level = level, alternative = alternative, type = type,
-                             c = c)
+    alphaS <- levelSceptical(
+        level = level,
+        alternative = alternative,
+        type = type,
+        c = c
+    )
     zalphaS <- p2z(p = alphaS, alternative = alternative)
     if (zoabs < zalphaS) {
         power <- 0
     } else {
         ## computing minimum zr to achieve replication success
-        dmin <- effectSizeReplicationSuccess(zo = zoabs, c = c, level = level,
-                                             alternative = alternative, type = type)
+        dmin <- effectSizeReplicationSuccess(
+            zo = zoabs,
+            c = c,
+            level = level,
+            alternative = alternative, type = type
+        )
         zrmin <- dmin * zoabs * sqrt(c)
 
         if (designPrior == "conditional") {
@@ -135,15 +143,19 @@
 #'     the contribution of the original study is shrunken towards zero based on
 #'     the evidence in the original study (with an empirical Bayes shrinkage
 #'     estimator).
-#' @param alternative Specifies if \code{level} is "one.sided" (default) or "two.sided".
+#' @param alternative Specifies if \code{level} is "one.sided" (default)
+#' or "two.sided".
 #'     If "one.sided" then power calculations are based
 #'     on a one-sided assessment of replication success in the direction of the
 #'     original effect estimates.
-#' @param type Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
-#'  or "controlled". "golden" ensures that for an original study just significant at
+#' @param type Type of recalibration. Can be either "golden" (default),
+#' "nominal" (no recalibration),
+#'  or "controlled". "golden" ensures that for an original study just
+#' significant at
 #' the specified \code{level}, replication success is only possible for
 #' replication effect estimates larger than the original one.
-#' "controlled" ensures exact overall Type-I error control at level \code{level}^2.
+#' "controlled" ensures exact overall Type-I error control at level
+#' \code{level}^2.
 #' @param shrinkage Numeric vector with values in [0,1). Defaults to 0.
 #'     Specifies the shrinkage of the original effect estimate towards zero,
 #'     e.g., the effect is shrunken by a factor of 25\% for
@@ -172,21 +184,54 @@
 #' Micheloud, C., Balabdaoui, F., Held, L. (2023).
 #' Beyond the two-trials rule: Type-I error control and sample size planning
 #' with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
-#' @seealso \code{\link{sampleSizeReplicationSuccess}}, \code{\link{pSceptical}},
+#' @seealso \code{\link{sampleSizeReplicationSuccess}},
+#' \code{\link{pSceptical}},
 #' \code{\link{levelSceptical}}
 #' @examples
 #' ## larger sample size in replication (c > 1)
-#' powerReplicationSuccess(zo = p2z(0.005), c = 2, level = 0.025, designPrior = "conditional")
-#' powerReplicationSuccess(zo = p2z(0.005), c = 2, level = 0.025, designPrior = "predictive")
+#' powerReplicationSuccess(
+#'   zo = p2z(0.005),
+#'   c = 2,
+#'   level = 0.025,
+#'   designPrior = "conditional"
+#' )
+#' powerReplicationSuccess(
+#'   zo = p2z(0.005),
+#'   c = 2,
+#'   level = 0.025,
+#'   designPrior = "predictive"
+#' )
 #'
 #' ## smaller sample size in replication (c < 1)
-#' powerReplicationSuccess(zo = p2z(0.005), c = 1/2, level = 0.025, designPrior = "conditional")
-#' powerReplicationSuccess(zo = p2z(0.005), c = 1/2, level = 0.025, designPrior = "predictive")
+#' powerReplicationSuccess(
+#'   zo = p2z(0.005),
+#'   c = 1/2,
+#'   level = 0.025,
+#'   designPrior = "conditional"
+#' )
+#' powerReplicationSuccess(
+#'   zo = p2z(0.005),
+#'   c = 1/2,
+#'   level = 0.025,
+#'   designPrior = "predictive"
+#' )
 #'
-#' powerReplicationSuccess(zo = p2z(0.00005), c = 2, level = 0.05,
-#'                         alternative = "two.sided",  strict = TRUE, shrinkage = 0.9)
-#' powerReplicationSuccess(zo = p2z(0.00005), c = 2, level = 0.05,
-#'                         alternative = "two.sided", strict = FALSE, shrinkage = 0.9)
+#' powerReplicationSuccess(
+#'   zo = p2z(0.00005),
+#'   c = 2,
+#'   level = 0.05,
+#'   alternative = "two.sided",
+#'   strict = TRUE,
+#'   shrinkage = 0.9
+#' )
+#' powerReplicationSuccess(
+#'   zo = p2z(0.00005),
+#'   c = 2,
+#'   level = 0.05,
+#'   alternative = "two.sided",
+#'   strict = FALSE,
+#'   shrinkage = 0.9
+#' )
 #'
 #' @export
 powerReplicationSuccess <- Vectorize(.powerReplicationSuccess_)

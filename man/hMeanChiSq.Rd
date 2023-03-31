@@ -35,10 +35,12 @@ hMeanChiSqCI(
 
 \item{w}{Numeric vector of weights.}
 
-\item{alternative}{Either "greater" (default), "less", "two.sided", or "none".
+\item{alternative}{Either "greater" (default), "less", "two.sided",
+or "none".
 Specifies the alternative to be considered in the computation of the p-value.}
 
-\item{bound}{If \code{FALSE} (default), p-values that cannot be computed are reported as \code{NaN}.
+\item{bound}{If \code{FALSE} (default), p-values that cannot be computed
+are reported as \code{NaN}.
 If \code{TRUE}, they are reported as "> bound".}
 
 \item{thetahat}{Numeric vector of parameter estimates.}
@@ -47,19 +49,24 @@ If \code{TRUE}, they are reported as "> bound".}
 
 \item{mu}{The null hypothesis value. Defaults to 0.}
 
-\item{conf.level}{Numeric vector specifying the conf.level of the confidence interval. Defaults to 0.95.
+\item{conf.level}{Numeric vector specifying the conf.level of the confidence
+interval. Defaults to 0.95.
 summarize the gamma values, i.e.,
-the local minima of the p-value function between the thetahats. Defaults is a vector of 1s.}
+the local minima of the p-value function between the thetahats.
+Defaults is a vector of 1s.}
 }
 \value{
-\code{hMeanChiSq}: returns the p-values from the harmonic mean chi-squared test
+\code{hMeanChiSq}: returns the p-values from the harmonic mean
+chi-squared test
 based on the study-specific z-values.
 
-\code{hMeanChiSqMu}: returns the p-value from the harmonic mean chi-squared test
+\code{hMeanChiSqMu}: returns the p-value from the harmonic
+mean chi-squared test
 based on study-specific estimates and standard errors.
 
 \code{hMeanChiSqCI}: returns a list containing confidence interval(s)
-obtained by inverting the harmonic mean chi-squared test based on study-specific
+obtained by inverting the harmonic mean chi-squared test based on
+study-specific
 estimates and standard errors. The list contains:
 \item{CI}{Confidence interval(s).}\cr\cr
 If the \code{alternative} is "none", the list also contains:
@@ -136,8 +143,10 @@ points(hm$gamma, col = "red", pch = 19, cex = 2)
 
 }
 \references{
-Held, L. (2020). The harmonic mean chi-squared test to substantiate scientific findings.
-\emph{Journal of the Royal Statistical Society: Series C (Applied Statistics)}, \bold{69}, 697-708.
+Held, L. (2020). The harmonic mean chi-squared test to
+substantiate scientific findings.
+\emph{Journal of the Royal Statistical Society:
+Series C (Applied Statistics)}, \bold{69}, 697-708.
 \doi{10.1111/rssc.12410}
 }
 \author{
