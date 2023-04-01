@@ -29,6 +29,9 @@ bin: update-src
 check-cran: tar
 	$(RSCRIPT) -e "devtools::check_built(path = './lib/$(TAR)', cran = TRUE)"
 
+check-all: tar
+	$(RSCRIPT) -e "devtools::check_built(path = './lib/$(TAR)', cran = TRUE, manual = TRUE, remote = TRUE, args = 'compact-vignettes=both')"
+
 check: tar
 	$(RSCRIPT) -e "devtools::check_built(path = './lib/$(TAR)', cran = FALSE)"
 

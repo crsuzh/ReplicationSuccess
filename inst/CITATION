@@ -1,7 +1,7 @@
 citHeader(paste("To cite the R-package 'ReplicationSuccess' in publications,",
                 "please use:"))
 
-citEntry(entry = "article",
+bibentry(bibtype = "article",
          title = "A new standard for the analysis and design of replication studies (with discussion)",
          author = c(person(given = "Leonhard", family = "Held", role = "aut")),
          doi = "10.1111/rssa.12493",
@@ -18,7 +18,7 @@ citEntry(entry = "article",
                              ))
 
 
-citEntry(entry = "article",
+bibentry(bibtype = "article",
          title = "The harmonic mean chi-squared test to substantiate scientific findings",
          author = c(person(given = "Leonhard", family = "Held", role = "aut")),
          doi = "10.1111/rssc.12410",
@@ -35,7 +35,7 @@ citEntry(entry = "article",
                              ))
 
 
-citEntry(entry = "article",
+bibentry(bibtype = "article",
          title = "Probabilistic forecasting of replication studies",
          author = c(person(given = "Samuel", family = "Pawel", role = "aut"),
                     person(given = "Leonhard", family = "Held", role = "aut")),
@@ -53,7 +53,7 @@ citEntry(entry = "article",
                              ))
 
 
-citEntry(entry = "article",
+bibentry(bibtype = "article",
          title = "The assessment of replication success based on relative effect size",
          author = c(person(given = "Leonhard", family = "Held", role = "aut"),
                     person(given = "Charlotte", family = "Micheloud", role = "aut"),
@@ -72,7 +72,7 @@ citEntry(entry = "article",
                              ))
 
 
-citEntry(entry = "article",
+bibentry(bibtype = "article",
          title = "Power Calculations for Replication Studies",
          author = c(person(given = "Leonhard", family = "Held", role = "aut"),
                     person(given = "Charlotte", family = "Micheloud", role = "aut")),
@@ -89,7 +89,7 @@ citEntry(entry = "article",
                              "https://doi.org/10.1214/21-STS828"
                              ))
 
-citEntry(entry = "article",
+bibentry(bibtype = "article",
          title = "The assessment of intrinsic credibility and a new argument for p < 0.005",
          author = c(person(given = "Leonhard", family = "Held", role = "aut")),
          doi = "10.1098/rsos.181534",
