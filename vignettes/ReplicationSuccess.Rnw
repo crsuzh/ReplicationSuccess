@@ -237,7 +237,7 @@ $c$, since most functions of the package use them as input.
 << "data-loading" >>=
 library(ReplicationSuccess)
 data("RProjects")
-str(RProjects)
+str(RProjects, width = 80, strict.width = "cut")
 
 ## computing zo, zr, c
 RProjects$zo <- with(RProjects, fiso/se_fiso)
@@ -553,7 +553,8 @@ for (p in unique(RProjects$project)) {
     plot(data_project$rr, study, col = color, pch = 20, cex = 0.5,
          xlim = c(-0.5, 1), xlab = expression(italic(r)[r]), ylab = "Study",
          main = paste0(p, ": ", round(mean(incompatible)*100, 0), "% incompatible"))
-    arrows(PI$lower, study, PI$upper, study, length = 0.02, angle = 90, code = 3, col = color)
+    arrows(PI$lower, study, PI$upper, study, length = 0.02,
+           angle = 90, code = 3, col = color)
     abline(v = 0, lty = 3)
 }
 @
