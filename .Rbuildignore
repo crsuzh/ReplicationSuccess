@@ -12,3 +12,10 @@ Makefile.defs
 ^doc$
 ^Meta$
 vignettes/figure
+vignettes/*concordance.tex
+vignettes/*.blg
+vignettes/*.bbl
+vignettes/*.dvi
+vignettes/*.fdb_latexmk
+vignettes/*.fls
+vignettes/*.out

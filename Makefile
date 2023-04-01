@@ -48,6 +48,9 @@ winbuild: update-src
 winbuild-devel: update-src
 	$(RSCRIPT) -e "devtools::check_win_devel(args = '--compact-vignettes=both')"
 
+rhub: tar
+	$(RSCRIPT) -e "rhub::check_for_cran(path = 'lib/$(TAR)')"
+
 webpage: update-src
 	$(RSCRIPT) -e "pkgdown::build_site()"
 
@@ -57,5 +60,7 @@ vignette: update-src
 clean:
 	rm -rf lib $(PACKAGE).Rcheck vignettes/cache/ vignettes/figure/ \
 		vignettes/*.log vignettes/*.tex vignettes/*.aux \
-		vignettes/*.synctex.gz \
+		vignettes/*.synctex.gz vignettes/*.bbl vignettes/*.blg \
+		vignettes/*.dvi vignettes/*.fdb_latexmk vignettes/*.fls \
+		vignettes/*.out \
 		manual

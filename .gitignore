@@ -29,6 +29,12 @@ vignettes/*.pdf
 vignettes/*.log
 vignettes/*.aux
 vignettes/*.bbl
+vignettes/*.blg
+vignettes/*.dvi
+vignettes/*.fdb_latexmk
+vignettes/*.fls
+vignettes/*.out
+vignettes/*concordance.tex
 vignettes/figure/*
 vignettes/cache/*
 # do not track the intermediate .tex file
