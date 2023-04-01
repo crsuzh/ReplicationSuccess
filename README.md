@@ -57,7 +57,7 @@ vignette("ReplicationSuccess")
     
   - Held, L. (2019). The assessment of intrinsic credibility and a new argument
     for *p* < 0.005. *Royal Society Open Science*, 6(3):181534.
-    <https://dx.doi.org/10.1098/rsos.181534>
+    <https://doi.org/10.1098/rsos.181534>
     
   - Micheloud, C., Balabdaoui, F., Held, L. (2023). Beyond the two-trials rule: Type-I error control and sample size planning 
   with the sceptical p-value. <https://arxiv.org/abs/2207.00464>
