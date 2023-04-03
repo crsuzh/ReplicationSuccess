@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ReplicationSuccess</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1</span>
       </span>
     </div>
 
@@ -29,7 +29,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/SamCH93/ReplicationSuccess/" class="external-link">
+  <a href="https://github.com/crsuzh/ReplicationSuccess/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -44,7 +44,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>harmonic mean chi-squared test</h1>
-    <small class="dont-index">Source: <a href="https://github.com/SamCH93/ReplicationSuccess/blob/HEAD/R/hMeanChiSq.R" class="external-link"><code>R/hMeanChiSq.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/crsuzh/ReplicationSuccess/blob/HEAD/R/hMeanChiSq.R" class="external-link"><code>R/hMeanChiSq.R</code></a></small>
     <div class="hidden name"><code>hMeanChiSq.Rd</code></div>
     </div>
 
@@ -74,8 +74,7 @@
 <span>  <span class="va">se</span>,</span>
 <span>  w <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">thetahat</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  alternative <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"two.sided"</span>, <span class="st">"greater"</span>, <span class="st">"less"</span>, <span class="st">"none"</span><span class="op">)</span>,</span>
-<span>  level <span class="op">=</span> <span class="fl">0.95</span>,</span>
-<span>  wGamma <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">thetahat</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span></span>
+<span>  conf.level <span class="op">=</span> <span class="fl">0.95</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -111,12 +110,8 @@ If <code>TRUE</code>, they are reported as "&gt; bound".</p></dd>
 <dd><p>The null hypothesis value. Defaults to 0.</p></dd>
 
 
-<dt>level</dt>
-<dd><p>Numeric vector specifying the level of the confidence interval. Defaults to 0.95.</p></dd>
-
-
-<dt>wGamma</dt>
-<dd><p>Numeric vector of length <code>unique(thetahat) - 1</code> specifying weights used to
+<dt>conf.level</dt>
+<dd><p>Numeric vector specifying the conf.level of the confidence interval. Defaults to 0.95.
 summarize the gamma values, i.e.,
 the local minima of the p-value function between the thetahats. Defaults is a vector of 1s.</p></dd>
 
@@ -144,12 +139,6 @@ estimates and standard errors. The list contains:</p>
 <p>If the <code>alternative</code> is "none", the list also contains:</p>
 <dl><dt>gamma</dt>
 <dd><p>Local minima of the p-value function between the thetahats.</p></dd>
-
-<dt>gammaMean</dt>
-<dd><p>Mean of all gammas weighted by <code>wGamma</code>.</p></dd>
-
-<dt>gammaHMean</dt>
-<dd><p>Harmonic mean of all gammas weighted by <code>wGamma</code>.</p></dd>
 
 </dl></div>
     <div id="references">
@@ -209,14 +198,14 @@ estimates and standard errors. The list contains:</p>
 <span class="r-in"><span><span class="va">CI1</span> <span class="op">&lt;-</span> <span class="fu">hMeanChiSqCI</span><span class="op">(</span>thetahat <span class="op">=</span> <span class="va">thetahat</span>, se <span class="op">=</span> <span class="va">se</span>, w <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="va">se</span><span class="op">^</span><span class="fl">2</span>,</span></span>
 <span class="r-in"><span>                    alternative <span class="op">=</span> <span class="st">"two.sided"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">CI2</span> <span class="op">&lt;-</span> <span class="fu">hMeanChiSqCI</span><span class="op">(</span>thetahat <span class="op">=</span> <span class="va">thetahat</span>, se <span class="op">=</span> <span class="va">se</span>, w <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="va">se</span><span class="op">^</span><span class="fl">2</span>,</span></span>
-<span class="r-in"><span>                    alternative <span class="op">=</span> <span class="st">"two.sided"</span>, level <span class="op">=</span> <span class="fl">0.99875</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                    alternative <span class="op">=</span> <span class="st">"two.sided"</span>, conf.level <span class="op">=</span> <span class="fl">0.99875</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co">## one-sided</span></span></span>
 <span class="r-in"><span><span class="va">CI1b</span> <span class="op">&lt;-</span> <span class="fu">hMeanChiSqCI</span><span class="op">(</span>thetahat <span class="op">=</span> <span class="va">thetahat</span>, se <span class="op">=</span> <span class="va">se</span>, w <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="va">se</span><span class="op">^</span><span class="fl">2</span>,</span></span>
-<span class="r-in"><span>                     alternative <span class="op">=</span> <span class="st">"less"</span>, level <span class="op">=</span> <span class="fl">0.975</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                     alternative <span class="op">=</span> <span class="st">"less"</span>, conf.level <span class="op">=</span> <span class="fl">0.975</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">CI2b</span> <span class="op">&lt;-</span> <span class="fu">hMeanChiSqCI</span><span class="op">(</span>thetahat <span class="op">=</span> <span class="va">thetahat</span>, se <span class="op">=</span> <span class="va">se</span>, w <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="va">se</span><span class="op">^</span><span class="fl">2</span>,</span></span>
-<span class="r-in"><span>                     alternative <span class="op">=</span> <span class="st">"less"</span>, level <span class="op">=</span> <span class="fl">1</span> <span class="op">-</span> <span class="fl">0.025</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                     alternative <span class="op">=</span> <span class="st">"less"</span>, conf.level <span class="op">=</span> <span class="fl">1</span> <span class="op">-</span> <span class="fl">0.025</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## confidence intervals on hazard ratio scale </span></span></span>
+<span class="r-in"><span><span class="co">## confidence intervals on hazard ratio scale</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">CI1</span><span class="op">$</span><span class="va">CI</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      lower upper</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  0.21  0.74</span>
@@ -234,7 +223,7 @@ estimates and standard errors. The list contains:</p>
 <span class="r-in"><span><span class="co">## example with confidence region consisting of disjunct intervals</span></span></span>
 <span class="r-in"><span><span class="va">thetahat2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3.7</span>, <span class="fl">2.1</span>, <span class="fl">2.5</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">se2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.5</span>, <span class="fl">2.2</span>, <span class="fl">3.1</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">level</span> <span class="op">&lt;-</span> <span class="fl">0.95</span>; <span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">-</span> <span class="va">level</span></span></span>
+<span class="r-in"><span><span class="va">conf.level</span> <span class="op">&lt;-</span> <span class="fl">0.95</span>; <span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">-</span> <span class="va">conf.level</span></span></span>
 <span class="r-in"><span><span class="va">muSeq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">7</span>, <span class="fl">6</span>, length.out <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">pValueSeq</span> <span class="op">&lt;-</span> <span class="fu">hMeanChiSqMu</span><span class="op">(</span>thetahat <span class="op">=</span> <span class="va">thetahat2</span>, se <span class="op">=</span> <span class="va">se2</span>,</span></span>
 <span class="r-in"><span>                          alternative <span class="op">=</span> <span class="st">"none"</span>, mu <span class="op">=</span> <span class="va">muSeq</span><span class="op">)</span></span></span>
@@ -248,12 +237,6 @@ estimates and standard errors. The list contains:</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        minimum pvalue_fun/gamma</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] -1.584762       0.01227696</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  2.277232       0.87220092</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $gammaMean</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.4422389</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $gammaHMean</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.02421311</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">muSeq</span>, y <span class="op">=</span> <span class="va">pValueSeq</span>, type <span class="op">=</span> <span class="st">"l"</span>, panel.first <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/graphics/grid.html" class="external-link">grid</a></span><span class="op">(</span>lty <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span></span>
@@ -278,7 +261,7 @@ estimates and standard errors. The list contains:</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

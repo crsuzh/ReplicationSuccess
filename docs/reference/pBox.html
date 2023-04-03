@@ -19,7 +19,7 @@ and the significance level."><!-- mathjax --><script src="https://cdnjs.cloudfla
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ReplicationSuccess</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1</span>
       </span>
     </div>
 
@@ -31,7 +31,7 @@ and the significance level."><!-- mathjax --><script src="https://cdnjs.cloudfla
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/SamCH93/ReplicationSuccess/" class="external-link">
+  <a href="https://github.com/crsuzh/ReplicationSuccess/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -46,7 +46,7 @@ and the significance level."><!-- mathjax --><script src="https://cdnjs.cloudfla
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Computes Box's tail probability</h1>
-    <small class="dont-index">Source: <a href="https://github.com/SamCH93/ReplicationSuccess/blob/HEAD/R/pBox.R" class="external-link"><code>R/pBox.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/crsuzh/ReplicationSuccess/blob/HEAD/R/pBox.R" class="external-link"><code>R/pBox.R</code></a></small>
     <div class="hidden name"><code>pBox.Rd</code></div>
     </div>
 
@@ -97,6 +97,14 @@ Specifies whether two-sided or one-sided Box's tail probabilities are computed.<
 
 <p><code>zBox</code> returns the z-values used in <code>pBox</code>.</p>
     </div>
+    <div id="details">
+    <h2>Details</h2>
+    <p><code>pBox</code> quantifies the conflict between the sceptical prior 
+that would render the original study non-significant and the result 
+from the replication study. If the original study was not significant 
+at level <code>level</code>, the sceptical prior does not exist and <code>pBox</code>
+cannot be calculated.</p>
+    </div>
     <div id="references">
     <h2>References</h2>
     <p>Box, G.E.P. (1980). Sampling and Bayes' inference in scientific
@@ -136,7 +144,7 @@ Series A (Statistics in Society)</em>, <b>183</b>, 431-448.
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

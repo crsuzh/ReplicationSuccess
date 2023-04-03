@@ -19,7 +19,7 @@ and the design prior."><!-- mathjax --><script src="https://cdnjs.cloudflare.com
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ReplicationSuccess</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1</span>
       </span>
     </div>
 
@@ -31,7 +31,7 @@ and the design prior."><!-- mathjax --><script src="https://cdnjs.cloudflare.com
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/SamCH93/ReplicationSuccess/" class="external-link">
+  <a href="https://github.com/crsuzh/ReplicationSuccess/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -46,7 +46,7 @@ and the design prior."><!-- mathjax --><script src="https://cdnjs.cloudflare.com
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Computes the power for significance</h1>
-    <small class="dont-index">Source: <a href="https://github.com/SamCH93/ReplicationSuccess/blob/HEAD/R/powerSignificance.R" class="external-link"><code>R/powerSignificance.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/crsuzh/ReplicationSuccess/blob/HEAD/R/powerSignificance.R" class="external-link"><code>R/powerSignificance.R</code></a></small>
     <div class="hidden name"><code>powerSignificance.Rd</code></div>
     </div>
 
@@ -82,7 +82,7 @@ size of the replication study to the sample size of the original study.</p></dd>
 
 
 <dt>level</dt>
-<dd><p>Numeric vector of significance levels. The default is 0.025.</p></dd>
+<dd><p>Significance level. Default is 0.025.</p></dd>
 
 
 <dt>designPrior</dt>
@@ -117,8 +117,8 @@ Is only taken into account if the <code>designPrior</code> is "conditional" or "
 
 <dt>strict</dt>
 <dd><p>Logical vector indicating whether the probability for significance
-in the opposite direction of the original effect estimate should also be 
-taken into account. Default is <code>FALSE</code>. 
+in the opposite direction of the original effect estimate should also be
+taken into account. Default is <code>FALSE</code>.
 Only taken into account when <code>alternative</code> = "two.sided".</p></dd>
 
 </dl></div>
@@ -131,15 +131,16 @@ in the specified direction.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p><code>powerSignificance</code> is the vectorized version of <code>.powerSignificance_</code>.
+    <p><code>powerSignificance</code> is the vectorized version of
+the internal function <code>.powerSignificance_</code>.
 <code><a href="https://rdrr.io/r/base/Vectorize.html" class="external-link">Vectorize</a></code> is used to vectorize the function.</p>
     </div>
     <div id="references">
     <h2>References</h2>
-    <p>Goodman, S. N. (1992). A comment on replication, p-values and evidence, 
-<em>Statistics in Medicine</em>, <b>11</b>, 875--879. 
-<a href="https://doi.org/10.1002/sim.4780110705" class="external-link">doi:10.1002/sim.4780110705</a></p>     
-<p>Senn, S. (2002). Letter to the Editor, <em>Statistics in Medicine</em>, 
+    <p>Goodman, S. N. (1992). A comment on replication, p-values and evidence,
+<em>Statistics in Medicine</em>, <b>11</b>, 875--879.
+<a href="https://doi.org/10.1002/sim.4780110705" class="external-link">doi:10.1002/sim.4780110705</a></p>
+<p>Senn, S. (2002). Letter to the Editor, <em>Statistics in Medicine</em>,
 <b>21</b>, 2437--2444.</p>
 <p>Held, L. (2020). A new standard for the analysis and design of replication
 studies (with discussion). <em>Journal of the Royal Statistical Society:
@@ -189,17 +190,17 @@ Series A (Statistics in Society)</em>, <b>183</b>, 431-448.
 <span class="r-in"><span><span class="fu">powerSignificance</span><span class="op">(</span>zo <span class="op">=</span> <span class="fu"><a href="conversionHelpers.html">p2z</a></span><span class="op">(</span><span class="fl">0.005</span><span class="op">)</span>, c <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, designPrior <span class="op">=</span> <span class="st">"EB"</span>,</span></span>
 <span class="r-in"><span>                  alternative <span class="op">=</span> <span class="st">"two.sided"</span>, h <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.3207855</span>
-<span class="r-in"><span>                  </span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># power as function of original p-value</span></span></span>
 <span class="r-in"><span><span class="va">po</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0.0001</span>, <span class="fl">0.06</span>, <span class="fl">0.0001</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">po</span>, <span class="fu">powerSignificance</span><span class="op">(</span>zo <span class="op">=</span> <span class="fu"><a href="conversionHelpers.html">p2z</a></span><span class="op">(</span><span class="va">po</span><span class="op">)</span>, designPrior <span class="op">=</span> <span class="st">"conditional"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>     type <span class="op">=</span> <span class="st">"l"</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">1.5</span>, las <span class="op">=</span> <span class="fl">1</span>, ylab <span class="op">=</span> <span class="st">"Power"</span>, </span></span>
+<span class="r-in"><span>     type <span class="op">=</span> <span class="st">"l"</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">1.5</span>, las <span class="op">=</span> <span class="fl">1</span>, ylab <span class="op">=</span> <span class="st">"Power"</span>,</span></span>
 <span class="r-in"><span>     xlab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="fu">italic</span><span class="op">(</span><span class="va">p</span><span class="op">)</span><span class="op">[</span><span class="va">o</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">po</span>, <span class="fu">powerSignificance</span><span class="op">(</span>zo <span class="op">=</span> <span class="fu"><a href="conversionHelpers.html">p2z</a></span><span class="op">(</span><span class="va">po</span><span class="op">)</span>, designPrior <span class="op">=</span> <span class="st">"predictive"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>      lwd <span class="op">=</span> <span class="fl">2</span>, lty <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">po</span>, <span class="fu">powerSignificance</span><span class="op">(</span>zo <span class="op">=</span> <span class="fu"><a href="conversionHelpers.html">p2z</a></span><span class="op">(</span><span class="va">po</span><span class="op">)</span>, designPrior <span class="op">=</span> <span class="st">"EB"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>      lwd <span class="op">=</span> <span class="fl">1.5</span>, lty <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"topright"</span>, legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"conditional"</span>, <span class="st">"predictive"</span>, <span class="st">"EB"</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"topright"</span>, legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"conditional"</span>, <span class="st">"predictive"</span>, <span class="st">"EB"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>       title <span class="op">=</span> <span class="st">"Design prior"</span>, lty <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">1.5</span>, bty <span class="op">=</span> <span class="st">"n"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="powerSignificance-1.png" alt="" width="2336" height="1600"></span>
 </code></pre></div>
@@ -216,7 +217,7 @@ Series A (Statistics in Society)</em>, <b>183</b>, 431-448.
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

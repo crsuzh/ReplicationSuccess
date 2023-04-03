@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ReplicationSuccess</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1</span>
       </span>
     </div>
 
@@ -29,7 +29,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/SamCH93/ReplicationSuccess/" class="external-link">
+  <a href="https://github.com/crsuzh/ReplicationSuccess/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -44,7 +44,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Computes the p-value for intrinsic credibility</h1>
-    <small class="dont-index">Source: <a href="https://github.com/SamCH93/ReplicationSuccess/blob/HEAD/R/pIntrinsic.R" class="external-link"><code>R/pIntrinsic.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/crsuzh/ReplicationSuccess/blob/HEAD/R/pIntrinsic.R" class="external-link"><code>R/pIntrinsic.R</code></a></small>
     <div class="hidden name"><code>pIntrinsic.Rd</code></div>
     </div>
 
@@ -56,7 +56,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pIntrinsic</span><span class="op">(</span></span>
 <span>  p <span class="op">=</span> <span class="fu"><a href="conversionHelpers.html">z2p</a></span><span class="op">(</span><span class="va">z</span>, alternative <span class="op">=</span> <span class="va">alternative</span><span class="op">)</span>,</span>
 <span>  z <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  alternative <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"two.sided"</span>, <span class="st">"one.sided"</span><span class="op">)</span>,</span>
+<span>  alternative <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"two.sided"</span>, <span class="st">"one.sided"</span>, <span class="st">"less"</span>, <span class="st">"greater"</span><span class="op">)</span>,</span>
 <span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Held"</span>, <span class="st">"Matthews"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -116,7 +116,7 @@ for <em>p &lt; 0.005</em>. <em>Royal Society Open Science</em>, <b>6</b>, 181534
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.02143411 0.03371017 0.09798756</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">pIntrinsic</span><span class="op">(</span>z <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1572992 0.1072866</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1572992 0.1072866 0.9839121 0.1072866</span>
 </code></pre></div>
     </div>
   </div>
@@ -131,7 +131,7 @@ for <em>p &lt; 0.005</em>. <em>Royal Society Open Science</em>, <b>6</b>, 181534
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

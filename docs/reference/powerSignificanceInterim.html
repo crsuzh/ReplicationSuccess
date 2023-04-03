@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ReplicationSuccess</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1</span>
       </span>
     </div>
 
@@ -29,7 +29,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/SamCH93/ReplicationSuccess/" class="external-link">
+  <a href="https://github.com/crsuzh/ReplicationSuccess/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -44,7 +44,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Interim power of a replication study</h1>
-    <small class="dont-index">Source: <a href="https://github.com/SamCH93/ReplicationSuccess/blob/HEAD/R/powerSignificanceInterim.R" class="external-link"><code>R/powerSignificanceInterim.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/crsuzh/ReplicationSuccess/blob/HEAD/R/powerSignificanceInterim.R" class="external-link"><code>R/powerSignificanceInterim.R</code></a></small>
     <div class="hidden name"><code>powerSignificanceInterim.Rd</code></div>
     </div>
 
@@ -77,8 +77,9 @@
 
 
 <dt>c</dt>
-<dd><p>Ratio of the sample size of the replication study to the sample size of the original study.
-Default is 1.</p></dd>
+<dd><p>Numeric vector of variance ratios of the original and replication effect estimates.
+This is usually the ratio of the sample size of the replication study to the sample
+size of the original study. Default is 1.</p></dd>
 
 
 <dt>f</dt>
@@ -114,15 +115,15 @@ the effect is shrunken by a factor of 25% for <code>shrinkage=0.25</code>.</p></
     <h2>Value</h2>
     
 
-<p>The probability of statistical significance in the specified direction 
-at the end of the replication study given the data collected so far 
+<p>The probability of statistical significance in the specified direction
+at the end of the replication study given the data collected so far
 in the replication study.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
     <p>This is an extension of <code><a href="powerSignificance.html">powerSignificance()</a></code> and adapts the `interim power'
 from section 6.6.3 of Spiegelhalter et al. (2004) to the setting of replication studies.</p>
-<p><code>powerSignificanceInterim</code> is the vectorized version of 
+<p><code>powerSignificanceInterim</code> is the vectorized version of
  <code>.powerSignificanceInterim_</code>.
 <code><a href="https://rdrr.io/r/base/Vectorize.html" class="external-link">Vectorize</a></code> is used to vectorize the function.</p>
     </div>
@@ -132,7 +133,8 @@ from section 6.6.3 of Spiegelhalter et al. (2004) to the setting of replication 
 Bayesian Approaches to Clinical Trials and Health-Care
 Evaluation, volume 13. John Wiley &amp; Sons</p>
 <p>Micheloud, C., Held, L. (2022). Power Calculations for Replication Studies.
- Statistical Science. 37:369-379. <a href="https://doi.org/10.1214/21-STS828" class="external-link">doi:10.1214/21-STS828</a></p>
+<em>Statistical Science</em>, <b>37</b>, 369-379.
+<a href="https://doi.org/10.1214/21-STS828" class="external-link">doi:10.1214/21-STS828</a></p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -184,7 +186,7 @@ Evaluation, volume 13. John Wiley &amp; Sons</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

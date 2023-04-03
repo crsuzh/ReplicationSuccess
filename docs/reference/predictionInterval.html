@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ReplicationSuccess</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1</span>
       </span>
     </div>
 
@@ -29,7 +29,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/SamCH93/ReplicationSuccess/" class="external-link">
+  <a href="https://github.com/crsuzh/ReplicationSuccess/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -44,7 +44,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Prediction interval for effect estimate of replication study</h1>
-    <small class="dont-index">Source: <a href="https://github.com/SamCH93/ReplicationSuccess/blob/HEAD/R/predictionInterval.R" class="external-link"><code>R/predictionInterval.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/crsuzh/ReplicationSuccess/blob/HEAD/R/predictionInterval.R" class="external-link"><code>R/predictionInterval.R</code></a></small>
     <div class="hidden name"><code>predictionInterval.Rd</code></div>
     </div>
 
@@ -139,23 +139,23 @@ replicability in psychological science. <em>Perspectives on Psychological Scienc
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 -0.9257882 0.8333333 2.592455</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 -0.4599640 1.5000000 3.459964</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3  2.6440396 4.8000000 6.955960</span>
-<span class="r-in"><span>       </span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># compute prediction intervals for replication projects</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"RProjects"</span>, package <span class="op">=</span> <span class="st">"ReplicationSuccess"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">parOld</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw">for</span> <span class="op">(</span><span class="va">p</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">RProjects</span><span class="op">$</span><span class="va">project</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="va">data_project</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">RProjects</span>, <span class="va">project</span> <span class="op">==</span> <span class="va">p</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="va">PI</span> <span class="op">&lt;-</span> <span class="fu">predictionInterval</span><span class="op">(</span>thetao <span class="op">=</span> <span class="va">data_project</span><span class="op">$</span><span class="va">fiso</span>, seo <span class="op">=</span> <span class="va">data_project</span><span class="op">$</span><span class="va">se_fiso</span>, </span></span>
+<span class="r-in"><span>  <span class="va">PI</span> <span class="op">&lt;-</span> <span class="fu">predictionInterval</span><span class="op">(</span>thetao <span class="op">=</span> <span class="va">data_project</span><span class="op">$</span><span class="va">fiso</span>, seo <span class="op">=</span> <span class="va">data_project</span><span class="op">$</span><span class="va">se_fiso</span>,</span></span>
 <span class="r-in"><span>                           ser <span class="op">=</span> <span class="va">data_project</span><span class="op">$</span><span class="va">se_fisr</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">PI</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Hyperbolic.html" class="external-link">tanh</a></span><span class="op">(</span><span class="va">PI</span><span class="op">)</span> <span class="co"># transforming back to correlation scale</span></span></span>
 <span class="r-in"><span>  <span class="va">within</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">data_project</span><span class="op">$</span><span class="va">rr</span> <span class="op">&lt;</span> <span class="va">PI</span><span class="op">$</span><span class="va">upper</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">(</span><span class="va">data_project</span><span class="op">$</span><span class="va">rr</span> <span class="op">&gt;</span> <span class="va">PI</span><span class="op">$</span><span class="va">lower</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">coverage</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">within</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">color</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">within</span> <span class="op">==</span> <span class="cn">TRUE</span>, <span class="st">"#333333B3"</span>, <span class="st">"#8B0000B3"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">study</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">data_project</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">data_project</span><span class="op">$</span><span class="va">rr</span>, <span class="va">study</span>, col <span class="op">=</span> <span class="va">color</span>, pch <span class="op">=</span> <span class="fl">20</span>, </span></span>
-<span class="r-in"><span>       xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.5</span>, <span class="fl">1</span><span class="op">)</span>, xlab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="fu">italic</span><span class="op">(</span><span class="va">r</span><span class="op">)</span><span class="op">[</span><span class="va">r</span><span class="op">]</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">data_project</span><span class="op">$</span><span class="va">rr</span>, <span class="va">study</span>, col <span class="op">=</span> <span class="va">color</span>, pch <span class="op">=</span> <span class="fl">20</span>,</span></span>
+<span class="r-in"><span>       xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.5</span>, <span class="fl">1</span><span class="op">)</span>, xlab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="fu">italic</span><span class="op">(</span><span class="va">r</span><span class="op">)</span><span class="op">[</span><span class="va">r</span><span class="op">]</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>       main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">p</span>, <span class="st">": "</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">coverage</span><span class="op">*</span><span class="fl">100</span>, <span class="fl">1</span><span class="op">)</span>, <span class="st">"% coverage"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/graphics/arrows.html" class="external-link">arrows</a></span><span class="op">(</span><span class="va">PI</span><span class="op">$</span><span class="va">lower</span>, <span class="va">study</span>, <span class="va">PI</span><span class="op">$</span><span class="va">upper</span>, <span class="va">study</span>, length <span class="op">=</span> <span class="fl">0.02</span>, angle <span class="op">=</span> <span class="fl">90</span>, </span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/graphics/arrows.html" class="external-link">arrows</a></span><span class="op">(</span><span class="va">PI</span><span class="op">$</span><span class="va">lower</span>, <span class="va">study</span>, <span class="va">PI</span><span class="op">$</span><span class="va">upper</span>, <span class="va">study</span>, length <span class="op">=</span> <span class="fl">0.02</span>, angle <span class="op">=</span> <span class="fl">90</span>,</span></span>
 <span class="r-in"><span>         code <span class="op">=</span> <span class="fl">3</span>, col <span class="op">=</span> <span class="va">color</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="fl">0</span>, lty <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
@@ -175,7 +175,7 @@ replicability in psychological science. <em>Perspectives on Psychological Scienc
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

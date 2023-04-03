@@ -40,6 +40,14 @@ pr
 Two-sided p-value from significance test of effect estimate
 from replication study
 
+ po1
+One-sided p-value from significance test of effect estimate
+from original study (in the direction of the original effect estimate)
+
+pr1
+One-sided p-value from significance test of effect estimate
+from replication study (in the direction of the original effect estimate)
+
 pm_belief
 Peer belief about whether replication effect estimate
 will achieve statistical significance elicited through prediction market (only
@@ -71,7 +79,7 @@ Sample size in replication study
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ReplicationSuccess</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1</span>
       </span>
     </div>
 
@@ -83,7 +91,7 @@ Sample size in replication study
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/SamCH93/ReplicationSuccess/" class="external-link">
+  <a href="https://github.com/crsuzh/ReplicationSuccess/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -98,7 +106,7 @@ Sample size in replication study
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Data from four large-scale replication projects</h1>
-    <small class="dont-index">Source: <a href="https://github.com/SamCH93/ReplicationSuccess/blob/HEAD/R/datasets.R" class="external-link"><code>R/datasets.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/crsuzh/ReplicationSuccess/blob/HEAD/R/datasets.R" class="external-link"><code>R/datasets.R</code></a></small>
     <div class="hidden name"><code>RProjects.Rd</code></div>
     </div>
 
@@ -143,6 +151,14 @@ from original study</p></dd>
 <dd><p>Two-sided p-value from significance test of effect estimate
 from replication study</p></dd>
 
+ <dt><code>po1</code></dt>
+<dd><p>One-sided p-value from significance test of effect estimate
+from original study (in the direction of the original effect estimate)</p></dd>
+
+<dt><code>pr1</code></dt>
+<dd><p>One-sided p-value from significance test of effect estimate
+from replication study (in the direction of the original effect estimate)</p></dd>
+
 <dt><code>pm_belief</code></dt>
 <dd><p>Peer belief about whether replication effect estimate
 will achieve statistical significance elicited through prediction market (only
@@ -163,7 +179,7 @@ available for EERP and SSRP)</p></dd>
 
     <div id="format">
     <h2>Format</h2>
-    <p>A data frame with 143 rows and 13 variables</p>
+    <p>A data frame with 143 rows and 15 variables</p>
     </div>
     <div id="source">
     <h2>Source</h2>
@@ -203,7 +219,7 @@ coordinators of the EPRP.</p>
     <p>Two-sided p-values were calculated assuming normality of Fisher-z
     transformed effect estimates. From the RPP only the <em>meta-analytic
     subset</em> is included, which consists of 73 out of 100 study pairs for
-    which the standard error of the z-transformed correlation coeffient can
+    which the standard error of the z-transformed correlation coefficient can
     be computed. For the RPP sample sizes were recalculated from the reported
     standard errors of Fisher z-transformed correlation coefficients. From
     the EPRP only 31 out of 40 study pairs are included where effective
@@ -295,7 +311,7 @@ psychological science. <em>Science</em>, <b>349</b>, aac4716.
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
