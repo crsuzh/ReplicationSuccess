@@ -24,13 +24,17 @@ tar: update-src
 
 bin: update-src
 	mkdir -p lib
-	$(RSCRIPT) -e "devtools::build(path = 'lib', binary = TRUE, args = '--compact-vignettes=\'both\'')"
+	$(RSCRIPT) -e "devtools::build(path = 'lib', binary = TRUE, args = '--compact-vignettes=both')"
+
+submission: update-src
+	mkdir -p lib
+	$(RSCRIPT) -e "devtools::build(path = 'lib', manual = TRUE, args = '--compact-vignettes=both')"
 
 check-cran: tar
 	$(RSCRIPT) -e "devtools::check_built(path = './lib/$(TAR)', cran = TRUE)"
 
 check-all: tar
-	$(RSCRIPT) -e "devtools::check_built(path = './lib/$(TAR)', cran = TRUE, manual = TRUE, remote = TRUE, args = 'compact-vignettes=both')"
+	$(RSCRIPT) -e "devtools::check_built(path = './lib/$(TAR)', cran = TRUE, manual = TRUE, remote = TRUE)"
 
 check: tar
 	$(RSCRIPT) -e "devtools::check_built(path = './lib/$(TAR)', cran = FALSE)"

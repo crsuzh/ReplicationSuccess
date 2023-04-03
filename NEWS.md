@@ -1,3 +1,18 @@
+# ReplicationSuccess 1.3.1
+
+- Removed functions from exports:
+  - .PPpSceptical_
+  - .T1EpSceptical_
+  - .effectSizeReplicationSuccess_
+  - .effectSizeSignificance_
+  - .levelSceptical_
+  - .p2z_
+  - .pSceptical_
+  - .powerReplicationSuccess_
+  - .powerSignificance_
+  - .predictionInterval_
+  - .sampleSizeReplicationSuccess_
+  - .z2p_
 
 # ReplicationSuccess 1.3
 
