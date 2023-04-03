@@ -66,10 +66,12 @@ If "one.sided" or "two.sided" is specified, the z-value is assumed to be positiv
 Convert between estimates, z-values, p-values, and confidence intervals
 }
 \details{
-\code{z2p} is the vectorized version of \code{.z2p_}.
+\code{z2p} is the vectorized version of
+the internal function \code{.z2p_}.
 \code{\link[base]{Vectorize}} is used to vectorize the function.
 
-\code{p2z} is the vectorized version of \code{.p2z_}.
+\code{p2z} is the vectorized version of
+the internal function \code{.p2z_}.
 \code{\link[base]{Vectorize}} is used to vectorize the function.
 }
 \examples{

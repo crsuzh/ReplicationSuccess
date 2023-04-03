@@ -9,7 +9,8 @@ target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
                          type = "nominal")
   myT1E - targetT1E
 }
-#' @export
+
+
 .levelSceptical_ <- function(level,
                            c = NA,
                            alternative = c("one.sided", "two.sided"), 
@@ -65,6 +66,9 @@ target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
 #' replication effect estimates larger than the original one.
 #' "controlled" ensures exact overall Type-I error control at level \code{level}^2.
 #' @return Replication success levels
+#' @details \code{levelSceptical} is the vectorized version of
+#' the internal function \code{.levelSceptical_}.
+#' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @references Held, L. (2020). A new standard for the analysis and design of replication studies (with discussion).
 #' \emph{Journal of the Royal Statistical Society: Series A (Statistics in Society)}, \bold{183}, 431-448.
 #' \doi{10.1111/rssa.12493}
@@ -81,8 +85,6 @@ target <- function(alphalevel, alternative = alternative, c = c, targetT1E){
 #' Micheloud, C., Balabdaoui, F., Held, L. (2023).
 #' Beyond the two-trials rule: Type-I error control and sample size planning
 #' with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
-#'
-
 #' @author Leonhard Held
 #' @examples
 #' levelSceptical(level = 0.025, alternative = "one.sided", type = "nominal")

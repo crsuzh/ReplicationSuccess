@@ -141,7 +141,6 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
 
 
 
-#' @export
 .sampleSizeReplicationSuccess_ <- function(
     zo,
     power = NA,
@@ -356,6 +355,9 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
 #'     heterogeneity).
 #' @return The relative sample size for replication success. If impossible to
 #'     achieve the desired power for specified inputs \code{NaN} is returned.
+#' @details \code{sampleSizeReplicationSuccess} is the vectorized version of
+#' the internal function \code{.sampleSizeReplicationSuccess_}.
+#' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @references
 #' Held, L. (2020). A new standard for the analysis and design of replication
 #' studies (with discussion). \emph{Journal of the Royal Statistical Society:

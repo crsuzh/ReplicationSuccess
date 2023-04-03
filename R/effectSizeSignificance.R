@@ -1,4 +1,3 @@
-#' @export
 .effectSizeSignificance_ <- function(zo, 
                                      c = 1, 
                                      level = 0.025, 
@@ -41,7 +40,8 @@
 #' If the significance level is one-sided, then effect size calculations are based on a one-sided assessment of
 #' significance in the direction of the original effect estimate.
 #' @return The minimum relative effect size to achieve significance in the replication study.
-#' @details \code{effectSizeSignificance} is the vectorized version of \code{.effectSizeSignificance_}.
+#' @details \code{effectSizeSignificance} is the vectorized version of
+#' the internal function \code{.effectSizeSignificance_}.
 #' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @references Held, L., Micheloud, C., Pawel, S. (2022). The assessment of
 #'     replication success based on relative effect size. The Annals of Applied

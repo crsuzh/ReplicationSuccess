@@ -1,4 +1,3 @@
-#' @export
 .effectSizeReplicationSuccess_ <- function(zo,
                                            c = 1,
                                            level = 0.025,
@@ -69,6 +68,9 @@
 #' "controlled" ensures exact overall Type-I error control at level \code{level}^2.
 #' @return The minimum relative effect size to achieve replication success
 #' with the sceptical p-value.
+#' @details \code{effectSizeReplicationSuccess} is the vectorized version of
+#' the internal function \code{.effectSizeReplicationSuccess_}.
+#' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @references Held, L., Micheloud, C., Pawel, S. (2022). The assessment of
 #'     replication success based on relative effect size. The Annals of Applied
 #'     Statistics. 16:706-720. \doi{10.1214/21-AOAS1502}

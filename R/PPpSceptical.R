@@ -1,4 +1,3 @@
-#' @export
 .PPpSceptical_ <- function(level, c, alpha, power,
                            alternative = c("one.sided", "two.sided"),
                            type = c("golden", "nominal", "controlled")) {
@@ -133,7 +132,8 @@
 #' @param type Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
 #'  or "controlled".
 #' @return The project power of the sceptical p-value
-#' @details \code{PPpSceptical} is the vectorized version of \code{.PPpSceptical_}.
+#' @details \code{PPpSceptical} is the vectorized version of
+#' the internal function \code{.PPpSceptical_}.
 #' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @references
 #' Held, L. (2020). The harmonic mean chi-squared test to substantiate

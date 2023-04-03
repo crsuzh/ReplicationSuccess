@@ -27,7 +27,6 @@ FZ <- function(z, c) {
 
 
 
-#' @export
 .pSceptical_ <- function(zo,
                          zr,
                          c,
@@ -124,6 +123,9 @@ FZ <- function(z, c) {
 #' least as large as the original one.
 #' "controlled" ensures exact overall Type-I error control at level \code{level}^2.
 #' @return \code{pSceptical} returns the sceptical p-value.
+#' @details \code{pSceptical} is the vectorized version of
+#' the internal function \code{.pSceptical_}.
+#' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @references
 #' Held, L. (2020). A new standard for the analysis and design of replication
 #' studies (with discussion). \emph{Journal of the Royal Statistical Society:

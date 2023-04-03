@@ -1,4 +1,3 @@
-#' @export
 .T1EpSceptical_ <- function(level, c,
                             alternative = c("one.sided", "two.sided"),
                             type = c("golden", "nominal", "controlled")) {  
@@ -107,7 +106,8 @@
 #' @param type Type of recalibration. Recalibration type can be either "golden"
 #' (default), "nominal" (no recalibration), or "controlled".
 #' @return The overall type-I error rate.
-#' @details \code{T1EpSceptical} is the vectorized version of \code{.T1EpSceptical_}.
+#' @details \code{T1EpSceptical} is the vectorized version of
+#' the internal function \code{.T1EpSceptical_}.
 #' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @references
 #' Held, L. (2020). The harmonic mean chi-squared test to substantiate

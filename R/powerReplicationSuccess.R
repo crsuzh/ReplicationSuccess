@@ -1,4 +1,3 @@
-#' @export
 .powerReplicationSuccess_ <- function(
     zo,
     c = 1,
@@ -158,6 +157,9 @@
 #'     estimate should also be taken into account. Default is \code{FALSE}.
 #'     Only taken into account when \code{alternative} = "two.sided".
 #' @return The power for replication success with the sceptical p-value
+#' @details \code{powerReplicationSuccess} is the vectorized version of
+#' the internal function \code{.powerReplicationSuccess_}.
+#' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @author Leonhard Held, Charlotte Micheloud, Samuel Pawel
 #' @references
 #' Held, L. (2020). A new standard for the analysis and design of replication

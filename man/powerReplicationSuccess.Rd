@@ -67,6 +67,11 @@ Computes the power for replication success with the sceptical
 p-value  based on the result of the
 original study, the corresponding variance ratio, and the design prior.
 }
+\details{
+\code{powerReplicationSuccess} is the vectorized version of
+the internal function \code{.powerReplicationSuccess_}.
+\code{\link[base]{Vectorize}} is used to vectorize the function.
+}
 \examples{
 ## larger sample size in replication (c > 1)
 powerReplicationSuccess(zo = p2z(0.005), c = 2, level = 0.025, designPrior = "conditional")

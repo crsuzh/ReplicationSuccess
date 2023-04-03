@@ -44,7 +44,8 @@ significance level and power for a standard significance test of
 the original study, and the alternative hypothesis.
 }
 \details{
-\code{PPpSceptical} is the vectorized version of \code{.PPpSceptical_}.
+\code{PPpSceptical} is the vectorized version of
+the internal function \code{.PPpSceptical_}.
 \code{\link[base]{Vectorize}} is used to vectorize the function.
 }
 \examples{

@@ -61,7 +61,8 @@ the original study, the corresponding variance ratio,
 and the design prior.
 }
 \details{
-\code{powerSignificance} is the vectorized version of \code{.powerSignificance_}.
+\code{powerSignificance} is the vectorized version of
+the internal function \code{.powerSignificance_}.
 \code{\link[base]{Vectorize}} is used to vectorize the function.
 }
 \examples{

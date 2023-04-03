@@ -62,6 +62,11 @@ The relative sample size to achieve replication success is computed based on
 the z-value of the original study,  the type of
 recalibration, the power and the design prior.
 }
+\details{
+\code{sampleSizeReplicationSuccess} is the vectorized version of
+the internal function \code{.sampleSizeReplicationSuccess_}.
+\code{\link[base]{Vectorize}} is used to vectorize the function.
+}
 \examples{
 ## based on power
 sampleSizeReplicationSuccess(zo = p2z(0.0025), power = 0.8, level = 0.025,

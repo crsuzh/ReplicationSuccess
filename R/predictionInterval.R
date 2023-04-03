@@ -1,4 +1,3 @@
-#' @export
 .predictionInterval_ <- function(thetao,
                                  seo,
                                  ser,

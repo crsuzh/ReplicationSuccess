@@ -34,6 +34,11 @@ Replication success levels
 The replication success level is computed based on the specified
 alternative and recalibration type.
 }
+\details{
+\code{levelSceptical} is the vectorized version of
+the internal function \code{.levelSceptical_}.
+\code{\link[base]{Vectorize}} is used to vectorize the function.
+}
 \examples{
 levelSceptical(level = 0.025, alternative = "one.sided", type = "nominal")
 levelSceptical(level = 0.025, alternative = "one.sided", type = "controlled", c = 1)

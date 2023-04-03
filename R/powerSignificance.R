@@ -1,4 +1,3 @@
-#' @export
 .powerSignificance_ <- function(zo,
                                 c = 1,
                                 level = 0.025,
@@ -106,7 +105,8 @@
 #' Only taken into account when \code{alternative} = "two.sided".
 #' @return The probability that a replication study yields a significant effect estimate
 #' in the specified direction.
-#' @details \code{powerSignificance} is the vectorized version of \code{.powerSignificance_}.
+#' @details \code{powerSignificance} is the vectorized version of
+#' the internal function \code{.powerSignificance_}.
 #' \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @references
 #' Goodman, S. N. (1992). A comment on replication, p-values and evidence,

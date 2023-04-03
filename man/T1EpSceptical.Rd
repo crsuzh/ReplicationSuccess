@@ -35,7 +35,8 @@ specified level, the relative variance,
 and the alternative hypothesis.
 }
 \details{
-\code{T1EpSceptical} is the vectorized version of \code{.T1EpSceptical_}.
+\code{T1EpSceptical} is the vectorized version of
+the internal function \code{.T1EpSceptical_}.
 \code{\link[base]{Vectorize}} is used to vectorize the function.
 }
 \examples{

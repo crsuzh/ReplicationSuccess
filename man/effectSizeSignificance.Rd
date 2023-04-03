@@ -33,7 +33,8 @@ of the replication study is computed based on the result of the original study a
 the corresponding variance ratio.
 }
 \details{
-\code{effectSizeSignificance} is the vectorized version of \code{.effectSizeSignificance_}.
+\code{effectSizeSignificance} is the vectorized version of
+the internal function \code{.effectSizeSignificance_}.
 \code{\link[base]{Vectorize}} is used to vectorize the function.
 }
 \examples{
