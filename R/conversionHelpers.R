@@ -14,30 +14,34 @@
 #' ci2se(lower = 1, upper = 3, conf.level = 0.9)
 #'
 #' @export
-ci2se <- function(lower,
-                  upper,
-                  conf.level = 0.95,
-                  ratio = FALSE) {
+ci2se <- function(
+    lower,
+    upper,
+    conf.level = 0.95,
+    ratio = FALSE
+) {
 
-    stopifnot(is.numeric(lower),
-              length(lower) > 0,
-              is.finite(lower),
+    stopifnot(
+        is.numeric(lower),
+        length(lower) > 0,
+        is.finite(lower),
 
-              is.numeric(upper),
-              length(upper) > 0,
-              is.finite(upper),
+        is.numeric(upper),
+        length(upper) > 0,
+        is.finite(upper),
 
-              length(upper) == length(lower),
-              lower <= upper,
+        length(upper) == length(lower),
+        lower <= upper,
 
-              is.numeric(conf.level),
-              length(conf.level) == 1,
-              is.finite(conf.level),
-              0 < conf.level, conf.level < 1,
+        is.numeric(conf.level),
+        length(conf.level) == 1,
+        is.finite(conf.level),
+        0 < conf.level, conf.level < 1,
 
-              is.logical(ratio),
-              length(ratio) == 1,
-              is.finite(ratio))
+        is.logical(ratio),
+        length(ratio) == 1,
+        is.finite(ratio)
+    )
 
     level <- 1 - conf.level
     q <- stats::qnorm(p = 1 - level / 2, lower.tail = TRUE)
@@ -182,30 +186,15 @@ ci2p <- function(
     return(p)
 }
 
-.z2p_ <- function(
-    z,
-    alternative = c("two.sided", "one.sided", "less", "greater")) {
-
-    stopifnot(is.numeric(z), is.finite(z),
-              !is.null(alternative))
-    alternative <- match.arg(alternative)
-
-    if (alternative == "two.sided") {
-        return(2 * stats::pnorm(abs(z), lower.tail = FALSE))
-    } else if (alternative == "less") {
-        return(stats::pnorm(q = z, lower.tail = TRUE))
-    } else {
-        ## alternative is "greater" or "one.sided")
-        stats::pnorm(q = z, lower.tail = FALSE)
-    }
-}
 
 #' @rdname conversionHelpers
 #' @param z Numeric vector of z-values.
-#' @details \code{z2p} is the vectorized version of
-#' the internal function \code{.z2p_}.
-#' \code{\link[base]{Vectorize}} is used to vectorize the function.
-#' @return \code{z2p} returns a numeric vector of p-values.
+#' @details \code{z2p} is vectorized over all arguments.
+#' @return \code{z2p} returns a numeric vector of p-values. The
+#' dimension of the output depends on the input. In general,
+#' the output will be an array of dimension
+#' \code{c(nrow(z), ncol(z), length(alternative))}. If any of these
+#' dimensions is 1, it will be dropped.
 #' @examples
 #' z2p(z = c(1, 2, 5))
 #' z2p(z = c(1, 2, 5), alternative = "less")
@@ -216,37 +205,52 @@ ci2p <- function(
 #' legend("topright", c("two-sided", "greater"), lty = c(1, 2), bty = "n")
 #'
 #' @export
-z2p <- Vectorize(.z2p_)
+z2p <- function(
+    z,
+    alternative = c("two.sided", "one.sided", "less", "greater")
+) {
 
-
-.p2z_ <- function(
-    p,
-    alternative = c("two.sided", "one.sided", "less", "greater")) {
-
-    stopifnot(is.numeric(p),
-              length(p) == 1,
-              is.finite(p),
-              0 < p, p <= 1,
-
+    stopifnot(is.numeric(z), is.finite(z),
               !is.null(alternative))
-    alternative <- match.arg(alternative)
+    alternative <- match.arg(alternative, several.ok = TRUE)
 
-    if (alternative == "two.sided")
-        return(stats::qnorm(p = p / 2, lower.tail = FALSE))
+    l_alt <- length(alternative)
 
-    if (alternative == "less")
-        return(stats::qnorm(p = p, lower.tail = TRUE))
+    p <- vapply(
+        alternative,
+        function(alt) {
+            if (alt == "two.sided") {
+                2 * stats::pnorm(abs(z), lower.tail = FALSE)
+            } else if (alt == "less") {
+                stats::pnorm(q = z, lower.tail = TRUE)
+            } else {
+                ## alternative is "greater" or "one.sided")
+                stats::pnorm(q = z, lower.tail = FALSE)
+            }
+        },
+        double(length(z))
+    )
 
-    ## alternative is "one.sided" or "greater"
-    return(stats::qnorm(p = p, lower.tail = FALSE))
+    d <- if (is.matrix(z)) {
+        c(dim(z), l_alt)
+    } else {
+        c(length(z), l_alt)
+    }
+
+    d <- d[d != 1L]
+    dim(p) <- d
+
+    p
 }
 
 #' @rdname conversionHelpers
 #' @param p Numeric vector of p-values.
-#' @details \code{p2z} is the vectorized version of
-#' the internal function \code{.p2z_}.
-#' \code{\link[base]{Vectorize}} is used to vectorize the function.
-#' @return \code{p2z} returns a numeric vector of z-values.
+#' @details \code{p2z} is vectorized over all arguments.
+#' @return \code{p2z} returns a numeric vector of z-values. The
+#' dimension of the output depends on the input. In general,
+#' the output will be an array of dimension
+#' \code{c(nrow(p), ncol(p), length(alternative))}. If any of these
+#' dimensions is 1, it will be dropped.
 #' @examples
 #' p2z(p = c(0.005, 0.01, 0.05))
 #' p2z(p = c(0.005, 0.01, 0.05), alternative = "greater")
@@ -256,4 +260,46 @@ z2p <- Vectorize(.z2p_)
 #' lines(p, p2z(p, alternative = "greater"), lty = 2)
 #' legend("bottomleft", c("two-sided", "greater"), lty = c(1, 2), bty = "n")
 #' @export
-p2z <- Vectorize(.p2z_)
+p2z <- function(
+    p,
+    alternative = c("two.sided", "one.sided", "less", "greater")
+) {
+
+    stopifnot(
+        is.numeric(p),
+        all(is.finite(p)),
+        all(0 < p), all(p <= 1),
+        !is.null(alternative)
+    )
+
+    alternative <- match.arg(alternative, several.ok = TRUE)
+
+    l_alt <- length(alternative)
+
+    z <- vapply(
+        alternative,
+        function(alt) {
+
+            if (alt == "two.sided") {
+                stats::qnorm(p = p / 2, lower.tail = FALSE)
+            } else if (alt == "less") {
+                stats::qnorm(p = p, lower.tail = TRUE)
+            } else {
+            ## alternative is "one.sided" or "greater"
+                stats::qnorm(p = p, lower.tail = FALSE)
+            }
+        },
+        double(length(p))
+    )
+
+    d <- if (is.matrix(p)) {
+        c(dim(p), l_alt)
+    } else {
+        c(length(p), l_alt)
+    }
+
+    d <- d[d != 1L]
+    dim(z) <- d
+
+    p
+}
