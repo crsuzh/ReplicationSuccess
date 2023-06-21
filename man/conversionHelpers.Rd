@@ -15,35 +15,32 @@ ci2estimate(lower, upper, ratio = FALSE, antilog = FALSE)
 
 ci2z(lower, upper, conf.level = 0.95, ratio = FALSE)
 
-ci2p(
-  lower,
-  upper,
-  conf.level = 0.95,
-  ratio = FALSE,
-  alternative = c("two.sided", "one.sided", "less", "greater")
-)
+ci2p(lower, upper, conf.level = 0.95, ratio = FALSE, alternative = "two.sided")
 
-z2p(z, alternative = c("two.sided", "one.sided", "less", "greater"))
+z2p(z, alternative = "two.sided")
 
-p2z(p, alternative = c("two.sided", "one.sided", "less", "greater"))
+p2z(p, alternative = "two.sided")
 }
 \arguments{
 \item{lower}{Numeric vector of lower confidence interval bounds.}
 
 \item{upper}{Numeric vector of upper confidence interval bounds.}
 
-\item{conf.level}{The confidence level of the confidence intervals. Default is 0.95.}
+\item{conf.level}{The confidence level of the confidence intervals.
+Default is 0.95.}
 
-\item{ratio}{Indicates whether the confidence interval is for a ratio, e.g. an
-odds ratio, relative risk or hazard ratio. If \code{TRUE}, the standard error
-of the log ratio is computed. Defaults to \code{FALSE}.}
+\item{ratio}{Indicates whether the confidence interval is for a
+ratio, e.g. an odds ratio, relative risk or hazard ratio.
+If \code{TRUE}, the standard error of the log ratio is computed.
+Defaults to \code{FALSE}.}
 
 \item{antilog}{Indicates whether the estimate is reported on the ratio scale.
 Only applies if \code{ratio = TRUE}. Defaults to \code{FALSE}.}
 
 \item{alternative}{Direction of the alternative of the p-value.
 Either "two.sided" (default), "one.sided", "less", or "greater".
-If "one.sided" or "two.sided" is specified, the z-value is assumed to be positive.}
+If "one.sided" or "two.sided" is specified, the z-value is assumed
+to be positive.}
 
 \item{z}{Numeric vector of z-values.}
 
@@ -58,21 +55,25 @@ If "one.sided" or "two.sided" is specified, the z-value is assumed to be positiv
 
 \code{ci2p} returns a numeric vector of p-values.
 
-\code{z2p} returns a numeric vector of p-values.
+\code{z2p} returns a numeric vector of p-values. The
+dimension of the output depends on the input. In general,
+the output will be an array of dimension
+\code{c(nrow(z), ncol(z), length(alternative))}. If any of these
+dimensions is 1, it will be dropped.
 
-\code{p2z} returns a numeric vector of z-values.
+\code{p2z} returns a numeric vector of z-values. The
+dimension of the output depends on the input. In general,
+the output will be an array of dimension
+\code{c(nrow(p), ncol(p), length(alternative))}. If any of these
+dimensions is 1, it will be dropped.
 }
 \description{
 Convert between estimates, z-values, p-values, and confidence intervals
 }
 \details{
-\code{z2p} is the vectorized version of
-the internal function \code{.z2p_}.
-\code{\link[base]{Vectorize}} is used to vectorize the function.
+\code{z2p} is vectorized over all arguments.
 
-\code{p2z} is the vectorized version of
-the internal function \code{.p2z_}.
-\code{\link[base]{Vectorize}} is used to vectorize the function.
+\code{p2z} is vectorized over all arguments.
 }
 \examples{
 ci2se(lower = 1, upper = 3)
