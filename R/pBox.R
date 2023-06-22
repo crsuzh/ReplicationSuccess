@@ -2,7 +2,7 @@
 #'
 #' \code{pBox} computes Box's tail probabilities based on the z-values of the
 #' original and the replication study, the corresponding variance ratio,
-#' and the significance level. 
+#' and the significance level.
 #' @rdname pBox
 #' @param zo Numeric vector of z-values from the original studies.
 #' @param zr Numeric vector of z-values from replication studies.
@@ -12,16 +12,17 @@
 #' original study.
 #' @param level Numeric vector of significance levels. Default is 0.05.
 #' @param alternative Either "two.sided" (default) or "one.sided".
-#' Specifies whether two-sided or one-sided Box's tail probabilities are computed.
-#' @return \code{pBox} returns Box's tail probabilities. 
-#' @details \code{pBox} quantifies the conflict between the sceptical prior 
-#' that would render the original study non-significant and the result 
-#' from the replication study. If the original study was not significant 
+#' Specifies whether two-sided or one-sided Box's tail
+#' probabilities are computed.
+#' @return \code{pBox} returns Box's tail probabilities.
+#' @details \code{pBox} quantifies the conflict between the sceptical prior
+#' that would render the original study non-significant and the result
+#' from the replication study. If the original study was not significant
 #' at level \code{level}, the sceptical prior does not exist and \code{pBox}
 #' cannot be calculated.
 #' @references Box, G.E.P. (1980). Sampling and Bayes' inference in scientific
-#' modelling and robustness (with discussion). \emph{Journal of the Royal Statistical
-#' Society, Series A}, \bold{143}, 383-430.
+#' modelling and robustness (with discussion). \emph{Journal of the Royal
+#' Statistical Society, Series A}, \bold{143}, 383-430.
 #'
 #' Held, L. (2020). A new standard for the analysis and design of replication
 #' studies (with discussion). \emph{Journal of the Royal Statistical Society:
@@ -35,44 +36,58 @@
 #'      zr = p2z(0.01, alternative = "one.sided"),
 #'      c = 1/2, alternative = "one.sided")
 #' @export
-pBox <- function(zo, zr, c, 
-                 level = 0.05,
-                 alternative = c("two.sided", "one.sided")){
+pBox <- function(
+    zo,
+    zr,
+    c,
+    level = 0.05,
+    alternative = c("two.sided", "one.sided")
+) {
+
     stopifnot(!is.null(alternative))
-    alternative <- match.arg(alternative)    
+    alternative <- match.arg(alternative)
     ## all other input parameters are checked in zBox()
 
     z <- zBox(zo = zo, zr = zr, c = c, level = level, alternative = alternative)
     res <- z2p(z = z)
-    if(alternative == "one.sided")
+    if (alternative == "one.sided")
         res <- ifelse(sign(zo) == sign(zr), res / 2, 1 - res / 2)
     return(res)
 }
 
 #' @rdname pBox
 #' @return \code{zBox} returns the z-values used in \code{pBox}.
-#' @export 
-zBox <- function(zo, zr, c, level = 0.05,
-                 alternative = c("two.sided", "one.sided")){
-    stopifnot(is.numeric(zo),
-              length(zo) >= 1,
-              is.finite(zo),
+#' @export
+zBox <- function(
+    zo,
+    zr,
+    c,
+    level = 0.05,
+    alternative = c("two.sided", "one.sided")
+) {
 
-              is.numeric(zr),
-              length(zr) >= 1,
-              is.finite(zr),
+    stopifnot(
+        is.numeric(zo),
+        length(zo) >= 1,
+        is.finite(zo),
 
-              is.numeric(c),
-              length(c) >= 1,
-              is.finite(c),
-              c > 0,
+        is.numeric(zr),
+        length(zr) >= 1,
+        is.finite(zr),
 
-              is.numeric(level),
-              length(level) >= 1,
-              is.finite(level),
-              0 < level, level < 1,
-              
-              !is.null(alternative))
+        is.numeric(c),
+        length(c) >= 1,
+        is.finite(c),
+        c > 0,
+
+        is.numeric(level),
+        length(level) >= 1,
+        is.finite(level),
+        0 < level, level < 1,
+
+        !is.null(alternative)
+    )
+
     alternative <- match.arg(alternative)
 
     z <- p2z(p = level, alternative = alternative)
@@ -80,4 +95,3 @@ zBox <- function(zo, zr, c, level = 0.05,
     res <- zr^2 / den
     return(sqrt(res))
 }
-

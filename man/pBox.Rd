@@ -22,7 +22,8 @@ original study.}
 \item{level}{Numeric vector of significance levels. Default is 0.05.}
 
 \item{alternative}{Either "two.sided" (default) or "one.sided".
-Specifies whether two-sided or one-sided Box's tail probabilities are computed.}
+Specifies whether two-sided or one-sided Box's tail
+probabilities are computed.}
 }
 \value{
 \code{pBox} returns Box's tail probabilities.
@@ -35,9 +36,9 @@ original and the replication study, the corresponding variance ratio,
 and the significance level.
 }
 \details{
-\code{pBox} quantifies the conflict between the sceptical prior 
-that would render the original study non-significant and the result 
-from the replication study. If the original study was not significant 
+\code{pBox} quantifies the conflict between the sceptical prior
+that would render the original study non-significant and the result
+from the replication study. If the original study was not significant
 at level \code{level}, the sceptical prior does not exist and \code{pBox}
 cannot be calculated.
 }
@@ -50,8 +51,8 @@ pBox(zo = p2z(0.02, alternative = "one.sided"),
 }
 \references{
 Box, G.E.P. (1980). Sampling and Bayes' inference in scientific
-modelling and robustness (with discussion). \emph{Journal of the Royal Statistical
-Society, Series A}, \bold{143}, 383-430.
+modelling and robustness (with discussion). \emph{Journal of the Royal
+Statistical Society, Series A}, \bold{143}, 383-430.
 
 Held, L. (2020). A new standard for the analysis and design of replication
 studies (with discussion). \emph{Journal of the Royal Statistical Society:
