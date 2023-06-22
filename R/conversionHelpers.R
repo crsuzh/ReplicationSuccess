@@ -150,6 +150,8 @@ ci2z_internal <- function(
         ratio = ratio
     )
 
+    if (any(se == 0)) stop("Invalid standard error: Some SEs are 0.")
+
     z <- estimate / se
 
     return(z)
@@ -376,7 +378,7 @@ set_output_dims <- function(x, d_input, alternative) {
 
 # Argument checks ==============================================================
 is_numeric_finite <- function(x) {
-    if (is.numeric(x) || all(is.finite(x))) TRUE else FALSE
+    if (is.numeric(x) && all(is.finite(x))) TRUE else FALSE
 }
 
 is_num_fin_poslength <- function(x) {
@@ -385,6 +387,10 @@ is_num_fin_poslength <- function(x) {
 
 is_in_01 <- function(p) {
     if (all(0 < p) && all(p < 1)) TRUE else FALSE
+}
+
+is_in_01_right_include <- function(p) {
+    if (all(0 < p) && all(p <= 1)) TRUE else FALSE
 }
 
 is_true_false <- function(x) {
@@ -401,8 +407,8 @@ check_conflevel_arg <- function(conf.level) {
         is_in_01(conf.level)
     if (!no_error) {
         stop(
-            "Argument 'conf.level' must be numeric, of length 1 and in [0, 1].",
-            call. = FALSE
+            "Argument 'conf.level' must be numeric, of length 1 and in (0, 1).",
+            call. = TRUE
         )
     }
     invisible(NULL)
@@ -412,7 +418,7 @@ check_ratio_arg <- function(ratio) {
     if (!is_true_false(ratio)) {
         stop(
             "Argument 'ratio' must be either TRUE or FALSE.",
-            call. = FALSE
+            call. = TRUE
         )
     }
     invisible(NULL)
@@ -439,17 +445,17 @@ check_lower_upper_arg <- function(lower, upper) {
                     "finite, of the same length and 'lower' should be ",
                     "<= 'upper'."
             ),
-            call. = FALSE
+            call. = TRUE
         )
     }
     invisible(NULL)
 }
 
 check_p_arg <- function(p) {
-    if (!is_numeric_finite(p) || !is_in_01(p)) {
+    if (!is_numeric_finite(p) || !is_in_01_right_include(p)) {
         stop(
-            "Argument 'p' must be numeric, finite and in [0, 1].",
-            call. = FALSE
+            "Argument 'p' must be numeric, finite and in (0, 1].",
+            call. = TRUE
         )
     }
     invisible(NULL)
@@ -459,7 +465,7 @@ check_z_arg <- function(z) {
     if (!is_numeric_finite(z)) {
         stop(
             "Argument 'z' must be numeric and finite.",
-            call. = FALSE
+            call. = TRUE
         )
     }
     invisible(NULL)
@@ -474,7 +480,7 @@ check_alternative_arg <- function(alternative) {
                     "Argument 'alternative' must be one of c(\"two.sided\", ",
                     "\"one.sided\", \"less\", \"greater\")"
             )
-        stop(msg, call. = FALSE)
+        stop(msg, call. = TRUE)
     }
     invisible(NULL)
 }
