@@ -46,8 +46,11 @@ c <- seq(0.2, 5, by = 0.05)
 t1 <- sapply(X = types, FUN = function(t) {
   T1EpSceptical(type = t, c = c, alternative = "one.sided", level = 0.025)
 })
-matplot(x = c, y = t1*100, type = "l", lty = 1, lwd = 2, las = 1, log = "x",
-        xlab = bquote(italic(c)), ylab = "Type-I error (\%)", xlim = c(0.2, 5))
+matplot(
+  x = c, y = t1*100, type = "l", lty = 1, lwd = 2, las = 1, log = "x",
+  xlab = bquote(italic(c)), ylab = "Type-I error (\%)",
+  xlim = c(0.2, 5)
+)
 legend("topright", legend = types, lty = 1, lwd = 2, col = seq_along(types))
 
 }
@@ -60,12 +63,13 @@ Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
     success based on relative effect size. The Annals of Applied Statistics.
     16:706-720. \doi{10.1214/21-AOAS1502}
 
-Micheloud, C., Balabdaoui, F., Held, L. (2023).
-Beyond the two-trials rule: Type-I error control and sample size planning
-with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
+Micheloud, C., Balabdaoui, F., Held, L. (2023). Assessing replicability
+with the sceptical p-value: Type-I error control and
+sample size planning. \emph{Statistica Neerlandica}. \doi{10.1111/stan.12312}
 }
 \seealso{
-\code{\link{pSceptical}}, \code{\link{levelSceptical}}, \code{\link{PPpSceptical}}
+\code{\link{pSceptical}}, \code{\link{levelSceptical}},
+\code{\link{PPpSceptical}}
 }
 \author{
 Leonhard Held, Samuel Pawel

@@ -1,6 +1,6 @@
 .T1EpSceptical_ <- function(level, c,
                             alternative = c("one.sided", "two.sided"),
-                            type = c("golden", "nominal", "controlled")) {  
+                            type = c("golden", "nominal", "controlled")) {
 
     stopifnot(is.numeric(level),
               length(level) == 1,
@@ -39,38 +39,40 @@
 
     # quick fix for alternative problems
 
-    if(alternative == "two.sided") {
+    if (alternative == "two.sided") {
         ## if c = 1 compute analytically
         if (c == 1) {
-            t1err <- 2*(1 - stats::pnorm(q = 2*zas))
+            t1err <- 2 * (1 - stats::pnorm(q = 2 * zas))
             return(t1err)
         } else {  ## if c != 1 use numerical integration
 
             ## define function to integrate over zo from zas to Infty
             intFun <- function(zo) {
-                K <- zo^2/zas^2
-                ## compute minimal zr to achieve replication success given zo and level
-                zrmin <- zas*sqrt(1 + c/(K - 1))
+                K <- zo^2 / zas^2
+                ## compute minimal zr to achieve replication
+                ## success given zo and level
+                zrmin <- zas * sqrt(1 + c / (K - 1))
                 ## return integrand: P(|zr| >= zrmin)*dnorm(zo)
-                2*(1 - stats::pnorm(q = zrmin))*stats::dnorm(x = zo)
+                2 * (1 - stats::pnorm(q = zrmin)) * stats::dnorm(x = zo)
             }
         }
     }
-  
+
     if (alternative == "one.sided") {
         ## if c = 1 compute analytically
         if (c == 1) {
-            t1err <- (1 - stats::pnorm(q = 2*zas))/2
+            t1err <- (1 - stats::pnorm(q = 2 * zas)) / 2
             return(t1err)
         } else { ## if c != 1 use numerical integration
 
             ## define function to integrate over zo from zas to Infty
             intFun <- function(zo) {
-                K <- zo^2/zas^2
-                ## compute minimal zr to achieve replication success given zo and level
-                zrmin <- zas*sqrt(1 + c/(K - 1))
+                K <- zo^2 / zas^2
+                ## compute minimal zr to achieve replication success
+                ## given zo and level
+                zrmin <- zas * sqrt(1 + c / (K - 1))
                 ## compute integrand: P(zr >= zrmin)*dnorm(zo)
-                (1 - stats::pnorm(q = zrmin))*stats::dnorm(x = zo)
+                (1 - stats::pnorm(q = zrmin)) * stats::dnorm(x = zo)
             }
         }
     }
@@ -78,7 +80,11 @@
     if (alternative == "two.sided") {
         ## the integral is symmetric around zero for "one.sided" and "two.sided"
         ## so we can multiply the integral from zas to Infty by 2
-        t1err <- 2*stats::integrate(f = intFun, lower = zas, upper = Inf)$value
+        t1err <- 2 * stats::integrate(
+            f = intFun,
+            lower = zas,
+            upper = Inf
+        )$value
         return(t1err)
     }
     if (alternative == "one.sided") {
@@ -118,12 +124,14 @@
 #'     success based on relative effect size. The Annals of Applied Statistics.
 #'     16:706-720. \doi{10.1214/21-AOAS1502}
 #'
-#' Micheloud, C., Balabdaoui, F., Held, L. (2023).
-#' Beyond the two-trials rule: Type-I error control and sample size planning
-#' with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
+#' Micheloud, C., Balabdaoui, F., Held, L. (2023). Assessing replicability
+#' with the sceptical p-value: Type-I error control and
+#' sample size planning. \emph{Statistica Neerlandica}. \doi{10.1111/stan.12312}
 #'
 #' @author Leonhard Held, Samuel Pawel
-#' @seealso \code{\link{pSceptical}}, \code{\link{levelSceptical}}, \code{\link{PPpSceptical}}
+#' @seealso
+#' \code{\link{pSceptical}}, \code{\link{levelSceptical}},
+#' \code{\link{PPpSceptical}}
 #' @examples
 #' ## compare type-I error rate for different recalibration types
 #' types <- c("nominal", "golden", "controlled")
@@ -131,10 +139,12 @@
 #' t1 <- sapply(X = types, FUN = function(t) {
 #'   T1EpSceptical(type = t, c = c, alternative = "one.sided", level = 0.025)
 #' })
-#' matplot(x = c, y = t1*100, type = "l", lty = 1, lwd = 2, las = 1, log = "x",
-#'         xlab = bquote(italic(c)), ylab = "Type-I error (%)", xlim = c(0.2, 5))
+#' matplot(
+#'   x = c, y = t1*100, type = "l", lty = 1, lwd = 2, las = 1, log = "x",
+#'   xlab = bquote(italic(c)), ylab = "Type-I error (%)",
+#'   xlim = c(0.2, 5)
+#' )
 #' legend("topright", legend = types, lty = 1, lwd = 2, col = seq_along(types))
-#' 
+#'
 #' @export
 T1EpSceptical <- Vectorize(.T1EpSceptical_)
-
