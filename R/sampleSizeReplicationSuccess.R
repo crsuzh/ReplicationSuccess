@@ -328,16 +328,17 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
 #' @param zo Numeric vector of z-values from original studies.
 #' @param power The power to achieve replication success.
 #' @param level Threshold for the calibrated sceptical p-value.
-#'  Default is 0.025.
-#' @param alternative Specifies if \code{level} is "one.sided" (default) or "two.sided".
-#'     If "one.sided" then sample size calculations are based
+#'     Default is 0.025.
+#' @param alternative Specifies if \code{level} is "one.sided" (default) or
+#'     "two.sided". If "one.sided" then sample size calculations are based
 #'     on a one-sided assessment of replication success in the direction of the
 #'     original effect estimates.
-#' @param type Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
-#'  or "controlled". "golden" ensures that for an original study just significant at
-#' the specified \code{level}, replication success is only possible for
-#' replication effect estimates larger than the original one.
-#' "controlled" ensures exact overall Type-I error control at level \code{level}^2.
+#' @param type Type of recalibration. Can be either "golden" (default),
+#'     "nominal" (no recalibration), or "controlled". "golden" ensures that for
+#'     an original study just significant at the specified \code{level},
+#'     replication success is only possible for replication effect estimates
+#'     larger than the original one. "controlled" ensures exact overall Type-I
+#'     error control at level \code{level}^2.
 #' @param designPrior Is only taken into account when \code{power} is specified.
 #'     Either "conditional" (default), "predictive", or "EB". If "EB", the power
 #'     is computed under a predictive distribution where the contribution of the
@@ -356,8 +357,8 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
 #' @return The relative sample size for replication success. If impossible to
 #'     achieve the desired power for specified inputs \code{NaN} is returned.
 #' @details \code{sampleSizeReplicationSuccess} is the vectorized version of
-#' the internal function \code{.sampleSizeReplicationSuccess_}.
-#' \code{\link[base]{Vectorize}} is used to vectorize the function.
+#'     the internal function \code{.sampleSizeReplicationSuccess_}.
+#'     \code{\link[base]{Vectorize}} is used to vectorize the function.
 #' @references
 #' Held, L. (2020). A new standard for the analysis and design of replication
 #' studies (with discussion). \emph{Journal of the Royal Statistical Society:
@@ -365,15 +366,16 @@ sampleSizeReplicationSuccessNum  <- Vectorize(.sampleSizeReplicationSuccessNum_)
 #' \doi{10.1111/rssa.12493}
 #'
 #' Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
-#'     success based on relative effect size. The Annals of Applied Statistics.
-#'     16:706-720. \doi{10.1214/21-AOAS1502}
+#'     success based on relative effect size. \emph{The Annals of Applied
+#' Statistics}. 16:706-720. \doi{10.1214/21-AOAS1502}
 #'
-#' Micheloud, C., Balabdaoui, F., Held, L. (2023).
-#' Beyond the two-trials rule: Type-I error control and sample size planning
-#' with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
+#' Micheloud, C., Balabdaoui, F., Held, L. (2023). Assessing replicability
+#' with the sceptical p-value: Type-I error control and
+#' sample size planning. \emph{Statistica Neerlandica}. \doi{10.1111/stan.12312}
 #'
 #' @author Leonhard Held, Charlotte Micheloud, Samuel Pawel, Florian Gerber
-#' @seealso \code{\link{pSceptical}}, \code{\link{powerReplicationSuccess}}, \code{\link{levelSceptical}}
+#' @seealso \code{\link{pSceptical}}, \code{\link{powerReplicationSuccess}},
+#'     \code{\link{levelSceptical}}
 #' @examples
 #' ## based on power
 #' sampleSizeReplicationSuccess(zo = p2z(0.0025), power = 0.8, level = 0.025,

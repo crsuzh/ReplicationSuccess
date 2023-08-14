@@ -48,38 +48,43 @@
 #' Computes the minimum relative effect size to achieve replication success
 #' with the sceptical p-value
 #'
-#' The minimum relative effect size (replication to original) to achieve replication success
-#' with the sceptical p-value
-#' is computed based on the result of the original study and the corresponding variance ratio.
+#' The minimum relative effect size (replication to original) to achieve
+#' replication success with the sceptical p-value is computed based on the
+#' result of the original study and the corresponding variance ratio.
 #'
 #' @param zo Numeric vector of z-values from original studies.
-#' @param c Numeric vector of variance ratios of the original and replication effect estimates.
-#' This is usually the ratio of the sample size of the replication study to the sample
-#' size of the original study.
+#' @param c Numeric vector of variance ratios of the original and replication
+#' effect estimates. This is usually the ratio of the sample size of the
+#' replication study to the sample size of the original study.
 #' @param level Threshold for the calibrated sceptical p-value.
 #'  Default is 0.025.
-#' @param alternative Specifies if \code{level} is "one.sided" (default) or "two.sided".
-#' If "one.sided", then effect size calculations are based on a one-sided assessment of
-#' replication success in the direction of the original effect estimate.
-#' @param type Type of recalibration. Can be either "golden" (default), "nominal" (no recalibration),
-#'  or "controlled". "golden" ensures that for an original study just significant at
-#' the specified \code{level}, replication success is only possible for
-#' replication effect estimates larger than the original one.
-#' "controlled" ensures exact overall Type-I error control at level \code{level}^2.
+#' @param alternative Specifies if \code{level} is "one.sided" (default) or
+#' "two.sided". If "one.sided", then effect size calculations are based on a
+#' one-sided assessment of replication success in the direction of the original
+#' effect estimate.
+#' @param type Type of recalibration. Can be either "golden" (default),
+#' "nominal" (no recalibration), or "controlled". "golden" ensures that for an
+#' original study just significant at the specified \code{level}, replication
+#' success is only possible for replication effect estimates larger than the
+#' original one. "controlled" ensures exact overall Type-I error control at
+#' level \code{level}^2.
 #' @return The minimum relative effect size to achieve replication success
 #' with the sceptical p-value.
 #' @details \code{effectSizeReplicationSuccess} is the vectorized version of
 #' the internal function \code{.effectSizeReplicationSuccess_}.
 #' \code{\link[base]{Vectorize}} is used to vectorize the function.
-#' @references Held, L., Micheloud, C., Pawel, S. (2022). The assessment of
+#' @references
+#' Held, L., Micheloud, C., Pawel, S. (2022). The assessment of
 #'     replication success based on relative effect size. The Annals of Applied
 #'     Statistics. 16:706-720. \doi{10.1214/21-AOAS1502}
 #'
-#' Micheloud, C., Balabdaoui, F., Held, L. (2023).
-#' Beyond the two-trials rule: Type-I error control and sample size planning
-#' with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
+#' Micheloud, C., Balabdaoui, F., Held, L. (2023). Assessing replicability
+#' with the sceptical p-value: Type-I error control and
+#' sample size planning. \emph{Statistica Neerlandica}. \doi{10.1111/stan.12312}
+#'
 #' @author Leonhard Held, Charlotte Micheloud, Samuel Pawel, Florian Gerber
-#' @seealso \code{\link{sampleSizeReplicationSuccess}}, \code{\link{levelSceptical}}
+#' @seealso
+#' \code{\link{sampleSizeReplicationSuccess}}, \code{\link{levelSceptical}}
 #' @examples
 #' po <- c(0.001, 0.002, 0.01, 0.02, 0.025)
 #' zo <- p2z(po, alternative = "one.sided")

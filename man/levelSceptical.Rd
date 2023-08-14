@@ -41,26 +41,33 @@ the internal function \code{.levelSceptical_}.
 }
 \examples{
 levelSceptical(level = 0.025, alternative = "one.sided", type = "nominal")
-levelSceptical(level = 0.025, alternative = "one.sided", type = "controlled", c = 1)
+levelSceptical(
+  level = 0.025,
+  alternative = "one.sided",
+  type = "controlled",
+  c = 1
+)
 levelSceptical(level = 0.025, alternative = "one.sided", type = "golden")
 }
 \references{
-Held, L. (2020). A new standard for the analysis and design of replication studies (with discussion).
-\emph{Journal of the Royal Statistical Society: Series A (Statistics in Society)}, \bold{183}, 431-448.
-\doi{10.1111/rssa.12493}
+Held, L. (2020). A new standard for the analysis and design of
+    replication studies (with discussion). \emph{Journal of the Royal
+    Statistical Society: Series A (Statistics in Society)}, \bold{183},
+    431-448. \doi{10.1111/rssa.12493}
 
-Held, L. (2020). The harmonic mean chi-squared test to substantiate scientific findings.
-\emph{Journal of the Royal Statistical Society: Series C (Applied Statistics)}, \bold{69}, 697-708.
-\doi{10.1111/rssc.12410}
+Held, L. (2020). The harmonic mean chi-squared test to substantiate
+    scientific findings. \emph{Journal of the Royal Statistical
+    Society: Series C (Applied Statistics)}, \bold{69}, 697-708.
+    \doi{10.1111/rssc.12410}
 
 Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
 success based on relative effect size.
 \emph{The Annals of Applied Statistics}, \bold{16}, 706-720.
 \doi{10.1214/21-AOAS1502}
 
-Micheloud, C., Balabdaoui, F., Held, L. (2023).
-Beyond the two-trials rule: Type-I error control and sample size planning
-with the sceptical p-value. \url{https://arxiv.org/abs/2207.00464}
+Micheloud, C., Balabdaoui, F., Held, L. (2023). Assessing replicability
+with the sceptical p-value: Type-I error control and
+sample size planning. \emph{Statistica Neerlandica}. \doi{10.1111/stan.12312}
 }
 \author{
 Leonhard Held
