@@ -2,6 +2,22 @@ citHeader(paste("To cite the R-package 'ReplicationSuccess' in publications,",
                 "please use:"))
 
 bibentry(bibtype = "article",
+         title = "The assessment of intrinsic credibility and a new argument for p < 0.005",
+         author = c(person(given = "Leonhard", family = "Held", role = "aut")),
+         doi = "10.1098/rsos.181534",
+         journal = "Royal Society Open Science",  
+         volume = "6",
+         number = "3",
+         pages = "181534",
+         year = 2019,
+         textVersion = paste("Held, L. (2019).",
+                             "The assessment of intrinsic credibility and a new argument for p < 0.005.",
+                             "Royal Society Open Science.",
+                             "6(3):181534.",
+                             "https://doi.org/10.1098/rsos.181534"
+                             ))
+
+bibentry(bibtype = "article",
          title = "A new standard for the analysis and design of replication studies (with discussion)",
          author = c(person(given = "Leonhard", family = "Held", role = "aut")),
          doi = "10.1111/rssa.12493",
@@ -16,7 +32,6 @@ bibentry(bibtype = "article",
                              "183(2):431-448.",
                              "https://doi.org/10.1111/rssa.12493"
                              ))
-
 
 bibentry(bibtype = "article",
          title = "The harmonic mean chi-squared test to substantiate scientific findings",
@@ -34,7 +49,6 @@ bibentry(bibtype = "article",
                              "https://doi.org/10.1111/rssc.12410"
                              ))
 
-
 bibentry(bibtype = "article",
          title = "Probabilistic forecasting of replication studies",
          author = c(person(given = "Samuel", family = "Pawel", role = "aut"),
@@ -51,7 +65,6 @@ bibentry(bibtype = "article",
                              "15(4):e0231416.",
                              "https://doi.org/10.1371/journal.pone.0231416"
                              ))
-
 
 bibentry(bibtype = "article",
          title = "The assessment of replication success based on relative effect size",
@@ -71,7 +84,6 @@ bibentry(bibtype = "article",
                              "https://doi.org/10.1214/21-AOAS1502"
                              ))
 
-
 bibentry(bibtype = "article",
          title = "Power Calculations for Replication Studies",
          author = c(person(given = "Leonhard", family = "Held", role = "aut"),
@@ -90,17 +102,18 @@ bibentry(bibtype = "article",
                              ))
 
 bibentry(bibtype = "article",
-         title = "The assessment of intrinsic credibility and a new argument for p < 0.005",
-         author = c(person(given = "Leonhard", family = "Held", role = "aut")),
-         doi = "10.1098/rsos.181534",
-         journal = "Royal Society Open Science",  
-         volume = "6",
-         number = "3",
-         pages = "181534",
-         year = 2019,
-         textVersion = paste("Held, L. (2019).",
-                             "The assessment of intrinsic credibility and a new argument for p < 0.005.",
-                             "Royal Society Open Science.",
-                             "6(3):181534.",
-                             "https://doi.org/10.1098/rsos.181534"
+         title = "Assessing replicability with the sceptical $p$-value: {T}ype-{I} error control and sample size planning",
+         author = c(person(given = "Charlotte", family = "Micheloud", role = "aut"),
+                    person(given = "Fadoua", family = "Balabdaoui", role = "aut"),
+                    person(given = "Leonhard", family = "Held", role = "aut")),
+         url = "https://doi.org/10.1111/stan.12312",
+         journal = "Statistica Neerlandica",
+         #volume = "n/a",
+         #number = "n/a",
+         #pages = "n/a",
+         year = 2023,
+         textVersion = paste("Micheloud, C., Balabdaoui, F., Held, L. (2023).",
+                             "Assessing replicability with the sceptical p-value: Type-I error control and sample size planning.",
+                             "Statistica Neerlandica.",
+                             "https://doi.org/10.1214/21-STS828"
                              ))
