@@ -50,6 +50,7 @@ ci2se_internal <- function(
         lower <- log(lower)
         upper <- log(upper)
     }
+
     se <- (upper - lower) / (2 * q)
     return(se)
 }
@@ -428,7 +429,7 @@ check_antilog_arg <- function(antilog) {
     if (!is_true_false(x = antilog)) {
         stop(
             "Argument 'antilog' must be either TRUE or FALSE.",
-            call. = FALSE
+            call. = TRUE
         )
     }
     invisible(NULL)
