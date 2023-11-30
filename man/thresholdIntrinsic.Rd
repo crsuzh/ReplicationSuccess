@@ -17,7 +17,8 @@ thresholdIntrinsic(
 Specifies if the threshold is for one-sided or two-sided p-values.}
 
 \item{type}{Either "Held" (default) or "Matthews".
-Type of intrinsic p-value threshold, see Held (2019) and Matthews (2018) for more information.}
+Type of intrinsic p-value threshold, see Held (2019) and Matthews (2018)
+for more information.}
 }
 \value{
 The threshold for intrinsic credibility.

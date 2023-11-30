@@ -4,8 +4,9 @@
 #' @param alternative Either "two.sided" (default) or "one.sided".
 #' Specifies if the threshold is for one-sided or two-sided p-values.
 #' @param type Either "Held" (default) or "Matthews".
-#' Type of intrinsic p-value threshold, see Held (2019) and Matthews (2018) for more information.
-#' @return The threshold for intrinsic credibility. 
+#' Type of intrinsic p-value threshold, see Held (2019) and Matthews (2018)
+#' for more information.
+#' @return The threshold for intrinsic credibility.
 #' @references
 #' Matthews, R. A. J. (2018). Beyond 'significance': principles and
 #' practice of the analysis of credibility. \emph{Royal Society Open
@@ -19,9 +20,11 @@
 #' thresholdIntrinsic(alpha = c(0.005, 0.01, 0.05))
 #' thresholdIntrinsic(alpha = c(0.005, 0.01, 0.05), alternative = "one.sided")
 #' @export
-thresholdIntrinsic <- function(alpha, 
-                               alternative = c("two.sided", "one.sided"), 
-                               type = c("Held", "Matthews")){
+thresholdIntrinsic <- function(
+    alpha,
+    alternative = c("two.sided", "one.sided"),
+    type = c("Held", "Matthews")
+) {
 
     stopifnot(is.numeric(alpha),
               length(alpha) > 0,
@@ -35,10 +38,15 @@ thresholdIntrinsic <- function(alpha,
     type <- match.arg(type)
 
     z <- p2z(p = alpha, alternative = alternative)
-    if(type == "Held"){
-        result <- z2p(z = sqrt(2)*z, alternative = alternative)
-    } else{ ## type == "Matthews"
-        result <- z2p(z = sqrt(2)*z/sqrt(sqrt(5) - 1), alternative = alternative)
+
+    if (type == "Held") {
+        result <- z2p(z = sqrt(2) * z, alternative = alternative)
+    } else {
+        ## type is "Matthews"
+        result <- z2p(
+            z = sqrt(2) * z / sqrt(sqrt(5) - 1),
+            alternative = alternative
+        )
     }
     return(result)
 }
