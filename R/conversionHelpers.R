@@ -386,6 +386,10 @@ is_num_fin_poslength <- function(x) {
     if (is_numeric_finite(x) && length(x) > 0L) TRUE else FALSE
 }
 
+is_num_poslength <- function(x) {
+    if (is.numeric(x) && length(x) > 0L) TRUE else FALSE
+}
+
 is_in_01 <- function(p) {
     if (all(0 < p) && all(p < 1)) TRUE else FALSE
 }
@@ -408,7 +412,11 @@ check_conflevel_arg <- function(conf.level) {
         is_in_01(conf.level)
     if (!no_error) {
         stop(
-            "Argument 'conf.level' must be numeric, of length 1 and in (0, 1).",
+            paste0(
+                "Argument 'conf.level' must be numeric, ",
+                "finite, of length 1 and in (0, 1)."
+            ),
+            # "Argument 'conf.level' must be numeric, of length 1 and in (0, 1).",
             call. = TRUE
         )
     }
@@ -437,13 +445,19 @@ check_antilog_arg <- function(antilog) {
 
 check_lower_upper_arg <- function(lower, upper) {
 
-    ok <- vapply(list(lower, upper), is_num_fin_poslength, logical(1L))
+    # ok <- vapply(list(lower, upper), is_num_fin_poslength, logical(1L))
+    ok <- vapply(list(lower, upper), is_num_poslength, logical(1L))
     no_error <- all(ok) && is_same_length(upper, lower) && all(lower <= upper)
     if (!no_error) {
         stop(
+            # paste0(
+            #         "Invalid 'lower' and 'upper': Both must be numeric, ",
+            #         "finite, of the same length and 'lower' should be ",
+            #         "<= 'upper'."
+            # ),
             paste0(
                     "Invalid 'lower' and 'upper': Both must be numeric, ",
-                    "finite, of the same length and 'lower' should be ",
+                    "of the same length and 'lower' should be ",
                     "<= 'upper'."
             ),
             call. = TRUE
@@ -453,9 +467,11 @@ check_lower_upper_arg <- function(lower, upper) {
 }
 
 check_p_arg <- function(p) {
-    if (!is_numeric_finite(p) || !is_in_01_right_include(p)) {
+    # if (!is_numeric_finite(p) || !is_in_01_right_include(p)) {
+    if (!is.numeric(p) || !is_in_01_right_include(p[!is.na(p)])) {
         stop(
-            "Argument 'p' must be numeric, finite and in (0, 1].",
+            # "Argument 'p' must be numeric, finite and in (0, 1].",
+            "Argument 'p' must be numeric and in (0, 1].",
             call. = TRUE
         )
     }
@@ -463,9 +479,11 @@ check_p_arg <- function(p) {
 }
 
 check_z_arg <- function(z) {
-    if (!is_numeric_finite(z)) {
+    # if (!is_numeric_finite(z)) {
+    if (!is.numeric(z)) {
         stop(
-            "Argument 'z' must be numeric and finite.",
+            # "Argument 'z' must be numeric and finite.",
+            "Argument 'z' must be numeric.",
             call. = TRUE
         )
     }
