@@ -350,7 +350,7 @@
 #' \item{\code{zr}}{The z-value in the replication study.}
 #' \item{\code{pr}}{The two-sided p-value in the replication study.}
 #' \item{\code{pr1}}{The one-sided p-value in the replication study. It
-#' it is only available for studies where \code{resulto} is \code{"Positive}.}
+#' it is only available for studies where \code{resulto} is \code{"Positive"}.}
 #' \item{\code{CIr_l}}{The lower bound of the 95\%-confidence interval for the
 #' smd in the replication study.}
 #' \item{\code{CIr_u}}{The lower bound of the 95\%-confidence interval for the
