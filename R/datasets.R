@@ -207,7 +207,7 @@
 #'   abline(a = 0, b = 1, col = "grey")
 #' }
 #' par(parOld)
-#' 
+#'
 #' ## Plots of peer beliefs
 #' RProjects$significant <- factor(RProjects$pr < 0.05,
 #'                                 levels = c(FALSE, TRUE),
@@ -309,3 +309,149 @@
 #' par(parOld)
 #' @keywords data
 "protzko2020"
+
+
+#' @title Data from the Reproducibility Project: Cancer Biology
+#'
+#' @description Data from the \emph{Reproducibility Project Cancer Biology}
+#' (RPCB). The variables are as follows:
+#' \describe{
+#' \item{\code{osf}}{Link to the OSF repository.}
+#' \item{\code{id}}{???}
+#' \item{\code{paper}}{???}
+#' \item{\code{experiment}}{???}
+#' \item{\code{effectType}}{Type of the effect.}
+#' \item{\code{effect}}{???}
+#' \item{\code{resulto}}{The direction of effect in the original study.}
+#' \item{\code{no}}{The sample size in the original study.}
+#' \item{\code{smdo}}{The standardized mean difference in the original study.}
+#' \item{\code{so}}{The standard error in the original study.}
+#' \item{\code{zo}}{The z-value in the original study.}
+#' \item{\code{po}}{The two-sided p-value in the original study.}
+#' \item{\code{po1}}{The one-sided p-value in the original study. It is only
+#' available for studies where \code{resulto} is \code{"Positive"}.}
+#' \item{\code{CIo_l}}{The lower bound of the 95\%-confidence interval for the
+#' smd in the original study.}
+#' \item{\code{CIo_u}}{The upper bound of the 95\%-confidence interval for the
+#' smd in the original study.}
+#' \item{\code{ESo}}{The effect size in the original study.
+#' ??? is this correct???}
+#' \item{\code{seESo}}{The standard error of the effect size in the original
+#' study.}
+#' \item{\code{lowerESo}}{The lower bound of the 95\%-confidence interval for
+#' the effect size in the original study.}
+#' \item{\code{upperESo}}{The upper bound of the 95\%-confidence interval for
+#' the effect size in the original study.}
+#' \item{\code{resultr}}{The direction of effect in the replication study.}
+#' \item{\code{nr}}{The sample size in the replication study.}
+#' \item{\code{smdr}}{The standardized mean difference in the replication
+#' study.}
+#' \item{\code{sr}}{The standard error in the replication study.}
+#' \item{\code{zr}}{The z-value in the replication study.}
+#' \item{\code{pr}}{The two-sided p-value in the replication study.}
+#' \item{\code{pr1}}{The one-sided p-value in the replication study. It
+#' it is only available for studies where \code{resulto} is \code{"Positive}.}
+#' \item{\code{CIr_l}}{The lower bound of the 95\%-confidence interval for the
+#' smd in the replication study.}
+#' \item{\code{CIr_u}}{The lower bound of the 95\%-confidence interval for the
+#' smd in the replication study.}
+#' \item{\code{ESr}}{The effect size in the replication study.
+#' ???is this correct???}
+#' \item{\code{seESr}}{The standard error of the effect size in the replication
+#' study.}
+#' \item{\code{lowerESr}}{The lower bound of the 95\%-confidence interval for
+#' the effect size in the replication study.}
+#' \item{\code{upperESr}}{The upper bound of the 95\%-confidence interval for
+#' the effect size in the replication study.}
+#' \item{\code{d}}{The relative effect size, i.e. \code{smdr/smdo}.}
+#' \item{\code{c}}{The variance ratio, i.e. \code{so^2 / sr^2}.}
+#' \item{\code{ttr}}{The significance criterion. ??? should we keep this ???.}
+#' \item{\code{ma}}{The meta-analysis effect estimate. ???}
+#' \item{\code{se_ma}}{The standard error for the meta-analysis effect
+#' estimate. ???}
+#' \item{\code{p_ma}}{The two-sided p-value for the meta-analysis effect
+#' estimate. ???}
+#' \item{\code{CIma_l}}{The lower bound of the 95\%-confidence interval for the
+#' meta-analysis effect estimate. ???}
+#' \item{\code{CIma_u}}{The upper bound of the 95\%-confidence interval for the
+#' meta-analysis effect estimate. ???}
+#' \item{\code{pS}}{The two-sided sceptical p-value for the meta-analysis. ???}
+#' \item{\code{pS1}}{The one-sided sceptical p-value for the meta-analysis. ???}
+#' }
+#'
+#' @details This data set is a subset(???) of the data from the Reproducibility
+#' Project: Cancer Biology (RPCB). TODO: Describe why we did not use their data
+#' directly and why we recalculated all the stuff above.
+#' @name RPCB
+#' @docType data
+#' @usage data(RPCB)
+#' @format A \code{data.frame} with 112 rows and 42 variables
+#' @source https://github.com/SamCH93/thesis/blob/main/source/data/rpcb-effect-level.csv
+#' @references Errington, T. M., Mathur, M., Soderberg, C. K., Denis, A.,
+#'     Perfito, N., Iorns, E., & Nosek, B. A. (2021). Investigating the
+#'     replicability of preclinical cancer biology. \emph{eLife}, \bold{10},
+#'     e71601. https://doi.org/10.7554/eLife.71601 \cr\cr
+#' Errington, T. M., Mathur, M., Soderberg, C. K., & Denis, A. (2021).
+#'     Meta-analysis paper figures and tables.
+#'     https://doi.org/10.17605/OSF.IO/SQUY7
+#' @keywords data
+"RPCB"
+
+#' @title Data from the LOOPR Project
+#'
+#' @description Data from the \emph{Life Outcomes of Personality Replication}
+#' (LOOPR) project. The variables are as follows:
+#' \describe{
+#' \item{\code{outcome}}{The life outcome}
+#' \item{\code{trait_predicted}}{The personality trait}
+#' \item{\code{study}}{Study identifier, usually names of authors
+#' from original study}
+#' \item{\code{project}}{Name of replication project}
+#' \item{\code{ro}}{Effect estimate of original study on correlation scale}
+#' \item{\code{rr}}{Effect estimate of replication study on correlation scale}
+#' \item{\code{fiso}}{Effect estimate of original study transformed to
+#' Fisher-z scale}
+#' \item{\code{fisr}}{Effect estimate of replication study transformed
+#' to Fisher-z scale}
+#' \item{\code{se_fiso}}{Standard error of Fisher-z transformed effect estimate
+#' of original study}
+#' \item{\code{se_fisr}}{Standard error of Fisher-z transformed effect estimate
+#' of replication study}
+#' \item{\code{po}}{Two-sided p-value from significance test of effect estimate
+#' from original study}
+#' \item{\code{pr}}{Two-sided p-value from significance test of effect estimate
+#' from replication study}
+#'  \item{\code{po1}}{One-sided p-value from significance test of effect
+#' estimate from original study (in the direction of the original effect
+#' estimate)}
+#' \item{\code{pr1}}{One-sided p-value from significance test of effect estimate
+#' from replication study (in the direction of the original effect estimate)}
+#' \item{\code{pm_belief}}{For this data set, this variable is always \code{NA}.
+#' It is only there for completeness, such that the RProjects and Soto2019 data
+#' sets can easily be bound together.}
+#' \item{\code{no}}{Sample size in original study. Sometimes the values in this
+#' variable are not integers. This happens if the trait-outcome associations are
+#' composed from multiple original studies.}
+#' \item{\code{nr}}{Sample size in replication study. Sometimes the values in
+#' this variable are not integers. This happens if the trait-outcome
+#' associations are composed from multiple original studies.}
+#' }
+#'
+#' @details This data set corresponds largely to the data presented in Table 1
+#' in Soto (2019). However, we have attached the names of the authors of the
+#' original study from the data available through the OSF repository.
+#' @name Soto2019
+#' @docType data
+#' @usage data(Soto2019)
+#' @format A data frame with 143 rows and 15 variables
+#' @source The relevant files were downloaded from \url{https://osf.io/d3xb7}
+#'     on December 08, 2023 via the R script "Soto2019.R", which also executes
+#'     the code to assemble the desired variables.
+#' @references Soto, C. J. (2019). How Replicable Are Links Between Personality
+#'     Traits and Consequential Life Outcomes? The Life Outcomes of Personality
+#'     Replication Project. \emph{Psychological Science}, \bold{30}(5), 711-727.
+#'     https://doi.org/10.1177/0956797619831612 \cr\cr
+#' Soto, C. J. (2019, May 28). The Life Outcomes Of Personality Replication
+#'     Project. Retrieved from osf.io/d3xb7
+#' @keywords data
+"Soto2019"
