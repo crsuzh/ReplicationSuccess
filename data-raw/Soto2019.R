@@ -140,10 +140,10 @@ df_list <- lapply(
     dat = dat
 )
 
-df <- do.call("cbind", df_list)
+Soto2019 <- do.call("cbind", df_list)
 
 # Order the columns as in RProjects data set
 nm_rproj <- names(ReplicationSuccess::RProjects)
-idx <- names(df) %in% nm_rproj
-df <- cbind(df[!idx], df[idx][nm_rproj])
-save(df, file = "../data/Soto2019.rda")
+idx <- names(Soto2019) %in% nm_rproj
+Soto2019 <- cbind(Soto2019[!idx], Soto2019[idx][nm_rproj])
+save(Soto2019, file = "../data/Soto2019.rda")
