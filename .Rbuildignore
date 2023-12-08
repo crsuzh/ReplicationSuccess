@@ -19,3 +19,4 @@ vignettes/*.dvi
 vignettes/*.fdb_latexmk
 vignettes/*.fls
 vignettes/*.out
+^data-raw$
