@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/376838333.svg)](https://zenodo.org/doi/10.5281/zenodo.10350448)
+
 # ReplicationSuccess
 
 Provides utilities for the design and analysis of replication studies.
