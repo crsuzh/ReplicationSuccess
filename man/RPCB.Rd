@@ -8,7 +8,7 @@
 A \code{data.frame} with 112 rows and 42 variables
 }
 \source{
-https://github.com/SamCH93/thesis/blob/main/source/data/rpcb-effect-level.csv
+https://osf.io/squy7/
 }
 \usage{
 data(RPCB)

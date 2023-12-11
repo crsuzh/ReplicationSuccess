@@ -386,7 +386,7 @@
 #' @docType data
 #' @usage data(RPCB)
 #' @format A \code{data.frame} with 112 rows and 42 variables
-#' @source https://github.com/SamCH93/thesis/blob/main/source/data/rpcb-effect-level.csv
+#' @source https://osf.io/squy7/
 #' @references Errington, T. M., Mathur, M., Soderberg, C. K., Denis, A.,
 #'     Perfito, N., Iorns, E., & Nosek, B. A. (2021). Investigating the
 #'     replicability of preclinical cancer biology. \emph{eLife}, \bold{10},
