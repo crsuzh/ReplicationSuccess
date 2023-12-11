@@ -2,8 +2,8 @@
 library(ReplicationSuccess)
 library(dplyr) # for data wrangling
 
-## RPCB data with SMD transformed effect sizes but before aggregating internal
-## replications:
+# ==============================================================================
+
 ## Download the zip archive if it does not exist
 destfile <- file.path(tempdir(), "osf_squy7.zip")
 if (!file.exists(destfile)) {
@@ -24,8 +24,13 @@ dir.create(out_dir, showWarnings = FALSE)
 unzip(zipfile = destfile, files = file, exdir = out_dir)
 data_file <- file.path(out_dir, file)
 
-# Import data, clean up, save 
+# ==============================================================================
 
+# This is mostly unchanged from:
+# https://github.com/SamCH93/thesis/blob/main/source/data/preprocess-rpcb-data.R
+
+## RPCB data with SMD transformed effect sizes but before aggregating internal
+## replications:
 dat <- read.csv(file = data_file)
 dat2 <- dat %>%
     ## only take studies with quantitative effect information available
@@ -141,9 +146,12 @@ datClean2 <- lapply(unique(dat3$id2), FUN = function(id2) {
 
 ## should give 15 original null effects and 11 "successful" null replications
 ## (see null results in Table 1)
-# Load RPCB data (from Samuel Pawel's Github)
+
 RPCB <- datClean2
-# Recalculate p-values is done in Charlotte Micheloud's thesis:
+
+# ==============================================================================
+
+# Recalculate p-values as done in Charlotte Micheloud's thesis:
 # For code see:
 # https://gitlab.uzh.ch/charlotte.micheloud/phd-thesis/-/blob/master/reproMaterial/Thesis_introduction.R
 
