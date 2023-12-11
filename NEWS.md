@@ -5,8 +5,15 @@ and `p2z`.
   - Functions now use vapply() instead of Vectorize()
   - Leads to a substantial speedup
   - Might lead to changes in output format of these functions
-  - Fixes behaviour in computation of `z <- estimate / se` in case where `se ==
-    0`
+  - Fixes behaviour in computation of `z <- estimate / se` in case where `se == 0`
+
+# ReplicationSuccess 1.3.1.1
+- Rewrote conversion functions `ci2se`, `ci2estimate`, `ci2z`, `ci2p`, `z2p`,
+and `p2z`.
+  - Functions now use vapply() instead of Vectorize()
+  - Leads to a substantial speedup
+  - Might lead to changes in output format of these functions
+  - Fixes behaviour in computation of `z <- estimate / se` in case where `se == 0`
 
 # ReplicationSuccess 1.3.1
 
