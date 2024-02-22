@@ -1,7 +1,7 @@
 include Makefile.defs
 
 PACKAGE = ReplicationSuccess
-VERSION = 1.3.1.1
+VERSION = 1.3.2
 TAR = $(PACKAGE)_$(VERSION).tar.gz
 
 

@@ -1,5 +1,6 @@
 # ReplicationSuccess 1.3.2
 
+- new maintainer Samuel Pawel
 - Rewrote conversion functions `ci2se`, `ci2estimate`, `ci2z`, `ci2p`, `z2p`,
 and `p2z`.
   - Functions now use vapply() instead of Vectorize()

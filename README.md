@@ -61,4 +61,4 @@ vignette("ReplicationSuccess")
   
   - Micheloud, C., Balabdaoui, F., Held, L. (2023). Assessing replicability with
     the sceptical *p*-value: Type-I error control and sample size planning.
-    *Statistica Neerlandica*. <https:://doi.org/10.1111/stan.12312>
+    *Statistica Neerlandica*. <https://doi.org/10.1111/stan.12312>
