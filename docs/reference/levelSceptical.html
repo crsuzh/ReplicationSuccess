@@ -18,7 +18,7 @@ alternative and recalibration type."><!-- mathjax --><script src="https://cdnjs.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ReplicationSuccess</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.2</span>
       </span>
     </div>
 
@@ -102,19 +102,21 @@ the internal function <code>.levelSceptical_</code>.
     </div>
     <div id="references">
     <h2>References</h2>
-    <p>Held, L. (2020). A new standard for the analysis and design of replication studies (with discussion).
-<em>Journal of the Royal Statistical Society: Series A (Statistics in Society)</em>, <b>183</b>, 431-448.
-<a href="https://doi.org/10.1111/rssa.12493" class="external-link">doi:10.1111/rssa.12493</a></p>
-<p>Held, L. (2020). The harmonic mean chi-squared test to substantiate scientific findings.
-<em>Journal of the Royal Statistical Society: Series C (Applied Statistics)</em>, <b>69</b>, 697-708.
-<a href="https://doi.org/10.1111/rssc.12410" class="external-link">doi:10.1111/rssc.12410</a></p>
+    <p>Held, L. (2020). A new standard for the analysis and design of
+    replication studies (with discussion). <em>Journal of the Royal
+    Statistical Society: Series A (Statistics in Society)</em>, <b>183</b>,
+    431-448. <a href="https://doi.org/10.1111/rssa.12493" class="external-link">doi:10.1111/rssa.12493</a></p>
+<p>Held, L. (2020). The harmonic mean chi-squared test to substantiate
+    scientific findings. <em>Journal of the Royal Statistical
+    Society: Series C (Applied Statistics)</em>, <b>69</b>, 697-708.
+    <a href="https://doi.org/10.1111/rssc.12410" class="external-link">doi:10.1111/rssc.12410</a></p>
 <p>Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
 success based on relative effect size.
 <em>The Annals of Applied Statistics</em>, <b>16</b>, 706-720.
 <a href="https://doi.org/10.1214/21-AOAS1502" class="external-link">doi:10.1214/21-AOAS1502</a></p>
-<p>Micheloud, C., Balabdaoui, F., Held, L. (2023).
-Beyond the two-trials rule: Type-I error control and sample size planning
-with the sceptical p-value. <a href="https://arxiv.org/abs/2207.00464" class="external-link">https://arxiv.org/abs/2207.00464</a></p>
+<p>Micheloud, C., Balabdaoui, F., Held, L. (2023). Assessing replicability
+with the sceptical p-value: Type-I error control and
+sample size planning. <em>Statistica Neerlandica</em>. <a href="https://doi.org/10.1111/stan.12312" class="external-link">doi:10.1111/stan.12312</a></p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -125,7 +127,12 @@ with the sceptical p-value. <a href="https://arxiv.org/abs/2207.00464" class="ex
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">levelSceptical</span><span class="op">(</span>level <span class="op">=</span> <span class="fl">0.025</span>, alternative <span class="op">=</span> <span class="st">"one.sided"</span>, type <span class="op">=</span> <span class="st">"nominal"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.025</span>
-<span class="r-in"><span><span class="fu">levelSceptical</span><span class="op">(</span>level <span class="op">=</span> <span class="fl">0.025</span>, alternative <span class="op">=</span> <span class="st">"one.sided"</span>, type <span class="op">=</span> <span class="st">"controlled"</span>, c <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">levelSceptical</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  level <span class="op">=</span> <span class="fl">0.025</span>,</span></span>
+<span class="r-in"><span>  alternative <span class="op">=</span> <span class="st">"one.sided"</span>,</span></span>
+<span class="r-in"><span>  type <span class="op">=</span> <span class="st">"controlled"</span>,</span></span>
+<span class="r-in"><span>  c <span class="op">=</span> <span class="fl">1</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.06530978</span>
 <span class="r-in"><span><span class="fu">levelSceptical</span><span class="op">(</span>level <span class="op">=</span> <span class="fl">0.025</span>, alternative <span class="op">=</span> <span class="st">"one.sided"</span>, type <span class="op">=</span> <span class="st">"golden"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.06167928</span>

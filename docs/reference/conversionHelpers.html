@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ReplicationSuccess</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.2</span>
       </span>
     </div>
 
@@ -59,17 +59,11 @@
 <span></span>
 <span><span class="fu">ci2z</span><span class="op">(</span><span class="va">lower</span>, <span class="va">upper</span>, conf.level <span class="op">=</span> <span class="fl">0.95</span>, ratio <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">ci2p</span><span class="op">(</span></span>
-<span>  <span class="va">lower</span>,</span>
-<span>  <span class="va">upper</span>,</span>
-<span>  conf.level <span class="op">=</span> <span class="fl">0.95</span>,</span>
-<span>  ratio <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  alternative <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"two.sided"</span>, <span class="st">"one.sided"</span>, <span class="st">"less"</span>, <span class="st">"greater"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
+<span><span class="fu">ci2p</span><span class="op">(</span><span class="va">lower</span>, <span class="va">upper</span>, conf.level <span class="op">=</span> <span class="fl">0.95</span>, ratio <span class="op">=</span> <span class="cn">FALSE</span>, alternative <span class="op">=</span> <span class="st">"two.sided"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">z2p</span><span class="op">(</span><span class="va">z</span>, alternative <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"two.sided"</span>, <span class="st">"one.sided"</span>, <span class="st">"less"</span>, <span class="st">"greater"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">z2p</span><span class="op">(</span><span class="va">z</span>, alternative <span class="op">=</span> <span class="st">"two.sided"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">p2z</span><span class="op">(</span><span class="va">p</span>, alternative <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"two.sided"</span>, <span class="st">"one.sided"</span>, <span class="st">"less"</span>, <span class="st">"greater"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">p2z</span><span class="op">(</span><span class="va">p</span>, alternative <span class="op">=</span> <span class="st">"two.sided"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -83,13 +77,15 @@
 
 
 <dt>conf.level</dt>
-<dd><p>The confidence level of the confidence intervals. Default is 0.95.</p></dd>
+<dd><p>The confidence level of the confidence intervals.
+Default is 0.95.</p></dd>
 
 
 <dt>ratio</dt>
-<dd><p>Indicates whether the confidence interval is for a ratio, e.g. an
-odds ratio, relative risk or hazard ratio. If <code>TRUE</code>, the standard error
-of the log ratio is computed. Defaults to <code>FALSE</code>.</p></dd>
+<dd><p>Indicates whether the confidence interval is for a
+ratio, e.g. an odds ratio, relative risk or hazard ratio.
+If <code>TRUE</code>, the standard error of the log ratio is computed.
+Defaults to <code>FALSE</code>.</p></dd>
 
 
 <dt>antilog</dt>
@@ -100,7 +96,8 @@ Only applies if <code>ratio = TRUE</code>. Defaults to <code>FALSE</code>.</p></
 <dt>alternative</dt>
 <dd><p>Direction of the alternative of the p-value.
 Either "two.sided" (default), "one.sided", "less", or "greater".
-If "one.sided" or "two.sided" is specified, the z-value is assumed to be positive.</p></dd>
+If "one.sided" or "two.sided" is specified, the z-value is assumed
+to be positive.</p></dd>
 
 
 <dt>z</dt>
@@ -127,19 +124,23 @@ If "one.sided" or "two.sided" is specified, the z-value is assumed to be positiv
 <p><code>ci2p</code> returns a numeric vector of p-values.</p>
 
 
-<p><code>z2p</code> returns a numeric vector of p-values.</p>
+<p><code>z2p</code> returns a numeric vector of p-values. The
+dimension of the output depends on the input. In general,
+the output will be an array of dimension
+<code>c(nrow(z), ncol(z), length(alternative))</code>. If any of these
+dimensions is 1, it will be dropped.</p>
 
 
-<p><code>p2z</code> returns a numeric vector of z-values.</p>
+<p><code>p2z</code> returns a numeric vector of z-values. The
+dimension of the output depends on the input. In general,
+the output will be an array of dimension
+<code>c(nrow(p), ncol(p), length(alternative))</code>. If any of these
+dimensions is 1, it will be dropped.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p><code>z2p</code> is the vectorized version of
-the internal function <code>.z2p_</code>.
-<code><a href="https://rdrr.io/r/base/Vectorize.html" class="external-link">Vectorize</a></code> is used to vectorize the function.</p>
-<p><code>p2z</code> is the vectorized version of
-the internal function <code>.p2z_</code>.
-<code><a href="https://rdrr.io/r/base/Vectorize.html" class="external-link">Vectorize</a></code> is used to vectorize the function.</p>
+    <p><code>z2p</code> is vectorized over all arguments.</p>
+<p><code>p2z</code> is vectorized over all arguments.</p>
     </div>
 
     <div id="ref-examples">

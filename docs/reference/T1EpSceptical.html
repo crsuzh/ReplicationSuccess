@@ -19,7 +19,7 @@ and the alternative hypothesis."><!-- mathjax --><script src="https://cdnjs.clou
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ReplicationSuccess</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.2</span>
       </span>
     </div>
 
@@ -109,13 +109,14 @@ scientific findings. <em>Journal of the Royal Statistical Society: Series C
 <p>Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
     success based on relative effect size. The Annals of Applied Statistics.
     16:706-720. <a href="https://doi.org/10.1214/21-AOAS1502" class="external-link">doi:10.1214/21-AOAS1502</a></p>
-<p>Micheloud, C., Balabdaoui, F., Held, L. (2023).
-Beyond the two-trials rule: Type-I error control and sample size planning
-with the sceptical p-value. <a href="https://arxiv.org/abs/2207.00464" class="external-link">https://arxiv.org/abs/2207.00464</a></p>
+<p>Micheloud, C., Balabdaoui, F., Held, L. (2023). Assessing replicability
+with the sceptical p-value: Type-I error control and
+sample size planning. <em>Statistica Neerlandica</em>. <a href="https://doi.org/10.1111/stan.12312" class="external-link">doi:10.1111/stan.12312</a></p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="pSceptical.html">pSceptical</a></code>, <code><a href="levelSceptical.html">levelSceptical</a></code>, <code><a href="PPpSceptical.html">PPpSceptical</a></code></p></div>
+    <div class="dont-index"><p><code><a href="pSceptical.html">pSceptical</a></code>, <code><a href="levelSceptical.html">levelSceptical</a></code>,
+<code><a href="PPpSceptical.html">PPpSceptical</a></code></p></div>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -130,8 +131,11 @@ with the sceptical p-value. <a href="https://arxiv.org/abs/2207.00464" class="ex
 <span class="r-in"><span><span class="va">t1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span>X <span class="op">=</span> <span class="va">types</span>, FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">t</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>  <span class="fu">T1EpSceptical</span><span class="op">(</span>type <span class="op">=</span> <span class="va">t</span>, c <span class="op">=</span> <span class="va">c</span>, alternative <span class="op">=</span> <span class="st">"one.sided"</span>, level <span class="op">=</span> <span class="fl">0.025</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/matplot.html" class="external-link">matplot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">c</span>, y <span class="op">=</span> <span class="va">t1</span><span class="op">*</span><span class="fl">100</span>, type <span class="op">=</span> <span class="st">"l"</span>, lty <span class="op">=</span> <span class="fl">1</span>, lwd <span class="op">=</span> <span class="fl">2</span>, las <span class="op">=</span> <span class="fl">1</span>, log <span class="op">=</span> <span class="st">"x"</span>,</span></span>
-<span class="r-in"><span>        xlab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/bquote.html" class="external-link">bquote</a></span><span class="op">(</span><span class="fu">italic</span><span class="op">(</span><span class="va">c</span><span class="op">)</span><span class="op">)</span>, ylab <span class="op">=</span> <span class="st">"Type-I error (%)"</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/matplot.html" class="external-link">matplot</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  x <span class="op">=</span> <span class="va">c</span>, y <span class="op">=</span> <span class="va">t1</span><span class="op">*</span><span class="fl">100</span>, type <span class="op">=</span> <span class="st">"l"</span>, lty <span class="op">=</span> <span class="fl">1</span>, lwd <span class="op">=</span> <span class="fl">2</span>, las <span class="op">=</span> <span class="fl">1</span>, log <span class="op">=</span> <span class="st">"x"</span>,</span></span>
+<span class="r-in"><span>  xlab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/bquote.html" class="external-link">bquote</a></span><span class="op">(</span><span class="fu">italic</span><span class="op">(</span><span class="va">c</span><span class="op">)</span><span class="op">)</span>, ylab <span class="op">=</span> <span class="st">"Type-I error (%)"</span>,</span></span>
+<span class="r-in"><span>  xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"topright"</span>, legend <span class="op">=</span> <span class="va">types</span>, lty <span class="op">=</span> <span class="fl">1</span>, lwd <span class="op">=</span> <span class="fl">2</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">types</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="T1EpSceptical-1.png" alt="" width="2336" height="1600"></span>
 <span class="r-in"><span></span></span>
