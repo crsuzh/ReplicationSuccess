@@ -52,6 +52,9 @@
     <loc>/reference/pBox.html</loc>
   </url>
   <url>
+    <loc>/reference/pEdgington.html</loc>
+  </url>
+  <url>
     <loc>/reference/pIntrinsic.html</loc>
   </url>
   <url>
@@ -59,6 +62,9 @@
   </url>
   <url>
     <loc>/reference/pSceptical.html</loc>
+  </url>
+  <url>
+    <loc>/reference/powerEdgington.html</loc>
   </url>
   <url>
     <loc>/reference/powerReplicationSuccess.html</loc>
@@ -77,6 +83,9 @@
   </url>
   <url>
     <loc>/reference/pvalueBound.html</loc>
+  </url>
+  <url>
+    <loc>/reference/sampleSizeEdgington.html</loc>
   </url>
   <url>
     <loc>/reference/sampleSizeReplicationSuccess.html</loc>
