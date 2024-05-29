@@ -73,6 +73,8 @@
 #'     Edgington's method. If impossible to achieve the desired power for
 #'     specified inputs \code{NaN} is returned.
 #' @details Either \code{zo} or \code{po} must be specified.
+#' @references Held, L., Pawel, S., Micheloud, C. (2024). The assessment of
+#'     replicability using the sum of p-values. \doi{10.48550/arXiv.2401.13615}
 #' @examples
 #' ## partially recreate Figure 5 from paper
 #' poseq <- exp(seq(log(0.00001), log(0.025), length.out = 100))

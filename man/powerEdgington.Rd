@@ -49,6 +49,10 @@ Either \code{zo} or \code{po} must be specified.
 \examples{
 powerEdgington(po = 0.025, level = 0.025, c = 1.4)
 }
+\references{
+Held, L., Pawel, S., Micheloud, C. (2024). The assessment of
+    replicability using the sum of p-values. \doi{10.48550/arXiv.2401.13615}
+}
 \author{
 Charlotte Micheloud, Leonhard Held, Samuel Pawel
 }

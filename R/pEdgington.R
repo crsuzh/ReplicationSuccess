@@ -85,6 +85,9 @@
 #' @details Either \code{zo} and \code{zr}, or \code{po} and \code{pr}, must be
 #'     specified.
 #' @return Edgington's p-value
+#' @references Held, L., Pawel, S., Micheloud, C. (2024). The assessment of
+#'     replicability using the sum of p-values. \doi{10.48550/arXiv.2401.13615}
+#'
 #' @examples
 #' ## examples from paper
 #' pEdgington(po = 0.026, pr = 0.001)

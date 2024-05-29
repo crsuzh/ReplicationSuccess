@@ -70,6 +70,8 @@
 #' the effect is shrunken by a factor of 25\% for \code{shrinkage = 0.25}.
 #' @return The power with Edgington's method
 #' @details Either \code{zo} or \code{po} must be specified.
+#' @references Held, L., Pawel, S., Micheloud, C. (2024). The assessment of
+#'     replicability using the sum of p-values. \doi{10.48550/arXiv.2401.13615}
 #' @examples
 #' powerEdgington(po = 0.025, level = 0.025, c = 1.4)
 #' @export

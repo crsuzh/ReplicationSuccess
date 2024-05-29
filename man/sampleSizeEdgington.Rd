@@ -58,6 +58,10 @@ cseqSig <- sampleSizeSignificance(zo = p2z(p = poseq, alternative = "one.sided")
 plot(poseq, cseq/cseqSig, log = "x", xlim = c(0.00001, 0.035), ylim = c(0.9, 1.3),
      type = "l", las = 1, xlab = "Original p-value", ylab = "Sample size ratio")
 }
+\references{
+Held, L., Pawel, S., Micheloud, C. (2024). The assessment of
+    replicability using the sum of p-values. \doi{10.48550/arXiv.2401.13615}
+}
 \author{
 Charlotte Micheloud, Leonhard Held, Samuel Pawel
 }

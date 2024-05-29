@@ -41,6 +41,10 @@ pEdgington(zo = 1.91, zr = 1.95)
 ## using combination of z-value and p-value
 pEdgington(zo = 1.91, pr = 0.024)
 }
+\references{
+Held, L., Pawel, S., Micheloud, C. (2024). The assessment of
+    replicability using the sum of p-values. \doi{10.48550/arXiv.2401.13615}
+}
 \author{
 Charlotte Micheloud, Leonhard Held, Samuel Pawel
 }
