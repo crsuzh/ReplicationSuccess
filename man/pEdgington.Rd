@@ -43,7 +43,8 @@ pEdgington(zo = 1.91, pr = 0.024)
 }
 \references{
 Held, L., Pawel, S., Micheloud, C. (2024). The assessment of
-    replicability using the sum of p-values. \doi{10.48550/arXiv.2401.13615}
+    replicability using the sum of p-values. \emph{Royal Society Open
+    Science}. 11(8):11240149. \doi{10.1177/09567976241242037}
 }
 \author{
 Charlotte Micheloud, Leonhard Held, Samuel Pawel

@@ -107,7 +107,7 @@ Series A (Statistics in Society)}, \bold{183}, 431-448.
 \doi{10.1111/rssa.12493}
 
 Pawel, S., Held, L. (2020). Probabilistic forecasting of replication studies.
-\emph{PLoS ONE}. \bold{15}, e0231416. \doi{10.1371/journal.pone.0231416}
+\emph{PLOS ONE}. \bold{15}, e0231416. \doi{10.1371/journal.pone.0231416}
 
 Held, L., Micheloud, C., Pawel, S. (2022). The assessment of replication
     success based on relative effect size. The Annals of Applied Statistics.

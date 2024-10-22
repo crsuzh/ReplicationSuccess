@@ -46,10 +46,10 @@ vignette("ReplicationSuccess")
   
   - Held, L. (2020). The harmonic mean chi-squared test to substantiate
     scientific findings. *Journal of the Royal Statistical Society: Series C
-    (Applied Statistics)*, 69(3):697-708. <https://doi.org/10.1111/rssc.12410>
+    (Applied Statistics)*. 69(3):697-708. <https://doi.org/10.1111/rssc.12410>
 
   - Pawel, S., Held, L. (2020). Probabilistic forecasting of replication
-    studies. PLoS ONE 15(4):e0231416.
+    studies. *PLOS ONE*. 15(4):e0231416.
     <https://doi.org/10.1371/journal.pone.0231416>
     
   - Micheloud, C., Held, L. (2021). Power Calculations for Replication Studies.
@@ -62,3 +62,7 @@ vignette("ReplicationSuccess")
   - Micheloud, C., Balabdaoui, F., Held, L. (2023). Assessing replicability with
     the sceptical *p*-value: Type-I error control and sample size planning.
     *Statistica Neerlandica*. <https://doi.org/10.1111/stan.12312>
+    
+  - Held, L., Pawel, S., Micheloud, C. (2024). The assessment of replicability
+    using the sum of *p*-values. *Royal Society Open Science*. 11(8):11240149.
+    <https://doi.org/10.1177/09567976241242037>
