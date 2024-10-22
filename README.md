@@ -65,4 +65,4 @@ vignette("ReplicationSuccess")
     
   - Held, L., Pawel, S., Micheloud, C. (2024). The assessment of replicability
     using the sum of *p*-values. *Royal Society Open Science*. 11(8):11240149.
-    <https://doi.org/10.1177/09567976241242037>
+    <https://doi.org/10.1098/rsos.240149>

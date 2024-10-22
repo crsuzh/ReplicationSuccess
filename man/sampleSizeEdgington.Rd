@@ -61,7 +61,7 @@ plot(poseq, cseq/cseqSig, log = "x", xlim = c(0.00001, 0.035), ylim = c(0.9, 1.3
 \references{
 Held, L., Pawel, S., Micheloud, C. (2024). The assessment of
     replicability using the sum of p-values. \emph{Royal Society Open
-    Science}. 11(8):11240149. \doi{10.1177/09567976241242037}
+    Science}. 11(8):11240149. \doi{10.1098/rsos.240149}
 }
 \author{
 Charlotte Micheloud, Leonhard Held, Samuel Pawel

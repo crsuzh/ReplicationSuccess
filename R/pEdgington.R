@@ -87,7 +87,7 @@
 #' @return Edgington's p-value
 #' @references Held, L., Pawel, S., Micheloud, C. (2024). The assessment of
 #'     replicability using the sum of p-values. \emph{Royal Society Open
-#'     Science}. 11(8):11240149. \doi{10.1177/09567976241242037}
+#'     Science}. 11(8):11240149. \doi{10.1098/rsos.240149}
 #'
 #' @examples
 #' ## examples from paper
