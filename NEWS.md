@@ -1,3 +1,7 @@
+# ReplicationSuccess 1.3.4
+
+- new function `p2ci` to compute a confidence interval from a *p*-value and an estimate.
+
 # ReplicationSuccess 1.3.3
 
 - new functions `pEdgington`, `powerEdgington`, and `sampleSizeEdgington` to

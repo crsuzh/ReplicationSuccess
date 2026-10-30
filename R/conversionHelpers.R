@@ -336,6 +336,81 @@ p2z_internal <- function(
     )
 }
 
+#' @rdname conversionHelpers
+#' @param estimate Numeric vector of parameter estimates.
+#' @details \code{p2ci} is the inverse of \code{ci2p}.
+#' @return \code{p2ci} returns a named numeric vector with the lower and upper
+#' bound of the confidence interval, or a matrix with columns \code{lower}
+#' and \code{upper} if \code{p} has length greater than 1.
+#' @examples
+#' p2ci(p = 0.03, estimate = 0.5)
+#' p2ci(p = 0.04, estimate = 2, ratio = TRUE)
+#' p2ci(p = 0.03, estimate = 0.5, conf.level = 0.9)
+#' p2ci(p = 0.015, estimate = 0.5, alternative = "greater")
+#'
+#' @export
+p2ci <- function(
+    p,
+    estimate,
+    conf.level = 0.95,
+    ratio = FALSE,
+    alternative = "two.sided"
+) {
+
+    check_p_arg(p = p)
+    check_conflevel_arg(conf.level = conf.level)
+    check_ratio_arg(ratio = ratio)
+    check_alternative_arg(alternative = alternative)
+
+    p2ci_internal(
+        p = p,
+        estimate = estimate,
+        conf.level = conf.level,
+        ratio = ratio,
+        alternative = alternative
+    )
+}
+
+p2ci_internal <- function(
+    p,
+    estimate,
+    conf.level = 0.95,
+    ratio = FALSE,
+    alternative = "two.sided"
+) {
+
+    stopifnot(length(alternative) == 1L)
+
+    z <- p2z_internal(
+        p = p,
+        alternative = alternative
+    )
+
+    if (ratio) {
+        stopifnot(all(estimate > 0))
+        estimate <- log(estimate)
+    }
+
+
+    se <- abs(estimate) / abs(z)
+
+    if (any(se == 0)) stop("Invalid standard error: Some SEs are 0.")
+
+
+    alpha <- 1 - conf.level
+    q <- stats::qnorm(p = 1 - alpha / 2, lower.tail = TRUE)
+
+    lower <- estimate - q * se
+    upper <- estimate + q * se
+
+    if (ratio) {
+        lower <- exp(lower)
+        upper <- exp(upper)
+    }
+
+    drop(cbind(lower = lower, upper = upper))
+}
+
 
 ################################################################################
 #                             Helper functions                                 #
