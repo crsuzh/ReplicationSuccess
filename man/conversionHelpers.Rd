@@ -7,6 +7,7 @@
 \alias{ci2p}
 \alias{z2p}
 \alias{p2z}
+\alias{p2ci}
 \title{Convert between estimates, z-values, p-values, and confidence intervals}
 \usage{
 ci2se(lower, upper, conf.level = 0.95, ratio = FALSE)
@@ -20,6 +21,8 @@ ci2p(lower, upper, conf.level = 0.95, ratio = FALSE, alternative = "two.sided")
 z2p(z, alternative = "two.sided")
 
 p2z(p, alternative = "two.sided")
+
+p2ci(p, estimate, conf.level = 0.95, ratio = FALSE, alternative = "two.sided")
 }
 \arguments{
 \item{lower}{Numeric vector of lower confidence interval bounds.}
@@ -45,6 +48,8 @@ to be positive.}
 \item{z}{Numeric vector of z-values.}
 
 \item{p}{Numeric vector of p-values.}
+
+\item{estimate}{Numeric vector of parameter estimates.}
 }
 \value{
 \code{ci2se} returns a numeric vector of standard errors.
@@ -66,6 +71,10 @@ dimension of the output depends on the input. In general,
 the output will be an array of dimension
 \code{c(nrow(p), ncol(p), length(alternative))}. If any of these
 dimensions is 1, it will be dropped.
+
+\code{p2ci} returns a named numeric vector with the lower and upper
+bound of the confidence interval, or a matrix with columns \code{lower}
+and \code{upper} if \code{p} has length greater than 1.
 }
 \description{
 Convert between estimates, z-values, p-values, and confidence intervals
@@ -74,6 +83,8 @@ Convert between estimates, z-values, p-values, and confidence intervals
 \code{z2p} is vectorized over all arguments.
 
 \code{p2z} is vectorized over all arguments.
+
+\code{p2ci} is the inverse of \code{ci2p}.
 }
 \examples{
 ci2se(lower = 1, upper = 3)
@@ -106,4 +117,9 @@ p <- seq(0.001, 0.05, 0.0001)
 plot(p, p2z(p), type = "l", ylim = c(0, 3.5), ylab = "z")
 lines(p, p2z(p, alternative = "greater"), lty = 2)
 legend("bottomleft", c("two-sided", "greater"), lty = c(1, 2), bty = "n")
+p2ci(p = 0.03, estimate = 0.5)
+p2ci(p = 0.04, estimate = 2, ratio = TRUE)
+p2ci(p = 0.03, estimate = 0.5, conf.level = 0.9)
+p2ci(p = 0.015, estimate = 0.5, alternative = "greater")
+
 }
