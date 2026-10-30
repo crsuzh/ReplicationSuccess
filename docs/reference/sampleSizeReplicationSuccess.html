@@ -5,7 +5,7 @@ recalibration, the power and the design prior."><!-- mathjax --><script src="htt
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -19,7 +19,7 @@ recalibration, the power and the design prior."><!-- mathjax --><script src="htt
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">ReplicationSuccess</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.4</span>
       </span>
     </div>
 
@@ -33,14 +33,14 @@ recalibration, the power and the design prior."><!-- mathjax --><script src="htt
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/crsuzh/ReplicationSuccess/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
@@ -71,27 +71,29 @@ recalibration, the power and the design prior.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>zo</dt>
+
+
+<dl><dt id="arg-zo">zo<a class="anchor" aria-label="anchor" href="#arg-zo"></a></dt>
 <dd><p>Numeric vector of z-values from original studies.</p></dd>
 
 
-<dt>power</dt>
+<dt id="arg-power">power<a class="anchor" aria-label="anchor" href="#arg-power"></a></dt>
 <dd><p>The power to achieve replication success.</p></dd>
 
 
-<dt>level</dt>
+<dt id="arg-level">level<a class="anchor" aria-label="anchor" href="#arg-level"></a></dt>
 <dd><p>Threshold for the calibrated sceptical p-value.
 Default is 0.025.</p></dd>
 
 
-<dt>alternative</dt>
+<dt id="arg-alternative">alternative<a class="anchor" aria-label="anchor" href="#arg-alternative"></a></dt>
 <dd><p>Specifies if <code>level</code> is "one.sided" (default) or
 "two.sided". If "one.sided" then sample size calculations are based
 on a one-sided assessment of replication success in the direction of the
 original effect estimates.</p></dd>
 
 
-<dt>type</dt>
+<dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
 <dd><p>Type of recalibration. Can be either "golden" (default),
 "nominal" (no recalibration), or "controlled". "golden" ensures that for
 an original study just significant at the specified <code>level</code>,
@@ -100,7 +102,7 @@ larger than the original one. "controlled" ensures exact overall Type-I
 error control at level <code>level</code>^2.</p></dd>
 
 
-<dt>designPrior</dt>
+<dt id="arg-designprior">designPrior<a class="anchor" aria-label="anchor" href="#arg-designprior"></a></dt>
 <dd><p>Is only taken into account when <code>power</code> is specified.
 Either "conditional" (default), "predictive", or "EB". If "EB", the power
 is computed under a predictive distribution where the contribution of the
@@ -108,7 +110,7 @@ original study is shrunken towards zero based on the evidence in the
 original study (with an empirical Bayes shrinkage estimator).</p></dd>
 
 
-<dt>shrinkage</dt>
+<dt id="arg-shrinkage">shrinkage<a class="anchor" aria-label="anchor" href="#arg-shrinkage"></a></dt>
 <dd><p>Is only taken into account when <code>power</code> is specified. A
 number in [0,1) with default 0. Specifies the shrinkage of the original
 effect estimate towards zero (e.g., the effect is shrunken by a factor of
@@ -116,7 +118,7 @@ effect estimate towards zero (e.g., the effect is shrunken by a factor of
 <code>designPrior</code> is "conditional" or "predictive".</p></dd>
 
 
-<dt>h</dt>
+<dt id="arg-h">h<a class="anchor" aria-label="anchor" href="#arg-h"></a></dt>
 <dd><p>Is only taken into account when <code>power</code> is specified and
 <code>designPrior</code> is "predictive" or "EB". The relative between-study
 heterogeneity, i.e., the ratio of the heterogeneity variance to the
@@ -126,9 +128,7 @@ heterogeneity).</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>The relative sample size for replication success. If impossible to
+    <p>The relative sample size for replication success. If impossible to
     achieve the desired power for specified inputs <code>NaN</code> is returned.</p>
     </div>
     <div id="details">
@@ -179,19 +179,19 @@ sample size planning. <em>Statistica Neerlandica</em>. <a href="https://doi.org/
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Leonhard Held, Samuel Pawel, Charlotte Micheloud, Florian Gerber, Felix Hofmann.</p>
+  <p></p><p>Developed by Leonhard Held, Samuel Pawel, Charlotte Micheloud, Florian Gerber, Felix Hofmann, Saverio Fontana.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
       </footer></div>
 
-  
 
 
-  
+
+
 
   </body></html>
 
